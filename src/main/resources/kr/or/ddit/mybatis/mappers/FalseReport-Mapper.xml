@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="FalseReport-Mapper">
+
+
+	<select id="selectAllFalseReportList" parameterType="str" resultType="falseReport">
+		select *
+		  from false_report
+		 where ind_id=#{indId} 
+	</select>
+
+	<select id="selectFalseReportByFalNo" parameterType="str" resultType="falseReport">	
+		select * 
+		  from false_report
+		 where fal_no=#{falNo}
+		   and ind_id=#{indId}
+	</select>	
+		
+	
+	<insert id="insertFalse" parameterType="falseReport" >
+		<selectKey resultType="int" keyProperty="falNo" order="BEFORE">
+			select max(fal_no)+1 from false_report
+		</selectKey>
+		insert into false_report
+		values(#{falNo}, #{indId}, #{falTitle}, #{falContent}, #{coName}, TO_CHAR(sysdate, 'YYYY-MM-DD'), #{falEdate}, #{falOdate}, #{falCategory}, #{falCategorydetail})
+	</insert>	
+	
+		
+	
+	<update id="updateFalse" parameterType="falseReport">
+		update false_report
+		   set 
+		   fal_title=#{falTitle}, fal_content=#{falContent}, co_name=#{coName}, fal_odate=#{falOdate}, fal_category=#{falCategory}, fal_categorydetail=#{falCategorydetail}
+		 where fal_no=#{falNo}
+		   and ind_id=#{indId}
+	</update>
+		
+		
+	<update id="deleteFalse" parameterType="str" >
+		delete 
+		  from false_report
+		 where fal_no=#{falNo}	
+		   and ind_id= TO_NUMBER(#{indId})	
+	</update>		
+
+	<insert id="insertReportList" parameterType="report">
+		insert into report_list (fal_no, rep_status)
+		values(#{falNo},  #{repStatus})
+	</insert>	
+</mapper>

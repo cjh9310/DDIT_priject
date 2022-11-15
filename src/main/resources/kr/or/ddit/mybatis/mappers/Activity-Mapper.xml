@@ -1,0 +1,126 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Activity-Mapper">
+	<select id="selectActivityList" resultType="activity">
+	/*Activity-Mapper.selectActivityList*/
+		select
+		*
+		from
+		activity
+		where ind_id = #{indId}
+	</select>
+	
+	<select id="selectActivityListByConNo" resultType="activity">
+	/*Activity-Mapper.selectActivityListByConNo*/
+		select
+		*
+		from
+		activity
+		where con_no = #{conNo}
+	</select>
+	
+	<select id="selectActivityListByMenNo" resultType="activity">
+	/*Activity-Mapper.selectActivityListByMenNo*/
+		select
+		*
+		from
+		activity
+		where men_no = #{menNo}
+	</select>
+	
+	<select id="selectActivityListCount" resultType="int">
+	/* Activity-Mapper.selectActivityListCount */
+		select
+		count(*)
+		from
+		activity
+		where act_no is not null
+		order by act_date desc
+	</select>
+	
+	<select id="selectActivityByActNo" resultType="activity">
+	/* Activity-Mapper.selectActivityByActNo */
+		select
+		*
+		from
+		activity
+		where act_no = #{actNo}
+	</select>
+	
+	<insert id="insertActivityContest" parameterType="activity">
+		insert
+		into
+		activity
+			(act_no
+			,ind_id
+			,con_no
+			,act_tel
+			,act_email
+			,act_date)
+		values
+			(#{actNo}
+			,#{indId}
+			,#{conNo}
+			,#{actTel}
+			,#{actEmail}
+			,sysdate)
+	</insert>
+	
+	<insert id="insertActivityMentoring" parameterType="activity">
+		insert
+		into
+		activity
+			(act_no
+			,ind_id
+			,men_no
+			,act_tel
+			,act_email
+			,act_date)
+		values
+			(#{actNo}
+			,#{indId}
+			,#{menNo}
+			,#{actTel}
+			,#{actEmail}
+			,sysdate)
+	</insert>
+	
+	<update id="updateActivity" parameterType="activity">
+		update
+			activity
+		set
+			 act_tel = #{actTel}
+			,act_email = #{actEmail}
+		where
+			act_no = #{actNo}
+	</update>
+	
+	<update id="updateActivityCom" parameterType="activity">
+		update
+			activity
+		set
+			 ACT_PRIZE = #{actPrize}
+			,ACT_SCORE = #{actScore}
+		where
+			act_no = #{actNo}
+	</update>
+	
+	
+	<delete id="deleteActivity" parameterType="int">
+		delete
+		from
+			activity
+		where
+			act_no = #{actNo}
+	</delete>
+	
+	<select id="selectActivitySeqNext" resultType="int">
+		select
+			ACTIVITY_SEQ.nextval as act_no
+		from 
+			dual
+	</select>
+	
+</mapper>

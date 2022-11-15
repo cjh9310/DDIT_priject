@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Bookmark-Mapper">
+
+	<sql id="bookmarkTypeCheck">
+		<if test="bookType == 0">
+			and rec_wantedno=#{recWantedno}
+		</if> 
+		<if test="bookType == 1">
+			and co_name=#{coName}
+		</if> 
+	</sql>
+	
+	<select id="selectBookmarkByRecno" parameterType="str" resultType="bookmark">
+		select 
+			    a.book_no as "bookNo",
+			    a.rec_wantedno as "recWantedno",
+			    a.co_name as "coName",
+			    a.book_type as "bookType",
+			    b.rec_wantedtitle as "recWantedtitle",
+			    d.name as "name"
+		   from bookmark a, recruit b, ind_member c, member d
+		  where a.rec_wantedno = b.rec_wantedno(+)
+			and a.ind_id = c.ind_id(+)
+			and c.ind_id = d.id(+)
+			and a.REC_WANTEDNO =#{recWantedno}
+	</select>
+
+
+	<select id="selectBookmarkById" parameterType="str" resultType="bookmark">
+		 select a.book_no as "bookNo",
+        		a.rec_wantedno as "recWantedno",
+        		a.co_name as "coName",
+        		a.book_type as "bookType",
+        		c.co_name as "recCoName",
+        		c.rec_wantedtitle as "recWantedtitle",
+        		b.co_logo as "coLogo"
+   		   from bookmark a, corporation b, recruit c
+  		  where a.co_name = b.co_name(+)
+    		and a.rec_wantedno = c.rec_wantedno(+)
+    		and a.ind_id = #{id}
+	</select>
+	
+	<select id="selectBookNoForRemove" parameterType="bookmark" resultType="int">
+		select book_no
+  		  from bookmark
+ 		 where ind_id=#{indId}
+   	       and book_type=#{bookType}
+   	       <include refid="bookmarkTypeCheck" />
+	</select>
+	
+	<update id="insertRecBookmark" parameterType="bookmark">
+		insert into bookmark (book_no, ind_id, rec_wantedno, book_type, co_name)
+		              values (bookmark_seq.nextval, #{indId}, #{recWantedno}, #{bookType}, #{coName})
+	</update>
+	
+	<update id="deleteBookmark" parameterType="int">
+		delete from bookmark
+		 where book_no=#{bookNo}
+	</update>
+	
+</mapper>

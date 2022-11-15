@@ -1,0 +1,11 @@
+/.metadata/
+/Servers/
+*.txt
+*.jar
+*.png
+/*/.settings
+*.MF
+*/build/
+*.mp4
+*.zip
+target/*

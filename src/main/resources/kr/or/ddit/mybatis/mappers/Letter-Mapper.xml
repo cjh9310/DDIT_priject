@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Letter-Mapper">
+
+	<select id="selectLetterListByIndId" parameterType="str" resultType="letter">
+		select *
+		  from letter
+		 where ind_id=#{indId}
+		 order by let_no
+	</select>
+	
+	<select id="selectLetterByLetSeqno" parameterType="str" resultType="letter">
+		select *
+		  from letter
+		 where let_seqNo=#{let_seqNo}
+	</select>
+	
+	<select id="selectCountOpenLetter" parameterType="str" resultType="int">
+		select count(*)
+  		  from letter
+ 		 where let_isnav = 1
+   	  	   and ind_id=#{indId}
+	</select>
+	
+	<update id="insertLetter" parameterType="hashMap">
+		insert into letter
+		(let_seqNo, ind_id, let_title, let_content, let_no, let_isnav)
+		values
+		(letter_seq.nextval, #{indId}, #{letTitle}, #{letContent}, #{letNo}, #{letIsnav})
+	</update>
+	
+	<update id="updateLetter" parameterType="hashMap">
+		update letter
+		   set let_title=#{letTitle},
+		       let_content=#{letContent},
+		       let_no=#{letNo},
+		       let_isnav=#{letIsnav}
+		 where let_seqno=#{letSeqno}
+	</update>
+	
+	<delete id="deleteLetter" parameterType="str">
+		delete from letter where let_seqno=#{letSeqno}
+	</delete>
+	
+</mapper>

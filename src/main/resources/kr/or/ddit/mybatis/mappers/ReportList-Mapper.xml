@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ReportList-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'mem'.toString()">
+			and ind_id like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'co'.toString()">
+			and co_name like '%'||#{keyword}||'%'
+		</if>		
+	</sql>
+
+	<select id="selectAllReportList" resultType="reportList">  
+		select *
+	  	  from (      
+			 select rownum as rnum,SearchAllReport.*
+		   	   from (
+				   	 select *
+				   	   from false_report F
+				    natural join report_list R
+				      where fal_no is not null
+				     <include refid="search" />
+				      order by fal_no desc
+				    ) SearchAllReport
+		     <![CDATA[
+		    where rownum <= #{endRow}
+		    ]]>
+		  )
+		  <![CDATA[
+	 	 where rnum >= #{startRow}		
+		 ]]>
+	</select>
+	
+	
+	<select id="selectSearchReportListCount" resultType="int">
+		select count(*)
+		  from 
+		       (select *
+				  from false_report F
+			   natural join report_list R)
+		 where fal_no is not null
+		 <include refid="search" />
+		 order by fal_no desc   
+	</select>
+	
+	
+	<select id="selectReportListByFalNo" parameterType="int" resultType="reportList">
+		select *
+		  from 
+		       (select *
+				  from false_report F
+			   natural join report_list R)
+	   	 where fal_no=#{falNo}		  
+	</select>
+</mapper>

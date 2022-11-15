@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="Advice-Mapper">
+
+	<select id="selectAdviceByNo" parameterType="int" resultType="advice">
+		select id, name, email, picture, adv_no, rec_wantedno, open_seqno, ind_bir, ind_gender, ind_score, ind_open, ind_addr, ind_fedu, ind_wishsec, ind_wishsal
+		from member m, advice s, ind_member i 
+		where m.id = s.ind_id and s.ind_id = i.ind_id and  s.open_seqno = #{open_seqno}
+	</select>
+
+	<select id="selectAdviceRecruitListById" parameterType="str" resultType="advice">
+		select rownum,
+		a.*,
+		b.rec_wantedno,
+		b.co_name,
+		b.rec_indtpcdnm,
+		b.rec_wantedtitle,
+		b.rec_receiptclosedt,
+		b.rec_regdt,
+		b.rec_region
+		from advice a, recruit b
+		where a.rec_wantedno = b.rec_wantedno
+		and a.rec_wantedno is not null
+		and ind_id=#{id}
+	</select>
+
+	<select id="selectAdviceOpenRecListById" parameterType="str" resultType="advice">
+		select rownum,
+               a.*,
+               b.open_seqno,
+               b.open_title,
+               b.open_conm,
+               b.open_region,
+               b.open_sdate,
+               b.open_edate
+          from advice a, open_rec b
+         where a.open_seqno = b.open_seqno
+           and a.open_seqno is not null
+           and ind_id=#{id}
+	</select>
+	
+	<update id="insertAdvice" parameterType="advice">
+		insert into advice (adv_no, ind_id, rec_wantedno, open_seqno)
+		              values (advice_seq.nextval, #{indId}, #{recWantedno}, #{openSeqno})
+	</update>
+	
+</mapper>
