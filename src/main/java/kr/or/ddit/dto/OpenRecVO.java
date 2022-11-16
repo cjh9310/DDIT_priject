@@ -1,34 +1,55 @@
 package kr.or.ddit.dto;
 
 public class OpenRecVO {
-	private int openSeqno;     //공고순번
-	
-	//상세검색옵션
-	private String openCOCL;   //기업형태
-	private String openType;   //고용형태
-	private String openCar;    //경력형태
-	private String openEdu;    //학력형태
-	private String openJobscd; //직종형태
-	
-	private String openConm;   //회사명
-	private String openHomepg; //회사홈페이지
+	private int openSeqno; // 공고순번
 
-	private String openTitle;  //채용제목
-	private String openSdate;  //채용시작일
-	private String openEdate;  //채용마감일
-	private String openAcptpsn;//채용합격자발표일
-	private String openContent;//채용내용
-	private String openRegion; //채용지역
-	private String openCarnm;  //지원자격(경력)
-	private String openEdunm;  //지원자격(학력)
-	private int openCnt;       //모집인원수
+	// 상세검색옵션
+	private String openCocl; // 기업형태
+	private String openType; // 고용형태
+	private String openCar; // 경력형태
+	private String openEdu; // 학력형태
+	private String openJobscd; // 직종형태
+
+	private String openConm; // 회사명
+	private String openHomepg; // 회사홈페이지
+
+	private String openTitle; // 채용제목
+	private String openSdate; // 채용시작일
+	private String openEdate; // 채용마감일
+	private String openAcptpsn;// 채용합격자발표일
+	private String openContent;// 채용내용
+	private String openRegion; // 채용지역
+	private String openCarnm; // 지원자격(경력)
+	private String openEdunm; // 지원자격(학력)
+	private int openCnt; // 모집인원수
 	private int idx;
-	private String openLogo;   //회사로고
-	
+	private String openLogo; // 회사로고
+
+	private String id;
+
+	// 즐겨찾기필드
+	private String coBookmark;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getCoBookmark() {
+		return coBookmark;
+	}
+
+	public void setCoBookmark(String coBookmark) {
+		this.coBookmark = coBookmark;
+	}
+
 	public String getOpenEdu() {
 		return openEdu;
 	}
-	
+
 	public void setOpenEdu(String openEdu) {
 		this.openEdu = openEdu;
 	}
@@ -57,12 +78,12 @@ public class OpenRecVO {
 		this.openSeqno = openSeqno;
 	}
 
-	public String getOpenCOCL() {
-		return openCOCL;
+	public String getOpenCocl() {
+		return openCocl;
 	}
 
-	public void setOpenCOCL(String openCOCL) {
-		this.openCOCL = openCOCL;
+	public void setOpenCocl(String openCocl) {
+		this.openCocl = openCocl;
 	}
 
 	public String getOpenType() {
@@ -119,10 +140,10 @@ public class OpenRecVO {
 	}
 
 	public void setOpenEdate(String openEdate) {
-		if(openEdate.contains("-")) {
+		if (openEdate.contains("-")) {
 			openEdate = openEdate.substring(2).replace("-", "/");
 			this.openEdate = openEdate;
-		} else {			
+		} else {
 			openEdate = openEdate.replace("/", "-");
 			this.openEdate = "20" + openEdate;
 		}
@@ -183,10 +204,10 @@ public class OpenRecVO {
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "OpenRecVO [openSeqno=" + openSeqno + ", openCOCL=" + openCOCL + ", openType=" + openType + ", openCar="
+		return "OpenRecVO [openSeqno=" + openSeqno + ", openCocl=" + openCocl + ", openType=" + openType + ", openCar="
 				+ openCar + ", openEdu=" + openEdu + ", oepnJobscd=" + openJobscd + ", openConm=" + openConm
 				+ ", openHomepg=" + openHomepg + ", openTitle=" + openTitle + ", openSdate=" + openSdate
 				+ ", openEdate=" + openEdate + ", openAcptpsn=" + openAcptpsn + ", openContent=" + openContent

@@ -21,5 +21,11 @@ public interface OpenRecService {
 	
 	OpenRecVO getOpenRecListByNo(int open_seqNo) throws SQLException;
 	
+	OpenRecVO getOpenRecListByDetail(OpenRecVO openRec) throws SQLException;
+	
 	public int regist(OpenRecVO openRec) throws SQLException;
+	
+	public int modify(OpenRecVO openRec) throws SQLException;
+
+	public void delete(int openSeqno) throws SQLException;
 }

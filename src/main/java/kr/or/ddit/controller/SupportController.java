@@ -58,7 +58,7 @@ public class SupportController {
 	}
 	
 	@RequestMapping("contest/activityRegist")
-	public String activityRegist(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
+	public String activityRegistContest(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
 		String url = "redirect:/support/contest/list";
 		
 		HttpSession session = request.getSession();
@@ -128,6 +128,21 @@ public class SupportController {
 	@GetMapping("mentoring/detail")
 	public String mentroringDetail()throws Exception {
 		String url = "support/mentoring/detail";
+		
+		return url;
+	}
+	
+	@RequestMapping("mentoring/activityRegist")
+	public String activityRegistMentoring(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
+		String url = "redirect:/support/mentoring/list";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		
+		String indId = loginUser.getId();
+		activity.setIndId(indId);
+		
+		activityService.registMentoring(activity);
 		
 		return url;
 	}

@@ -3,13 +3,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Activity-Mapper">
-	<select id="selectActivityList" resultType="activity">
-	/*Activity-Mapper.selectActivityList*/
-		select
-		*
-		from
-		activity
-		where ind_id = #{indId}
+
+	<select id="selectActivityListCon" resultType="activity">
+	/*Activity-Mapper.selectActivityListCon*/
+		select a.*, b.*
+         from activity a, contest b
+        where a.con_no = b.con_no
+          and ind_id= #{indId}
+          and a.con_no is not null
+	</select>
+	
+	<select id="selectActivityListMen" resultType="activity">
+	/*Activity-Mapper.selectActivityListMen*/
+		select a.*, b.*
+         from activity a, mentoring b
+        where a.men_no = b.men_no
+          and ind_id= #{indId}
+          and a.men_no is not null
 	</select>
 	
 	<select id="selectActivityListByConNo" resultType="activity">

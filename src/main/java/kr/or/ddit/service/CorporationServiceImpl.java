@@ -24,13 +24,19 @@ public class CorporationServiceImpl implements CorporationService {
 	}
 
 	@Override
-	public Map<String, Object> getCoInfo(String conm) throws SQLException, Exception {
+	public Map<String, Object> getCoInfo(String open_conm) throws SQLException, Exception {
 		Map<String, Object> coInfoMap = new HashMap<>();
 		
-		CorporationVO coInfo = corporationDAO.selectCoInfoByName(conm);
+		CorporationVO coInfo = corporationDAO.selectCoInfoByName(open_conm);
 		
 		coInfoMap.put("coInfo",coInfo);
 		return coInfoMap;
+	}
+	
+	@Override
+	public CorporationVO getCoInfoVo(String conm) throws SQLException, Exception {
+		CorporationVO coInfo = corporationDAO.selectCoInfoByName(conm);
+		return coInfo;
 	}
 
 }

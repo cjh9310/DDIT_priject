@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="supportList" value="${dataMap.supportList }" />
-<c:set var="contestList" value="${contesttList }" />
-<c:set var="mentoringList" value="${mentoringList }" />
+<c:set var="supportMap" value="${supportMap.supportList }" />
+<c:set var="activityConMap" value="${activityConMap.activityListCon }" />
+<c:set var="activityMenMap" value="${activityMenMap.activityListMen }" />
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
 <c:set var="cri" value="${pageMaker.cri }" />
 
@@ -45,27 +45,27 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty mentoringList }">
+								<c:if test="${empty activityMenMap }">
 									<tr>
 										<td colspan="7"><strong>참여하신 멘토링내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${mentoringList }" var="mentoring">
+								<c:forEach items="${activityMenMap }" var="mentoring">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 									<tr style="cursor: pointer;">
-										<th scope="row">${mentoring.supNo }</th>
-										<td><fmt:formatDate value="${mentoring.supDate }"
+										<th scope="row">${mentoring.actNo }</th>
+										<td><fmt:formatDate value="${mentoring.actDate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td>${mentoring.supTitle }</td>
-										<td><fmt:formatDate value="${mentoring.supDate }"
+										<td>${mentoring.menTitle }</td>
+										<td><fmt:formatDate value="${mentoring.menSdate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td><fmt:formatDate value="${mentoring.supDate }"
+										<td><fmt:formatDate value="${mentoring.menEdate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td><c:if test="${mentoring.supProcess eq 0 }">상담접수중 </c:if>
-											<c:if test="${mentoring.supProcess eq 1 }">상담중 </c:if> <c:if
-												test="${mentoring.supProcess eq 2 }">상담완료 <fmt:formatDate
-													value="${mentoring.supEdate }" pattern="yyyy-MM-dd" />
-											</c:if> <c:if test="${mentoring.supProcess eq 3 }">상담반려 </c:if></td>
-										<td>가산점와야대...</td>
+										<td><c:if test="${mentoring.actStatus eq 0 }">상담접수중 </c:if>
+											<c:if test="${mentoring.actStatus eq 1 }">상담중 </c:if> <c:if
+												test="${mentoring.actStatus eq 2 }">상담완료 <fmt:formatDate
+													value="${mentoring.actDate }" pattern="yyyy-MM-dd" />
+											</c:if> <c:if test="${mentoring.actStatus eq 3 }">상담반려 </c:if></td>
+										<td>${metoring.actScore }</td>
 									</tr>
 								</c:forEach>
 						</table>
@@ -97,28 +97,29 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty activityList }">
+								<c:if test="${empty activityConMap }">
 									<tr>
 										<td colspan="7"><strong>참여하신 공모전내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${activityList }" var="activity">
+								<c:forEach items="${activityConMap }" var="contest">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 									<tr style="cursor: pointer;">
-										<th scope="row">${activity.supNo }</th>
-										<td><fmt:formatDate value="${activity.supDate }"
+										<th scope="row">${contest.actNo }</th>
+										<td><fmt:formatDate value="${contest.actDate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td>${activity.supTitle }</td>
-										<td><fmt:formatDate value="${activity.supDate }"
+										<td>${contest.conTitle }</td>
+										<td><fmt:formatDate value="${contest.conSdate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td><fmt:formatDate value="${activity.supDate }"
+										<td><fmt:formatDate value="${contest.conEdate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td><c:if test="${activity.supProcess eq 0 }">신청완료 </c:if>
-											<c:if test="${activity.supProcess eq 1 }">진 행 중 </c:if> <c:if
-												test="${activity.supProcess eq 2 }">완 료 <fmt:formatDate
-													value="${support.supEdate }" pattern="yyyy-MM-dd" />
-											</c:if> <c:if test="${activity.supProcess eq 3 }">중도포기 </c:if></td>
-										<td>수상내역</td>
-										<td>가산점와야대...</td>
+										<td><c:if test="${activity.actStatus eq 0 }">신청완료 </c:if>
+											<c:if test="${activity.actStatus eq 1 }">진 행 중 </c:if> <c:if
+												test="${activity.actStatus eq 2 }">완 료 <fmt:formatDate
+													value="${support.supDate }" pattern="yyyy-MM-dd" />
+											</c:if> <c:if test="${activity.actStatus eq 3 }">중도포기 </c:if></td>
+										<td>${contest.actPrize }</td>
+										<td>${contest.actScore }</td>
+										
 									</tr>
 								</c:forEach>
 						</table>
@@ -150,11 +151,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty supportList }">
+								<c:if test="${empty supportMap }">
 									<tr>
 										<td colspan="7"><strong>신청하신 상담내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${supportList }" var="support"
+								<c:forEach items="${supportMap }" var="support"
 									varStatus="idxrow">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 

@@ -24,6 +24,12 @@ public class RecruitServiceImpl implements RecruitService {
 		RecruitVO recruit = recruitDAO.selectRecruitByRecWantedno(recWantedno);
 		return recruit;
 	}
+	
+	@Override
+	public RecruitVO getRecruitDetail(RecruitVO recruitParam) throws SQLException {
+		RecruitVO recruit = recruitDAO.selectRecruitByDetail(recruitParam);
+		return recruit;
+	}
 
 	@Override
 	public RecruitVO getRecruitForModify(String recWantedno) throws SQLException {

@@ -18,13 +18,24 @@ public class ActivityServiceImpl implements ActivityService {
 	public void setActivityDAO(ActivityDAO activityDAO) {
 		this.activityDAO = activityDAO;
 	}
+	
+	@Override
+	public Map<String, Object> getActivityListCon(String indId) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		
+		List<ActivityVO> activityListCon = activityDAO.selectActivityListCon(indId);
+		dataMap.put("activityListCon", activityListCon);
+		
+		return dataMap;
+	}
 
 	@Override
-	public Map<String, Object> getActivityList(String indId) throws SQLException {
+	public Map<String, Object> getActivityListMen(String indId) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-				
-		List<ActivityVO> activityList = activityDAO.selectActivityList(indId);
-		dataMap.put("activityList", activityList);
+		
+		List<ActivityVO> activityListMen = activityDAO.selectActivityListMem(indId);
+		dataMap.put("activityListMen", activityListMen);
+		
 		return dataMap;
 	}
 
@@ -106,5 +117,7 @@ public class ActivityServiceImpl implements ActivityService {
 		activityDAO.deleteActivity(actNo);
 
 	}
+
+	
 
 }

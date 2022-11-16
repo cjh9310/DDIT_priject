@@ -200,8 +200,8 @@ function faqModify(){
 									</div>
 									<div class="col-xl-2" style="padding-top: 5px;">
 										<div style="float: right;">
-											<b>추가하기</b> <a href="javascript:void(0);"
-												class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed"
+											<b style="padding-right: 5px;">추가하기</b> <a href="javascript:void(0);"
+												class="btn btn-default btn-sm btn-icon rounded-circle waves-effect waves-themed"
 												data-toggle="modal"
 												data-target=".default-example-modal-right-sm"> <i
 												class="fal fa-plus"></i>
@@ -317,8 +317,8 @@ function faqModify(){
 									</div>
 									<div class="col-xl-2" style="padding-top: 5px;">
 										<div style="float: right;">
-											<b>추가하기</b> <a href="javascript:void(0);"
-												class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed"
+											<b style="padding-right: 5px;">추가하기</b> <a href="javascript:void(0);"
+												class="btn btn-default btn-sm btn-icon rounded-circle waves-effect waves-themed"
 												data-toggle="modal"
 												data-target=".default-example-modal-left-sm"> <i
 												class="fal fa-plus"></i>
@@ -564,7 +564,7 @@ function faqModify(){
 										</div>
 									</div>
 									<div class="panel-content p-0">
-										<form class="needs-validation" novalidate method="post" action="<%=request.getContextPath()%>/admember/mypage/commuity" name="faqForm" id="faqForm">
+										<form class="needs-validation" novalidate method="post" name="faqForm" id="faqForm">
 											<div class="panel-content">
 												<div class="form-row">
 													<div class="col-lg-12 mb-3">

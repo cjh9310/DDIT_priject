@@ -10,6 +10,8 @@ public interface SupportDAO {
 	
 	List<SupportVO> selectSupportCriteria(Criteria cri) throws SQLException;
 	
+	List<SupportVO> selectSupportListByIndId(String indId) throws SQLException;
+	
 	int selectSupportCriteriaTotalCount(Criteria cri) throws SQLException;
 	
 	SupportVO selectSupportBySupNo(int supNo) throws SQLException;

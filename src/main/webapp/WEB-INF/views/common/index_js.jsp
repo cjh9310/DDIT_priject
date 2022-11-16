@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+	pageEncoding="UTF-8"%>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 <script>
 function subMenu_go(mCode){
 	//alert(mCode);	
@@ -70,6 +71,15 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
     }
 });
 </script>
+<script>
+Handlebars.registerHelper("dateCheck", function(element, options) {
+    if(element == '채용시까지') { 
+    	return options.fn(this);
+    } else if(element != '채용시까지') {
+    	return options.inverse(this);
+    }
+});
+</script>
 <script type="text/x-handlebars-template" id="scroll-recruit-list">
 {{#each recruitList}}
 <div class="card border-top-left-radius-0 border-top-right-radius-0">
@@ -82,61 +92,70 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 					<td colspan="1" rowspan="3"
 						style="width: 45px; padding-right: 16px;">
 						<div class='icon-stack display-3 flex-shrink-0'>
-							
-								{{#nullCheck recBookmark}}
-									<button id="{{recWantedno}}" class="bookMark_btn"
-																	style="background-color: transparent; border: 0px;"
-																	type="button" value="{{recBookmark}}">
-																	<i name="recremove"
-																		class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-																</button>
-								{{else}}									
-									<button name="recregist" id="{{recWantedno}}"
-																	class="bookMark_btn"
-																	style="background-color: transparent; border: 0px;"
-																	type="button" value="{{recBookmark}}">
-																	<i name="recregist"
-																		class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-																</button>
-								{{/nullCheck}}
-
+						{{#nullCheck recBookmark}}
+							<button id="{{recWantedno}}" class="bookMark_btn_handlebars"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="{{recBookmark}}">
+															<i name="recremove"
+																class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+						{{else}}									
+							<button name="recregist" id="{{recWantedno}}"
+															class="bookMark_btn_handlebars"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="{{recBookmark}}">
+															<i name="recregist"
+																class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+						{{/nullCheck}}
 						</div>
 					</td>
 				</tr>
 				<tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno={{recWantedno}}'">
-					<td colspan="8" style="width: 1400px;">
-						<h2>{{recWantedtitle}}</h2>
-					</td>
-					<td colspan="4" style="width: 300px;"><h4>
-							등록일&nbsp;&nbsp;:&nbsp;&nbsp;
-
-						</h4></td>
-					<td rowspan="2" style="width: 320px;">
-						<h4>
-							경력사항
-							&nbsp;:&nbsp;&nbsp;{{recEntertpnm}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<h4>
-					</td>
-					<td rowspan="2" style="width: 140px;">
-						<h4>
-							{{recRegion}}
-							<h4>
-					</td>
-				</tr>
+												<td colspan="8" style="width: 1400px;">
+													<h2>{{recWantedtitle}}</h2>
+												</td>
+												<td rowspan="2" style="width: 140px;">
+													<h4>
+														{{recRegion}}
+														<h4>
+												</td>
+												<td rowspan="2" style="width: 320px;">
+													<h4>
+														경력사항
+														&nbsp;:&nbsp;&nbsp;{{recEntertpnm}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<h4>
+												</td>
+												<td colspan="4" rowspan="2" style="width: 300px;"><h4>
+														마감일 &nbsp;:&nbsp;
+															{{recReceiptclosedt}}
+													</h4></td>
+											</tr>
 				<tr>
 					<td colspan="4" style="width: 900px;">
 						<div class="panel-toolbar ml-2">
 							<h4 style="margin: 0px;">{{coName}}</h4>
-							
+							{{#nullCheck coBookmark}}
+												
+																<button class="bookMark_btn_handlebars" id="{{coName}}"
+																	value="{{coBookmark}}" type="button"
+																	style="background-color: transparent; border: 0px;">
+																	<i name="comremove"
+																		class="badge border border-danger text-danger"> 나의
+																		관심 기업 </i>
+																</button>
+					{{else}}	
+																<button class="bookMark_btn_handlebars" id="{{coName}}"
+																	value="{{coBookmark}}" type="button"
+																	style="background-color: transparent; border: 0px;">
+																	<i name="comregist"
+																		class="badge border border-info text-info"> 관심 기업
+																		등록하기 </i>
+																</button>
+									{{/nullCheck}}
 						</div>
 					</td>
 					<td colspan="4" style="width: 300px;"></td>
-					<td>
-						<h4>
-							마감일 &nbsp;:&nbsp;
-							
-						</h4>
-					</td>
 				</tr>
 			</table> <span class="ml-auto" data-toggle="collapse"
 			data-target="#accordion-recruit-{{recWantedno}}">
@@ -157,11 +176,12 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 </script>
 <script type="text/x-handlebars-template" id="scroll-openrec-card">
 {{#each openRecList}}
-<div class="panel-content card-wrapper col-2" style="margin:0px;">
+<div class="panel-content card-wrapper col-2" style="margin: 0px;">
 	<div class="card-deck">
 		<div class="card shadow-0 mb-g shadow-sm-hover">
 			<img src="{{openLogo}}" class="card-img-top" alt="...">
-			<div class="card-body">
+			<div class="card-body" style="cursor: pointer;"
+				onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno={{openSeqno}}&openConm={{openConm}}'">
 				<h5 class="card-title" data-toggle="tooltip"
 					data-placement="top" title=""
 					data-filter-tags="{{openConm}} {{openTitle}}"
@@ -170,8 +190,25 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 					data-placement="top" title=""
 					data-original-title="{{openTitle}}">{{openTitle}}</p>
 			</div>
-			<div class="card-footer">
-				<small class="text-muted">마감일:{{openEdate}}</small>
+			<div class="card-body">
+					{{#nullCheck coBookmark}}
+						<button class="bookMark_btn_handlebars" id="{{openConm}}"
+							value="{{coBookmark}}" type="button"
+							style="background-color: transparent; border: 0px;">
+							<i name="comremove"
+								class="badge border border-danger text-danger"> 나의 관심
+								기업 </i>
+						</button>
+					{{else}}
+						<button class="bookMark_btn_handlebars" id="{{openConm}}"
+							value="{{coBookmark}}" type="button"
+							style="background-color: transparent; border: 0px;">
+							<i name="comregist"
+								class="badge border border-info text-info"> 관심 기업 등록하기
+							</i>
+						</button>
+					{{/nullCheck}}
+				<i class="badge border border-success text-success">{{openSdate}}까지</i>
 			</div>
 		</div>
 	</div>
@@ -470,6 +507,7 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 {{/each}}
 </script>
 <script>
+
 	   /* 채용공고 / 공채정보 / 인재정보 - 리스트 및 카드의 무한 스크롤 로직 */
        $('.dataload-scroll').scroll(function(){
     	   
@@ -483,12 +521,11 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
         	var outerHeight = $(this).outerHeight();
         	var scrollTop = $(this).scrollTop();
 
-			var startNum = childCount + 1;
-			var endNum = childCount + 18;
+			var pageNum = 1 + childCount/18;
 			
 			if((scrollTop+outerHeight) >= (scrollHeight - 100)) {
 				var ajaxOption = {
-					url : '<%=request.getContextPath()%>/' + parameter + '/scrollList.do?startNum=' + startNum + '&endNum=' + endNum,
+					url : '<%=request.getContextPath()%>/' + parameter + '/scrollList.do?pageNum=' + pageNum,
 					async : true,
 					type : "GET",
 					dataType : "json",
@@ -497,8 +534,7 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 				
 				$.ajax(ajaxOption).done(function(data) {
 					console.log("json data : ",data);
-					printDataByScroll(data, $('#accordion-' + parameter), $('#scroll-' + parameter + "-" + viewType));
-					$('.bookMark_btn').click(function() {
+					$('.bookMark_btn_handlebars').click(function() {
 						
 						var button = $(this);
 						var depth = button.children('i').attr('name');
@@ -572,6 +608,7 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
 							});
 							
 					});
+					printDataByScroll(data, $('#accordion-' + parameter), $('#scroll-' + parameter + "-" + viewType));
 				});			
 			}
         });

@@ -1,4 +1,4 @@
-<!DOCTYPE mapper
+ <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -56,5 +56,18 @@
          where mem.id=auth.id
            and mem.id=ind.ind_id
 	</select>
+	
+	<update id="updateMember" parameterType="member">
+	update member 
+		set 
+		email=#{email},name=#{name},tel=#{tel}
+		where id=#{id}
+		
+	update ind_member 
+		set 
+		IND_BIR=#{indBir},IND_GENDER=#{indGender},IND_ADDR=#{indAddr}
+		where IND_ID=#{id} 
+		
+	</update>
 	
 </mapper>

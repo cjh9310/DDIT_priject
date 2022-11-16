@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dto.CorporationVO;
+import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
+import kr.or.ddit.service.CorporationService;
 import kr.or.ddit.service.OpenRecService;
 
 @Controller
@@ -30,12 +34,36 @@ public class OpenrecController {
 	@Autowired
 	private OpenRecService openRecService;
 
+	@Autowired
+	private CorporationService corporationService; 
+	
 	@GetMapping("list")
 	public String openrecList(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "openrec/list";
-		Map<String, Object> dataMap = openRecService.getOpenRecListByScroll(1, 18);
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		cri.setId(id);
+		cri.setPerPageNum(18);
+		Map<String, Object> dataMap = openRecService.getOpenRecList(cri);
 		
 		request.setAttribute("dataMap", dataMap);
+		return url;
+	}
+	
+	@GetMapping("detail")
+	public String openrecDetail(int openSeqno, String openConm, HttpServletRequest request) throws Exception {
+		String url = "openrec/detail";
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		OpenRecVO openRecParam = new OpenRecVO();
+		openRecParam.setId(id);
+		openRecParam.setOpenSeqno(openSeqno);
+		OpenRecVO openRec = openRecService.getOpenRecListByDetail(openRecParam);
+		CorporationVO corporation = corporationService.getCoInfoVo(openConm);
+		request.setAttribute("openRec", openRec);
+		request.setAttribute("corporation", corporation);
 		return url;
 	}
 	
@@ -48,8 +76,14 @@ public class OpenrecController {
 	
 	@RequestMapping(value = "/scrollList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> openRecScrollList(int startNum, int endNum, HttpServletRequest request) throws Exception {
-		Map<String, Object> dataMap = openRecService.getOpenRecListByScroll(startNum, endNum);
+	public Map<String, Object> openRecScrollList(Criteria cri, int pageNum, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		cri.setId(id);
+		cri.setPerPageNum(18);
+		cri.setPage(pageNum);
+		Map<String, Object> dataMap = openRecService.getOpenRecList(cri);
 		return dataMap;
 	}
 

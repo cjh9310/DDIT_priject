@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,18 +19,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dao.SeniorDAO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.FaqVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.NewsVO;
 import kr.or.ddit.dto.PublicWorkVO;
 import kr.or.ddit.dto.ReportListVO;
+import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.FaqService;
 import kr.or.ddit.service.NewsService;
 import kr.or.ddit.service.PublicWorkService;
 import kr.or.ddit.service.ReportService;
+import kr.or.ddit.service.SeniorService;
 import kr.or.ddit.service.SupportService;
 
 @Controller
@@ -51,6 +55,9 @@ public class AdMemeberController {
 	
 	@Autowired
 	private SupportService supportService;
+	
+	@Autowired
+	private SeniorService seniorService;
 
 	@GetMapping("/mypage/info")
 	public String myPageInfo() throws Exception {
@@ -82,6 +89,20 @@ public class AdMemeberController {
 		return supportVO;
 
 	}
+	  @ResponseBody
+	  @RequestMapping(value="/mypage/supportModify", method = RequestMethod.POST)
+	  public String modifySupport(@RequestBody SupportVO support, HttpServletRequest request,
+	  RedirectAttributes rttr) throws Exception { 
+	
+	  String msg ="성공";
+	  
+	  supportService.updateSupportCounselor(support);
+	  
+	 
+	  
+	  return msg;
+	  
+	  }
 	
 	
 	@GetMapping("/mypage/report")
@@ -107,11 +128,35 @@ public class AdMemeberController {
 	}
 	
 	@GetMapping("/mypage/senior")
-	public String myPageSenior() throws Exception {
+	public String myPageSenior(String adId, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/senior";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		
+		adId = loginUser.getId();
+		
+		List<SeniorVO> seniorVO = seniorService.getAllSeniorList();
+		
+		request.setAttribute("SeniorList", seniorVO);
+		
 		return url;
 	}
+	
+	@ResponseBody
+	@PostMapping("/mypage/seniorRegist")
+	public String registSenior(SeniorVO senior, RedirectAttributes rttr) throws Exception {
+		String url = "redirect:/mypage/senior";
 
+		seniorService.regist(senior);
+
+		rttr.addFlashAttribute("from", "regist");
+
+		return url;
+
+	}	
+	
+	
 	@GetMapping("/mypage/community")
 	public String myPageCommunity(String adId, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/community";

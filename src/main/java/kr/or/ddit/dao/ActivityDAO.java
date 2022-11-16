@@ -8,8 +8,11 @@ import kr.or.ddit.dto.ActivityVO;
 
 public interface ActivityDAO {
 	
-	//개인회원 자신이 참여한 프로그램 리스트
-	List<ActivityVO> selectActivityList(String indId) throws SQLException;
+	//개인회원 자신이 참여한 공모전 리스트
+	List<ActivityVO> selectActivityListCon(String indId) throws SQLException;
+	
+	//개인회원 자신이 참여한 공모전 리스트
+	List<ActivityVO> selectActivityListMem(String indId) throws SQLException;
 	
 	//공모전번호로 참가자 리스트 가져오기
 	List<ActivityVO> selectActivityListByConNo(int conNo) throws SQLException;

@@ -51,6 +51,14 @@
    	       <include refid="bookmarkTypeCheck" />
 	</select>
 	
+	<select id="selectCountForIndBookmark" parameterType="bookmark" resultType="int">
+		select count(book_no)
+  		  from bookmark
+ 		 where ind_id=#{indId}
+ 		   and book_type=#{bookType}
+ 		   <include refid="bookmarkTypeCheck" />
+	</select>
+	
 	<update id="insertRecBookmark" parameterType="bookmark">
 		insert into bookmark (book_no, ind_id, rec_wantedno, book_type, co_name)
 		              values (bookmark_seq.nextval, #{indId}, #{recWantedno}, #{bookType}, #{coName})

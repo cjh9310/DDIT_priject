@@ -22,8 +22,9 @@ public class CorporationDAOImpl implements CorporationDAO {
 	}
 
 	@Override
-	public CorporationVO selectCoInfoByName(String coName) throws SQLException {
-		CorporationVO corporation = session.selectOne("Corporation-Mapper.selectCoInfoByName", coName);
+	public CorporationVO selectCoInfoByName(String open_conm) throws SQLException {
+		System.out.println(open_conm);
+		CorporationVO corporation = session.selectOne("Corporation-Mapper.selectCoInfoByName", open_conm);
 		return corporation;
 	}
 	

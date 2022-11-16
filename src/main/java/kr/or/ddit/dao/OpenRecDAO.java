@@ -23,5 +23,11 @@ public interface OpenRecDAO {
 	
 	OpenRecVO selectOpenRecListByNo(int open_seqno) throws SQLException;
 	
+	OpenRecVO selectOpenRecListbyDetail(OpenRecVO openRec) throws SQLException;
+	
 	int insertOpenRec(OpenRecVO openRec) throws SQLException;
+	
+	int modifyOpenRec(OpenRecVO openRec) throws SQLException;
+
+	void delete(int openSeqno) throws SQLException;
 }

@@ -213,4 +213,25 @@
 	}
 </script>
 
+<script>
+$('#indmembermodifyBtn').on('click', function() {
+	var v_indmembermodifyForm = $('#indmembermodifyForm').serialize();
+	console.log(v_indmembermodifyForm);
+	alert("짠");
+	
+	$.ajax({
+		url : 'indmembermodify',
+		type : 'post',
+		data : v_indmembermodifyForm,
+		success : function(data) {
+			alert("수정 완료했습니다.");
+			location.reload();
+		},
+		error : function(xhr,status) {
+			alert("수정 실패 했습니다");
+		}
+	});
+});
+
+</script>
 

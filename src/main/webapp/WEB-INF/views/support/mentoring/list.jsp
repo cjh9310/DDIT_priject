@@ -2,11 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <c:set var="mentoringList" value="${dataMap.mentoringList }" />
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
-<%-- <c:set var="count" value="${dataMap.totalCnt }" /> --%>
+
 
 <style>
 img {
@@ -51,6 +52,8 @@ img {
 				<div class="panel-container show">
 					<div class="row" style="padding: 16px 32px 16px 32px;">
 						<c:forEach items="${mentoringList}" var="mentoring">
+							<c:set var="sDate"><fmt:formatDate value="${mentoring.menSdate}" pattern="yyyyMMdd" /></c:set>
+							<c:set var="eDate"><fmt:formatDate value="${mentoring.menEdate}" pattern="yyyyMMdd" /></c:set>
 							<div class="panel-content col-3">
 								<div class="card-deck">
 									<div class="card">
@@ -65,20 +68,20 @@ img {
 															~ <fmt:formatDate value="${mentoring.menEdate }" pattern="yyyy-MM-dd" />
 												</span>
 												<c:if
-													test="${mentoring.menSdate > now}">
+													test="${sDate > today}">
 													<span class="badge badge-info badge-pill">모집중</span>
 												</c:if>
 												<c:if
-													test="${mentoring.menSdate <= now and mentoring.menEdate >= now }">
+													test="${sDate <= today and eDate >= today }">
 													<span class="badge badge-success badge-pill">멘토링 진행중</span>
 												</c:if>
-												<c:if test="${mentoring.menEdate < now }">
+												<c:if test="${eDate < today }">
 													<span class="badge badge-secondary badge-pill">종료</span>
 												</c:if>
 											</div>
 											<div style="text-align: center; ">
-												<c:if test="${mentoring.menSdate > now }">
-													<button class="btn btn-success btn-pills waves-effect waves-themed" type="button" id="detailBtn" onclick="OpenWindow('detail.do','멘토링 신청화면',990,920)">자세히 보기</button>
+												<c:if test="${sDate > today }">
+													<button class="btn btn-success btn-pills waves-effect waves-themed detailBtn" type="button" id="detailBtn" value="${mentoring.menNo }">자세히 보기</button>
 												</c:if>
 											</div>
 										</div>
@@ -120,3 +123,11 @@ img {
 		</div>
 	</div>
 </main>
+
+<script>
+$('.detailBtn').on('click',function() {
+	var menNo = $(this).val();
+	//alert(menNo);
+	window.open('detail.do?menNo='+menNo, '멘토링 신청화면', 990,920);
+});
+</script>

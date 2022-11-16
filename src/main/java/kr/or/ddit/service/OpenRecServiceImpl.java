@@ -86,9 +86,24 @@ public class OpenRecServiceImpl implements OpenRecService {
 
 	@Override
 	public OpenRecVO getOpenRecListByNo(int open_seqNo) throws SQLException {
-		
 		OpenRecVO openRecDetail = openRecDAO.selectOpenRecListByNo(open_seqNo);
-		
 		return openRecDetail;
+	}
+	
+	@Override
+	public OpenRecVO getOpenRecListByDetail(OpenRecVO openRec) throws SQLException {
+		OpenRecVO openRecDetail = openRecDAO.selectOpenRecListbyDetail(openRec);
+		return openRecDetail;
+	}
+
+	@Override
+	public int modify(OpenRecVO openRec) throws SQLException {
+		int openRecModify = openRecDAO.modifyOpenRec(openRec);
+		return openRecModify;
+	}
+
+	@Override
+	public void delete(int openSeqno) throws SQLException {
+		openRecDAO.delete(openSeqno);
 	}
 }

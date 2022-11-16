@@ -67,6 +67,8 @@
 		p:sqlSession-ref="sqlSession" />
 	<bean id="activityDAO" class="kr.or.ddit.dao.ActivityDAOImpl"
 		p:sqlSession-ref="sqlSession" />
+	<bean id="seniorDAO" class="kr.or.ddit.dao.SeniorDAOImpl"
+		p:sqlSession-ref="sqlSession" />
 
 	<!-- Service -->
 	<bean id="menuService" class="kr.or.ddit.service.MenuServiceImpl"
@@ -143,5 +145,8 @@
 	<bean id="ActivityService"
 		class="kr.or.ddit.service.ActivityServiceImpl"
 		p:activityDAO-ref="activityDAO"/>
+	<bean id="seniorService"
+		class="kr.or.ddit.service.SeniorServiceImpl"
+		p:seniorDAO-ref="seniorDAO"/>
 	
 </beans>

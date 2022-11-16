@@ -32,6 +32,7 @@ public class ContestDAOImpl implements ContestDAO {
 		return contestList;
 	}
 	
+	
 	@Override
 	public List<ContestVO> selectContestCriteria(Criteria cri) throws SQLException {
 		
@@ -80,6 +81,7 @@ public class ContestDAOImpl implements ContestDAO {
 		return seq_num;
 	}
 
+	
 	
 
 }

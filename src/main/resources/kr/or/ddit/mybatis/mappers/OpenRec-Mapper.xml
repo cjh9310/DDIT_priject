@@ -24,14 +24,24 @@
 	</select>
 	
 	<select id = "selectOpenRecList" resultType="openRec">
-		select *
-		from open_rec
+		select a.*,
+               b.co_name as co_bookmark
+          from open_rec a, 
+                          (select co_name
+                             from bookmark
+                            where ind_id=#{id}) b
+         where a.open_conm = b.co_name (+)
+         <include refid="search"/>
 	</select>
 	
 	<select id = "selectSearchOpenRecList" resultType="openRec">
-		select *
-		from open_rec
-		where OPEN_SEQNO is not null
+		select a.*,
+               b.co_name as co_bookmark
+          from open_rec a, 
+                          (select co_name
+                             from bookmark
+                            where ind_id=#{id}) b
+         where a.open_conm = b.co_name (+)
 		<include refid="search"/>
 	</select>
 	
@@ -59,6 +69,16 @@
 		where open_seqno = #{open_seqno}
 	</select>
 	
+	<select id="selectOpenRecListbyDetail" parameterType="openRec" resultType="openRec">
+		select a.*,
+             b.co_name as co_bookmark
+		from open_rec a, (select co_name
+                            from bookmark
+                           where ind_id=#{id}) b
+       where a.open_conm = b.co_name (+)
+         and a.open_seqno = #{openSeqno}
+	</select>
+	
 	<select id="selectOpenApplicants" parameterType="int" resultType="str">
 		select a.ind_id
 		from supply_rec a
@@ -66,9 +86,31 @@
 	</select>
 	
 	<insert id="insertOpenRec" parameterType="openRec">
-		insert into open_Rec values((select max(open_seqno)+1 from open_Rec), #{openCOCL}, #{openType}, #{openCar}, #{oepnJobscd},
+		insert into open_Rec values((select max(open_seqno)+1 from open_Rec), #{openCOCL}, #{openType}, #{openCar}, #{openJobscd},
 		                           #{openTitle}, to_char(sysdate, 'YY/MM/DD'), #{openEdate}, #{openAcptpsn}, #{openContent},
 		                           #{openRegion}, #{openCarnm}, #{openEdunm}, #{openCnt}, #{openConm},
 		                           #{openHomepg}, #{openLogo}, #{openEdu})
 	</insert>
+	
+	<update id="modifyOpenRec" parameterType="openRec">
+		update open_rec
+		set open_title = #{openTitle},
+		    open_jobscd = #{openJobscd},
+		    open_cocl = #{openCOCL},
+		    open_type = #{openType},
+		    open_car  = #{openCar},
+		    open_edu  = #{openEdu},
+		    open_Edate= #{openEdate},
+		    open_carnm= #{openCarnm},
+		    open_edunm= #{openEdunm},
+		    open_content= #{openContent},
+		    open_cnt = #{openCnt},
+		    open_acptpsn = #{openAcptpsn}
+		where open_seqno = #{openSeqno}    
+	</update>
+	
+	<delete id="deleteOpenRec" parameterType="int">
+		delete from open_rec
+		where open_rec.open_seqno = #{openSeqno}
+	</delete>
 </mapper>

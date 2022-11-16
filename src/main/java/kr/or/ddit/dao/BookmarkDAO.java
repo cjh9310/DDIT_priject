@@ -14,6 +14,8 @@ public interface BookmarkDAO {
 	
 	int selectBookNoForRemove(BookmarkVO bookmark) throws SQLException;
 	
+	int selectCountForIndBookmark(BookmarkVO bookmark) throws SQLException;
+	
 	void insertRecBookmark(BookmarkVO bookmark) throws SQLException;
 	
 	void deleteBookmark(int bookNo) throws SQLException;

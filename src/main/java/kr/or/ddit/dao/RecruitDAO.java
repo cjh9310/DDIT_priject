@@ -20,6 +20,7 @@ public interface RecruitDAO {
 
 	RecruitVO selectRecruitByRecWantedno(String recWantedno) throws SQLException;
 	/* RecruitVO selectBoardByImage(String imageFile) throws SQLException; */
+	RecruitVO selectRecruitByDetail(RecruitVO recruitParam) throws SQLException;
 
 	void insertRecruit(RecruitVO recruit) throws SQLException;
 

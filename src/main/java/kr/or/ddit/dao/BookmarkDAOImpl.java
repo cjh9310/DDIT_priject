@@ -34,6 +34,12 @@ public class BookmarkDAOImpl implements BookmarkDAO {
 	}
 	
 	@Override
+	public int selectCountForIndBookmark(BookmarkVO bookmark) throws SQLException {
+		int bookNo = session.selectOne("Bookmark-Mapper.selectCountForIndBookmark", bookmark);
+		return bookNo;
+	}
+	
+	@Override
 	public void insertRecBookmark(BookmarkVO bookmark) throws SQLException {
 		session.update("Bookmark-Mapper.insertRecBookmark", bookmark);
 	}

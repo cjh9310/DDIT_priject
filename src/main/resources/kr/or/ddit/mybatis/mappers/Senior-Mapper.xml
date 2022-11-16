@@ -1,0 +1,42 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="Senior-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'state'.toString()">
+			and snr_state like '%'||#{keyword}||'%'
+		</if>	
+	</sql>
+
+
+	<select id="selectAllSeniorList" resultType="senior">  
+		select *
+	  	  from (      
+			 select SearchAllSenior.*
+		   	   from (
+				   	 select *
+				   	   from recruit_senior
+				      where snr_no is not null
+				      	and snr_adid is not null
+				     <include refid="search" />
+				      order by snr_no desc
+				    ) SearchAllSenior )
+	</select>
+	
+	
+	<select id="selectSeniorListBySnrNo" parameterType="int" resultType="senior">
+		select *
+		  from recruit_senior
+	   	 where snr_no=#{snrNo}		  
+	</select>
+	
+	<insert id="insertSenior" parameterType="senior">
+		insert into recruit_senior
+		values ((select max(snr_no)+1 from recruit_senior),#{snrNo},#{snrType},#{snrTile},#{snrConame},#{snrWorkplace},#{snrTel},#{snrContent} 
+				,TO_CHAR(sysdate, 'YYYY-MM-DD'),#{snrEdate},#{snrVolume},#{snrState},#{snrAdid})                 
+	</insert>
+	
+	
+</mapper>

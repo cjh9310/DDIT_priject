@@ -76,8 +76,7 @@ function openRecDetail(p_seqno) {
 			$('#edunm').val(result.openEdunm);
 			$('#carnm').val(result.openCarnm);
 			$('#content').val(result.openContent);
-			
-			$('#openHomepg').val(result.openHomepg);
+			$('#no').val(result.openSeqno);
 		},
 		error : function() {
 			alert("Error");
@@ -190,7 +189,7 @@ function changeRecBtn() {
 	var now_utc = Date.now() 
 	var timeOff = new Date().getTimezoneOffset()*60000; 
 	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-	document.getElementById("openEdate").setAttribute("min", today);
+	$("#openEdate").attr("min", today);
 </script>
 
 <script>
@@ -360,17 +359,18 @@ function changeRecBtn() {
 						<h2>공고글 상세보기</h2>					
 					</div>
 					<div class="col-md-3" style="padding : 0px; margin-left: 50px;">
-						<button type="button" class="btn btn-warning waves-effect waves-themed">수정</button>
-						<button type="button" class="btn btn-danger waves-effect waves-themed">삭제</button>
+						<button type="button" class="btn btn-warning waves-effect waves-themed" id="openRecModifyBtn">수정</button>
+						<button type="button" class="btn btn-danger waves-effect waves-themed" id="openRecDeleteBtn">삭제</button>
 					</div>
 				</div>
 				<div class="panel-container show" style="overflow: auto;">
 					<!-- 공개 채용 영역 -->
 					<div id="openRec-content" class="panel-content" style="height: 1010px;">
-						<form style="height : 100%;" >
+						<form id="openRecModifyForm" style="height : 100%;" >
 		                    <div class="form-group">
 		                        <label class="form-label" for="simpleinput">제목</label>
-		                        <input type="text" id="title" class="form-control">
+		                        <input type="text" id="title" class="form-control" name="openTitle">
+		                        <input type="text" style="display: none;" id="no" class="form-control" name="openSeqno">
 		                    </div>
 		                    <div class="form-group">
 								<label class="form-label" for="validationCustom03"><b>업종</b>
@@ -390,17 +390,17 @@ function changeRecBtn() {
 							</div>
 		                    <div class="form-group">
 		                        <label class="form-label" for="example-email-2">회사명</label>
-		                        <input type="text" id="company" name="example-email-2" class="form-control" placeholder="" disabled>
+		                        <input type="text" id="company" name="openConm" class="form-control" placeholder="" disabled>
 		                    </div>
 		                    <div class="form-group">
 		                        <label class="form-label" for="example-email-2">회사주소</label>
-		                        <input type="text" id="address" name="example-email-2" class="form-control" placeholder="" disabled>
+		                        <input type="text" id="address" name="openRegion" class="form-control" placeholder="" disabled>
 		                    </div>
 		                    <div class="form-group">
 		                    	<div class="row" style="margin-left: 0px; margin-right: 0px;">
 		                    		<div style = "display: inline; width: 25%; padding: 0px 5px 0px 0px;">
 		                    			<label class="form-label" for="example-select">기업형태</label>
-				                        <select class="form-control" id="coType">
+				                        <select class="form-control" id="coType" name="openCOCL">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">대기업</option>
 				                            <option value="20">공기업</option>
@@ -411,7 +411,7 @@ function changeRecBtn() {
 		                    		</div>
 		                    		<div style = "display: inline; width: 25%; padding: 0px 5px 0px 5px;">
 		                    			<label class="form-label" for="example-select">고용형태</label>
-				                        <select class="form-control" id="empType">
+				                        <select class="form-control" id="empType" name="openType">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">정규직</option>
 				                            <option value="20">정규직 전환형</option>
@@ -423,7 +423,7 @@ function changeRecBtn() {
 		                    		</div>
 		                    		<div style = "display: inline;  width: 25%; padding: 0px 5px 0px 5px;">
 		                    			<label class="form-label" for="example-select">경력형태</label>
-				                        <select class="form-control" id="carType">
+				                        <select class="form-control" id="carType" name="openCar">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">인턴</option>
 				                            <option value="20">신입</option>
@@ -433,7 +433,7 @@ function changeRecBtn() {
 		                    		</div>
 		                    		<div style = "display: inline;  width: 25%; padding: 0px 0px 0px 5px;">
 		                    			<label class="form-label" for="example-select">학력형태</label>
-				                        <select class="form-control" id="eduType">
+				                        <select class="form-control" id="eduType" name="openEdu">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">고등학교졸업</option>
 				                            <option value="20">대졸(2,3년)</option>
@@ -448,43 +448,38 @@ function changeRecBtn() {
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 		                    	<div style="display: inline; width : 50%; padding : 0px 5px 0px 0px;">
 		                    		<label class="form-label" for="example-date">등록일</label>
-		                        	<input class="form-control" id="sdate" type="date" name="date" value="" disabled>
+		                        	<input class="form-control" id="sdate" type="date" name="openSdate" value="" disabled>
 		                    	</div>
 		                    	<div style="display: inline; width : 50%; padding : 0px 0px 0px 5px;">
 		                    		<label class="form-label" for="example-date">마감일</label>
-		                        	<input class="form-control" id="edate" type="date" name="date" value="">
+		                        	<input class="form-control" id="edate" type="date" name="openEdate" value="">
 		                    	</div>
 		                    </div>
 		                    
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 	                    		<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 0px;">
 	                    			<label class="form-label" for="example-select">지원학력(상세)</label>
-			                        <input type="text" id="edunm" class="form-control">
+			                        <input type="text" id="edunm" class="form-control" name="openCarnm">
 	                    		</div>
 	                    		<div style = "display: inline;  width: 50%; padding: 0px 0px 0px 5px;">
 	                    			<label class="form-label" for="example-select">지원경력(상세)</label>
-			                        <input type="text" id="carnm" class="form-control">
+			                        <input type="text" id="carnm" class="form-control" name="openEdunm">
 	                    		</div>
 		                    </div>
 		                    
 		                    <div class="form-group">
 		                        <label class="form-label" for="simpleinput">직무설명</label>
-		                        <textarea style="resize: none;" class="form-control" id="content" rows="15"></textarea>
+		                        <textarea style="resize: none;" class="form-control" id="content" name="openContent" rows="15"></textarea>
 		                    </div>
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 		                    	<div style="display: inline; width : 50%; padding : 0px 5px 0px 0px;">
 		                    		<label class="form-label" for="example-date">모집인원수(명)</label>
-		                        	<input class="form-control" id="cnt" type="text" name="cnt" value="">
+		                        	<input class="form-control" id="cnt" type="text" name="openCnt" value="">
 		                    	</div>
 		                    	<div style="display: inline; width : 50%; padding : 0px 0px 0px 5px;">
 		                    		<label class="form-label" for="example-date">마감일</label>
-		                        	<input class="form-control" id="example-select" type="date" name="date" value="">
+		                        	<input class="form-control" id="example-select" type="date" name="openAcptpsn" value="">
 		                    	</div>
-		                    </div>
-		                    <label class="form-label" for="simpleinput">근무지역(다음 주소 API)</label>
-		                    <div class="form-group">
-		                        <input type="text" style="width: 50%; float : left;  " id="sample6_address" class="form-control" onclick="findAddr()">
-		                        <input type="text" style="width: 49%; float : right; "id="sample6_extraAddress" class="form-control" >
 		                    </div>
 		                </form>
 					</div>
@@ -508,16 +503,16 @@ function changeRecBtn() {
 									<label class="form-label" for="validationCustom03"><b>업종</b>
 										<span class="text-danger">*</span></label> <select
 										class="custom-select" required="" name="recIndtpcdnm">
-										<option value="0">서비스업</option>
-										<option value="1">제조·화학</option>
-										<option value="2">IT·웹·통신</option>
-										<option value="3">은행·금융업</option>
-										<option value="4">미디어·디자인</option>
-										<option value="5">교육업</option>
-										<option value="6">의료·제약·복지</option>
-										<option value="7">판매·유통</option>
-										<option value="8">건설업</option>
-										<option value="9">기관·협회</option>
+										<option value="10">서비스업</option>
+										<option value="20">제조·화학</option>
+										<option value="30">IT·웹·통신</option>
+										<option value="40">은행·금융업</option>
+										<option value="50">미디어·디자인</option>
+										<option value="60">교육업</option>
+										<option value="70">의료·제약·복지</option>
+										<option value="80">판매·유통</option>
+										<option value="90">건설업</option>
+										<option value="99">기관·협회</option>
 									</select>
 									<div class="invalid-feedback">상담유형을 선택해주세요.</div>
 								</div>
@@ -597,7 +592,6 @@ function changeRecBtn() {
 										name="recJobcont"></textarea>
 									<div class="invalid-feedback">담당직무의 내용을 입력해주세요.</div>
 								</div>
-
 							</div>
 						</form>
 					</div>
@@ -928,7 +922,7 @@ function changeRecBtn() {
 			                    	</div>
 			                    </div>
 			                    <div>
-			                    	<input class="form-control" id="" type="date" name="openLogo" value="${coInfo.coLogo}" style="display: none;">
+			                    	<input class="form-control" id="" type="text" name="openLogo" value="${coInfo.coLogo}" style="display: none;">
 			                    </div>
 								<div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
 									<div class="custom-control custom-checkbox">
@@ -977,6 +971,46 @@ $('#openRecBtn').on("click", function() {
 		}
 	});
 });
+</script>
+
+<script>
+$('#openRecModifyBtn').on('click', function() {
+	var openRecModifyForm = $('#openRecModifyForm').serializeObject();
+	
+	$.ajax({
+		url : 'openRecModify',
+		type : 'post',
+		data : openRecModifyForm,
+		success : function(data) {
+			alert("수정 완료했습니다.");
+			location.reload();
+		},
+		error : function(xhr,status) {
+			alert("수정 실패 했습니다");
+		}
+	});
+});
+
+</script>
+
+<script>
+$('#openRecDeleteBtn').on('click', function() {
+	var seqno = $('#no').val();
+	
+	$.ajax({
+		url : 'openRecDelte',
+		type : 'post',
+		data : {'openSeqno' : seqno} ,
+		success : function() {
+			alert("삭제완료되었습니다.");
+			location.reload();
+		},
+		error : function() {
+			alert("삭제실패하였습니다.");
+		}
+	});
+});
+
 </script>
 
 <script>

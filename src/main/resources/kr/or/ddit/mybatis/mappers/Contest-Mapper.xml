@@ -22,6 +22,15 @@
 		order by CON_DATE desc
 	</select>
 	
+	<select id="selectContestListByIndId" resultType="contest">
+		select
+		* 
+		from
+		contest
+		where ind_id = #{indId}
+		order by CON_DATE desc
+	</select>
+	
 	<select id="selectContestListCount" resultType="int">
 		select
 		count(*)

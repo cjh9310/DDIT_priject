@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
@@ -33,20 +35,23 @@
 		                                           	<h3 class="m-0" style="text-align:center;">
 		                                         		멘토링 신청
 		                                    	    </h3>
-		                                    	    <div style="margin-top:50px;">
-			                                    	    <div class="form-group">
-	                                                    	<label class="form-label text-muted" for="indId">이름</label>
-	                                                    	<input type="text" id="indId" name="indId" value="${loginUser.name }" class="form-control" readonly>
+		                                    	    <form id="registForm">
+		                                    	    	<input type="hidden" name="menNo" value="" >
+			                                    	    <div style="margin-top:50px;">
+				                                    	    <div class="form-group">
+		                                                    	<label class="form-label text-muted" for="indId">이름</label>
+		                                                    	<input type="text" id="indId" name="indId" value="${loginUser.name }" class="form-control" readonly>
+		                                                	</div>
+				                                    	    <div class="form-group">
+		                                                    	<label class="form-label" for="actTel">연락처</label>
+		                                                    	<input type="text" id="actTel" name="actTel" class="form-control">
+		                                                	</div>
+				                                    	    <div class="form-group">
+		                                                    	<label class="form-label" for="actEmail">이메일 주소</label>
+		                                                    	<input type="text" id="actEmail" name="actEmail" class="form-control">
+		                                                	</div>
 	                                                	</div>
-			                                    	    <div class="form-group">
-	                                                    	<label class="form-label" for="actTel">연락처</label>
-	                                                    	<input type="text" id="actTel" name="actTel" class="form-control">
-	                                                	</div>
-			                                    	    <div class="form-group">
-	                                                    	<label class="form-label" for="actEmail">이메일 주소</label>
-	                                                    	<input type="text" id="actEmail" name="actEmail" class="form-control">
-	                                                	</div>
-                                                	</div>
+	                                                </form>
 		                                        </div>
 		                                    </div>
 			                             </div>
@@ -57,7 +62,7 @@
                  
              </div>
             <div style="text-align:center; margin:30px; ">
-            	<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="js-bootbox-example-9">신청하기</a>
+            	<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="mentoringReg">신청하기</a>
             </div>
          </div>
      </div>
@@ -101,5 +106,32 @@ $(document).ready(function()
 });
 
 </script>
-   
+
+<script>
+$("#mentoringReg").on("click", function(){
+	
+	var param = $("#registForm").serialize();
+	//alert(param);
+	$.ajax({
+		url : 'activityRegist.do',
+		type : 'POST',
+		data : param,
+		cache : false,
+		async : true,
+		success : function(data){
+			alert("멘토링에 응모되었습니다! 신청하신 공모전은 마이페이지에서 확인가능합니다.");
+			window.open("about:blank", "_self").close();
+			window.opener.location.reload();
+		}
+	});
+});
+</script>
+
+<script>
+ const url = new URL(window.location.href);
+ const urlParams = url.searchParams;
+ var menNo = urlParams.get('menNo');
+ $('input[name=menNo]').attr('value',menNo);
+ 
+</script>   
      

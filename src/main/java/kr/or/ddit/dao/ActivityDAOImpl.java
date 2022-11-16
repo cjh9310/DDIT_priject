@@ -19,8 +19,14 @@ public class ActivityDAOImpl implements ActivityDAO {
 	}
 
 	@Override
-	public List<ActivityVO> selectActivityList(String indId) throws SQLException {
-		List<ActivityVO> activityList = session.selectList("Activity-Mapper.selectActivityList", indId);
+	public List<ActivityVO> selectActivityListCon(String indId) throws SQLException {
+		List<ActivityVO> activityList = session.selectList("Activity-Mapper.selectActivityListCon", indId);
+		return activityList;
+	}
+
+	@Override
+	public List<ActivityVO> selectActivityListMem(String indId) throws SQLException {
+		List<ActivityVO> activityList = session.selectList("Activity-Mapper.selectActivityListMen", indId);
 		return activityList;
 	}
 
@@ -95,5 +101,6 @@ public class ActivityDAOImpl implements ActivityDAO {
 		return seq_num;
 	}
 
+	
 	
 }

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
@@ -40,7 +39,7 @@
 		                                         		공모전 응모
 		                                    	    </h3>
 		                                    	    <form id="registForm">
-		                                    	    	<input type="hidden" name="conNo" >
+		                                    	    	<input type="hidden" name="conNo" value="" >
 			                                    	    <div style="margin-top:50px;">
 				                                    	    <div class="form-group">
 		                                                    	<label class="form-label text-muted" for="indId"> 이름</label>
@@ -104,12 +103,9 @@
     }); 
 }); */
 $("#contestReg").on("click", function(){
-	alert("눌렀어?");
-	
-	
 	
 	var param = $("#registForm").serialize();
-	alert(param);
+	//alert(param);
 	$.ajax({
 		url : 'activityRegist.do',
 		type : 'POST',
@@ -117,11 +113,20 @@ $("#contestReg").on("click", function(){
 		cache : false,
 		async : true,
 		success : function(data){
+			alert("공모전에 응모되었습니다! 신청하신 공모전은 마이페이지에서 확인가능합니다.");
 			window.open("about:blank", "_self").close();
 			window.opener.location.reload();
 		}
 	});
 });
+</script>
+
+<script>
+ const url = new URL(window.location.href);
+ const urlParams = url.searchParams;
+ var conNo = urlParams.get('conNo');
+ $('input[name=conNo]').attr('value',conNo);
+ 
 </script>
    
      

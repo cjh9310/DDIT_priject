@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,13 +25,18 @@ import kr.or.ddit.dto.CertificateVO;
 import kr.or.ddit.dto.EducationVO;
 import kr.or.ddit.dto.LetterVO;
 import kr.or.ddit.dto.MemberVO;
+import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.SupportVO;
+import kr.or.ddit.service.ActivityService;
 import kr.or.ddit.service.AdviceService;
 import kr.or.ddit.service.BookmarkService;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
+import kr.or.ddit.service.ContestService;
 import kr.or.ddit.service.EducationService;
 import kr.or.ddit.service.LetterService;
+import kr.or.ddit.service.MemberService;
+import kr.or.ddit.service.MentoringService;
 import kr.or.ddit.service.RecruitService;
 import kr.or.ddit.service.SupplyRecService;
 import kr.or.ddit.service.SupportService;
@@ -57,6 +64,14 @@ public class IndMemberController {
 	private SupplyRecService supplyRecService;
 	@Autowired
 	private AdviceService adviceService;
+	@Autowired
+	private ActivityService activityService;
+	@Autowired
+	private ContestService contestService;
+	@Autowired
+	private MentoringService mentoringService;
+	@Autowired
+	private MemberService memberService;
 	
 	
 	@GetMapping("mypage/info")
@@ -277,11 +292,17 @@ public class IndMemberController {
 	public String myPageSupport(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "indmember/mypage/support";
 		
-		Map<String, Object> dataMap = null;
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String indId = loginUser.getId();
 		
-		dataMap = supportService.getSupportList(cri);
+		Map<String, Object> supportMap = supportService.getSupportListByindId(indId);
+		Map<String, Object> activityConMap = activityService.getActivityListCon(indId);
+		Map<String, Object> activityMenMap = activityService.getActivityListMen(indId);
 		
-		request.setAttribute("dataMap", dataMap);
+		request.setAttribute("supportMap", supportMap);
+		request.setAttribute("activityConMap", activityConMap);
+		request.setAttribute("activityMenMap", activityMenMap);
 		
 		return url;
 	}
@@ -347,6 +368,27 @@ public class IndMemberController {
 		rttr.addFlashAttribute("from","remove");
 		return url;
 	}
+	//개인회원 수정-----------------------------------------------------------------------------------------------
+	
+	@RequestMapping(value="/mypage/indmembermodify", method=RequestMethod.POST, produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public String indmembermodify(MemberVO member, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+		String url = "redirect:/mypage/info";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		System.out.println(member.getName());
+		System.out.println(member.getTel());
+		System.out.println(member.getEmail());
+		member.setId(id);
+		memberService.modify(member);
+		
+		rttr.addFlashAttribute("from","modify");
+		
+		return url;
+	}
 	
 	//--------------------------------------------------------------------------------------------------
 	@GetMapping("mypage/usage")
@@ -358,7 +400,11 @@ public class IndMemberController {
 	@GetMapping("mypage/report")
 	public String myPageReport() throws Exception {
 		String url = "indmember/mypage/report";
+		
+		
+		
 		return url;
 	}
+	
 
 }

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.MemberVO;
+import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.service.EmpstatsService;
 import kr.or.ddit.service.RecruitService;
@@ -53,7 +54,8 @@ public class RecruitController {
 	@GetMapping("list")
 	public String recruitList(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "recruit/list";
-		
+		cri.setPage(1);
+		cri.setPerPageNum(18);
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
@@ -68,15 +70,23 @@ public class RecruitController {
 	@GetMapping("detail")
 	public String recruitDetail(String recWantedno, HttpServletRequest request) throws Exception {
 		String url = "recruit/detail";
-		RecruitVO recruit = recruitService.getRecruit(recWantedno);
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		RecruitVO recruitParam = new RecruitVO();
+		recruitParam.setIndId(id);
+		recruitParam.setRecWantedno(recWantedno);
+		RecruitVO recruit = recruitService.getRecruitDetail(recruitParam);
 		request.setAttribute("recruit", recruit);
 		return url;
 	}
 	
 	@RequestMapping(value = "/scrollList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> recruitScrollList(int startNum, int endNum, HttpServletRequest request) throws Exception {
-		Map<String, Object> dataMap = recruitService.getRecruitListByScroll(startNum, endNum);
+	public Map<String, Object> recruitScrollList(Criteria cri, int pageNum, HttpServletRequest request) throws Exception {
+		cri.setPerPageNum(18);
+		cri.setPage(pageNum);
+		Map<String, Object> dataMap = recruitService.getRecruitList(cri);
 		return dataMap;
 	}
 

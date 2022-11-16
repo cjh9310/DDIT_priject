@@ -11,6 +11,8 @@ public interface SupportService {
 	//리스트 조회
 	Map<String, Object> getSupportList(Criteria cri) throws SQLException;
 	
+	Map<String, Object> getSupportListByindId(String indId) throws SQLException;
+	
 	//상세보기
 	SupportVO getSupport(int supNo) throws SQLException;
 	
@@ -22,5 +24,7 @@ public interface SupportService {
 	
 	//삭제
 	void remove(int supNo) throws SQLException;
+
+	void updateSupportCounselor(SupportVO support) throws SQLException;
 	
 }

@@ -40,6 +40,16 @@ public class SupportServiceImpl implements SupportService {
 
 		return dataMap;
 	}
+	
+	@Override
+	public Map<String, Object> getSupportListByindId(String indId) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<SupportVO> supportList = supportDAO.selectSupportListByIndId(indId);
+		
+		dataMap.put("supportList", supportList);
+		
+		return dataMap;
+	}
 
 	@Override
 	public SupportVO getSupport(int supNo) throws SQLException {
@@ -66,5 +76,13 @@ public class SupportServiceImpl implements SupportService {
 		supportDAO.deleteSupport(supNo);
 
 	}
+	
+	@Override
+	public void updateSupportCounselor(SupportVO support) throws SQLException {
+		supportDAO.updateSupportCounselor(support);
+		
+	}
+
+	
 
 }

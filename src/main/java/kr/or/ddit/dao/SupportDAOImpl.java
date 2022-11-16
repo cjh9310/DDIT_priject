@@ -29,6 +29,12 @@ public class SupportDAOImpl implements SupportDAO {
 		
 		return supportList;
 	}
+	
+	@Override
+	public List<SupportVO> selectSupportListByIndId(String indId) throws SQLException {
+		List<SupportVO> supportList = session.selectList("Support-Mapper.selectSupportListByIndId", indId);
+		return supportList;
+	}
 
 	@Override
 	public int selectSupportCriteriaTotalCount(Criteria cri) throws SQLException {
@@ -72,6 +78,9 @@ public class SupportDAOImpl implements SupportDAO {
 		int seq_num = session.selectOne("Support-Mapper.selectSupportSeqNext");
 		return seq_num;
 	}
+
+
+	
 
 
 	

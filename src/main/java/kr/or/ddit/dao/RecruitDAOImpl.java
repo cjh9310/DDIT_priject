@@ -52,8 +52,14 @@ public class RecruitDAOImpl implements RecruitDAO {
 
 	@Override
 	public RecruitVO selectRecruitByRecWantedno(String recWantedno) throws SQLException {
-		RecruitVO board = session.selectOne("Recruit-Mapper.selectRecruitByRecWantedno", recWantedno);
-		return board;
+		RecruitVO recruit = session.selectOne("Recruit-Mapper.selectRecruitByRecWantedno", recWantedno);
+		return recruit;
+	}
+	
+	@Override
+	public RecruitVO selectRecruitByDetail(RecruitVO recruitParam) throws SQLException {
+		RecruitVO recruit = session.selectOne("Recruit-Mapper.selectRecruitByDetail", recruitParam);
+		return recruit;
 	}
 
 	@Override

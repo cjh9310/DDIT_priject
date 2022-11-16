@@ -222,9 +222,12 @@
 								<div class="col-4">
 									<a href="javascript:void(0);"
 										class="text-center p-3 d-flex flex-column hover-highlight">
-										<span class="profile-image"
-										style="width:100%; background-size:contain; background-repeat:no-repeat;
-								       background-position:center center; background-image: url('${bookmark.coLogo}');"></span>
+										<span class="profile-image w-100">
+											<img id="image" style="display:block; width:100%; height:auto;"
+												src="${bookmark.coLogo}"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png';"
+												alt="일반채용기업" />
+										</span>
 										<span class="d-block text-truncate text-muted fs-xs mt-1">${bookmark.coName}</span>
 									</a>
 								</div>
@@ -261,7 +264,8 @@
 								<tbody>
 									<c:forEach items="${bookmarkList}" var="bookmark">
 										<c:if test="${bookmark.bookType == 0}">
-											<tr id="1" role="row" class="odd">
+											<tr id="1" role="row" class="odd" style="cursor:pointer;"
+											    onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${bookmark.recWantedno}'">
 												<td class="dtr-control"><span
 													class="badge badge-success badge-pill">채용중</span>
 													${bookmark.recCoName} - ${bookmark.recWantedtitle}</td>

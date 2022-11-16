@@ -9,5 +9,5 @@ public interface CorporationDAO {
 	
 	List<CorporationVO> selectLogoList() throws SQLException;
 	
-	CorporationVO selectCoInfoByName(String coName) throws SQLException;
+	CorporationVO selectCoInfoByName(String open_conm) throws SQLException;
 }

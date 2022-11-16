@@ -200,4 +200,30 @@ public class CoMemeberController {
 		
 		return url;
 	}
+	
+	@RequestMapping(value="/mypage/openRecModify", method=RequestMethod.POST, produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public String openRecModify(OpenRecVO openRec, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+		String url = "redirect:/mypage/recruit";
+		
+		System.out.println(openRec.getOpenSeqno());
+		
+		openRecService.modify(openRec);
+		
+		rttr.addFlashAttribute("from","regist");
+		
+		return url;
+	}
+	
+	@RequestMapping(value="/mypage/openRecDelte", method=RequestMethod.POST)
+	@ResponseBody
+	public String openRecDelte(@RequestParam("openSeqno") int openSeqno) throws Exception {
+		String url = "redirect:/mypage/recruit";
+		
+		System.out.println(openSeqno);
+		
+		openRecService.delete(openSeqno);
+		
+		return url;
+	}
 }

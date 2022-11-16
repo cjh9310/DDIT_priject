@@ -8,7 +8,9 @@ import kr.or.ddit.dto.ActivityVO;
 
 public interface ActivityService {
 	
-	Map<String, Object> getActivityList(String indId) throws SQLException;
+	Map<String, Object> getActivityListCon(String indId) throws SQLException;
+	
+	Map<String, Object> getActivityListMen(String indId) throws SQLException;
 	
 	Map<String, Object> getActivityList(Criteria cri) throws SQLException;
 	

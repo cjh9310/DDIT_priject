@@ -330,22 +330,29 @@
 												<td colspan="8" style="width: 1400px;">
 													<h2>${recruit.recWantedtitle}</h2>
 												</td>
-												<td colspan="4" style="width: 300px;"><h4>
-														등록일&nbsp;&nbsp;:&nbsp;&nbsp;
-														<fmt:formatDate value="${recruit.recRegdt}"
-															pattern="yyyy-MM-dd" />
-													</h4></td>
+												<td rowspan="2" style="width: 140px;">
+													<h4>
+														${recruit.recRegion}
+														<h4>
+												</td>
 												<td rowspan="2" style="width: 320px;">
 													<h4>
 														경력사항
 														&nbsp;:&nbsp;&nbsp;${recruit.recEntertpnm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<h4>
 												</td>
-												<td rowspan="2" style="width: 140px;">
-													<h4>
-														${recruit.recRegion}
-														<h4>
-												</td>
+												<td colspan="4" rowspan="2" style="width: 300px;"><h4>
+														마감일 &nbsp;:&nbsp;
+														<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
+															<fmt:parseDate var="dateString"
+																value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
+															<fmt:formatDate value="${dateString}"
+																pattern="yyyy-MM-dd" />
+														</c:if>
+														<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
+														${recruit.recReceiptclosedt}
+													</c:if>
+													</h4></td>
 											</tr>
 											<tr>
 												<td colspan="4" style="width: 900px;">
@@ -374,20 +381,6 @@
 													</div>
 												</td>
 												<td colspan="4" style="width: 300px;"></td>
-												<td>
-													<h4>
-														마감일 &nbsp;:&nbsp;
-														<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
-															<fmt:parseDate var="dateString"
-																value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
-															<fmt:formatDate value="${dateString}"
-																pattern="yyyy-MM-dd" />
-														</c:if>
-														<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
-														${recruit.recReceiptclosedt}
-													</c:if>
-													</h4>
-												</td>
 											</tr>
 										</table> <span class="ml-auto" data-toggle="collapse"
 										data-target="#accordion-recruit-${recruit.recWantedno}">

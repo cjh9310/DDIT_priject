@@ -8,6 +8,8 @@
 <c:set var="count" value="${dataMap.totalCnt }" />
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
+<%-- <c:set var="sDate"><fmt:formatDate value="${contestList.conSdate}" pattern="yyyy-MM-dd" /></c:set>
+<c:set var="eDate"><fmt:formatDate value="${contestList.conEdate}" pattern="yyyy-MM-dd" /></c:set> --%>
 
 <style>
 .card-img-top {
@@ -48,7 +50,8 @@
 				<div class="panel-container show">
 					<div class="row" style="padding: 16px 32px 16px 32px;">
 						<c:forEach items="${contestList}" var="contest">
-							
+							<c:set var="sDate"><fmt:formatDate value="${contest.conSdate}" pattern="yyyyMMdd" /></c:set>
+							<c:set var="eDate"><fmt:formatDate value="${contest.conEdate}" pattern="yyyyMMdd" /></c:set>
 							<div class="panel-content col-3">
 								<div class="card-deck">
 									<div class="card">
@@ -65,15 +68,17 @@
 												공모기간 : <fmt:formatDate value="${contest.conSdate }" pattern="yyyy-MM-dd" /> 
 														~ <fmt:formatDate value="${contest.conEdate }" pattern="yyyy-MM-dd" />
 												</span>
-												<c:if test="${contest.conSdate <= now and contest.conEdate >= now }">
-													<span class="badge badge-info badge-pill">진행중</span>
-												</c:if>
-												<c:if test="${contest.conEdate < now }">
-													<span class="badge badge-secondary badge-pill">마감</span>
-												</c:if>
+												<c:choose>
+													<c:when test="${sDate <= today and eDate >= today }">
+														<span class="badge badge-info badge-pill">진행중</span>
+													</c:when>
+													<c:when test="${eDate < today  }">
+														<span class="badge badge-secondary badge-pill">마감</span>
+													</c:when>
+												</c:choose>
 											</div>
 											<div style="text-align: center;">
-												<c:if test="${contest.conSdate <= now and contest.conEdate >= now }">
+												<c:if test="${sDate <= today and eDate >= today }">
 													<button class="btn btn-success btn-pills waves-effect waves-themed detailBtn" type="button" id="detailBtn" value="${contest.conNo }">응모하기</button>
 												</c:if>
 											</div>
@@ -139,10 +144,9 @@
 
 <script>
 $('.detailBtn').on('click',function() {
-	alert("아왜안돼");
+	
 	var conNo = $(this).val();
-	alert(conNo);
-	//onclick="OpenWindow('detail.do','공모전 신청화면',990,920)"
+	//alert(conNo);
 	window.open('detail.do?conNo='+conNo, '공모전 신청화면', 990,920);
 });
 </script>

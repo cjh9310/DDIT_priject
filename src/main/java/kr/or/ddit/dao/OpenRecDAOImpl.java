@@ -75,11 +75,28 @@ public class OpenRecDAOImpl implements kr.or.ddit.dao.OpenRecDAO {
 			= session.selectOne("OpenRec-Mapper.selectOpenRecListbyNo", open_seqno);
 		return openRec;
 	}
+	
+	@Override
+	public OpenRecVO selectOpenRecListbyDetail(OpenRecVO openRek) throws SQLException {
+		OpenRecVO openRec = session.selectOne("OpenRec-Mapper.selectOpenRecListbyDetail", openRek);
+		return openRec;
+	}
 
 	@Override
 	public int insertOpenRec(OpenRecVO openRec) throws SQLException {
 		int check = session.insert("OpenRec-Mapper.insertOpenRec", openRec);
 		return check;
+	}
+
+	@Override
+	public int modifyOpenRec(OpenRecVO openRec) throws SQLException {
+		int check = session.update("OpenRec-Mapper.modifyOpenRec", openRec);
+		return check;
+	}
+
+	@Override
+	public void delete(int openSeqno) throws SQLException {
+		session.delete("OpenRec-Mapper.deleteOpenRec", openSeqno);
 	}
 
 	

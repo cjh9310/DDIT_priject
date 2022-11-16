@@ -13,6 +13,15 @@
 		order by sup_Date desc
 	</select>
 	
+	<select id="selectSupportListByIndId" resultType="support">
+		select
+		*
+		from
+		support
+		where ind_id = #{indId}
+		order by sup_Date desc
+	</select>
+	
 	<select id="selectSupportListCount" resultType="int">
 		select
 		count(*)

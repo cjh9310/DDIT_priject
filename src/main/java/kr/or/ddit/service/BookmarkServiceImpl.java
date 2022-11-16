@@ -39,7 +39,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Override
 	public void registRecBookmark(BookmarkVO bookmark) throws SQLException {
-		bookmarkDAO.insertRecBookmark(bookmark);
+		int bookNo = bookmarkDAO.selectCountForIndBookmark(bookmark);
+		if(bookNo == 0) {
+			bookmarkDAO.insertRecBookmark(bookmark);
+		}
 	}
 	
 	@Override

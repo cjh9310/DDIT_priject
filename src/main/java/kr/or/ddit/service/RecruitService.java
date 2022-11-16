@@ -20,6 +20,8 @@ public interface RecruitService {
 	//상세조회
 	RecruitVO getRecruit(String recWantedno)throws SQLException;	
 	
+	RecruitVO getRecruitDetail(RecruitVO recruitParam)throws SQLException;	
+	
 	RecruitVO getRecruitForModify(String recWantedno)throws SQLException;
 	
 	public void regist(RecruitVO recruit) throws Exception;

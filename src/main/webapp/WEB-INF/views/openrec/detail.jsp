@@ -41,38 +41,13 @@ td { height: 80px; }
 <div class="card mb-g">
 	<div class="recruit-head panel-conteiner">
 		<div class="row w-100 p-0 m-0 h-100">
+			<div class="col-xl-1 p-2 m-0 row" style="background-size: cover;">
+				<img src="${openRec.openLogo}" class="card-img-top" alt="..."  style="display: block; height: 100%; width: auto;" />
+			</div>
 			<table>
 				<tr>
-					<td colspan="1" rowspan="3"
-						style="width: 45px; padding-right: 16px;">
-						<div class='icon-stack display-3 flex-shrink-0'
-							style="margin-left: 10px;">
-							<c:choose>
-								<c:when test="${recruit.recBookmark != null}">
-									<button id="${recruit.recWantedno}" class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recremove"
-											class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-								<c:when test="${recruit.recBookmark == null}">
-									<button name="recregist" id="${recruit.recWantedno}"
-										class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recregist"
-											class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-							</c:choose>
-						</div>
-					</h2></td>
-				</tr>
-				<tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}'">
 					<td colspan="8" style="width: 1400px;">
-						<h2 style="margin: 0px;">${recruit.coName}-
-							${recruit.recWantedtitle}</h2>
+						<h2 style="margin:0px 0px 0px 60px;">${openRec.openConm} - ${openRec.openTitle}</h2>
 					</h2></td>
 				</tr>
 			</table>
@@ -101,25 +76,25 @@ td { height: 80px; }
 								<thead class="thead-themed text-center">
 									<tr>
 										<th>기업명</th>
-										<th>업종</th>
 										<th>지역</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td align="center" valign="middle"><h2>${recruit.coName}<c:choose>
-												<c:when test="${recruit.coBookmark != null}">
-													<button class="bookMark_btn" id="${recruit.coName}"
-														value="${recruit.coBookmark}" type="button"
+										<td align="center" valign="middle"><h2>${openRec.openConm}
+											<c:choose>
+												<c:when test="${openRec.coBookmark != null}">
+													<button class="bookMark_btn" id="${openRec.openConm}"
+														value="${openRec.coBookmark}" type="button"
 														style="background-color: transparent; border: 0px;">
 														<i name="comremove"
 															class="badge border border-danger text-danger"> 나의 관심
 															기업 </i>
 													</button>
 												</c:when>
-												<c:when test="${recruit.coBookmark == null}">
-													<button class="bookMark_btn" id="${recruit.coName}"
-														value="${recruit.coBookmark}" type="button"
+												<c:when test="${openRec.coBookmark == null}">
+													<button class="bookMark_btn" id="${openRec.openConm}"
+														value="${openRec.coBookmark}" type="button"
 														style="background-color: transparent; border: 0px;">
 														<i name="comregist"
 															class="badge border border-info text-info"> 관심 기업
@@ -128,8 +103,7 @@ td { height: 80px; }
 												</c:when>
 											</c:choose>
 										</h2></td>
-										<td><h2>${recruit.recIndtpcdnm}</h2></td>
-										<td><h2>${recruit.recRegion}</h2></td>
+										<td><h2>${openRec.openRegion}</h2></td>
 									</tr>
 								</tbody>
 							</table>
@@ -143,19 +117,15 @@ td { height: 80px; }
 										<th>자본금</th>
 										<th>회사규모</th>
 										<th>연매출액</th>
-										<th>근로자수</th>
 										<th>홈페이지</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td><h2>${recruit.recCapitalamt}</h2></td>
-										<td><h2>${recruit.recBusisize}</h2></td>
-										<td><h2>${recruit.recYrsalesamt}</h2></td>
-										<td><h2>${recruit.recPersonal}</h2></td>
-										<td><h2>
-											${recruit.recHomepg}
-										</h2></td>
+										<td><h2>${corporation.coContent}</h2></td>
+										<td><h2>${corporation.coSummary}</h2></td>
+										<td><h2>${corporation.coBusino}</h2></td>
+										<td><h2>${corporation.coHomeurl}</h2></td>
 									</tr>
 								</tbody>
 							</table>
@@ -169,7 +139,7 @@ td { height: 80px; }
 
 <div class="card mb-g p-0">
 	<div class="panel-hdr w-100">
-		<h2>채용공고 상세정보</h2>
+		<h2>공채 상세정보</h2>
 	</div>
 	<div class="card-body p-0">
 		<div class="custom-scroll recruit-content">
@@ -181,23 +151,11 @@ td { height: 80px; }
 							<thead class="thead-themed text-center">
 								<tr>
 									<th style="width:900px;">직무내용</th>
-									<th>등록일</th>
-									<th>마감일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="width:900px;"><h2>${recruit.recJobcont}</h2></td>
-									<td><h2><fmt:formatDate value="${recruit.recRegdt}"
-											pattern="yyyy-MM-dd" /></h2></td>
-									<td><h2><c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
-											<fmt:parseDate var="dateString"
-												value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
-											<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd" />
-										</c:if> <c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
-											${recruit.recReceiptclosedt}
-										</c:if>
-									</h2></td>
+									<td style="width:900px;"><h2>${openRec.openContent}</h2></td>
 								</tr>
 							</tbody>
 						</table>
@@ -211,17 +169,15 @@ td { height: 80px; }
 									<th>경력조건</th>
 									<th>학력</th>
 									<th>모집인원</th>
-									<th>모집집종</th>
 									<th>근무예정지</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><h2>${recruit.recEntertpnm}</h2></td>
-									<td><h2>${recruit.recMinedubg}</h2></td>
-									<td><h2>${recruit.recCollectpsncnt}명</h2></td>
-									<td><h2>${recruit.recJobsnm}</h2></td>
-									<td><h2>${recruit.recRegion}</h2></td>
+									<td><h2>${openRec.openCarnm}</h2></td>
+									<td><h2>${openRec.openEdunm}</h2></td>
+									<td><h2>${openRec.openCnt}명</h2></td>
+									<td><h2>${openRec.openRegion}</h2></td>
 								</tr>
 							</tbody>
 						</table>
@@ -232,16 +188,16 @@ td { height: 80px; }
 						<table class="table table-sm table-bordered table-hover m-0">
 							<thead class="thead-themed text-center">
 								<tr>
-									<th>임금조건</th>
-									<th>근무시간 / 근무형태</th>
-									<th>사회보험</th>
+									<th>채용시작일</th>
+									<th>채용마감일</th>
+									<th>합격자발표일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>${recruit.recSaltpnm}</td>
-									<td>${recruit.recWorkdayworkhrcont}</td>
-									<td>${recruit.recFourins}</td>
+									<td><h2>${openRec.openSdate}</h2></td>
+									<td><h2>${openRec.openEdate}</h2></td>
+									<td><h2>${openRec.openAcptpsn}</h2></td>
 								</tr>
 							</tbody>
 						</table>

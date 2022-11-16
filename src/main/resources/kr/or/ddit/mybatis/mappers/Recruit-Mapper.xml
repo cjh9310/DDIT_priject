@@ -81,11 +81,26 @@
 		order by REC_REGDT desc
 	</select>
 
-	<select id="selectRecruitByRecWantedno" resultType="recruit">
+	<select id="selectRecruitByRecWantedno" parameterType="recruit" resultType="recruit">
 		select *
 		from
 		recruit
-		where REC_WANTEDNO=#{REC_WANTEDNO}
+		where REC_WANTEDNO=#{recWantedno}
+	</select>
+	
+	<select id="selectRecruitByDetail" parameterType="recruit" resultType="recruit">
+		select a.*,
+             b.co_name as co_bookmark,
+             c.rec_wantedno as rec_bookmark
+		from recruit a, (select co_name
+                            from bookmark
+                           where ind_id=#{indId}) b,
+                        (select rec_wantedno
+                           from bookmark
+                          where ind_id=#{indId}) c
+       where a.co_name = b.co_name (+)
+         and a.rec_wantedno = c.rec_wantedno (+)
+         and a.rec_wantedno = #{recWantedno}
 	</select>
 
 	<update id="insertRecruit" parameterType="recruit">

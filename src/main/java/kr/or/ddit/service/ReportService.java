@@ -14,5 +14,7 @@ public interface ReportService {
 	
 	// 상세보기
 	ReportListVO getReport(int falNo) throws SQLException;
+	
+
 
 }

@@ -53,7 +53,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-</style>  
+</style>
 
 <main id="js-page-content" role="main" class="page-content">
 <div class="card mb-g">
@@ -176,22 +176,22 @@
 					</c:forEach>
 				</div>
 			</div> --%>
+			</div>
 		</div>
 	</div>
-	</div>
 </div>
-<div class="alert alert-info fs-lg p-0" style="margin-bottom:24px;">
+<div class="alert alert-info fs-lg p-0" style="margin-bottom: 24px;">
 	<div class="input-group p-0 m-0 rounded-top">
 		<input type="text"
-			   class="form-control form-control-lg shadow-inset-2 m-0"
-			   id="accordion-openrec_filter"
-			   placeholder="원하는 공채 정보를 다양한 키워드로 검색해보세요" />
+			class="form-control form-control-lg shadow-inset-2 m-0"
+			id="accordion-openrec_filter"
+			placeholder="원하는 공채 정보를 다양한 키워드로 검색해보세요" />
 		<div class="input-group-append">
-			<div class="card" style="width:400px;">
-				
-			</div>
-			<button class="btn btn-outline-default waves-effect waves-themed" type="button" id="inputGroupFileAddon04">검색</button>
-			<button class="btn btn-outline-default waves-effect waves-themed" type="button" id="inputGroupFileAddon04">AI에게 기업 추천받기</button>
+			<div class="card" style="width: 400px;"></div>
+			<button class="btn btn-outline-default waves-effect waves-themed"
+				type="button" id="inputGroupFileAddon04">검색</button>
+			<button class="btn btn-outline-default waves-effect waves-themed"
+				type="button" id="inputGroupFileAddon04">AI에게 기업 추천받기</button>
 		</div>
 	</div>
 </div>
@@ -200,13 +200,15 @@
 		<div class="custom-scroll">
 			<div class="dataload-scroll panel-content" id="openrec" name="card"
 				style="margin-right: 10px;">
-				<div class="row" id="accordion-openrec" name="openrec" style="padding:24px;">
+				<div class="row" id="accordion-openrec" name="openrec"
+					style="padding: 24px;">
 					<c:forEach items="${openRecList}" var="openRec">
-						<div class="panel-content card-wrapper col-2" style="margin:0px;">
+						<div class="panel-content card-wrapper col-2" style="margin: 0px;">
 							<div class="card-deck">
 								<div class="card shadow-0 mb-g shadow-sm-hover">
 									<img src="${openRec.openLogo}" class="card-img-top" alt="...">
-									<div class="card-body">
+									<div class="card-body" style="cursor: pointer;"
+										 onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno=${openRec.openSeqno}&openConm=${openRec.openConm}'">
 										<h5 class="card-title" data-toggle="tooltip"
 											data-placement="top" title=""
 											data-filter-tags="${openRec.openConm} ${openRec.openTitle}"
@@ -215,8 +217,28 @@
 											data-placement="top" title=""
 											data-original-title="${openRec.openTitle}">${openRec.openTitle}</p>
 									</div>
-									<div class="card-footer">
-										<small class="text-muted">마감일:${openRec.openEdate}</small>
+									<div class="card-body">
+										<c:choose>
+											<c:when test="${openRec.coBookmark != null}">
+												<button class="bookMark_btn" id="${openRec.openConm}"
+													value="${openRec.coBookmark}" type="button"
+													style="background-color: transparent; border: 0px;">
+													<i name="comremove"
+														class="badge border border-danger text-danger"> 나의 관심
+														기업 </i>
+												</button>
+											</c:when>
+											<c:when test="${openRec.coBookmark == null}">
+												<button class="bookMark_btn" id="${openRec.openConm}"
+													value="${openRec.coBookmark}" type="button"
+													style="background-color: transparent; border: 0px;">
+													<i name="comregist"
+														class="badge border border-info text-info"> 관심 기업 등록하기
+													</i>
+												</button>
+											</c:when>
+										</c:choose>
+										<i class="badge border border-success text-success">${openRec.openSdate}까지</i>
 									</div>
 								</div>
 							</div>

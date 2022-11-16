@@ -90,8 +90,8 @@ function openList(falNo) {
 			<div class="col-6">
 				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" style="height: 1020px;">
-	                        <div class="frame-wrap">
+	                    <div class="panel-content" style="height: 630px;">
+	                        <div class="frame-wrap" style="margin-bottom: 20px;">
 	                        	<div class="row">
 	                        		<div class="col-5">
 	                        			<ul class="nav nav-pills" role="tablist">
@@ -131,10 +131,10 @@ function openList(falNo) {
 	                                <thead class="thead-themed">
 	                                    <tr>
 	                                        <th style="width: 8%;">NO</th>
-	                                        <th style="width: 20">작성자</th>
-	                                        <th style="width: 20">신고 기업명</th>
-	                                        <th style="width: 20">신고 유형</th>
-	                                        <th style="width: 20">발생일</th>
+	                                        <th style="width: 20%">작성자</th>
+	                                        <th style="width: 20%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">신고 기업명</th>
+	                                        <th style="width: 20%">신고 유형</th>
+	                                        <th style="width: 20%">발생일</th>
 	                                        <th style="width: 12%;">처리상태</th>
 	                                    </tr>
 	                                </thead>
@@ -161,7 +161,26 @@ function openList(falNo) {
 							<%@ include file="../../include/pagination.jsp" %>
 	                    </div>
 	                </div>
-	            </div>		
+	            </div>	
+	            
+<!-- --------------------------------------기업검색-------------------------------------------- -->
+				<div id="panel-5" class="panel" style="height: 500px;">
+	                <div class="panel-hdr">
+                   		<ul class="nav nav-pills" role="tablist">
+							<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 기업 검색 </a></li>
+						</ul>
+	                </div>
+	                <div class="panel-container show">
+	                    <div class="panel-content">
+	                        <div class="frame-wrap">
+
+
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>	            
+	            
+	            	
 			</div>
 			
 <!-- -----------------------------------상세 신고 내역 ------------------------------------- -->
@@ -169,7 +188,7 @@ function openList(falNo) {
 			<div class="col-xl-6">
 				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" style="height: 600px;">
+	                    <div class="panel-content" style="height: 1150px;">
 	                        <div class="frame-wrap">
 	                        	<div class="row">
 	                        		<div class="col-12" style="margin-bottom: 18px;">
@@ -267,33 +286,25 @@ function openList(falNo) {
 										</div>
 									</div>														
 											
-									<div class="col-lg-12">
+									<div class="col-lg-12 mt-4">
 										<label class="form-label" for="validationTextarea2"><b>내용</b></label>
 										<textarea class="form-control" id="openContent" style="height: 250px;"
 											name="" disabled></textarea>
 									</div>
+									
+									<div class="col-lg-12 mt-3">
+										<label class="form-label" for="validationCustom02"><b>첨부파일 </b></label> 
+										<div style="border: solid 1px rgb(233,233,233); height: 70px;">
+										
+										</div>
+									</div>									
+									
 								</form>
 	                        </div>
 	                    </div>
 	                </div>
 	            </div>		
-			
-	    
-				<div id="panel-5" class="panel" style="height: 400px;">
-	                <div class="panel-hdr">
-                   		<ul class="nav nav-pills" role="tablist">
-							<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 기업 검색 </a></li>
-						</ul>
-	                </div>
-	                <div class="panel-container show">
-	                    <div class="panel-content">
-	                        <div class="frame-wrap">
-
-
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>		            
+					            
 			</div>
 		</div>
 </main>
