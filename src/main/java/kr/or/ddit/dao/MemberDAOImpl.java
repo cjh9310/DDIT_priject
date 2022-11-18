@@ -35,11 +35,12 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
-	public List<MemberVO> selectTalentListByScroll(int startNum, int endNum) throws SQLException {
+	public List<MemberVO> selectTalentListByScroll(Criteria cri) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		Map<String, Integer> pageMap = new HashMap<String, Integer>();
-		pageMap.put("startNum", startNum);
-		pageMap.put("endNum", endNum);
-		List<MemberVO> talentList = session.selectList("Member-Mapper.selectTalentListByScroll", pageMap);
+		List<MemberVO> talentList = session.selectList("Member-Mapper.selectTalentListByScroll", cri, rowBounds);
 		return talentList;
 	}
 
@@ -62,7 +63,14 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void updateMember(MemberVO member) throws SQLException {
-		session.update("Member-Mapper.updateMember", member);
+//		if(member.getId() != null) {
+//			session.update("Member-Mapper.indUpdateMember1", member);
+//			session.update("Member-Mapper.indUpdateMember2", member);
+//		}
+		if(member.getCoNm() != null) {
+			session.update("Member-Mapper.comUpdateMember1", member);
+		}
+		
 	}
 
 	@Override

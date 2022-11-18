@@ -119,7 +119,7 @@
 			 	conAward:$("input[name=conAward]").val()
 			 	//conEdate:$("input[name=conEdate]").val(),
 			 } */
-			param = param.replaceAll('-','/');
+		 param = param.replaceAll('-','/');
 	 var conNo = ${contest.conNo};
 	 
 	 $.ajax({

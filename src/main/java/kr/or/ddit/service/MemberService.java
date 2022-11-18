@@ -15,7 +15,7 @@ public interface MemberService {
 	void login(String id, String pwd)throws NotFoundIdException,InvalidPasswordException,
 											SQLException;
 	
-	Map<String,Object> getTalentListByScroll(int startNum, int endNum)throws SQLException;
+	Map<String,Object> getTalentListByScroll(Criteria cri)throws SQLException;
 	
 	//회원목록조회
 	Map<String,Object> getMemberList(Criteria cri)throws SQLException;

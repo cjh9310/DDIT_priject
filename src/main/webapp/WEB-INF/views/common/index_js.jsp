@@ -70,6 +70,8 @@ Handlebars.registerHelper("nullCheck", function(element, options) {
     	return options.inverse(this);
     }
 });
+
+
 </script>
 <script>
 Handlebars.registerHelper("dateCheck", function(element, options) {
@@ -116,20 +118,21 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 													<h2>{{recWantedtitle}}</h2>
 												</td>
 												<td rowspan="2" style="width: 140px;">
-													<h4>
+													<i class="badge text-primary"><h4>
 														{{recRegion}}
-														<h4>
+														</h4></i>
 												</td>
 												<td rowspan="2" style="width: 320px;">
-													<h4>
+													<i class="badge text-primary"><h4>
 														경력사항
 														&nbsp;:&nbsp;&nbsp;{{recEntertpnm}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<h4>
+														</h4></i>
 												</td>
-												<td colspan="4" rowspan="2" style="width: 300px;"><h4>
+												<td colspan="4" rowspan="2" style="width: 300px;">
+													<i class="badge text-primary"><h4>
 														마감일 &nbsp;:&nbsp;
 															{{recReceiptclosedt}}
-													</h4></td>
+													</h4></i></td>
 											</tr>
 				<tr>
 					<td colspan="4" style="width: 900px;">
@@ -240,14 +243,31 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 							   onclick="talentDetail('{{id}}')"
 							   data-toggle="modal"
 							   data-target="#default-example-modal-lg-center-{{id}}" >인재 상세보기</a> 
-							<a class="dropdown-item" href="#">채용 지원 권유하기</a>
+							<div class="dropdown-multilevel">
+                             <div class="dropdown-item">채용 권유하기
+							</div>
+							
+							</div>
 						</div>
-						<span class="text-truncate text-truncate-xl">Project
-							Manager</span>
 					</div>
 					<div class='icon-stack display-3 flex-shrink-0 panel-toolbar ml-2'>
-						<i class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-					</div>
+							{{#nullCheck talBookmark}}
+									<button id="{{id}}" class="bookMark_btn_handlebars"
+										style="background-color: transparent; border: 0px;"
+											type="button" value="{{talBookmark}}">
+											<i name="talremove"
+												class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+									</button>
+								{{else}}
+									<button name="talregist" id="{{id}}"
+										class="bookMark_btn_handlebars"
+										style="background-color: transparent; border: 0px;"
+										type="button" value="{{talBookmark}}">
+											<i name="talregist"
+												class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+											</button>
+								{{/nullCheck}}
+						</div>
 					<button
 						class="js-expand-btn btn btn-sm btn-default d-none waves-effect waves-themed"
 						data-toggle="collapse"
@@ -260,17 +280,16 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 			</div>
 			<div class="card-body p-0 collapse show">
 				<div class="p-3">
-					<a href="tel:+13174562564"
+					<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+						class="fas fa-user-graduate text-muted mr-2"></i>최종학력 : {{indFedu}}
+					</a> 
+					<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+						class="fas fa-birthday-cake text-muted mr-2"></i>생년월일 : {{indBir}}
+					</a> 
+					<a href="mailto:{{email}}"
 						class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-						class="fas fa-mobile-alt text-muted mr-2"></i> {{tel}}
-					</a> <a href="mailto:oliver.kopyov@smartadminwebapp.com"
-						class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-						class="fas fa-mouse-pointer text-muted mr-2"></i>
-						{{email}}
+						class="fas fa-mail-bulk text-muted mr-2"></i>이메일 :{{email}}
 					</a>
-					<address class="fs-sm fw-400 mt-4 text-muted">
-						<i class="fas fa-map-pin mr-2"></i> {{indAddr}}
-					</address>
 					<div class="d-flex flex-row">
 						<a href="javascript:void(0);" class="mr-2 fs-xxl"
 							style="color: #3b5998"> <i
@@ -337,9 +356,9 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 															class="thead-themed text-center border fw-700">E-mail</th>
 													</tr>
 													<tr>
-														<td colspan="3" class="border"></td>
-														<td colspan="3" class="border"></td>
-														<td colspan="3" class="border"></td>
+														<td colspan="3" class="border">{{name}}</td>
+														<td colspan="3" class="border">{{indBir}}</td>
+														<td colspan="3" class="border">{{email}}</td>
 													</tr>
 													<tr>
 														<th colspan="3" width="50"
@@ -348,8 +367,8 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 															class="thead-themed text-center border fw-700">주소</td>
 													</tr>
 													<tr>
-														<th class="border"></th>
-														<td class="border" colspan="8"></td>
+														<th class="border">{{tel}}</th>
+														<td class="border" colspan="8">{{indAddr}}</td>
 													</tr>
 												</table>
 												<div
@@ -385,7 +404,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 													class="card-header py-2 d-flex align-items-center flex-wrap">
 													<div class="card-title">경력</div>
 												</div>
-												<table class="table">
+												<table class="table" id="{{id}}-crr-section">
 													<thead>
 														<tr>
 															<th
@@ -405,32 +424,18 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 													<tbody>
 														<c:if test="${empty crrList}">
 															<tr>
-																<td class="text-center fw-700" colspan="6">등록된 경력
-																	정보가 없습니다.<br />
-																<br />회원정보 관리에서 경력을 동록하세요.
+																<td class="text-center fw-700" colspan="6">
+																등록된 경력 정보가 없습니다.
 																</td>
 															</tr>
 														</c:if>
-														<c:forEach items="${crrList}" var="crr">
-															<tr>
-																<td class="text-center">${crr.crrSector}</td>
-																<td class="text-center">${crr.crrCorname}</td>
-																<td class="text-center">${crr.crrJob}</td>
-																<td class="text-center">${crr.crrPosition}</td>
-																<td class="text-center"><fmt:formatDate
-																		value="${crr.crrSdate }" pattern="yyyy-MM-dd" /></td>
-																<td class="text-center"><fmt:formatDate
-																		value="${crr.crrEdate }" pattern="yyyy-MM-dd" /></td>
-															</tr>
-														</c:forEach>
 													</tbody>
 												</table>
-												<c:if test="${not empty cerList}">
-													<div
+												<div
 														class="card-header py-2 d-flex align-items-center flex-wrap">
 														<div class="card-title">자격증</div>
 													</div>
-													<table class="table">
+													<table class="table" id="{{id}}-cer-section">
 														<thead>
 															<tr>
 																<th
@@ -444,26 +449,15 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${cerList}" var="cer">
-																<tr>
-																	<td class="text-center">${cer.cerHost}</td>
-																	<td class="text-center">${cer.cerName}</td>
-																	<td class="text-center"><fmt:formatDate
-																			value="${cer.cerSdate }" pattern="yyyy-MM-dd" /></td>
-																	<td class="text-center"><c:if
-																			test="${cer.cerEdate == null}">
-																			<span class="badge badge-info">유효기간없음</span>
-																		</c:if> <c:if test="${cer.cerEdate < today}">
-																			<span class="badge badge-danger"> 갱신기간만료</span>
-																		</c:if> <c:if test="${cer.cerEdate > today}">
-																			<fmt:formatDate value="${cer.cerEdate }"
-																				pattern="yyyy-MM-dd" />
-																		</c:if></td>
-																</tr>
-															</c:forEach>
+															<c:if test="${empty cerList}">
+															<tr>
+																<td class="text-center fw-700" colspan="6">
+																등록된 자격증 정보가 없습니다.
+																</td>
+															</tr>
+														</c:if>
 														</tbody>
 													</table>
-												</c:if>
 												<div
 													class="card-header py-2 d-flex align-items-center flex-wrap">
 													<div class="card-title">자기소개서</div>
@@ -481,17 +475,17 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 															</td>
 														</tr>
 													</c:if>
-													<c:forEach items="${letterList}" var="let">
-														<c:if test="${let.letIsnav == 1}">
+													<c:forEach items="{{letterList}}" var="let">
+														<c:if test="{{letIsnav == 1}}">
 															<thead>
 																<tr>
 																	<th colspan="6"
-																		class="text-center border-top-0 table-scale-border-bottom fw-700">${let.letTitle}</th>
+																		class="text-center border-top-0 table-scale-border-bottom fw-700">{{letTitle}}</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr>
-																	<td class="text-left">${let.letContent}</td>
+																	<td class="text-left">{{letContent}}</td>
 																</tr>
 															</tbody>
 														</c:if>
@@ -534,18 +528,14 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 				
 				$.ajax(ajaxOption).done(function(data) {
 					console.log("json data : ",data);
+					printDataByScroll(data, $('#accordion-' + parameter), $('#scroll-' + parameter + "-" + viewType));
+					$('.bookMark_btn_handlebars').off("click");
 					$('.bookMark_btn_handlebars').click(function() {
 						
 						var button = $(this);
 						var depth = button.children('i').attr('name');
 						var uri = depth.substr(3,7);
-						var authName = '${loginUser.authName}';
-						var indId = '${loginUser.id}';
-						
-						if(authName != 'ROLE_INDUSER') {
-							alert('관심 등록은 개인회원만 사용 가능한 기능입니다.');
-							return;
-						}
+						var id = '${loginUser.id}';
 						
 						var flag;
 						var url;
@@ -568,6 +558,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 						var recWantedno;
 						var bookType;
 						var coName;
+						var talId;
 						
 						if(depth.substr(0,3) == "rec") {
 							recWantedno = pkey;
@@ -575,12 +566,16 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 						} else if(depth.substr(0,3) == "com") {
 							coName = pkey;
 							bookType = 1;
+						} else if(depth.substr(0,3) == "tal") {
+							talId = pkey;
+							bookType = 2;
 						}
 						
-						data = {indId : indId,
+						data = {id : id,
 								recWantedno : recWantedno,
 								bookType : bookType,
-								coName : coName};
+								coName : coName,
+								talId : talId};
 						
 						var ajaxOption = {
 								url : url,
@@ -592,23 +587,31 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 							};
 					
 							$.ajax(ajaxOption).done(function(data) {
-								if(data=='recBookmarkRegistSuccess' && depth.substr(0,3) == "rec") {
+								
+								console.log('최초 18개에 대한 이벤트---------------------------------');
+								
+								if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "rec") {
 									button.children('i').remove();
 									button.prepend('<i name="recremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='recBookmarkRegistSuccess' && depth.substr(0,3) == "com") {
+								} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "tal") {
+									button.children('i').remove();
+									button.prepend('<i name="talremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
+								} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "com") {
 									button.children('i').remove();
 									button.prepend('<i name="comremove" class="badge border border-danger text-danger">나의 관심 기업</i>');
-								} else if(data=='recBookmarkRemoveSuccess' && depth.substr(0,3) == "rec") {
+								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "rec") {
 									button.children('i').remove();
 									button.prepend('<i name="recregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='recBookmarkRemoveSuccess' && depth.substr(0,3) == "com") {
+								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "tal") {
+									button.children('i').remove();
+									button.prepend('<i name="talregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
+								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "com") {
 									button.children('i').remove();
 									button.prepend('<i name="comregist" class="badge border border-info text-info">관심 기업 등록하기</i>');
 								}
 							});
 							
 					});
-					printDataByScroll(data, $('#accordion-' + parameter), $('#scroll-' + parameter + "-" + viewType));
 				});			
 			}
         });
@@ -671,13 +674,7 @@ $(document).ready(function() {
 		var button = $(this);
 		var depth = button.children('i').attr('name');
 		var uri = depth.substr(3,7);
-		var authName = '${loginUser.authName}';
-		var indId = '${loginUser.id}';
-		
-		if(authName != 'ROLE_INDUSER') {
-			alert('관심 등록은 개인회원만 사용 가능한 기능입니다.');
-			return;
-		}
+		var id = '${loginUser.id}';
 		
 		var flag;
 		var url;
@@ -700,6 +697,7 @@ $(document).ready(function() {
 		var recWantedno;
 		var bookType;
 		var coName;
+		var talId;
 		
 		if(depth.substr(0,3) == "rec") {
 			recWantedno = pkey;
@@ -707,12 +705,16 @@ $(document).ready(function() {
 		} else if(depth.substr(0,3) == "com") {
 			coName = pkey;
 			bookType = 1;
+		} else if(depth.substr(0,3) == "tal") {
+			talId = pkey;
+			bookType = 2;
 		}
 		
-		data = {indId : indId,
+		data = {id : id,
 				recWantedno : recWantedno,
 				bookType : bookType,
-				coName : coName};
+				coName : coName,
+				talId : talId};
 		
 		var ajaxOption = {
 				url : url,
@@ -724,16 +726,25 @@ $(document).ready(function() {
 			};
 	
 			$.ajax(ajaxOption).done(function(data) {
-				if(data=='recBookmarkRegistSuccess' && depth.substr(0,3) == "rec") {
+				
+				console.log('최초 18개에 대한 이벤트---------------------------------');
+				
+				if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "rec") {
 					button.children('i').remove();
 					button.prepend('<i name="recremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-				} else if(data=='recBookmarkRegistSuccess' && depth.substr(0,3) == "com") {
+				} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "tal") {
+					button.children('i').remove();
+					button.prepend('<i name="talremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
+				} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "com") {
 					button.children('i').remove();
 					button.prepend('<i name="comremove" class="badge border border-danger text-danger">나의 관심 기업</i>');
-				} else if(data=='recBookmarkRemoveSuccess' && depth.substr(0,3) == "rec") {
+				} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "rec") {
 					button.children('i').remove();
 					button.prepend('<i name="recregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-				} else if(data=='recBookmarkRemoveSuccess' && depth.substr(0,3) == "com") {
+				} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "tal") {
+					button.children('i').remove();
+					button.prepend('<i name="talregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
+				} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "com") {
 					button.children('i').remove();
 					button.prepend('<i name="comregist" class="badge border border-info text-info">관심 기업 등록하기</i>');
 				}

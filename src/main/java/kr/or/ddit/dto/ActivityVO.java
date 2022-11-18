@@ -26,6 +26,9 @@ public class ActivityVO {
 	private String menTitle;//재목
 	private int menProgress;//진행률
 	
+	//회원명
+	private String name;
+	
 	public int getActNo() {
 		return actNo;
 	}
@@ -128,14 +131,22 @@ public class ActivityVO {
 	public void setMenProgress(int menProgress) {
 		this.menProgress = menProgress;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	@Override
 	public String toString() {
 		return "ActivityVO [actNo=" + actNo + ", indId=" + indId + ", conNo=" + conNo + ", menNo=" + menNo
 				+ ", actStatus=" + actStatus + ", actPrize=" + actPrize + ", actScore=" + actScore + ", actTel="
 				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", conSdate=" + conSdate + ", conEdate="
 				+ conEdate + ", conTitle=" + conTitle + ", menSdate=" + menSdate + ", menEdate=" + menEdate
-				+ ", menTitle=" + menTitle + ", menProgress=" + menProgress + "]";
+				+ ", menTitle=" + menTitle + ", menProgress=" + menProgress + ", name=" + name + "]";
 	}
+	
+	
 	
 	
 	

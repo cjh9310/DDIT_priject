@@ -2,6 +2,7 @@ package kr.or.ddit.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.ReportVO;
@@ -9,7 +10,7 @@ import kr.or.ddit.dto.ReportVO;
 public interface FalseReportService {
 	
 	// 전체보기
-	List<FalseReportVO> getAllFalseReportList(String indId)throws SQLException;
+	Map<String, Object> getAllFalseReportList(String indId)throws SQLException;
 	
 	// 상세보기
 	FalseReportVO getFalseReport(int falNo)throws SQLException;

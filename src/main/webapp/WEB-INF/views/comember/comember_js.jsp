@@ -9,7 +9,7 @@
 		
 		if(check_password == user_password) {
 			var ajaxOption = {
-				url : '<%=request.getContextPath()%>/indmember/mypage/info.do',
+				url : '<%=request.getContextPath()%>/comember/mypage/info.do',
 				async : true,
 				type : "GET",
 				dataType : "html",
@@ -28,7 +28,7 @@
 <script>
 	function nonCheck_reload() {
 		var ajaxOption = {
-			url : '<%=request.getContextPath()%>/indmember/mypage/info.do',
+			url : '<%=request.getContextPath()%>/comember/mypage/info.do',
 			async : true,
 			type : "GET",
 			dataType : "html",
@@ -47,7 +47,7 @@
 		var selector = '#' + parameter.substr(0,3) + 'Manage';
 	
 		var ajaxOption = {
-				url : '<%=request.getContextPath()%>/indmember/mypage/manage.do?parameter=' + parameter,
+				url : '<%=request.getContextPath()%>/comember/mypage/manage.do?parameter=' + parameter,
 				async : true,
 				type : "GET",
 				dataType : "html",
@@ -66,7 +66,7 @@
 		var selector = '#' + parameter.substr(0,3) + 'Form_section';
 		
 		var ajaxOption = {
-				url : '<%=request.getContextPath()%>/indmember/mypage/registForm.do?parameter=' + parameter,
+				url : '<%=request.getContextPath()%>/comember/mypage/registForm.do?parameter=' + parameter,
 				async : true,
 				type : "GET",
 				dataType : "html",
@@ -98,7 +98,7 @@
 			/* 날짜 형식 포맷 */
 			$.ajax({
 				type : "post",
-				url : "<%=request.getContextPath()%>/indmember/mypage/regist.do",
+				url : "<%=request.getContextPath()%>/comember/mypage/regist.do",
 				data : form,
 				dataType : 'text',
 				success : function() {
@@ -117,7 +117,7 @@
 			var selector = '#' + parameter.substr(0,3) + 'Form_section';
 			
 			var ajaxOption = {
-					url : '<%=request.getContextPath()%>/indmember/mypage/modifyForm.do?parameter=' + parameter + '&pkey=' + pkey,
+					url : '<%=request.getContextPath()%>/comember/mypage/modifyForm.do?parameter=' + parameter + '&pkey=' + pkey,
 					async : true,
 					type : "GET",
 					dataType : "html",
@@ -138,7 +138,7 @@
 			
 			$.ajax({
 				type : "get",
-				url : "<%=request.getContextPath()%>/indmember/mypage/remove.do?pkey=" + pkey + "&parameter=" + parameter,
+				url : "<%=request.getContextPath()%>/comember/mypage/remove.do?pkey=" + pkey + "&parameter=" + parameter,
 				success : function() {
 					manage_rendering(parameter); /* education일 경우 -> eduManage */
 				},
@@ -166,7 +166,7 @@
 		
 		$.ajax({
 			type : "post",
-			url : "<%=request.getContextPath()%>/indmember/mypage/modify.do",
+			url : "<%=request.getContextPath()%>/comember/mypage/modify.do",
 			data : form,
 			dataType : 'text',
 			success : function() {
@@ -178,4 +178,63 @@
 		});  
 	}
 </script>
+<!-- 기업정보 수정 -->
+<script>
+$('#comembermodifyBtn').on('click', function() {
+	var v_comembermodifyForm = $('#comembermodifyForm').serialize();
+	/* console.log(v_comembermodifyForm); */
+	
+	$.ajax({
+		url : 'comembermodify',
+		type : 'post',
+		data : v_comembermodifyForm,
+		success : function(data) {
+			nonCheck_reload();
+		}, 
+		error : function(xhr,status) {
+			
+		}
+	});
+});
 
+</script>
+<script>
+	function licenceFileUpload() {
+		var formData = new FormData($("#licenceFileForm")[0]);
+		console.log($('#licenceFile')[0].files[0]);
+		formData.append("file",$('#licenceFile')[0].files[0]);
+		
+		$.ajax({
+			type : "post",
+			url : '<%=request.getContextPath()%>/comember/mypage/licenceFileUpload',
+			data : formData,
+			contentType : false,
+		    processData : false,
+			dataType : 'text',
+			success : function(data) {
+				ai12_submit();
+			},
+			error : function(request, status, error) {
+				console.log(request, status, error);
+			}
+		});
+	}
+</script>
+<script>
+	function ai12_submit() {
+		var id = '${loginUser.id}';
+		
+		$.ajax({
+			type : "get",
+			url : "http://127.0.0.1:5000/licence?id="+id,
+			dataType : 'text',
+			success : function(data) {
+				nonCheck_reload();
+				console.log(data);
+			},
+			error : function(request, status, error) {
+				console.log(request, status, error);
+			}
+		});
+	}
+</script>

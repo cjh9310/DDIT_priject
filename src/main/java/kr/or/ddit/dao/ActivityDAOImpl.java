@@ -38,7 +38,7 @@ public class ActivityDAOImpl implements ActivityDAO {
 
 	@Override
 	public List<ActivityVO> selectActivityListByMenNo(int menNo) throws SQLException {
-		List<ActivityVO> activityList = session.selectList("Activity-Mapper.selectActivityListBymenNo", menNo);
+		List<ActivityVO> activityList = session.selectList("Activity-Mapper.selectActivityListByMenNo", menNo);
 		return activityList;
 	}
 

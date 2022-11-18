@@ -23,15 +23,15 @@
 			<div class="panel-content">
 				<div class="form-group">
 					<label class="form-label" for="simpleinput">NAME</label> <input
-						type="text" class="form-control"name="name"/>
+						type="text" class="form-control"name="name" value="${loginUser.name }" readonly/>
 				</div>
 				<div class="form-group">
 					<label class="form-label" for="example-email-2">BIRTH</label> <input
-						type="text" name="indBir" class="form-control" />
+						type="text" name="indBir" class="form-control" value="${loginUser.indBir}"/>
 				</div>
 				<div class="form-group">
 					<label class="form-label" for="example-password">GENDER</label> <input
-						type="text" name="indGender"class="form-control" placeholder="M 혹은 W만 작성하세요"/>
+						type="text" name="indGender"class="form-control" value="${loginUser.indGender }" readonly/>
 				</div>
 			</div>
 		</div>
@@ -39,16 +39,16 @@
 			<div class="panel-content">
 				<div class="form-group">
 					<label class="form-label" for="simpleinput">ADDRESS</label> <input
-						type="text" class="form-control" name="indAddr"/>
+						type="text" class="form-control" name="indAddr" value="${loginUser.indAddr }" />
 				</div>
 				<div class="form-group">
 					<label class="form-label" for="example-password">TEL</label> <input
-						type="text"name="tel"class="form-control"/>
+						type="text"name="tel"class="form-control" value="${loginUser.tel }" placeholder="${loginUser.tel }"/>
 				</div>
 				<div class="form-group">
 					<label class="form-label" for="example-email-2">E-MAIL</label> <input
 						type="email" name="email"
-						class="form-control" placeholder="Email"/>
+						class="form-control" value="${loginUser.email }"/>
 				</div>
 				
 			</div>

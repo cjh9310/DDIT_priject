@@ -1,7 +1,9 @@
 package kr.or.ddit.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.dao.FalseReportDAO;
 import kr.or.ddit.dto.FalseReportVO;
@@ -15,9 +17,16 @@ public class FalseReportServiceImpl implements FalseReportService {
 	}
 
 	@Override
-	public List<FalseReportVO> getAllFalseReportList(String indId) throws SQLException {
+	public Map<String, Object> getAllFalseReportList(String indId) throws SQLException {
+		Map<String, Object> dataMap = null;
+		
 		List<FalseReportVO> falseReport = falseReportDAO.selectAllFalseReportList(indId);
-		return falseReport;
+		
+		dataMap = new HashMap<String, Object>();
+		
+		dataMap.put("falseReportList",falseReport);
+		
+		return dataMap;
 	}
 
 	@Override

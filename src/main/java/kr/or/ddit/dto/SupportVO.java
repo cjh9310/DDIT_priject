@@ -13,7 +13,15 @@ public class SupportVO {
 	private int supProcess; //상담진행과정(0:상담신청접수, 1:상담중, 2:상담종료, 3:반려)
 	private String supPdate; //상담희망일자
 	private Date supEdate; //상담완료일자
+	private String counselorName; //상담사이름
 	
+	
+	public String getCounselorName() {
+		return counselorName;
+	}
+	public void setCounselorName(String counselorName) {
+		this.counselorName = counselorName;
+	}
 	public int getSupNo() {
 		return supNo;
 	}
@@ -68,12 +76,14 @@ public class SupportVO {
 	public void setSupEdate(Date supEdate) {
 		this.supEdate = supEdate;
 	}
+	
 	@Override
 	public String toString() {
 		return "SupportVO [supNo=" + supNo + ", indId=" + indId + ", supType=" + supType + ", supTitle=" + supTitle
 				+ ", supContent=" + supContent + ", supDate=" + supDate + ", supProcess=" + supProcess + ", supPdate="
-				+ supPdate + ", supEdate=" + supEdate + "]";
+				+ supPdate + ", supEdate=" + supEdate + ", counselorName=" + counselorName + "]";
 	}
+	
 	
 	
 	

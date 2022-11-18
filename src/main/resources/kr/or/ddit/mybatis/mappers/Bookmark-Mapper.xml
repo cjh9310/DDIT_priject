@@ -11,6 +11,9 @@
 		<if test="bookType == 1">
 			and co_name=#{coName}
 		</if> 
+		<if test="bookType == 2">
+			and tal_id=#{talId}
+		</if> 
 	</sql>
 	
 	<select id="selectBookmarkByRecno" parameterType="str" resultType="bookmark">
@@ -23,7 +26,7 @@
 			    d.name as "name"
 		   from bookmark a, recruit b, ind_member c, member d
 		  where a.rec_wantedno = b.rec_wantedno(+)
-			and a.ind_id = c.ind_id(+)
+			and a.id = c.ind_id(+)
 			and c.ind_id = d.id(+)
 			and a.REC_WANTEDNO =#{recWantedno}
 	</select>
@@ -40,13 +43,13 @@
    		   from bookmark a, corporation b, recruit c
   		  where a.co_name = b.co_name(+)
     		and a.rec_wantedno = c.rec_wantedno(+)
-    		and a.ind_id = #{id}
+    		and a.id = #{id}
 	</select>
 	
 	<select id="selectBookNoForRemove" parameterType="bookmark" resultType="int">
 		select book_no
   		  from bookmark
- 		 where ind_id=#{indId}
+ 		 where id=#{id}
    	       and book_type=#{bookType}
    	       <include refid="bookmarkTypeCheck" />
 	</select>
@@ -54,14 +57,14 @@
 	<select id="selectCountForIndBookmark" parameterType="bookmark" resultType="int">
 		select count(book_no)
   		  from bookmark
- 		 where ind_id=#{indId}
+ 		 where id=#{id}
  		   and book_type=#{bookType}
  		   <include refid="bookmarkTypeCheck" />
 	</select>
 	
 	<update id="insertRecBookmark" parameterType="bookmark">
-		insert into bookmark (book_no, ind_id, rec_wantedno, book_type, co_name)
-		              values (bookmark_seq.nextval, #{indId}, #{recWantedno}, #{bookType}, #{coName})
+		insert into bookmark (book_no, id, tal_id, rec_wantedno, book_type, co_name)
+		              values (bookmark_seq.nextval, #{id}, #{talId}, #{recWantedno}, #{bookType}, #{coName})
 	</update>
 	
 	<update id="deleteBookmark" parameterType="int">

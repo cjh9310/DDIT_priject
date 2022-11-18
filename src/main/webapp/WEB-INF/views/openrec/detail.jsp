@@ -125,7 +125,12 @@ td { height: 80px; }
 										<td><h2>${corporation.coContent}</h2></td>
 										<td><h2>${corporation.coSummary}</h2></td>
 										<td><h2>${corporation.coBusino}</h2></td>
-										<td><h2>${corporation.coHomeurl}</h2></td>
+										<td><h2>
+											<a href="${corporation.coHomeurl}" target="_blank">
+												<i class="badge border border-success text-success"> 
+													${openRec.openConm} 홈페이지 방문하기</i>
+											</a>
+										</h2></td>
 									</tr>
 								</tbody>
 							</table>

@@ -96,9 +96,8 @@ public class AdMemeberController {
 	
 	  String msg ="성공";
 	  
-	  supportService.updateSupportCounselor(support);
 	  
-	 
+	  supportService.updateSupportCounselor(support);
 	  
 	  return msg;
 	  
@@ -155,7 +154,17 @@ public class AdMemeberController {
 		return url;
 
 	}	
-	
+
+	@ResponseBody
+	@RequestMapping(value="/mypage/seniorDetail", method = RequestMethod.POST)
+	public SeniorVO DetailSenior(@RequestParam("snrNo") int snrNo,  Model model) throws Exception {
+		SeniorVO seniorVO = seniorService.getSenior(snrNo);
+		
+		model.addAttribute("seniorDetail", seniorVO);
+		
+		return seniorVO;
+
+	}
 	
 	@GetMapping("/mypage/community")
 	public String myPageCommunity(String adId, HttpServletRequest request) throws Exception {
@@ -180,7 +189,7 @@ public class AdMemeberController {
 	@RequestMapping(value = "/mypage/communityPubDetail", method = RequestMethod.POST)
 	public @ResponseBody PublicWorkVO detailPubwork(@RequestParam("pubNo") int pubNo, Model model) throws Exception {
 		PublicWorkVO publicWokrVO = publicWorkService.getPublicWork(pubNo);
-
+		
 		model.addAttribute("openPubDetail", publicWokrVO);
 
 		return publicWokrVO;
@@ -335,7 +344,7 @@ public class AdMemeberController {
 	  }
 	 
 	@PostMapping("/mypage/newsRemove")
-
+	
 	@ResponseBody
 	public String removeNews(int newsNo, RedirectAttributes rttr) throws Exception {
 
@@ -348,6 +357,7 @@ public class AdMemeberController {
 		return url;
 	}
 	
+}
 	
 
-}
+

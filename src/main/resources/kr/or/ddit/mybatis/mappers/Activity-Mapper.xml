@@ -8,8 +8,8 @@
 	/*Activity-Mapper.selectActivityListCon*/
 		select a.*, b.*
          from activity a, contest b
-        where a.con_no = b.con_no
-          and ind_id= #{indId}
+        where a.con_no=b.con_no
+          and ind_id=#{indId}
           and a.con_no is not null
 	</select>
 	
@@ -17,27 +17,27 @@
 	/*Activity-Mapper.selectActivityListMen*/
 		select a.*, b.*
          from activity a, mentoring b
-        where a.men_no = b.men_no
-          and ind_id= #{indId}
+        where a.men_no=b.men_no
+          and ind_id=#{indId}
           and a.men_no is not null
 	</select>
 	
 	<select id="selectActivityListByConNo" resultType="activity">
 	/*Activity-Mapper.selectActivityListByConNo*/
-		select
-		*
-		from
-		activity
-		where con_no = #{conNo}
+	   select a.*, b.name, c.con_title
+		 from activity a, member b, contest c
+		where a.ind_id = b.id
+          and a.con_no = c.con_no
+          and a.con_no = #{conNo}
 	</select>
 	
 	<select id="selectActivityListByMenNo" resultType="activity">
 	/*Activity-Mapper.selectActivityListByMenNo*/
-		select
-		*
-		from
-		activity
-		where men_no = #{menNo}
+		select a.*, b.name, c.men_title
+          from activity a, member b, mentoring c
+         where a.ind_id = b.id
+           and a.men_no = c.men_no
+           and a.men_no = #{menNo}
 	</select>
 	
 	<select id="selectActivityListCount" resultType="int">

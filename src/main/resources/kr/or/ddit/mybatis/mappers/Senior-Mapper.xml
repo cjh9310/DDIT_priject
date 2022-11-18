@@ -34,7 +34,7 @@
 	
 	<insert id="insertSenior" parameterType="senior">
 		insert into recruit_senior
-		values ((select max(snr_no)+1 from recruit_senior),#{snrNo},#{snrType},#{snrTile},#{snrConame},#{snrWorkplace},#{snrTel},#{snrContent} 
+		values ((select max(snr_no)+1 from recruit_senior),#{snrType},#{snrTitle},#{snrConame},#{snrWorkplace},#{snrTel},#{snrContent} 
 				,TO_CHAR(sysdate, 'YYYY-MM-DD'),#{snrEdate},#{snrVolume},#{snrState},#{snrAdid})                 
 	</insert>
 	

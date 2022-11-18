@@ -114,13 +114,27 @@
 </main>
 <script>
 $('#deleteBtn').on('click',()=>{
-	alert("누름");
-	
+	//alert("누름");
 	var conNo = ${contest.conNo};
-	location.href = "contestRemove.do?conNo=" + conNo;
-	alert("삭제완료");
-	window.open("about:blank", "_self").close();
-	window.opener.location.reload();
+	Swal.fire({
+                icon: 'warning',
+				title: "프로그램을 삭제하시겠습니까?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonText: "OK"
+    }).then(function(result){
+		
+		location.href = "contestRemove.do?conNo=" + conNo;
+		
+		Swal.fire({
+				icon: 'success',
+				title: '프로그램이 삭제되었습니다.',
+				showConfirmButton: false,
+				timer: 1500
+		})
+		window.open("about:blank", "_self").close();
+		window.opener.location.reload();
+    	}
 });
 </script>
 

@@ -11,7 +11,7 @@
 
 .tab-content {
 	border-top: 1px solid rgb(233,233,233);
-	height: 300px;
+	height: 700px;
 	overflow: auto;
 	position: relative;
 }
@@ -82,29 +82,50 @@
 </script>
 
 
+
 <script>
 
-function openList(falNo) {
-	console.log(falNo)
-	$.ajax({
-		url : 'reportDetail',
+function openList(snrNo) {
+	console.log(snrNo)
+	    $.ajax({
+		url : 'seniorDetail',
 		method : 'POST',
-		data : {'falNo' : falNo},
+		data : {'snrNo' : snrNo},
 		success : function(result) {
 			console.log(result);
-			$('input[id=openTitle]').val(result.falTitle);
-			$('input[id=openIndId]').val(result.indId);
-			$('input[id=openCoName]').val(result.coName);
-			$('input[id=openCategory]').val(result.falCategory);
-			$('input[id=openCategoryDetail]').val(result.falCategorydetail);
-			$('input[id=openOdate]').val(result.falOdate);
-			$('input[id=openSdate]').val(result.falSdate);
-			$('#openContent').val(result.falContent);
+ 			$('input[id=registsnrAdId]').val(result.snrAdid);
+			$('input[id=registWorkplace]').val(result.snrWorkplace);
+			$('#inputRegistVolume').val(result.snrVolume);
+			$('input[id=registSdate]').val(result.snrSdate);
+			$('input[id=registEdate]').val(result.snrEdate);
+			$('input[id=registConame]').val(result.snrConame);
+			$('input[id=registTel]').val(result.snrTel);
+			$('input[id=registTitle]').val(result.snrTitle);
+			$('#registContent').val(result.snrContent); 
+			if (result.snrType == "시니어 인턴십") {
+				$('#inputRegistType').val(1); 
+			} else if (result.snrType == "사회서비스형") {
+				$('#inputRegistType').val(2); 
+			} else if (result.snrType == "시장형") {
+				$('#inputRegistType').val(3);
+			} else if (result.snrType == "공익활동") {
+				$('#inputRegistType').val(4);
+			}
+			
+			if (result.snrWorkplace == "대전광역시 대덕구") {
+				$('#inputRegistWorkplace').val(1);
+			} else if (result.snrWorkplace == "대전광역시 동구") {
+				$('#inputRegistWorkplace').val(2);
+			} else if (result.snrWorkplace == "대전광역시 서구") {
+				$('#inputRegistWorkplace').val(3);
+			} else if (result.snrWorkplace == "대전광역시 유성구") {
+				$('#inputRegistWorkplace').val(4);
+			}else if (result.snrWorkplace == "대전광역시 중구") {
+				$('#inputRegistWorkplace').val(5);
+			}
 		}
 	})
 }
-
-
 
 </script>
 
@@ -117,7 +138,7 @@ function openList(falNo) {
 			<div class="col-6">
 				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" style="height: 900px;">
+	                    <div class="panel-content" style="height: 800px;">
 	                        <div class="frame-wrap" style="margin-bottom: 20px;">
 	                        	<div class="row" style="margin-bottom: 18px;">
 	                        		<div class="col-8">
@@ -135,7 +156,7 @@ function openList(falNo) {
 										</select>
 										</div>
 										<div>
-										<button type="button" class="btn btn-success waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-left-sm" >새 글 등록</button>
+											<button type="button" class="btn btn-success waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-left-sm" >새 글 등록</button>
 	                        			</div>
 	                        		</div>
 								</div>
@@ -150,10 +171,10 @@ function openList(falNo) {
 								<thead class="mytable">
 	                                    <tr>
 	                                        <th style="width: 8%;">NO</th>
-	                                        <th style="width: 15%;">일자리유형</th>
-	                                        <th style="width: 20%">사업체명</th>
+	                                        <th style="width: 14%;">일자리유형</th>
+	                                        <th style="width: 18%">사업체명</th>
 	                                        <th style="width: 30%">제목</th>
-	                                        <th style="width: 15%">근무지역</th>
+	                                        <th style="width: 18%">근무지역</th>
 	                                        <th style="width: 12%;">진행상태</th>
 	                                    </tr>
 	                                </thead>
@@ -191,7 +212,7 @@ function openList(falNo) {
 			<div class="col-xl-6">
 				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" style="height: 900px;">
+	                    <div class="panel-content" style="height: 800px;">
 	                        <div class="frame-wrap">
 	                        	<div class="row">
 	                        		<div class="col-12" style="margin-bottom: 18px;">
@@ -201,100 +222,116 @@ function openList(falNo) {
 	                        		</div>
 								</div>
 	                        
-                       			<form class="needs-validation" novalidate method="post" name="comentForm" id="myForm">
-									
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-1">
-											<label class="form-label" style="margin-top: 10px;"><b>제목</b></label> 
-										</div>
-										<div class="col-lg-11" style="padding-left: 28px;">
-											<input type="text" class="form-control" id="openTitle" style="width: 706px;"
-												value="" name="" disabled  />
+							<div id="faqpanel-2" class="panel">
+								<div class="panel-container show">
+									<div class="panel-content p-0">
+										<form class="needs-validation" novalidate method="post"  id="snrRegistForm">
+											<div class="panel-content">
+												<div class="form-row">
+													<div class="col-lg-12 mb-3">
+														<label class="form-label" for="validationCustom01">작성자</label> 
+														<input type="text" class="form-control" id="registsnrAdId"
+															value="" name="registAdid" disabled required /> 
+													</div>
+														<div class="col-lg-4 mb-3">
+															<label class="form-label" for="example-date">일자리 유형 </label>
+															<div class="input-group">
+			                                                    <select class="custom-select" id="inputRegistType" onchange="registFunType()">
+			                                                        <option selected="">일자리 유형</option>
+			                                                        <option value="1">시니어 인턴십</option>
+			                                                        <option value="2">사회서비스형</option>
+			                                                        <option value="3">시장형</option>
+			                                                        <option value="4">공익활동</option>
+			                                                    </select>
+			                                                </div>
+			                                                <input class="form-label" id="registType" name="snrType" style="display: none;"></input>
+														</div>
+																												
+														<div class="col-lg-4 mb-3">
+															<label class="form-label" for="example-date">근무지 <span
+																class="text-danger">*</span></label>
+															<div class="input-group">
+			                                                    <select class="custom-select" id="inputRegistWorkplace" onchange="registWorkplace()">
+			                                                        <option selected="">근무지 선택</option>
+			                                                        <option value="1">대전광역시 대덕구</option>
+			                                                        <option value="2">대전광역시 동구 </option>
+			                                                        <option value="3">대전광역시 서구</option>
+			                                                        <option value="4">대전광역시 유성구</option>
+			                                                        <option value="5">대전광역시 중구</option>
+			                                                    </select>
+			                                                </div>
+			                                                <input class="form-label" id="registWorkplace" name="snrWorkplace" value="" style="display: none;"></input>
+														</div>
+														
+														<div class="col-lg-4 mb-3">
+															<label class="form-label" for="example-date">구인인원 명수 <span
+																class="text-danger">*</span></label>
+															<div class="input-group">
+			                                                    <select class="custom-select" id="inputRegistVolume" onchange="registVolume()">
+			                                                        <option selected="">인원을 선택하세요</option>
+			                                                        <option value="1">1</option>
+			                                                        <option value="2">2 </option>
+			                                                        <option value="3">3</option>
+			                                                        <option value="4">4</option>
+			                                                        <option value="5">5</option>
+			                                                        <option value="6">6</option>
+			                                                        <option value="7">7</option>
+			                                                        <option value="8">8</option>
+			                                                        <option value="9">9</option>
+			                                                        <option value="10">10</option>
+			                                                        <option value="15">15</option>
+			                                                        <option value="20">20</option>
+			                                                    </select>
+			                                                </div>
+			                                                <input class="form-label" id="registVolume" name="snrVolume" value="" style="display: none;"></input>
+														</div>	
+														
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="example-date">등록일</label> 
+															<input class="form-control"
+																id="registSdate" type="date" value="" placeholder="" disabled
+																required>
+														</div>
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="example-date">마감일 </label> 
+															<input class="form-control"
+																id="registEdate" type="date" name="snrEdate" value=""
+																required>
+														</div>		
+														
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="validationCustom02"> 사업체명
+															</label> <input type="text" class="form-control" id="registConame"
+																name="snrConame" placeholder="사업체명을 입력하세요" value="" required>
+														</div>	
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="validationCustom02"> 전화번호
+															</label> <input type="text" class="form-control" id="registTel"
+																name="snrTel" placeholder="예시) 010 - 1234 - 5678" value="" required>
+														</div>														
+																																																
+														<div class="col-lg-12 mb-3">
+															<label class="form-label" for="validationCustom03">제목
+															</label> <input type="text" class="form-control" id="registTitle"
+																name="snrTitle" placeholder="타이틀을 입력하세요" value="" required>
+														</div>
+														<div class="col-lg-12 mb-3">
+															<label class="form-label" for="validationTextarea1"><b>내용</b></label>
+															<textarea class="form-control" id="registContent"
+																name="snrContent" placeholder="내용을 간략하게 입력해주세요. (50자 내외)" rows="10"
+																required></textarea>
+														</div>
+														<div class="col-lg-12">
+															<div style="float: right;">
+																<button class="btn btn-warning ml-auto" id="snrModifyBtn" type="button">수정하기</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
 										</div>
 									</div>
-									
-							
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>작성자</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openIndId"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>신고 기업명</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCoName"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-									</div>													
-									
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>신고유형</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCategory"
-														value="" name="" disabled  /> 
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>상세신고유형</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCategoryDetail"
-														value="" name="" disabled  /> 
-												</div>
-											</div>
-										</div>
-									</div>														
-									
-									<div class="row col-lg-12 mb-4">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>발생일</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="date" class="form-control" id="openOdate"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>등록일</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="date" class="form-control" id="openSdate"
-														value="" name="" disabled />
-												</div>
-											</div>
-										</div>
-									</div>														
-											
-									<div class="col-lg-12">
-										<label class="form-label" for="validationTextarea2"><b>내용</b></label>
-										<textarea class="form-control" id="openContent" style="height: 250px;"
-											name="" disabled></textarea>
-									</div>
-								</form>
+								</div>
 	                        </div>
 	                    </div>
 	                </div>
@@ -347,7 +384,7 @@ function openList(falNo) {
 															<span class="text-danger">*</span>
 														</label> <input type="text" class="form-control" id="modalsnrAdId"
 															value="${loginUser.id }" disabled required> <input
-															type="hidden" name="adId" value="${loginUser.id }" />
+															type="hidden" name="snrAdid" value="${loginUser.id }" />
 														<div class="valid-feedback">Looks good!</div>
 													</div>
 													<div class="col-lg-4 mb-3">
@@ -370,17 +407,17 @@ function openList(falNo) {
 														<label class="form-label" for="example-date">근무지 <span
 															class="text-danger">*</span></label>
 														<div class="input-group">
-		                                                    <select class="custom-select" id="inputGroupSelect02" onchange="workspaceType()">
+		                                                    <select class="custom-select" id="inputGroupSelect02" onchange="workplaceType()">
 		                                                        <option selected="">근무지 선택</option>
-		                                                        <option value="1">대전시 대덕구</option>
-		                                                        <option value="2">대전시 동구 </option>
-		                                                        <option value="3">대전시 서구</option>
-		                                                        <option value="4">대전시 유성구</option>
-		                                                        <option value="5">대전시 중구</option>
+		                                                        <option value="1">대전광역시 대덕구</option>
+		                                                        <option value="2">대전광역시 동구 </option>
+		                                                        <option value="3">대전광역시 서구</option>
+		                                                        <option value="4">대전광역시 유성구</option>
+		                                                        <option value="5">대전광역시 중구</option>
 		                                                    </select>
 		                                                    <div class="valid-feedback">Looks good!</div>
 		                                                </div>
-		                                                <input class="form-label" id="workspaceLable" name="snrWorkspace" value="" style="display: none;"></input>
+		                                                <input class="form-label" id="workplaceLable" name="snrWorkplace" value="" style="display: none;"></input>
 													</div>
 													
 													<div class="col-lg-4 mb-3">
@@ -422,17 +459,25 @@ function openList(falNo) {
 														<div class="valid-feedback">Looks good!</div>
 													</div>		
 													
-													<div class="col-lg-12 mb-3">
+													<div class="col-lg-6 mb-3">
 														<label class="form-label" for="validationCustom02"> 사업체명
 															 <span class="text-danger">*</span>
 														</label> <input type="text" class="form-control" id="modalsnrConame"
 															name="snrConame" placeholder="사업체명을 입력하세요" value="" required>
 														<div class="valid-feedback">Looks good!</div>
-													</div>																																			
+													</div>	
+													<div class="col-lg-6 mb-3">
+														<label class="form-label" for="validationCustom02"> 전화번호
+															 <span class="text-danger">*</span>
+														</label> <input type="text" class="form-control" id="modalsnrConame"
+															name="snrTel" placeholder="예시) 010 - 1234 - 5678" value="" required>
+														<div class="valid-feedback">Looks good!</div>
+													</div>														
+																																															
 																									
 													<div class="col-lg-12 mb-3">
-														<label class="form-label" for="validationCustom03">제
-															목 <span class="text-danger">*</span>
+														<label class="form-label" for="validationCustom03">제목
+															 <span class="text-danger">*</span>
 														</label> <input type="text" class="form-control" id="modalsnrTitle"
 															name="snrTitle" placeholder="타이틀을 입력하세요" value="" required>
 														<div class="valid-feedback">Looks good!</div>
@@ -483,11 +528,11 @@ function openList(falNo) {
 		console.log($('#typeLable').val());
 	};
 	
-	function workspaceType(){
-		var workspace = $('#inputGroupSelect02 option:checked').text()
+	function workplaceType(){
+		var workplace = $('#inputGroupSelect02 option:checked').text()
 		
-		$('#workspaceLable').val(workspace)
-		console.log($('#workspaceLable').val());
+		$('#workplaceLable').val(workplace)
+		console.log($('#workplaceLable').val());
 	};
 	
 	function volumeType(){
@@ -499,7 +544,7 @@ function openList(falNo) {
 	
 	
 	$('#snrRegistBtn').click(function() {
-		var data = $("#snrForm").serializeObject();
+		var data = $('#snrForm').serializeObject();
 		console.log(data);
 		    $.ajax({
 			url : 'seniorRegist',
@@ -520,7 +565,7 @@ function openList(falNo) {
 <c:if test="${from eq 'regist' }" >
 	<script>
 		alert("등록되었습니다.");
-		$("#my_modal").modal('hide');
+		$("#snrForm").modal('hide');
 		window.opener.location.reload();			
 	</script>
 </c:if>

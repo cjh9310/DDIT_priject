@@ -46,28 +46,36 @@
     		and a.id=#{id}
 	</select>
 	
-	<select id="selectTalentListByScroll" parameterType="hashMap" resultType="member">
-		select mem.*,
-               auth.*,
-               ind.*
-          from member mem, authority auth, (select *
-                                              from (select rownum as idx, a.* from (select ind_member.* from ind_member order by ind_opendate) a)
-                                             where idx between #{startNum} and #{endNum}) ind
-         where mem.id=auth.id
-           and mem.id=ind.ind_id
+	<select id="selectTalentListByScroll" resultType="member">
+		select a.*,
+               b.tal_id as tal_bookmark
+          from (select mem.*, ind.* 
+                  from member mem, ind_member ind
+                 where mem.id=ind.ind_id) a, 
+                          (select tal_id
+                             from bookmark
+                            where id=#{id}) b
+         where a.ind_id = b.tal_id (+)
 	</select>
 	
-	<update id="updateMember" parameterType="member">
+	<update id="indUpdateMember1" parameterType="member">
 	update member 
 		set 
 		email=#{email},name=#{name},tel=#{tel}
 		where id=#{id}
-		
+	</update>
+	<update id="indUpdateMember2" parameterType="member">
 	update ind_member 
 		set 
 		IND_BIR=#{indBir},IND_GENDER=#{indGender},IND_ADDR=#{indAddr}
-		where IND_ID=#{id} 
-		
+		where IND_ID=#{id}
+	</update>
+	<update id="comUpdateMember1" parameterType="member">
+	update co_member
+		set
+		CO_NM=#{coNm}, CO_REG_NO=#{coRegNo}, CO_ADDR=#{coAddr},
+		CO_DEADDR=#{coDeaddr},CO_ADDRNO=#{coAddrno},CO_LINK=#{coLink}
+		where co_id=#{id}
 	</update>
 	
 </mapper>

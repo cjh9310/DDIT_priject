@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <c:set var="contestMap" value="${contestMap}"/>
 <c:set var="mentoringMap" value="${mentoringMap}"/>
@@ -91,7 +92,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll"> 
+			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll" onclick="contestSupporterList(${contest.conNo})"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.count }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${contest.conTitle }</td>
@@ -313,21 +314,20 @@ $(document).ready(function(){
                                     <div class="panel-container show">
                                     	<div style="margin-bottom:30px;"></div>
                                        	<div class="panel-content" style="height: 300px;">
-		                                      <div class="frame-wrap" style="overflow: auto; height: 230px;">
-		                                          <table class="table table-sm table-hover m-0">
+		                                      <div class="frame-wrap" style="overflow: auto; height: 230px;"id="ajaxConList">
+		                                          <div class="text-center">
+		                                          	<h5>공모전 지원자 목록을 보시려면 좌측 공모전을 선택하세요.</h5>
+		                                          </div>
+		                                          <!-- <table class="table table-sm table-hover m-0">
 		                                              <thead class="text-center">
-		                                                  <tr>
-		                                                  	<th>No</th>
-		                                                      <th>지원일자</th>
-		                                                      <th>지원자명</th>
-		                                                      <th>연락처</th>
-		                                                      <th>제출파일</th>
-		                                                      <th>시상내용</th>
-		                                                      <th>가산점</th>
-		                                                      <th></th>
-		                                                  </tr>
+		                                                  
 		                                              </thead>
 		                                              <tbody>
+		                                              	<tr>
+                                                 			<td class="text-center" colspan="6">
+                                                 				
+                                                 			</td>
+                                                		</tr>
 		                                                  <tr class="text-center" style="cursor:pointer">
 		                                                      <th scope="row">1</th>
 		                                                      <td>2022-10-18</td>
@@ -354,12 +354,12 @@ $(document).ready(function(){
 		                                             			<a href="javascript:void(0);" class="btn btn-sm btn-success shadow-0" id="js-sweetalert2-example-7">수정</a>
 															  </td>
 		                                                  </tr>
-		                                                  <!--리스트 불러올 조건문  -->
+		                                                  리스트 불러올 조건문 
 		                                                  		
 		                                              </tbody>
-		                                              <!-- 상담리스트 보여줄 내용이 없을때 -->
+		                                              상담리스트 보여줄 내용이 없을때
 		                                              	
-		                                          </table>
+		                                          </table> -->
 		                                         
 		                                      </div>
 		                                      
@@ -423,7 +423,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${mentoringList }" var="mentoring" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList"> 
+			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterList(${mentoring.menNo})"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.index+1 }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${mentoring.menTitle }</td>
@@ -562,8 +562,8 @@ $(document).ready(function(){
 			                                                        	<th class="border-right">No</th>
 			                                                            <th>게시물 등록일</th>
 			                                                        	<th>멘토링명</th>
-			                                                            <th>기간</th>
-			                                                            <th>참가인원수</th>
+			                                                            <th>멘토링 기간</th>
+			                                                            <th>참여인원수</th>
 			                                                            <th>진행여부</th>
 			                                                            <th></th>
 			                                                        </tr>
@@ -646,15 +646,18 @@ $(document).ready(function(){
 										</div>
 										<div class="col-lg-6">
 											<div class="float-right">
-												<!-- 버튼 들어갈 자리 -->>
+												<!-- 버튼 들어갈 자리 -->
 											</div>
 										</div>
 									</div>
                                     <div class="panel-container show">
                                     	<div style="margin-bottom:30px;"></div>
                                        	<div class="panel-content" style="height: 300px;">
-		                                      <div class="frame-wrap">
-		                                          <table class="table table-sm table-hover m-0">
+		                                      <div class="frame-wrap" id="ajaxCureList">
+		                                      	<div class="text-center">
+		                                          	<h5>멘토링 지원자 목록을 보시려면 좌측 공모전을 선택하세요.</h5>
+		                                          </div>
+		                                          <!-- <table class="table table-sm table-hover m-0">
 		                                              <thead class="text-center">
 		                                                  <tr>
 		                                                  	<th>No</th>
@@ -694,7 +697,7 @@ $(document).ready(function(){
 															  </td>
 		                                                  </tr>
 		                                              </tbody>
-		                                          </table>
+		                                          </table> -->
 		                                         
 		                                      </div>
 		                                      
@@ -704,7 +707,7 @@ $(document).ready(function(){
                             		</div>
                             	</div>
                             	<div class="modal fade default-example-modal-right-sm metoringRegistModal"
-												tabindex="-1" role="dialog" aria-hidden="true">
+												tabindex="-1" role="dialog" aria-hidden="true" id="menModal">
 												<div class="modal-dialog modal-dialog-right modal-sm">
 													<div class="modal-content">
 														<div class="modal-header">
@@ -802,7 +805,7 @@ $(document).ready(function(){
 											</div>
 											
 											<div class="modal fade default-example-modal-right-sm contestRegistModal"
-												tabindex="-1" role="dialog" aria-hidden="true">
+												tabindex="-1" role="dialog" aria-hidden="true" id="conModal">
 												<div class="modal-dialog modal-dialog-right modal-sm">
 													<div class="modal-content">
 														<div class="modal-header">
@@ -927,7 +930,7 @@ $(document).ready(function(){
     $(document).ready(function()
     {
 
-        "use strict";
+        //"use strict";
 
         
 
@@ -975,42 +978,26 @@ $(document).ready(function(){
 			
 			var param = $("#registForm").serialize();
 			param = param.replaceAll('-','/');
-			//var param = $("#registForm").serializeObject();
-			/*
-			param = {
-					supType:$("input[name=supType]").val(),
-					supTitle:$("input[name=supTitle]").val(),
-					supContent:$("input[name=supContent]").val(),
-					supPdate:$("input[name=supPdate]").val()
-				};
-			*/
-		
-		    //alert(JSON.stringify(param));
 			
 			$.ajax({
 				url : 'contestRegist.do',
 				type : 'POST',
-				//data : JSON.stringify(param),
 				data : param,
-				/*
-				data:JSON.parse({
-					supType:$("input[name=supType]").val();,
-					supTitle:$("input[name=supTitle]").val();,
-					supContent:$("input[name=supContent]").val();
-					supPdate:$("input[name=supPdate]").val();
-				}),
-				*/
 				cache: false,
 	            async: true,
-	            //dataType : 'json',
-	            //contentType:'application/json',
 				success : function(data) {
-					//alert(data);
-					window.location.replace(location.href);
+					Swal.fire({
+						target: document.getElementById('conModal'),
+		                icon: 'success',
+						title: "프로그램이 등록되었습니다.",
+		                type: "success",
+		                showCancelButton: false,
+		                confirmButtonText: "OK"
+		    		}).then(function(result){
+					 
+						window.location.replace(location.href);
 					
-					
-					
-					
+		    		});
 					
 				},
 				error : function(request, status, error) {
@@ -1025,50 +1012,35 @@ $(document).ready(function(){
 			
 			var param = $("#mentoringRegistForm").serialize();
 			param = param.replaceAll('-','/');
-			alert(param);
-			//var param = $("#registForm").serializeObject();
-			/*
-			param = {
-					supType:$("input[name=supType]").val(),
-					supTitle:$("input[name=supTitle]").val(),
-					supContent:$("input[name=supContent]").val(),
-					supPdate:$("input[name=supPdate]").val()
-				};
-			*/
-		
-		    //alert(JSON.stringify(param));
+			//alert(param);
 			
 			$.ajax({
 				url : 'mentoringRegist.do',
 				type : 'POST',
-				//data : JSON.stringify(param),
 				data : param,
-				/*
-				data:JSON.parse({
-					supType:$("input[name=supType]").val();,
-					supTitle:$("input[name=supTitle]").val();,
-					supContent:$("input[name=supContent]").val();
-					supPdate:$("input[name=supPdate]").val();
-				}),
-				*/
 				cache: false,
 	            async: true,
-	            //dataType : 'json',
-	            //contentType:'application/json',
 				success : function(data) {
-					alert("멘토링 프로그램이 등록되었습니다!");
-					window.location.replace(location.href);
+					Swal.fire({
+						target: document.getElementById('menModal'),
+		                icon: 'success',
+						title: "프로그램이 등록되었습니다.",
+		                type: "success",
+		                showCancelButton: false,
+		                confirmButtonText: "OK"
+		    		}).then(function(result){
+					 
+						window.location.replace(location.href);
 					
-					
-					
-					
+		    		});
 					
 				},
 				error : function(request, status, error) {
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
-			});
+			
 		});
+	});		
 </script>
 
 <script>
@@ -1092,4 +1064,242 @@ $('.mentoringAdBtn').on('click', function(){
 		
 	});
 </script>
-   
+<!-- mentoring -->
+<script>
+
+function mentoringSupporterList(m){  
+
+   $.ajax({
+      url:"mentoringSupporterList",
+      type:"get",
+      data: {menNo: m},
+      dataType:"json",
+      success: function(data) {
+    	  ajaxHtmlMentoring(data);
+	},
+      error:function(){alert("error");
+      console.log(data)}
+   });
+}
+
+   function ajaxHtmlMentoring(data){
+	   if(data.activityMenList.length == 0){
+		  var html = "<div class = text-center>";
+			 html += "<h5>멘토링에 지원한 인원이 없습니다.</h5>";
+			 html += "</div>";
+			 
+	   }else {
+			console.log(data)
+			
+			var html = "<div class='frame-wrap' id='ajaxCureList'>";
+               	html += "<table class='table table-sm table-hover m-0'>";
+               	html += "<thead class='text-center'>";
+		        html += "<tr>";
+		        html += "<th>No</th>";
+		        html += "<th>지원일자</th>";
+		        html += "<th>지원자명</th>";
+		        html += "<th>회원ID</th>";
+		        html += "<th>연락처</th>";
+		        html += "<th>진행상황</th>";
+		        html += "<th>가산점</th>";
+		        html += "<th></th>";
+		        html += "</tr>";
+		        html += "</thead>";
+		        html += "<tbody>";
+			
+		      /* var html="<table class='table table-bordered' id='userListTable'>";
+		      html+="<tr>";
+		      html+="<th>진료일자</th>";
+		      html+="<th>진료의사</th>";
+		      html+="<th>진료내역</th>";
+		      html+="<th>이름</th>";
+		      html+="<th>연령|성별</th>";
+		          
+		      html+="</tr>"; */
+	   }
+      
+      
+      $.each(data.activityMenList, (index, obj)=>{
+    	  
+    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
+          	html +=	"<th scope='row'>"+index+"</th>";
+            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.name+"</td>";
+            html +=	"<td>"+obj.indId+"</td>";
+            html +=	"<td>"+obj.actTel+"</td>";
+            html +=	"<td>"+ +"</td> ";
+         	html +=	"<td>";
+            html +=	"<select class='form-control' id='mentoringScoreSelect'>";
+            
+            if(obj.actScore == 0){
+                html +=	"<option value=0 selected>없음</option>";
+            }else {
+                html +=	"<option value=0>없음</option>";            	
+            }
+
+            if(obj.actScore == 1){
+                html +=	"<option value=1 selected>1점</option>";
+            }else {
+                html +=	"<option value=1>1점</option>";            	
+            }
+
+            if(obj.actScore == 2){
+                html +=	"<option value=2 selected>2점</option>";
+            }else {
+                html +=	"<option value=2>2점</option>";            	
+            }
+
+            if(obj.actScore == 3){
+                html +=	"<option value=3 selected>3점</option>";
+            }else {
+                html +=	"<option value=3>3점</option>";            	
+            }
+
+            /* html +=	"<option value=1>1점</option>";
+            html +=	"<option value=2>2점</option>";
+            html +=	"<option value=3>3점</option>"; */
+            html +=	"</select>";
+         	html +=	"</td>";
+     		html +=	"<td>";
+     		html +=	"<button class='btn btn-sm btn-success shadow-0' onclick='scoreModifyBtn()'>수정</button>";
+     		html += "</td>";
+			html += "</tr>";
+      })
+      html+="</tbody>";
+      html+="</table>";
+      html+="</div>";
+      
+      $("#ajaxCureList").html(html);
+      //$("#mentoringScoreSelect").val(obj.actScore);
+   }
+
+
+
+</script>
+
+<script> //가산점 부여
+function scoreModifyBtn(){
+	Swal.fire({
+                icon: 'warning',
+				title: "가산점을 부여하시겠습니까?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonText: "OK"
+    }).then(function(result){
+    		if(result.value){
+    			$.ajax({
+    				type:"put",
+    				url:"/ddit/comember/mypage/mentoringScoreModify",
+    				contentType:"application/json; charset=UTF-8",
+    				data: JSON.stringify({
+    					actScore:$('#mentoringScoreSelect').val()
+    				}),
+    				success:function(p_rslt){
+						console.log(p_rslt)
+    					
+    					Swal.fire({
+  							icon: 'success',
+  							title: '가산점이 부여 되었습니다.',
+  							showConfirmButton: false,
+  							timer: 1500
+						})
+    				},
+    				error:(request,status,error)=>{
+    					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    			})
+    		}
+    });	
+}
+</script>
+
+<script>
+
+function contestSupporterList(c){  
+
+   $.ajax({
+      url:"contestSupporterList",
+      type:"get",
+      data: {conNo: c},
+      dataType:"json",
+      success: ajaxHtmlContest,
+      error:function(){alert("error");
+      console.log(data)}
+   });
+}
+
+   function ajaxHtmlContest(data){
+	   if(data.activityList.length == 0){
+		  var html = "<div class = text-center>";
+			 html += "<h5>공모전에 지원한 인원이 없습니다.</h5>";
+			 html += "</div>";
+			 
+	   }else {
+			console.log(data)
+			
+			var html = "<div class='frame-wrap' id='ajaxConList'>";
+               	html += "<table class='table table-sm table-hover m-0'>";
+               	html += "<thead class='text-center'>";
+		        html += "<tr>";
+		        html += "<th>No</th>";
+		        html += "<th>지원일자</th>";
+		        html += "<th>지원자명</th>";
+		        html += "<th>연락처</th>";
+		        html += "<th>제출파일</th>";
+		        html += "<th>시상내용</th>";
+		        html += "<th>가산점</th>";
+		        html += "<th></th>";
+		        html += "</tr>";
+		        html += "</thead>";
+		        html += "<tbody>";
+			
+		      /* var html="<table class='table table-bordered' id='userListTable'>";
+		      html+="<tr>";
+		      html+="<th>진료일자</th>";
+		      html+="<th>진료의사</th>";
+		      html+="<th>진료내역</th>";
+		      html+="<th>이름</th>";
+		      html+="<th>연령|성별</th>";
+		          
+		      html+="</tr>"; */
+	   }
+      
+      
+      $.each(data.activityConList, (index, obj)=>{
+    	  
+    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
+          	html +=	"<th scope='row'>"+index+"</th>";
+            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.indId+"</td>";
+            html +=	"<td>"+obj.actTel+"</td>";
+            html +=	"<td>"+ +"</td>";
+            html +=	"<td>";
+            html +=	"<select class='form-control' id='contest_score_select'>";
+            html +=	"<option>0</option>";
+            html += "<option>1</option>";
+            html += "<option>2</option>";
+            html += "<option>3</option>";
+            html +=	"</select>";
+         	html +=	"</td>";
+         	html +=	"<td>";
+            html +=	"<select class='form-control' id='contest_score_select'>";
+            html +=	"<option>0</option>";
+            html +=	"<option>1</option>";
+            html +=	"<option>2</option>";
+            html +=	"<option>3</option>";
+            html +=	"</select>";
+         	html +=	"</td>";
+     		html +=	"<td>";
+     		html +=	"<a href='javascript:void(0);' class='btn btn-sm btn-success shadow-0' id='js-sweetalert2-example-7'>수정</a>";
+     		html += "</td>";
+			html += "</tr>";
+      })
+      html+="</tbody>";
+      html+="</table>";
+      html+="</div>";
+      
+      $("#ajaxConList").html(html);
+   }
+
+</script>
+  

@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<c:forEach items="${newsList}" var="news">
-				<div class="row" onclick="location.href='detail.do?newsNo=${news.newsNo}&from=list'">
+				<div class="row" onclick="location.href='detail.do?newsNo=${news.newsNo}&from=list'" style="cursor:pointer;">
 					<div class="col-md-3 pt-3 pl-5 pb-3">
 						<img
 							src="<%=request.getContextPath()%>/resources/images/희망연봉(썸).png"/>

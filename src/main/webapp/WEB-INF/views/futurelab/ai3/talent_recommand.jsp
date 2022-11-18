@@ -70,8 +70,8 @@
 								</div>
 								<div class="w-100">
 									<div class="text-center">
-										<input type="button" id="talentSubmit" onclick="ai5_submit()">
-										</input>
+										<button class="btn btn-outline-success waves-effect waves-themed w-100" 
+			        							type="button" id="talentSubmit" onclick="ai5_submit()">AI에게 인재 리스트 받아보기</button>
 									</div>
 								</div>
 							</form>

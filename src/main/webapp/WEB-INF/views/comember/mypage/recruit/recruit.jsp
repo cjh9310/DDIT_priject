@@ -189,6 +189,7 @@ function changeRecBtn() {
 	var now_utc = Date.now() 
 	var timeOff = new Date().getTimezoneOffset()*60000; 
 	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+	console.log(today);
 	$("#openEdate").attr("min", today);
 </script>
 
@@ -222,12 +223,12 @@ function changeRecBtn() {
 						<div class="col-lg-6">
 							<div class="float-right">
 							<button type="button" id="openBtn"
-								class="btn btn-default waves-effect waves-themed"
+								class="btn btn-success waves-effect waves-themed"
 								data-toggle="modal"
 								data-target="#openRec-Form">공개채용 등록</button>
 								
 							<button type="button" id="recBtn" style="display: none;"
-								class="btn btn-default waves-effect waves-themed"
+								class="btn btn-success waves-effect waves-themed"
 								data-toggle="modal"
 								data-target="#recruit-Form">일반채용 등록</button>
 							</div>
@@ -287,7 +288,7 @@ function changeRecBtn() {
 												<th style="width: 8%;">No</th>
 												<th style="width: 31%;">지원자명</th>
 												<th style="width: 31%;">이력서보기</th>
-												<th style="width : 15%;">ㅁㅁ</th>
+												<th style="width : 15%;">모집마감일자</th>
 												<th style="width : 15%;">모집인원(명)</th>
 											</tr>
 										</thead>

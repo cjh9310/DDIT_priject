@@ -53,18 +53,6 @@
 							Log4Job AI Service 1 - 명함 디자인 서비스</a></li>
 				</ul>
 			</div>
-			<div class="col-lg-4">
-				<ul class="fs-md fw-700 mb-5 list-spaced">
-					<li><a href="javascript:scrolling('#AI_SERVICE_2');">
-							Log4Job AI Service 2 - 증명사진 복장 변환 서비스</a></li>
-				</ul>
-			</div>
-			<div class="col-lg-4">
-				<ul class="fs-md fw-700 mb-5 list-spaced">
-					<li><a href="javascript:scrolling('#AI_SERVICE_3');">
-							Log4Job AI Service 3 - 증명사진 메이크업 서비스</a></li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </div>
@@ -344,9 +332,8 @@
 							</div>
 							<div class="w-100">
 								<div class="text-center">
-									<input type="button" value="AI에게 명함 받아오기"
-										class="btn w-100 btn-success waves-effect waves-themed"
-										id="busicardSubmit" onclick="ai7_submit()">
+									<button class="btn btn-outline-success waves-effect waves-themed w-100" 
+			        						type="button" id="busicardSubmit" onclick="ai7_submit()">AI에게 명함 받아보기</button>
 									<!-- <button id="busicardSubmit" onclick="ai7_submit()"
 										class="btn btn-success waves-effect waves-themed">
 										<span class="fal fa-download mr-1"></span>
@@ -358,106 +345,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="alert alert-primary">
-	<div class="d-flex flex-start w-100">
-		<div class="mr-2 hidden-md-down">
-			<span class="icon-stack icon-stack-lg"> <i
-				class="base base-6 icon-stack-3x opacity-100 color-primary-500"></i>
-				<i
-				class="base base-10 icon-stack-2x opacity-100 color-primary-300 fa-flip-vertical"></i>
-				<i class="ni ni-blog-read icon-stack-1x opacity-100 color-white"></i>
-			</span>
-		</div>
-		<div class="d-flex flex-fill">
-			<div class="flex-fill">
-				<span class="h5">About</span>
-				<p>
-					Cropperjs is a slick and lightweight responsive cropping tool for
-					images. It supports <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#options"
-						target="_blank">39 options</a>, <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#methods"
-						target="_blank">27 methods</a> and 6 events. You can select an
-					specific area of an image, and then upload the coordinates data to
-					server-side to crop the image, or crop the image on browser-side
-					directly. The plugin is regularly updated and has tons of
-					potential! Making it a great fit for SmartAdmin WebApp.
-				</p>
-				<p class="m-0">
-					Find in-depth, guidelines, tutorials and more on Cropper's <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md"
-						target="_blank">Official Documentation</a>
-				</p>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="card mb-g" id="AI_SERVICE_2">
-	<div class="panel-hdr" style="width: 100%;">
-		<h2 class="fw-700 m-0">
-			Log4Job AI Service 2 - 증명사진 복장 변환 서비스<a href="javascript:void(0);"></a>
-		</h2>
-		<div class="panel-toolbar ml-2">
-			<button type="button" onclick="window.scrollTo(0, 0);"
-				class="btn btn-sm btn-outline-dark waves-effect waves-themed">
-				<span class="fal  fa-eject mr-1"></span> 상단으로 가기
-			</button>
-		</div>
-	</div>
-	<div class="card-body">
-		<div class="ai-content"></div>
-	</div>
-</div>
-<div class="alert alert-primary">
-	<div class="d-flex flex-start w-100">
-		<div class="mr-2 hidden-md-down">
-			<span class="icon-stack icon-stack-lg"> <i
-				class="base base-6 icon-stack-3x opacity-100 color-primary-500"></i>
-				<i
-				class="base base-10 icon-stack-2x opacity-100 color-primary-300 fa-flip-vertical"></i>
-				<i class="ni ni-blog-read icon-stack-1x opacity-100 color-white"></i>
-			</span>
-		</div>
-		<div class="d-flex flex-fill">
-			<div class="flex-fill">
-				<span class="h5">About</span>
-				<p>
-					Cropperjs is a slick and lightweight responsive cropping tool for
-					images. It supports <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#options"
-						target="_blank">39 options</a>, <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#methods"
-						target="_blank">27 methods</a> and 6 events. You can select an
-					specific area of an image, and then upload the coordinates data to
-					server-side to crop the image, or crop the image on browser-side
-					directly. The plugin is regularly updated and has tons of
-					potential! Making it a great fit for SmartAdmin WebApp.
-				</p>
-				<p class="m-0">
-					Find in-depth, guidelines, tutorials and more on Cropper's <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md"
-						target="_blank">Official Documentation</a>
-				</p>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="card mb-g" id="AI_SERVICE_3">
-	<div class="panel-hdr" style="width: 100%;">
-		<h2 class="fw-700 m-0">
-			Log4Job AI Service 3 - 증명사진 메이크업 서비스<a href="javascript:void(0);"></a>
-		</h2>
-		<div class="panel-toolbar ml-2">
-			<button type="button" onclick="window.scrollTo(0,0);"
-				class="btn btn-sm btn-outline-dark waves-effect waves-themed">
-				<span class="fal  fa-eject mr-1"></span> 상단으로 가기
-			</button>
-		</div>
-	</div>
-	<div class="card-body">
-		<div class="ai-content"></div>
 	</div>
 </div>
 </main>

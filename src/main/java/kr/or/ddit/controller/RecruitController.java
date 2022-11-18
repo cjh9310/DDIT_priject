@@ -24,8 +24,13 @@ import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
+import kr.or.ddit.service.CareerService;
+import kr.or.ddit.service.CertificateService;
+import kr.or.ddit.service.EducationService;
 import kr.or.ddit.service.EmpstatsService;
+import kr.or.ddit.service.LetterService;
 import kr.or.ddit.service.RecruitService;
+import kr.or.ddit.service.SupportService;
 
 @Controller
 @RequestMapping("/recruit")
@@ -34,9 +39,16 @@ public class RecruitController {
 
 	@Autowired
 	private RecruitService recruitService;
-
 	@Autowired
 	private EmpstatsService empstatsService;
+	@Autowired
+	private EducationService educationService;
+	@Autowired
+	private CareerService careerService;
+	@Autowired
+	private CertificateService certificateService;
+	@Autowired
+	private LetterService letterService;
 
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> recruitlist(@PathVariable("page") int page)throws Exception {
@@ -78,6 +90,33 @@ public class RecruitController {
 		recruitParam.setRecWantedno(recWantedno);
 		RecruitVO recruit = recruitService.getRecruitDetail(recruitParam);
 		request.setAttribute("recruit", recruit);
+		return url;
+	}
+	
+	@GetMapping("support")
+	public String recruitSupport(String recWantedno, HttpServletRequest request) throws Exception {
+		String url = "recruit/support";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		RecruitVO recruitParam = new RecruitVO();
+		recruitParam.setIndId(id);
+		recruitParam.setRecWantedno(recWantedno);
+		
+		RecruitVO recruit = recruitService.getRecruitDetail(recruitParam);
+		Map<String, Object> eduMap = educationService.getEducationListById(id);
+		Map<String, Object> crrMap = careerService.getCareerListById(id);
+		Map<String, Object> cerMap = certificateService.getCertificateListById(id);
+		Map<String, Object> letMap = letterService.getLetterListByIndId(id);
+		
+		request.setAttribute("recruit", recruit);
+		request.setAttribute("eduMap", eduMap);
+		request.setAttribute("crrMap", crrMap);
+		request.setAttribute("cerMap", cerMap);
+		request.setAttribute("letMap", letMap);
+		
 		return url;
 	}
 	

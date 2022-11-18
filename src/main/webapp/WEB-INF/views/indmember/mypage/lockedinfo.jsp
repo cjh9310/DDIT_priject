@@ -170,7 +170,7 @@
 					</h2>
 				</div>
 				<div class="panel-container show" id="auth_check">
-					<div class="panel-content page-wrapper auth">
+					<div class="panel-content page-wrapper auth" id="faceSection">
 						<div class="page-inner bg-brand-gradient">
 							<div class="page-content-wrapper bg-transparent m-0">
 								<div class="d-flex flex-1"
@@ -182,6 +182,12 @@
 											<p class="text-white opacity-50">Please enter your
 												password for safe viewing</p>
 											<div class="input-group input-group-lg">
+												<div class="input-group-append">
+													<button class="btn btn-success shadow-0"
+														onclick="faceOn()" type="button" id="button-addon5">
+														얼굴인식 잠금해제
+													</button>
+												</div>
 												<input type="password" id="password" value=""
 													onkeyup="if(window.event.keyCode==13){rendering()}"
 													class="form-control" placeholder="Password">
@@ -220,7 +226,7 @@
 						<c:forEach items="${bookmarkList}" var="bookmark">
 							<c:if test="${bookmark.bookType == 1}">
 								<div class="col-4">
-									<a href="javascript:void(0);"
+									<a data-toggle="dropdown"
 										class="text-center p-3 d-flex flex-column hover-highlight">
 										<span class="profile-image w-100">
 											<img id="image" style="display:block; width:100%; height:auto;"
@@ -229,6 +235,19 @@
 												alt="일반채용기업" />
 										</span>
 										<span class="d-block text-truncate text-muted fs-xs mt-1">${bookmark.coName}</span>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" onclick="" >
+												기업정보
+											</a>
+											<div class="dropdown-multilevel">
+												<div class="dropdown-item">공고 리스트</div>
+												<div class="dropdown-menu">
+													<a href="javascript:void(0);" type="button" class="dropdown-item">채용공고</a>
+													<a href="javascript:void(0);" type="button" class="dropdown-item">채용공고</a>
+													<a href="javascript:void(0);" type="button" class="dropdown-item">채용공고</a>
+												</div>
+											</div>
+										</div>
 									</a>
 								</div>
 							</c:if>
@@ -264,11 +283,18 @@
 								<tbody>
 									<c:forEach items="${bookmarkList}" var="bookmark">
 										<c:if test="${bookmark.bookType == 0}">
-											<tr id="1" role="row" class="odd" style="cursor:pointer;"
-											    onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${bookmark.recWantedno}'">
+											<tr id="1" role="row" class="odd" style="cursor:pointer;">
 												<td class="dtr-control"><span
 													class="badge badge-success badge-pill">채용중</span>
-													${bookmark.recCoName} - ${bookmark.recWantedtitle}</td>
+													<a data-toggle="dropdown">${bookmark.recCoName} - ${bookmark.recWantedtitle}
+														<div class="dropdown-menu">
+															<a class="dropdown-item" onclick="">즐겨찾기 해제 </a> <a
+																class="dropdown-item"
+																onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${bookmark.recWantedno}'">
+																채용공고 보러가기 </a>
+														</div>
+													</a>
+												</td>
 											</tr>
 										</c:if>
 									</c:forEach>

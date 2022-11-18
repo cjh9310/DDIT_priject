@@ -38,6 +38,9 @@ public class MemberVO {
 	private String coDeaddr;
 	private String coAddrno;
 	private String coNm;
+	
+	// 인재 즐겨찾기 필드
+	private String talBookmark;
 
 	public MemberVO() {
 	}
@@ -47,6 +50,14 @@ public class MemberVO {
 		this.pwd = pwd;
 	}
 	
+	public String getTalBookmark() {
+		return talBookmark;
+	}
+
+	public void setTalBookmark(String talBookmark) {
+		this.talBookmark = talBookmark;
+	}
+
 	public String getCoNm() {
 		return coNm;
 	}

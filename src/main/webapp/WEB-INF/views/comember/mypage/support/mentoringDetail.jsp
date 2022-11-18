@@ -101,14 +101,38 @@
 		</div>
 	</div>
 </main>
+
+<script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
+<script src="<%=request.getContextPath()%>/resources/template/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
 <script>
 $('#deleteBtn').on('click',()=>{
 	
 	var menNo = ${mentoring.menNo};
-	location.href = "mentoringRemove.do?menNo=" + menNo;
-	alert("삭제완료");
-	window.open("about:blank", "_self").close();
-	window.opener.location.reload();
+	
+	Swal.fire({
+        icon: 'warning',
+		title: "프로그램을 삭제하시겠습니까?",
+        type: "success",
+        showCancelButton: true,
+        confirmButtonText: "OK"
+    }).then(function(result){
+		
+	    //alert("삭제완료");
+ 		Swal.fire({
+					icon: 'success',
+					title: '프로그램이 삭제되었습니다.',
+					showConfirmButton: false,
+					timer: 1000
+		}).then(function(){
+			location.href = "mentoringRemove.do?menNo=" + menNo;
+			
+		    window.open("about:blank", "_self").close();
+			window.opener.location.reload();
+			})
+	
+    })
+    
 });
 </script>
 

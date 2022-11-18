@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<c:set var="seniorList" value="${seniorList }" />
+
 <style>
 
 	.col-md-4 img {
@@ -25,6 +29,14 @@
 	.col-md-7 {
 		display: flex;
 		align-items: center;
+	}
+	
+	#tootitle {
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
 	}
 	
 	
@@ -134,238 +146,49 @@
 	        <div class="panel-container show">
 	            <div class="panel-content">
 	                <div class="card-deck">
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon6.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>공익방송 모니터요원사업</b></h3>
-						                	</div>
-						                </div>
+					    <c:forEach items="${seniorList }" var="senior">
+						    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
+						        <div class="card shadow-1 shadow-hover-5 mb-g">
+						            <div class="card-header p-3">
+							            <div class="row">
+							                <div class="col-md-5" >
+							                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon6.png">
+							                </div>
+							                <div class="col-md-7">
+							                	<div class="title" style="width: 300px; height: 60px;">
+							                		<h3 id="tooltitle"><b>${senior.snrTitle }</b></h3>
+							                	</div>
+							                </div>
+							            </div>
 						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
+						            <div class="card-body" >
+						            	<div class="row">
+							            	<div class="col-6" style="height: 50px;">
+							            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5>
+							            	</div>
+							            	<div class="col-6" style="height: 60px;">
+							            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5>
+							            	</div>							            	
+							            	<div class="col-6" style="height: 50px;">
+							            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
+							            	</div>							            	
+							            	<div class="col-6" style="height: 60px;">
+							            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
+							            	</div>
 						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
+						            	<div style="height: 70px;">
+						            		<h4><b>${senior.snrContent }</b></h4>
 						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div> 
-	                    
-	                    
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon5_1.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>건축건자재 제조/ 건설업 / 도소매업 계속고용계획있음</b></h3>
-						                	</div>
-						                </div>
 						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
-						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
-						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div>
-						    
-						  
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon6.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>공익방송 모니터요원사업</b></h3>
-						                	</div>
-						                </div>
-						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
-						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
-						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div>
-						    
-	
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon5_1.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>공익방송 모니터요원사업</b></h3>
-						                	</div>
-						                </div>
-						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
-						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
-						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div> 	
-	
-						    	
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon8.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>공익방송 모니터요원사업</b></h3>
-						                	</div>
-						                </div>
-						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
-						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
-						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div> 
-
-
-					    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-					        <div class="card shadow-1 shadow-hover-5 mb-g">
-					            <div class="card-header p-3">
-						            <div class="row">
-						                <div class="col-md-5" >
-						                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon7.png">
-						                </div>
-						                <div class="col-md-7">
-						                	<div class="title">
-						                		<h3><b>공익방송 모니터요원사업</b></h3>
-						                	</div>
-						                </div>
-						            </div>
-					            </div>
-					            <div class="card-body" >
-					            	
-					            	<div class="row">
-						            	<div class="col-6">
-						            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5><br>
-						            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-						            
-						            	</div>
-						            	<div class="col-6">
-						            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5><br>
-						            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
-						            	</div>
-					            	</div>
-					            	<h4><b>공익방송모니터요원 참여자 모집공고를 등재합니다.</b></h4>
-					            </div>
-	            	                <div class="card-footer">
-			                            <div>
-			                            	<span class="badge badge-warning badge-pill">접수중</span>  
-			                            	  2022-05-15 ~ 2022-12-31                          	
-			                            </div>
-	                      		    </div>
-						        </div>
-						    </div> 
+		            	                <div class="card-footer">
+				                            <div>
+				                            	<span class="badge badge-warning badge-pill">접수중</span>  
+				                            	  2022-05-15 ~ 2022-12-31                          	
+				                            </div>
+		                      		    </div>
+							        </div>
+							    </div> 
+	                        </c:forEach>
 		                </div>
 		            </div>
 		        </div>

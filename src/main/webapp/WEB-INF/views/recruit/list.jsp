@@ -331,28 +331,31 @@
 													<h2>${recruit.recWantedtitle}</h2>
 												</td>
 												<td rowspan="2" style="width: 140px;">
-													<h4>
+													<i class="badge text-primary"><h4>
 														${recruit.recRegion}
-														<h4>
+														</h4></i>
 												</td>
 												<td rowspan="2" style="width: 320px;">
-													<h4>
+													<i class="badge text-primary"><h4>
 														경력사항
 														&nbsp;:&nbsp;&nbsp;${recruit.recEntertpnm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<h4>
+														</h4></i>
 												</td>
-												<td colspan="4" rowspan="2" style="width: 300px;"><h4>
-														마감일 &nbsp;:&nbsp;
-														<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
-															<fmt:parseDate var="dateString"
-																value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
-															<fmt:formatDate value="${dateString}"
-																pattern="yyyy-MM-dd" />
+												<td colspan="4" rowspan="2" style="width: 300px;">
+													<i class="badge text-primary">
+														<h4>마감일 &nbsp;:&nbsp;
+															<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
+																<fmt:parseDate var="dateString"
+																	value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
+																<fmt:formatDate value="${dateString}"
+																	pattern="yyyy-MM-dd" />
+															</c:if>
+															<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
+															${recruit.recReceiptclosedt}
 														</c:if>
-														<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
-														${recruit.recReceiptclosedt}
-													</c:if>
-													</h4></td>
+														</h4>
+													</i>
+												</td>
 											</tr>
 											<tr>
 												<td colspan="4" style="width: 900px;">

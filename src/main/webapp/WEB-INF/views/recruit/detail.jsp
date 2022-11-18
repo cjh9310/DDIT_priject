@@ -69,7 +69,8 @@ td { height: 80px; }
 						</div>
 					</h2></td>
 				</tr>
-				<tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}'">
+				<%-- <tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}'"> --%>
+				<tr onclick="goPage('<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}','M350000')">
 					<td colspan="8" style="width: 1400px;">
 						<h2 style="margin: 0px;">${recruit.coName}-
 							${recruit.recWantedtitle}</h2>
@@ -77,7 +78,7 @@ td { height: 80px; }
 				</tr>
 			</table>
 			<div class="panel-toolbar ml-2">
-				<button type="button"
+				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/support.do?recWantedno=${recruit.recWantedno}','${recruit.coName}-지원하기','fullscreen')"
 					class="btn btn-lg btn-outline-info waves-effect waves-themed">
 					즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
 				</button>
@@ -144,7 +145,9 @@ td { height: 80px; }
 										<th>회사규모</th>
 										<th>연매출액</th>
 										<th>근로자수</th>
-										<th>홈페이지</th>
+										<c:if test="${recruit.recHomepg != null}">
+											<th>홈페이지</th>
+										</c:if>
 									</tr>
 								</thead>
 								<tbody>
@@ -153,9 +156,14 @@ td { height: 80px; }
 										<td><h2>${recruit.recBusisize}</h2></td>
 										<td><h2>${recruit.recYrsalesamt}</h2></td>
 										<td><h2>${recruit.recPersonal}</h2></td>
-										<td><h2>
-											${recruit.recHomepg}
-										</h2></td>
+										<c:if test="${recruit.recHomepg != null}">
+											<td><h2>
+												<a href="//${recruit.recHomepg}" target="_blank">
+													<i class="badge border border-success text-success"> 
+														${recruit.coName} 홈페이지 방문하기</i>
+												</a>
+											</h2></td>
+										</c:if>
 									</tr>
 								</tbody>
 							</table>

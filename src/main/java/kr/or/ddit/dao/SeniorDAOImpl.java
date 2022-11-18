@@ -26,7 +26,7 @@ public class SeniorDAOImpl implements SeniorDAO {
 
 	@Override
 	public void insertSenior(SeniorVO senior) throws SQLException {
-		session.insert("PublicWork-Mapper.insertSenior", senior);
+		session.insert("Senior-Mapper.insertSenior", senior);
 		
 	}
 

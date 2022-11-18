@@ -1,6 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<c:set var="Test" value="${Test }" />
+
+<style>
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+}
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+</style>
 
 <!-- END Page Header -->
 <!-- BEGIN Page Content -->
@@ -22,10 +40,6 @@
 </div>
 <div class="row">
 	<div class="col-xl-12">
-
-
-
-
 		<!--Table small-->
 		<div id="panel-7" class="panel">
 			<div class="panel-hdr">
@@ -58,6 +72,7 @@
 									<th>첨부파일</th>
 								</tr>
 							</thead>
+							<c:if test="${!empty Test }">
 							<tbody>
 								<tr>
 									<th scope="row">2</th>
@@ -75,14 +90,18 @@
 									<td>상담신청합니다.</td>
 									<td>상담완료</td>
 									<td>박지영</td>
-									<td></td>
+									<td><c:out value="${Test }"/></td>
 								</tr>
+							</tbody>
+							</c:if>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 	</div>
 </div>
 
+<%@ include file="../../include/pagination.jsp" %>
 </main>

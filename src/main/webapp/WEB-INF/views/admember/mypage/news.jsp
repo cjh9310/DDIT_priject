@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <c:set var="newsList" value="${dataMap.newsList }" />
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
@@ -141,15 +142,22 @@
 								<tr>
 									<td style="width: 10%; padding-bottom: 150px;">내용</td>
 									<td class="p-0" colspan="7">
-										<div>
+										<div id="summerForUpdate">
 											<textarea class="textarea" style="border: 0px; height: 200px;"
-												id="Content" name="newsContent" >
+												id="textarea-view" >
+												
 											</textarea>
+											
+											
 										</div>
 									</td>
 								</tr>
 							</thead>
 						</table>
+						<textarea class="textarea" style="display: none;"
+							id="textarea-hidden" name="newsContent" >
+							
+						</textarea>
 					</form>
 				</div>
 			</div>
@@ -162,6 +170,9 @@
 	role="dialog" aria-hidden="true" id="my_modal">
 	<div class="modal-dialog modal-dialog-right modal-sm">
 		<div class="modal-content">
+		
+		
+		
 			<div class="modal-header">
 				<div class="row">
 					<div class="col-xl-12">
@@ -215,9 +226,9 @@
 												<div class="col-lg-12 mb-3" >
 													<label class="form-label" for="validationTextarea2"><b>내용</b>
 														<span class="text-danger">*</span></label>
-													<textarea class="form-control" id="modalNewsContent"
+													<textarea class="form-control" id="textarea-view-insert"
 														name="newsContent" placeholder="내용을 입력해주세요." rows="7"
-														required ><c:out value='${news.newsContent.replaceAll("\\\<.*?\\\>","")}' escapeXml="ture"/> </textarea>
+														required ></textarea>
 													<div class="valid-feedback">Looks good!</div>
 												</div>
 												<div class="col-lg-6 mb-3">
@@ -313,7 +324,8 @@
 
 <script>
 	window.onload=function(){
-		summernote_go($('textarea[name="newsContent"]'),'<%=request.getContextPath()%>');
+		summernote_go($('#textarea-view'),'<%=request.getContextPath()%>');
+		summernote_go($('#textarea-view-insert'),'<%=request.getContextPath()%>');
 		summernote_go($('#Content'),'<%=request.getContextPath()%>');	
 	}
 	
@@ -326,20 +338,38 @@
 
 <script>
  function remove(newsNo){
-	alert("게시글을 삭제합니다");
-	$.ajax({
-		url : 'newsRemove',
-		type : 'POST',
-		data : {'newsNo': newsNo},				
-		success : function(data) {
-			console.log(data);
-			window.location.replace(location.href);
-		},
-		error : function(request, status, error) {
-			 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-		}
-	});
+	 Swal.fire({
+		  title: '삭제하겠습니까?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		 cancelButtonText: '아니요',
+		  confirmButtonText: '네'
+	}).then(function (result){
+		if(result.value){
+		$.ajax({
+			url : 'newsRemove',
+			type : 'POST',
+			data : {'newsNo': newsNo},				
+			success : function(data) {
+				console.log(data);
+				Swal.fire({
+					icon:'success',
+					title:'삭제했습니다.',
+					showConfirmButton:false,
+					timer:1500
+				})
+				window.location.replace(location.href);
+			},
+			error : function(request, status, error) {
+				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+			}
+		})	
+	}
+  });		
 }
+
 </script>
 <script>
 
@@ -355,7 +385,10 @@ function openList(newsNo) {
 			$('input[id=newsOneContent]').val(newList.newsOneContent);
 			$('input[id=newsContent]').val(newList.newsContent);
 			$('input[id=newsSdate]').val(newList.newsSdate);
-			$('div[role=textbox]').html(newList.newsContent);	
+			
+			console.log(newList.newsContent)
+			$('#summerForUpdate .note-editor .note-editing-area div[role=textbox]').html(newList.newsContent);	
+			document.querySelector('#textarea-hidden').innerText=newList.newsContent
 
 		},
 		error : function(request, status, error) {
@@ -367,8 +400,31 @@ function openList(newsNo) {
 <script>
 
 function Modify(){
+	Swal.fire({
+		  title: '수정하겠습니까?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		 cancelButtonText: '아니요',
+		  confirmButtonText: '네'
+	}).then(function (result){
+		if(result.value){
+			
+ 		var text_content_by_summernote = $('div[role=textbox]').html()
+ 		
+ 		document.querySelector('#textarea-hidden').innerText = text_content_by_summernote
+ 		
  	$("form[role='newsModifyForm']").submit();
+ 	Swal.fire({
+			icon:'success',
+			title:'수정했습니다.',
+			showConfirmButton:false,
+			timer:1500
+		})
 }	
+  });
+	}
 </script>
     	
     	

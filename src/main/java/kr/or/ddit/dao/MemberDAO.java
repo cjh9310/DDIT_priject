@@ -12,7 +12,7 @@ public interface MemberDAO {
 	
 	List<MemberVO> selectMemberList(Criteria cri)throws SQLException;
 	
-	List<MemberVO> selectTalentListByScroll(int startNum, int endNum) throws SQLException;
+	List<MemberVO> selectTalentListByScroll(Criteria cri) throws SQLException;
 	
 	int selectMemberListCount(Criteria cri)throws SQLException;
 	

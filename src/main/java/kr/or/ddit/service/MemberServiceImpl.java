@@ -41,9 +41,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Map<String, Object> getTalentListByScroll(int startNum, int endNum) throws SQLException {
+	public Map<String, Object> getTalentListByScroll(Criteria cri) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		List<MemberVO> talentList = memberDAO.selectTalentListByScroll(startNum, endNum);
+		List<MemberVO> talentList = memberDAO.selectTalentListByScroll(cri);
 		dataMap.put("talentList", talentList);
 		return dataMap;
 	}

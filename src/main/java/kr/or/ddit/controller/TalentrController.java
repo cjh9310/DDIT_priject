@@ -61,23 +61,21 @@ public class TalentrController {
 	private AdviceService adviceService;
 
 	@GetMapping("list")
-	public String talentMain(String id,String open_conm ,HttpServletRequest request) throws Exception {
+	public String talentMain(Criteria cri, String open_conm ,HttpServletRequest request) throws Exception {
 		String url = "talent/list";
-
-		Map<String, Object> dataMap = memberService.getTalentListByScroll(1, 18);
-		//. 여기부터
 		HttpSession session = request.getSession();
-		MemberVO loginUser = null;
-		try {			
-			loginUser = (MemberVO) session.getAttribute("loginUser");
-		} catch (Exception e) {
-			url = "redirect:/index.do";// TODO: handle exception
-		}
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		cri.setId(id);
+		cri.setPerPageNum(18);
+		Map<String, Object> dataMap = memberService.getTalentListByScroll(cri);
+		//. 여기부터
 		
 		Map<String, Object> dataMap2 = null;
 		Map<String, Object> dataMap3 = null;
 		
 		open_conm = loginUser.getCoNm();
+		
 		
 		dataMap2 = openRecService.getOpenRecListByConm(open_conm);
 		dataMap3 = recruitService.getRecruitListByConm(open_conm);
@@ -92,8 +90,14 @@ public class TalentrController {
 
 	@RequestMapping(value = "/scrollList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> talnetScrollList(int startNum, int endNum, HttpServletRequest request) throws Exception {
-		Map<String, Object> dataMap = memberService.getTalentListByScroll(startNum, endNum);
+	public Map<String, Object> talnetScrollList(Criteria cri, int pageNum, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		cri.setId(id);
+		cri.setPerPageNum(18);
+		cri.setPage(pageNum);
+		Map<String, Object> dataMap = memberService.getTalentListByScroll(cri);
 		return dataMap;
 	}
 

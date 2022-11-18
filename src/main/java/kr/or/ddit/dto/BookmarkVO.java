@@ -4,7 +4,8 @@ public class BookmarkVO {
 
 	// 기본 필드
 	private int bookNo;
-	private String indId;
+	private String id;
+	private String talId;
 	private String recWantedno;
 	private int bookType;
 	private String coName;
@@ -15,9 +16,17 @@ public class BookmarkVO {
 
 	// 조인 필드 - 기업정보
 	private String coLogo;
-	
+
 	// 조인 필드 - 개인회원 이름
 	private String name;
+
+	public String getTalId() {
+		return talId;
+	}
+
+	public void setTalId(String talId) {
+		this.talId = talId;
+	}
 
 	public int getBookNo() {
 		return bookNo;
@@ -75,12 +84,12 @@ public class BookmarkVO {
 		this.bookType = bookType;
 	}
 
-	public String getIndId() {
-		return indId;
+	public String getId() {
+		return id;
 	}
 
-	public void setIndId(String indId) {
-		this.indId = indId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -91,5 +100,4 @@ public class BookmarkVO {
 		this.name = name;
 	}
 
-	
 }

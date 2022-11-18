@@ -1,5 +1,9 @@
 package kr.or.ddit.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +15,11 @@ import javax.swing.text.html.parser.Entity;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +91,20 @@ public class CoMemeberController {
 		String url="comember/mypage/support/contestRegist";
 		return url;
 	}
+	
+	@GetMapping("mypage/lockedinfo")
+	public String myPageLockedInfo(HttpServletRequest request) throws Exception {
+		String url = "comember/mypage/lockedinfo";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListById(id);
+		request.setAttribute("bookmarkMap", bookmarkMap);
+		
+		return url;
+	}
 		
 	@GetMapping("/mypage/info")
 	public String  myPageInfo(HttpServletRequest request) throws Exception {
@@ -92,6 +115,12 @@ public class CoMemeberController {
 		System.out.println(recWantedno);
 		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListByRecno(recWantedno);
 		request.setAttribute("bookmarkMap", bookmarkMap);
+		return url;
+	}
+	
+	@GetMapping("mypage/manage")
+	public String myPageManage(String parameter, HttpServletRequest request) throws Exception {
+		String url = "comember/mypage/manage/" + parameter;
 		return url;
 	}
 	
@@ -225,5 +254,48 @@ public class CoMemeberController {
 		openRecService.delete(openSeqno);
 		
 		return url;
+	}
+	
+	//기업정보 수정-----------------------------------------------------------------------------------------------
+	
+	@RequestMapping(value="/mypage/comembermodify", method=RequestMethod.POST, produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public String comembermodify(MemberVO member, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+		String url = "redirect:/mypage/info";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		member.setId(id);
+		memberService.modify(member);
+		
+		rttr.addFlashAttribute("from","modify");
+		
+		return url;
+	}
+	
+	@GetMapping("/mypage/licence")
+	public ResponseEntity<Resource> getIdenPicture(@Param("folder") String folder, @Param("filename") String filename) {
+		
+		String path = "D:\\team1\\src\\uploadImage\\BusinessLicense\\";
+		
+		folder = folder + "\\";
+		
+		Resource resource = new FileSystemResource(path + folder + filename);
+		
+		if(!resource.exists()) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		HttpHeaders header = new HttpHeaders();
+		Path filePath = null;
+		
+		try {
+			filePath = Paths.get(path + folder + filename);
+			header.add("Content-Type", Files.probeContentType(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
 }

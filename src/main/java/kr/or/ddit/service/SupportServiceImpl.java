@@ -79,6 +79,7 @@ public class SupportServiceImpl implements SupportService {
 	
 	@Override
 	public void updateSupportCounselor(SupportVO support) throws SQLException {
+		System.out.println("서포트서포트서포트서포트서포트서포트"+support);
 		supportDAO.updateSupportCounselor(support);
 		
 	}

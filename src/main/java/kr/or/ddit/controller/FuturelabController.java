@@ -114,5 +114,30 @@ public class FuturelabController {
 		}
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
+	
+	@GetMapping("ai1/idenPicture/recommand")
+	public ResponseEntity<Resource> getIdenPicture(@Param("folder") String folder, @Param("filename") String filename) {
+		
+		String path = "D:\\team1\\src\\uploadImage\\idenPicture\\";
+		
+		folder = folder + "\\";
+		
+		Resource resource = new FileSystemResource(path + folder + filename);
+		
+		if(!resource.exists()) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		HttpHeaders header = new HttpHeaders();
+		Path filePath = null;
+		
+		try {
+			filePath = Paths.get(path + folder + filename);
+			header.add("Content-Type", Files.probeContentType(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
 
 }

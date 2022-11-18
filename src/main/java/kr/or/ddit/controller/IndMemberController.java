@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
@@ -34,6 +36,7 @@ import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.ContestService;
 import kr.or.ddit.service.EducationService;
+import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.LetterService;
 import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.MentoringService;
@@ -72,6 +75,8 @@ public class IndMemberController {
 	private MentoringService mentoringService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private FalseReportService falseReportService;
 	
 	
 	@GetMapping("mypage/info")
@@ -396,15 +401,35 @@ public class IndMemberController {
 		String url = "indmember/mypage/usage";
 		return url;
 	}
-
+	
+	
 	@GetMapping("mypage/report")
-	public String myPageReport() throws Exception {
+	public String myPageReport(Criteria cri, String indId, HttpServletRequest request) throws Exception {
 		String url = "indmember/mypage/report";
 		
+		Map<String, Object> dataMap = null;
 		
+		dataMap = falseReportService.getAllFalseReportList(indId);
+		
+		request.setAttribute("dataMap", dataMap);
 		
 		return url;
 	}
 	
-
+	@GetMapping("mypage/faceSection")
+	public String faceSection(CorsRegistry registry) throws Exception {
+		String url = "indmember/mypage/faceSection";
+		registry.addMapping("/**").allowedOrigins("*");
+		return url;
+	}
+	
+	//얘는 통채로 
+	@GetMapping("mypage/result")
+	@ResponseBody
+	public String result() throws Exception {
+		String url = "http://localhost:5005/result";
+		
+		RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, String.class);
+	}
 }

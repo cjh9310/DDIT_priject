@@ -177,9 +177,11 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai1/main.do','M200000')">AI와
-								함께하는 취업 탐색</a> <a class="dropdown-item"
+								함께하는 취업 탐색</a> 
+							<a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai2/main.do','M210000')">AI와
-								함께하는 면접 준비</a> <a class="dropdown-item"
+								함께하는 면접 준비</a>
+							<a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai3/main.do','M220000')">다양한
 								AI Service 체험하기</a>
 						</div></li>

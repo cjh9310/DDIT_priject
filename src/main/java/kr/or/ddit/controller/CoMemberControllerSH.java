@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +9,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,12 +88,16 @@ public class CoMemberControllerSH {
 		
 		Map<String, Object> contestMap = new HashMap<String, Object>();
 		Map<String, Object> mentoringMap = new HashMap<String, Object>();
+		
 		contestMap = contestService.getContestListByCoId(coId);
 		//mentoringMap = mentoringService.getMentoringList();
 		mentoringMap = mentoringService.getMentoringListByCoId(coId);
 		
+		
 		model.addAttribute("contestMap",contestMap);
 		model.addAttribute("mentoringMap",mentoringMap);
+		
+		
 		
 		return url;
 	}
@@ -134,11 +143,37 @@ public class CoMemberControllerSH {
 		
 	}
 	
-	
-	public String contestSupporterList()throws Exception{
-		String url = "";
+	@RequestMapping("/mypage/contestSupporterList")
+	public ResponseEntity<Map<String, Object>> contestSupporterList(int conNo, Model model)throws Exception{
 		
-		return url;
+		ResponseEntity<Map<String, Object>> activityConMap = null;
+		Map<String, Object> dataMap = activityService.getActivityListByConNo(conNo);
+		
+		model.addAttribute("activityConMap",activityConMap);
+		
+		activityConMap = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		
+		return activityConMap;
+	}
+	
+	@RequestMapping("/mypage/mentoringSupporterList")
+	public ResponseEntity<Map<String, Object>> mentoringSupporterList(int menNo, Model model)throws Exception{
+		ResponseEntity<Map<String, Object>> activityMenMap = null;
+		Map<String, Object> dataMap = activityService.getActivityListByMenNo(menNo);
+		
+		model.addAttribute("activityMenMap",activityMenMap);
+		
+		activityMenMap = new ResponseEntity<Map<String, Object>>(dataMap, HttpStatus.OK);
+		
+	       return activityMenMap;
+	}
+	
+	@PutMapping(value="/mypage/mentoringScoreModify", produces = "application/text; charset=UTF-8")
+	@ResponseBody
+	public String mentoringScoreModify(@RequestBody ActivityVO activityVO) throws Exception {
+		activityService.modifyCom(activityVO);
+		
+		return "가산점수정!!";
 	}
 	
 	@RequestMapping(value="/mypage/mentoringRegist", produces = "application/text; charset=UTF-8")

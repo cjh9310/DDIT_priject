@@ -221,7 +221,7 @@
 												<a href="javascript:void(0);"
 													class="fs-xl text-truncate text-truncate-lg text-info"
 													data-toggle="dropdown" aria-expanded="false"
-													data-filter-tags="${talent.name}"> ${talent.name} <i
+													data-filter-tags="${talent.name}">${talent.name} <i
 													class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
 												</a>
 												<div class="dropdown-menu">
@@ -230,7 +230,7 @@
 													   data-toggle="modal"
 													   data-target="#default-example-modal-lg-center-${talent.id}" >인재 상세보기</a> 
 													<div class="dropdown-multilevel">
-                                                    <div class="dropdown-item">기업 공고 권유하기
+                                                    <div class="dropdown-item">채용 권유하기
                                                     </div>
                                                     <div class="dropdown-menu">
                                                     <c:forEach items="${openRecList }" var="openRecList">
@@ -254,8 +254,25 @@
 											</div>
 											<div
 												class='icon-stack display-3 flex-shrink-0 panel-toolbar ml-2'>
-												<i
-													class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+												<c:choose>
+													<c:when test="${talent.talBookmark != null}">
+														<button id="${talent.id}" class="bookMark_btn"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="${talent.talBookmark}">
+															<i name="talremove"
+																class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+													</c:when>
+													<c:when test="${talent.talBookmark == null}">
+														<button name="talregist" id="${talent.id}"
+															class="bookMark_btn"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="${talent.talBookmark}">
+															<i name="talregist"
+																class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+													</c:when>
+												</c:choose>
 											</div>
 											<button
 												class="js-expand-btn btn btn-sm btn-default d-none waves-effect waves-themed"
@@ -269,18 +286,17 @@
 									</div>
 									<div class="card-body p-0 collapse show">
 										<div class="p-3">
-											<a href="tel:+13174562564"
+											<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+												class="fas fa-user-graduate text-muted mr-2"></i>최종학력 : ${talent.indFedu}
+											</a> 
+											<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+												class="fas fa-birthday-cake text-muted mr-2"></i>생년월일 : ${talent.indBir}
+											</a> 
+											<a href="mailto:${talent.email}"
 												class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-												class="fas fa-mobile-alt text-muted mr-2"></i> ${talent.tel}
-											</a> <a href="mailto:oliver.kopyov@smartadminwebapp.com"
-												class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-												class="fas fa-mouse-pointer text-muted mr-2"></i>
-												${talent.email}
+												class="fas fa-mail-bulk text-muted mr-2"></i>이메일 : ${talent.email}
 											</a>
-											<address class="fs-sm fw-400 mt-4 text-muted">
-												<i class="fas fa-map-pin mr-2"></i> ${talent.indAddr}
-											</address>
-											<div class="d-flex flex-row">
+											<div class="d-flex flex-row" style="margin-top:10px;">
 												<a href="javascript:void(0);" class="mr-2 fs-xxl"
 													style="color: #3b5998"> <i
 													class="fab fa-facebook-square"></i>

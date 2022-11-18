@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+​
 
 <c:set var="supportList" value="${dataMap.supportList }" />
-<c:set var="memberList" value="${dataMap.memberList }" />
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
 <c:set var="cri" value="${pageMaker.cri }" />
 
@@ -61,12 +62,13 @@
 									<thead class="mytable">
 										<tr>
 											<th style="width: 5%; text-align: center;"><b>NO</b></th>
-											<th style="width: 12%; text-align: center;"><b>상담신청일자</b></th>
+											<th style="width: 8%; text-align: center;"><b>상담신청일자</b></th>
 											<th style="width: 10%; text-align: center;"><b>작성자(이름)</b></th>
 											<th style="width: 10%; text-align: center;"><b>작성자(ID)</b></th>
-											<th style="width: 10%; text-align: center;"><b>상담유형</b></th>
-											<th style="width: 20%; text-align: center;"><b>제목</b></th>
+											<th style="width: 8%; text-align: center;"><b>상담유형</b></th>
+											<th style="width: 15%; text-align: center;"><b>제목</b></th>
 											<th style="width: 12%; text-align: center;"><b>상담진행상태</b></th>
+											<th style="width: 10%; text-align: center;"><b>상담사</b></th>
 											<th style="width: 5%; text-align: center;"><b>수정</b></th>
 
 										</tr>
@@ -75,7 +77,7 @@
 									<tbody>
 										<c:if test="${empty supportList }">
 											<tr>
-												<td colspan="6"><strong>해당 내용이 없습니다.</strong></td>
+												<td colspan="7"><strong>해당 내용이 없습니다.</strong></td>
 											</tr>
 										</c:if>
 										<c:forEach items="${supportList}" var="support">
@@ -86,24 +88,33 @@
 														value="${support.supDate }" pattern="yyyy-MM-dd" /></td>
 												<td style="text-align: center;"></td>
 												<td style="text-align: center;">${support.indId }</td>
-												<td style="text-align: center;">${youme.index }<c:if
-														test="${support.supType eq 0 }">진로상담 </c:if> <c:if
+												<td style="text-align: center;">
+												<c:if test="${support.supType eq 0 }">진로상담 </c:if> <c:if
 														test="${support.supType eq 1 }">취업상담 </c:if> <c:if
 														test="${support.supType eq 2 }">프로그램상담 </c:if>
 												<td
 													style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${support.supTitle }</td>
 												<td style="text-align: center;"><select
-													class="form-control" id="supProcess" name="supProcess" style="height: 32px;">
-														<option value="0">상담접수중</option>
-														<option value="1">상담중</option>
-														<option value="2">상담완료</option>
-														<option value="3">상담반려</option>
+													class="form-control" id="supProcess${i }" name="supProcess" style="height: 32px;">
+														<option value="0" ${support.supProcess == 0 ? 'selected':''}>상담접수중</option>
+														<option value="1" ${support.supProcess == 1 ? 'selected':''}>상담중</option>
+														<option value="2" ${support.supProcess == 2 ? 'selected':''}>상담완료</option>
+														<option value="3" ${support.supProcess == 3 ? 'selected':''}>상담반려(상담내용불일치)</option>
 												</select></td>
+												
+												<td style="text-align: center;"><select
+													class="form-control" id="counselorName${i }" name="counselorName" style="height: 32px;">
+														<option value="0" ${support.counselorName == 0 ? 'selected':''}>박혜인 상담사</option>
+														<option value="1" ${support.counselorName == 1 ? 'selected':''}>이수진 상담사</option>
+														<option value="2" ${support.counselorName == 2 ? 'selected':''}>김민지 상담사</option>
+														<option value="3" ${support.counselorName == 3 ? 'selected':''}>김채원 상담사</option>
+												</select>
+												</td>
 												<th
 													style="width: 5%; text-align: center; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px;">
 													<button type="button"
 														class="btn-sm btn-warning waves-themed" id="modify"
-														onclick="Modify('${support.supNo}')">수정</button>
+														onclick="Modify('${support.supNo}',${i })">수정</button>
 												</th>
 											</tr>
 										</c:forEach>
@@ -118,19 +129,24 @@
 		<div id="panel-7" class="panel">
 			<div class="panel-container show">
 				<div class="panel-content">
-
+					<form id="supportModifyForm">
+				
 					<table id="userTable"
 						class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
 								<th style="width: 15px;">NO</th>
 								<th style="width: 10%;"><input type="text"
-									style="border: 0px; width: 25px;" id="supNo" name="supNo"
+									style="border: 0px; width: 40px;" id="supNo" name="supNo"
 									readonly></th>
 								<th style="width: 10%;">상담유형</th>
-								<th style="width: 15%;" id="" colspan="3"><input
-									type="text" style="border: 0px; width: 420px;" id="supType"
+								<th style="width: 5%;" id="" colspan="1"><input
+									type="text" style="border: 0px; width: 200px;" id="supType"
 									name="supType"></th>
+								<th style="width:10%">작성자(ID)</th> 
+								<th style="width: 15%;"><input type="text"
+									style="border: 0px; width: 150px;" id="indId" name="indId"
+									readonly></th>
 								<th style="width: 10%;">상담신청일자</th>
 								<th style="width: 25%;"><input type="text"
 									style="border: 0px;" id="supDate" name="supDate"></th>
@@ -142,8 +158,11 @@
 									style="border: 0px; width: 450px;" id="supTitle"
 									name="supTitle"></th>
 								<th style="width: 13%;">상담진행상태</th>
-								<th style="width: 30;" id="" colspan="3"><input type="text"
-									style="border: 0px;" id="" name="supProcess"></th>
+								<th style="width: 30;" id="" colspan="1"><input type="text"
+									style="border: 0px;" id="supProcesss" name="supProcess"></th>
+								<th style="width: 13%;">상담사</th>
+								<th style="width: 30;" id="" colspan="1"><input type="text"
+									style="border: 0px;" id="counselorNames" name="counselorName"></th>
 							</tr>
 							<tr>
 								<td style="width: 15%; padding-bottom: 150px;">내용</td>
@@ -154,7 +173,7 @@
 							</tr>
 						</thead>
 					</table>
-
+	</form>
 				</div>
 			</div>
 		</div>
@@ -164,30 +183,7 @@
 </main>
 
 <script>
-	$(document).ready(function() {
-				jQuery.fn.serializeObject = function() {
-					var obj = null;
-					try {
-						if (this[0].tagName
-								&& this[0].tagName.toUpperCase() == "FORM") {
-							var arr = this.serializeArray();
-							if (arr) 
-							{
-								obj = {};
-								jQuery.each(arr, function() 
-								{
-									obj[this.name] = this.value;
-								});
-							}
-						}
-					} catch (e) {
-						alert(e.message);
-					} finally {
-					}
 
-					return obj;
-				};
-			});
 	
 </script>
 
@@ -204,6 +200,7 @@ function openList(supNo) {
 		method : 'POST',
 		data : {'supNo' : supNo},
 		success : function(supportList) {
+			
 			$('input[id=supNo]').val(supportList.supNo);
 			
 			var v_supDate= "";
@@ -246,7 +243,20 @@ function openList(supNo) {
 			}else{
 				v_supProcess="상담반려";
 			}
-			$('input[id=supProcess]').val(v_supProcess);
+			$('input[id=supProcesss]').val(v_supProcess);
+			
+			var v_counselorName= "";
+			if (supportList.counselorName == 0){
+				v_counselorName="박혜인 상담사";
+			}else if(supportList.counselorName == 1) {
+				v_counselorName="이수진 상담사";
+			}else if(supportList.counselorName == 2){
+				v_counselorName="김민지 상담사";
+			}else{
+				v_counselorName="김채원 상담사";
+			}
+			$('input[id="counselorNames"]').val(v_counselorName);
+			$('input[id="indId"]').val(supportList.indId);
 
 		},
 		error : function(request, status, error) {
@@ -256,25 +266,65 @@ function openList(supNo) {
 };
 </script>
 <script>
- 	function Modify(supNo){
- 		
- 	
- 		var supProcess = $("#supProcess option:selected").val();
- //		console.log(supProcess);
- 		
- 		$.ajax({
- 			url : 'supportModify',
- 			method : 'POST',
- 			data : JSON.stringify({'supNo' : supNo,'supProcess':supProcess	}),
- 			contentType:'application/json',
- 			success : function(result){
- 				window.location.replace(location.href);
- 			},
- 			error : function(request, status, error) {
- 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
- 			}
- 			
-	 	});
- 	}
+ 	function Modify(supNo,index){
+ 		var v_supProcess = $("#supProcess"+index+" option:selected").val();
+ 		var v_counselorName = $("#counselorName"+index+" option:selected").val();
+ 		Swal.fire({
+ 			  title: '수정하겠습니까?',
+ 			  icon: 'warning',
+ 			  showCancelButton: true,
+ 			  confirmButtonColor: '#3085d6',
+ 			  cancelButtonColor: '#d33',
+ 			 cancelButtonText: '아니요',
+ 			  confirmButtonText: '네'
+ 		}).then(function (result){
+ 			if(result.value){
+ 			$.ajax({
+ 	 			url : 'supportModify',
+ 	 			method : 'POST',
+ 	 			data : JSON.stringify({'supNo' : supNo,'supProcess':v_supProcess,'counselorName':v_counselorName }),
+ 	 			contentType:'application/json',
+ 	 			success : function(result){
+ 	 				Swal.fire({
+ 	 	 				icon:'success',
+ 	 	 				title:'수정했습니다.',
+ 	 	 				showConfirmButton:false,
+ 	 	 				timer:1500
+ 	 	 			})
+ 	 				window.location.replace(location.href);
+ 	 			},
+ 	 			
+ 	 			error : function(request, status, error) {
+ 	 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+ 	 			}
+ 			})
+ 		}
+ 	});
+ }
+</script>
+
+
+<script>
+$(document).ready(function(){	
+	jQuery.fn.serializeObject = function() {
+		var obj = null;
+		try {
+			if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+				var arr = this.serializeArray();
+				if (arr) {
+					obj = {};
+					jQuery.each(arr, function() {
+						obj[this.name] = this.value;
+					});
+				}
+			}
+		} catch (e) {
+			alert(e.message);
+		} finally {
+		}
+
+		return obj;
+	};
+});
 </script>
 

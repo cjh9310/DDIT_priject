@@ -75,8 +75,8 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public Map<String, Object> getActivityListByMenNo(int menNo) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-		List<ActivityVO> activityList = activityDAO.selectActivityListByMenNo(menNo);
-		dataMap.put("activityList",activityList);
+		List<ActivityVO> activityMenList = activityDAO.selectActivityListByMenNo(menNo);
+		dataMap.put("activityMenList",activityMenList);
 		return dataMap;
 	}
 

@@ -234,4 +234,61 @@ $('#indmembermodifyBtn').on('click', function() {
 });
 
 </script>
+<script>
+function faceOn() {
+	
+	var faceSection = $('#faceSection');
 
+	var ajaxOption = {
+			url : '<%=request.getContextPath()%>/indmember/mypage/faceSection.do',
+			async : true,
+			type : "GET",
+			dataType : "html",
+			cache : false
+		};
+
+		$.ajax(ajaxOption).done(function(data) {
+			$(faceSection).children().remove();
+			$(faceSection).append(data);  
+		});
+	
+}
+</script>
+<script>
+setTimeout(function() {
+	$.ajax({
+		url : '<%=request.getContextPath()%>/indmember/mypage/result',
+			type : 'get',
+			error : function(xhr, status) {
+				console.log(xhr + status);
+			},
+			success : function(data) {
+				console.log(data);
+				face_rendering(data);
+			}
+		});
+	}, 5000);
+</script>
+<script>
+	function face_rendering(check_password) {
+		var user_password = "${loginUser.pwd}";
+		console.log('락 오프 시도', check_password, user_password);
+		
+		if(check_password == user_password) {
+			var ajaxOption = {
+				url : '<%=request.getContextPath()%>/indmember/mypage/info.do',
+				async : true,
+				type : "GET",
+				dataType : "html",
+				cache : false
+			};
+	
+			$.ajax(ajaxOption).done(function(data) {
+				$('#auth_check').children().remove();
+				$('#auth_check').html(data); 
+			});
+		} else {
+			alert('비밀번호가 일치하지않습니다.');	
+		}
+	}
+</script>

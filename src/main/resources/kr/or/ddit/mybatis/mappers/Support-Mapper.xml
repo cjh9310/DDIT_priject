@@ -42,9 +42,9 @@
 	<insert id="insertSupport" parameterType="support">
 		insert
 		into
-		support(sup_No, ind_Id, sup_Type, sup_Title, sup_Content, sup_Pdate ,sup_Date)
+		support(sup_No, ind_Id, sup_Type, sup_Title, sup_Content, sup_Pdate ,sup_Date,counselor_Name)
 		values
-		(#{supNo}, #{indId}, #{supType}, #{supTitle,  jdbcType = VARCHAR}, #{supContent,  jdbcType = VARCHAR}, #{supPdate,  jdbcType = VARCHAR}, sysdate)
+		(#{supNo}, #{indId}, #{supType}, #{supTitle,  jdbcType = VARCHAR}, #{supContent,  jdbcType = VARCHAR}, #{supPdate,  jdbcType = VARCHAR}, sysdate, #{counselorName})
 	</insert>
 	
 	<update id="updateSupport" parameterType="support">
@@ -59,7 +59,9 @@
 		update
 		support
 		set
-		sup_Process=#{supProcess}, sup_Edate=sysdate
+		sup_Process=#{supProcess}, 
+		sup_Edate=sysdate,
+		counselor_Name=#{counselorName}
 		where sup_No=#{supNo}
 	</update>
 	
