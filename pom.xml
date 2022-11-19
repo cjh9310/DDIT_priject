@@ -62,7 +62,12 @@
          <artifactId>spring-test</artifactId>
          <version>${org.springframework-version}</version>
       </dependency>
-      
+      <!-- websocket -->
+      <dependency>
+		 <groupId>org.springframework</groupId>
+		 <artifactId>spring-websocket</artifactId>
+		 <version>${org.springframework-version}</version>
+	  </dependency>
       <!-- spring-security-web -->
       <dependency>
          <groupId>org.springframework.security</groupId>
@@ -225,6 +230,7 @@
          <version>1.2</version>
       </dependency>
 
+	  
       <!-- Test -->
       <dependency>
          <groupId>junit</groupId>

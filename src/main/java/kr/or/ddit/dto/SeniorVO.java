@@ -15,7 +15,6 @@ public class SeniorVO {
 	private String snrState;	// 상태(진행중,진행완료..) 
 	private String snrAdid;	// 등록관리자
 	
-	
 	public int getSnrNo() {
 		return snrNo;
 	}
@@ -82,14 +81,12 @@ public class SeniorVO {
 	public void setSnrState(String snrState) {
 		this.snrState = snrState;
 	}
-	
 	public String getSnrAdid() {
 		return snrAdid;
 	}
 	public void setSnrAdid(String snrAdid) {
 		this.snrAdid = snrAdid;
 	}
-	
 	
 	@Override
 	public String toString() {
@@ -98,5 +95,7 @@ public class SeniorVO {
 				+ ", snrSdate=" + snrSdate + ", snrEdate=" + snrEdate + ", snrVolume=" + snrVolume + ", snrState="
 				+ snrState + ", snrAdid=" + snrAdid + "]";
 	}
+	
+	
 
 }

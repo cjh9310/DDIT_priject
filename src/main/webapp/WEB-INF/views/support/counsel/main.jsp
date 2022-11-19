@@ -54,7 +54,7 @@ $(document).ready(function(){
 						</div>
 						<!-- Modal Left Large -->
 						<div class="modal fade default-example-modal-right-sm"
-							tabindex="-1" role="dialog" aria-hidden="true">
+							tabindex="-1" role="dialog" aria-hidden="true" id="counselModal">
 							<div class="modal-dialog modal-dialog-right modal-sm">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -78,8 +78,7 @@ $(document).ready(function(){
 														<p>궁금하신 사항이 있다면 언제든 신청해주세요. 친절히 상담을 도와드리겠습니다.</p>
 													</div>
 												</div>
-												<form class="needs-validation" novalidate="" method="post"
-													name="registForm" id="registForm">
+												<form class="needs-validation" novalidate="" method="post" name="registForm" id="registForm" enctype="multipart/form-data">
 													<div class="panel-content">
 														<!-- <input type="hidden" name="supNo" value="0"> -->
 														<div class="form-group">
@@ -109,34 +108,29 @@ $(document).ready(function(){
 														</div>
 
 														<div class="form-group">
-															<label class="form-label" for="supPdate"><b>상담가능일자</b>&nbsp;※상담일자를
-																선택하지않을 경우 상담사가 임의로 연락을 드립니다.</label> <input class="form-control"
-																id="supPdate" type="date" name="supPdate">
+															<label class="form-label" for="supPdate"><b>상담가능일자</b>&nbsp;※상담일자를 선택하지않을 경우 상담사가 임의로 연락을 드립니다.</label> 
+															<input class="form-control" id="supPdate" type="date" name="supPdate">
 														</div>
 
 														<div class="form-group">
-															<label class="form-label" for="supContent"><b>상담내용</b>
-																<span class="text-danger">*</span></label>
-															<textarea class="form-control" id="supContent"
-																name="supContent" placeholder="상담신청하실 내용을 입력해주세요."
-																rows="7"></textarea>
+															<label class="form-label" for="supContent"><b>상담내용</b><span class="text-danger">&nbsp;*</span></label>
+															<textarea class="form-control" id="supContent" name="supContent" placeholder="상담신청하실 내용을 입력해주세요." rows="7"></textarea>
 															<div class="invalid-feedback">상담신청하실 내용을 입력해주세요.</div>
 														</div>
 
-														<!-- <div class="form-group mb-0">
-																				<label class="form-label"><b>첨부파일</b></label>
-																				<div class="custom-file">
-																					<input type="file" class="custom-file-input" id="customFile">
-																					<label class="custom-file-label" for="customFile">파일선택</label>
-																				</div>
-																			</div> -->
+														<div class="form-group mb-0">
+															<label class="form-label"><b>첨부파일</b></label>
+															<div class="custom-file">
+																<input type="file" class="custom-file-input" id="registFile">
+																<label class="custom-file-label" for="registFile">파일선택</label>
+															</div>
+														</div>
 													</div>
 													<div
 														class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
 														<div class="custom-control custom-checkbox">
-															<input type="checkbox" class="custom-control-input"
-																id="invalidCheck" required=""> <label
-																class="custom-control-label" for="invalidCheck">
+															<input type="checkbox" class="custom-control-input" id="invalidCheck" required=""> 
+															<label class="custom-control-label" for="invalidCheck">
 																Agree to terms and conditions <span class="text-danger">*</span>
 															</label>
 															<div class="invalid-feedback">You must agree before
@@ -183,49 +177,36 @@ $(document).ready(function(){
 <script>
 		$("#registBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
 			
-			
 			var param = $("#registForm").serialize();
-			//var param = $("#registForm").serializeObject();
-			/*
-			param = {
-					supType:$("input[name=supType]").val(),
-					supTitle:$("input[name=supTitle]").val(),
-					supContent:$("input[name=supContent]").val(),
-					supPdate:$("input[name=supPdate]").val()
-				};
-			*/
-		
-		    //alert(JSON.stringify(param));
 			
 			$.ajax({
 				url : 'regist',
 				type : 'POST',
-				//data : JSON.stringify(param),
 				data : param,
-				/*
-				data:JSON.parse({
-					supType:$("input[name=supType]").val();,
-					supTitle:$("input[name=supTitle]").val();,
-					supContent:$("input[name=supContent]").val();
-					supPdate:$("input[name=supPdate]").val();
-				}),
-				*/
 				cache: false,
 	            async: true,
 	            //dataType : 'json',
 	            //contentType:'application/json',
 				success : function(data) {
-					//alert(data);
-					window.location.replace(location.href);
+					Swal.fire({
+						target: document.getElementById('counselModal'),
+		                icon: 'success',
+						title: "상담신청완료!",
+						text: "신청한 상담은 [마이페이지]-[프로그램관리]에서 확인할 수 있습니다.",
+		                type: "success",
+		                showCancelButton: false,
+		                confirmButtonText: "OK"
+		    		}).then(function(result){
+					 
+						window.location.replace(location.href);
 					
-					
-					
-					
+		    		});
 					
 				},
 				error : function(request, status, error) {
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
-			});
+			
 		});
+	});		
 </script>

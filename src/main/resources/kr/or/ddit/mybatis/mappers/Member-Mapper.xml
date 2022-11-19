@@ -58,6 +58,13 @@
          where a.ind_id = b.tal_id (+)
 	</select>
 	
+	<select id="selectCoMember" parameterType="str" resultType="member">
+		select *
+		  from co_member
+		 where co_id is not null
+		   and co_nm like '%'||#{keyword}||'%'
+	</select>
+	
 	<update id="indUpdateMember1" parameterType="member">
 	update member 
 		set 
@@ -75,6 +82,12 @@
 		set
 		CO_NM=#{coNm}, CO_REG_NO=#{coRegNo}, CO_ADDR=#{coAddr},
 		CO_DEADDR=#{coDeaddr},CO_ADDRNO=#{coAddrno},CO_LINK=#{coLink}
+		where co_id=#{id}
+	</update>
+	<update id="comUpdateMember2" parameterType="member">
+	update co_member
+		set
+		CO_CONFIRM=#{coConfirm}
 		where co_id=#{id}
 	</update>
 	

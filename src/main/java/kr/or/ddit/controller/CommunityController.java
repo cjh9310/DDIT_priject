@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import kr.or.ddit.dto.PublicWorkVO;
 import kr.or.ddit.dto.ReportVO;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.FaqService;
+import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.PublicWorkService;
 
 
@@ -41,6 +43,9 @@ public class CommunityController {
 	@Autowired
 	private FalseReportService falseReportService;
 
+	@Autowired
+	private MemberService memberService;
+	
 	@GetMapping("archive/list")
 	public String archiveList() throws Exception {
 		String url = "community/archive/list";
@@ -75,6 +80,28 @@ public class CommunityController {
 		req.setAttribute("dataMap", dataMap);
 		
 		return url;
+	}
+	
+	@RequestMapping(value = "/publicworkForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> publicworkForMain(Criteria cri, HttpServletRequest request) throws Exception {
+		cri.setPerPageNum(20);
+		Map<String,Object> dataMap = publicWorkService.getPublicWorkList(cri);
+		return dataMap;
+	}
+	
+	@RequestMapping(value = "/faqForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> faqForMain(HttpServletRequest request) throws Exception {
+		Map<String,Object> dataMap = new HashMap<String, Object>();
+		
+		List<FaqVO> indMemberList = faqService.getAllFaqIndmemberList();
+		List<FaqVO> coMemberList = faqService.getAllFaqComemberList();
+		
+		dataMap.put("indMemberList", indMemberList);
+		dataMap.put("coMemberList", coMemberList);
+		
+		return dataMap;
 	}
 	
 	@RequestMapping("publicwork/detail")
@@ -132,4 +159,22 @@ public class CommunityController {
 		
 		return url;
 	}
+	
+	@GetMapping("report/coNameSearch")
+	public String coNameSearch() throws Exception {
+		String url = "community/report/nameSearch";
+		
+		return url;
+	}	
+	
+	@GetMapping("report/nameSearch")
+	public String nameSearch(String name, HttpServletRequest request) throws Exception {
+		String url="community/report/regist";
+				
+		List<MemberVO> memberVO = memberService.getSelectCoMember(name);
+		request.setAttribute("memberVO", memberVO);
+		
+		
+		return url;
+	}	
 }

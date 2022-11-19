@@ -2,12 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-
-<c:set var="openRecList" value="${openRecMap.openRecList}" />
-<c:set var="recruitList" value="${recruitMap.recruitList}" />
-<c:set var="contestList" value="${contestMap.contestList}" />
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <style>
 .panel-conteiner {
@@ -70,20 +65,8 @@ div {
 									<div class="custom-scroll">
 										<div>
 											<table class="table table-sm table-hover table-striped w-100">
-												<tbody>
-													<c:if test="${empty openRecList}">
-														<tr>
-															<td class="text-center fw-700" colspan="2">등록된 공채
-																정보가 없습니다.</td>
-														</tr>
-													</c:if>
-													<c:forEach items="${openRecList}" var="openRec"
-														varStatus="status">
-														<tr>
-															<td>${openRec.openConm}</td>
-															<td>${openRec.openTitle}</td>
-														</tr>
-													</c:forEach>
+												<tbody id="openrecList_MainSection">
+													
 												</tbody>
 											</table>
 										</div>
@@ -92,33 +75,14 @@ div {
 								<div class="col-xl-3" style="padding: 0px;">
 									<div id="carouselExampleInterval" style="padding: 0px;"
 										class="carousel slide" data-ride="carousel">
-										<div class="carousel-inner">
-											<c:forEach items="${openRecList}" var="openRec"
-												varStatus="status">
-												<c:choose>
-													<c:when test="${status.first}">
-														<div class="carousel-item active" data-interval="2000">
-													</c:when>
-													<c:otherwise>
-														<div class="carousel-item" data-interval="2000">
-													</c:otherwise>
-												</c:choose>
-												<div class="card border m-auto m-lg-0">
-													<img src="${openRec.openLogo}" class="card-img-top"
-														alt="...">
-													<div class="card-body">
-														<h5 class="card-title fw-700">${openRec.openConm}</h5>
-														<p class="card-text">${openRec.openTitle}</p>
-														<p class="card-text">${openRec.openEdate}까지</p>
-														<p class="card-text">${openRec.openCarnm}
-															${openRec.openEdunm}</p>
-														<p class="card-text">${openRec.openRegion}</p>
-														<a href="" class="card-link fw-700">${openRec.openConm}
-															지원하러가기</a>
-													</div>
-												</div>
+										<div class="carousel-inner" id="openrecSlide_MainSection">
+										<div class="carousel-item active" data-interval="2000">
+										<div class="card border m-auto m-lg-0">
+											<div class="card-body">
+												공채 카드
 											</div>
-										</c:forEach>
+										</div>
+									</div>
 									</div>
 								</div>
 							</div>
@@ -130,20 +94,8 @@ div {
 								<div class="custom-scroll">
 									<div>
 										<table class="table table-sm table-hover table-striped w-100">
-											<tbody>
-												<c:if test="${empty recruitList}">
-													<tr>
-														<td class="text-center fw-700" colspan="2">등록된 채용공고가
-															없습니다.</td>
-													</tr>
-												</c:if>
-												<c:forEach items="${recruitList}" var="recruit"
-													varStatus="status">
-													<tr>
-														<td>${recruit.coName}</td>
-														<td>${recruit.recWantedtitle}</td>
-													</tr>
-												</c:forEach>
+											<tbody id="recruitList_MainSection">
+											
 											</tbody>
 										</table>
 									</div>
@@ -152,31 +104,14 @@ div {
 							<div class="col-xl-3" style="padding: 0px;">
 								<div id="carouselExampleInterval" style="padding: 0px;"
 									class="carousel slide" data-ride="carousel">
-									<div class="carousel-inner">
-										<c:forEach items="${recruitList}" var="recruit"
-											varStatus="status">
-											<c:choose>
-												<c:when test="${status.first}">
-													<div class="carousel-item active" data-interval="2000">
-												</c:when>
-												<c:otherwise>
-													<div class="carousel-item" data-interval="2000">
-												</c:otherwise>
-											</c:choose>
-											<div class="card border m-auto m-lg-0">
-												<div class="card-body">
-													<h5 class="card-title fw-700">${recruit.coName}</h5>
-													<p class="card-text">
-														<fmt:formatDate value="${recruit.recRegdt}" pattern="yyyy-MM-dd"/>
-													</p>
-													<p class="card-text">${recruit.recRegion}</p>
-													<p class="card-text">${recruit.recWantedtitle}</p>
-													<a href="" class="card-link fw-700">${recruit.coName}
-													지원하러가기</a>
-												</div>
+									<div class="carousel-inner" id="recruitSlide_MainSection">
+										<div class="carousel-item active" data-interval="2000">
+										<div class="card border m-auto m-lg-0">
+											<div class="card-body">
+												채용공고 카드
 											</div>
 										</div>
-									</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -297,24 +232,8 @@ div {
 						<div class="tab-pane fade show active" id="tab_mentoring" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div>
-										<table class="table table-sm table-hover table-striped w-100">
-											<tbody>
-												<c:if test="${empty contestList}">
-													<tr>
-														<td class="text-center fw-700" colspan="2">등록된 공모전이
-															없습니다.</td>
-													</tr>
-												</c:if>
-												<c:forEach items="${contestList}" var="contest"
-													varStatus="status">
-													<tr>
-														<td>${contest.conEdate}</td>
-														<td>${contest.conContent}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
+									<div class="row" id="mentoringList_MainSection">
+										
 									</div>
 								</div>
 							</div>
@@ -322,24 +241,8 @@ div {
 						<div class="tab-pane fade" id="tab_contest" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div>
-										<table class="table table-sm table-hover table-striped w-100">
-											<tbody>
-												<c:if test="${empty contestList}">
-													<tr>
-														<td class="text-center fw-700" colspan="2">등록된 공모전이
-															없습니다.</td>
-													</tr>
-												</c:if>
-												<c:forEach items="${contestList}" var="contest"
-													varStatus="status">
-													<tr>
-														<td>${contest.conEdate}</td>
-														<td>${contest.conTitle}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
+									<div class="row" id="contestList_MainSection">
+										
 									</div>
 								</div>
 							</div>
@@ -347,50 +250,35 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-3">
-				<div id="panel-1" class="panel">
-					<div class="panel-hdr">
-						<h2>
-							취업상담 <span class="fw-300"></span>
-						</h2>
-						<div class="panel-toolbar">
-							<button onclick="location.href='<%=request.getContextPath()%>/support/counsel/main.do'"
-								class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
-								<i class="fal fa-plus"></i>
-							</button>
+			<sec:authorize access="hasAnyRole('ROLE_INDUSER')">
+				<div class="col-xl-3">
+					<div id="panel-1" class="panel">
+						<div class="panel-hdr">
+							<h2>
+								취업상담 <span class="fw-300"></span>
+							</h2>
+							<div class="panel-toolbar">
+								<button onclick="location.href='<%=request.getContextPath()%>/support/counsel/main.do'"
+									class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+									<i class="fal fa-plus"></i>
+								</button>
+							</div>
 						</div>
-					</div>
-					<div class="panel-container show">
-						<div class="panel-content">
-							<div class="row cardMargin">
-								<div class="col-xl-12 panel" style="padding: 0px;">
-									<div class="custom-scroll">
-										<div>
-											<table class="table table-sm table-hover table-striped w-100">
-												<tbody>
-													<c:if test="${empty counselList}">
-														<tr>
-															<td class="text-center fw-700" colspan="2">등록된 상담내역이
-																없습니다.</td>
-														</tr>
-													</c:if>
-													<c:forEach items="${counselList}" var="counsel"
-														varStatus="status">
-														<%-- <tr>
-																<td>${}</td>
-																<td>${}</td>
-															</tr> --%>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-									</div>
+						<div class="panel-container show">
+							<div class="panel-content">
+								<div class="frame-wrap">
+								<div style="text-align: center;">
+									<img
+										src="<%=request.getContextPath()%>/resources/template/img/support/취업상담메인수정.png"
+										style="width: 100%" />
 								</div>
+	
+							</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</sec:authorize>
 			<div class="col-xl-4">
 				<div id="panel-7" class="panel">
 					<div class="panel-hdr">
@@ -484,20 +372,8 @@ div {
 									<div class="custom-scroll">
 										<div>
 											<table class="table table-sm table-hover table-striped w-100">
-												<tbody>
-													<c:if test="${empty publicworkList}">
-														<tr>
-															<td class="text-center fw-700" colspan="2">등록된
-																공공근로알림이 없습니다.</td>
-														</tr>
-													</c:if>
-													<c:forEach items="${publicworkList}" var="publicwork"
-														varStatus="status">
-														<%-- <tr>
-																<td>${}</td>
-																<td>${}</td>
-															</tr> --%>
-													</c:forEach>
+												<tbody id="publicworkList_MainSection">
+													
 												</tbody>
 											</table>
 										</div>
@@ -508,41 +384,32 @@ div {
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4">
-				<div id="panel-1" class="panel">
-					<div class="panel-hdr">
-						<h2>
-							FAQ <span class="fw-300"></span>
-						</h2>
-						<div class="panel-toolbar">
-							<button onclick="location.href='<%=request.getContextPath()%>/community/faq/list.do'"
-								class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
-								<i class="fal fa-plus"></i>
-							</button>
+			<sec:authorize access="hasAnyRole('ROLE_INDUSER')">
+				<div class="col-xl-4">
+					<div id="panel-1" class="panel">
+						<div class="panel-hdr">
+							<h2>
+								개인회원 FAQ <span class="fw-300"></span>
+							</h2>
+							<div class="panel-toolbar">
+								<button onclick="location.href='<%=request.getContextPath()%>/community/faq/list.do'"
+									class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+									<i class="fal fa-plus"></i>
+								</button>
+							</div>
 						</div>
-					</div>
-					<div class="panel-container show">
-						<div class="panel-content">
-							<div class="row cardMargin">
-								<div class="col-xl-12 panel" style="padding: 0px;">
-									<div class="custom-scroll">
-										<div>
-											<table class="table table-sm table-hover table-striped w-100">
-												<tbody>
-													<c:if test="${empty faqList}">
-														<tr>
-															<td class="text-center fw-700" colspan="2">등록된
-																자주묻는질문이 없습니다.</td>
-														</tr>
-													</c:if>
-													<c:forEach items="${faqList}" var="faq" varStatus="status">
-														<%-- <tr>
-																	<td>${}</td>
-																	<td>${}</td>
-																</tr> --%>
-													</c:forEach>
-												</tbody>
-											</table>
+						<div class="panel-container show">
+							<div class="panel-content">
+								<div class="row cardMargin">
+									<div class="col-xl-12 panel" style="padding: 0px;">
+										<div class="custom-scroll">
+											<div>
+												<table class="table table-sm table-hover table-striped w-100">
+													<tbody id="indfaqList_MainSection">
+														
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -550,7 +417,41 @@ div {
 						</div>
 					</div>
 				</div>
-			</div>
+			</sec:authorize>
+			<sec:authorize access="hasAnyRole('ROLE_COUSER')">
+				<div class="col-xl-4">
+					<div id="panel-1" class="panel">
+						<div class="panel-hdr">
+							<h2>
+								기업회원 FAQ <span class="fw-300"></span>
+							</h2>
+							<div class="panel-toolbar">
+								<button onclick="location.href='<%=request.getContextPath()%>/community/faq/list.do'"
+									class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+									<i class="fal fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="panel-container show">
+							<div class="panel-content">
+								<div class="row cardMargin">
+									<div class="col-xl-12 panel" style="padding: 0px;">
+										<div class="custom-scroll">
+											<div>
+												<table class="table table-sm table-hover table-striped w-100">
+													<tbody id="cofaqList_MainSection">
+														
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</sec:authorize>
 			<div class="col-xl-4">
 				<div id="panel-8" class="panel">
 					<div class="panel-hdr">
@@ -605,3 +506,235 @@ div {
 	</div>
 </div>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+<script>
+Handlebars.registerHelper("indexCheck", function(element, options) {
+    if(element == 0) { 
+    	return options.fn(this);
+    } else {
+    	return options.inverse(this);
+    }
+});
+</script>
+
+<script type="text/x-handlebars-template" id="main-recruit-list">
+{{#each recruitList}}
+<tr>
+	<td>{{coName}}</td>
+	<td>{{recWantedtitle}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-openrec-list">
+{{#each openRecList}}
+<tr>
+	<td>{{openConm}}</td>
+	<td>{{openTitle}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-recruit-slide">
+{{#each recruitList}}
+	<div class="carousel-item" data-interval="2000">
+	<div class="card border m-auto m-lg-0">
+		<div class="card-body">
+			<h5 class="card-title fw-700">{{coName}}</h5>
+			<p class="card-text">
+			</p>
+			<p class="card-text">{{recRegion}}</p>
+			<p class="card-text">{{recWantedtitle}}</p>
+			<a href="" class="card-link fw-700">{{coName}}
+			지원하러가기</a>
+		</div>
+	</div>
+</div>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-openrec-slide">
+{{#each openRecList}}
+	<div class="carousel-item" data-interval="2000">
+	<div class="card border m-auto m-lg-0">
+		<div class="card-body">
+			<h5 class="card-title fw-700">{{openConm}}</h5>
+			<p class="card-text">
+			</p>
+			<p class="card-text">{{openConm}}</p>
+			<p class="card-text">{{openConm}}</p>
+			<a href="" class="card-link fw-700">{{openConm}}
+			지원하러가기</a>
+		</div>
+	</div>
+</div>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-contest-list">
+{{#each contestList}}
+<div class="panel-content col-3">
+	<div class="card-deck">
+		<div class="card">
+			<img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" class="card-img-top" alt="...">
+		</div>
+	</div>
+</div>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-mentoring-list">
+{{#each mentoringList}}
+<div class="panel-content col-3">
+	<div class="card-deck">
+		<div class="card">
+			<img src="<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg" class="card-img-top" alt="...">
+			<div class="card-body demo"style="height: 155.87px;">
+				<h4 class="card-title" data-toggle="tooltip"
+					data-placement="top" title=""
+					data-original-title="{{menTitle }}">{{menTitle }}</h4>
+			</div>
+		</div>
+	</div>
+</div>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-publicwork-list">
+{{#each publicWorkList}}
+	<tr>
+		<td>{{pubTitle}}</td>
+		<td>{{pubHost}}</td>
+	</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-indfaq-list">
+{{#each indMemberList}}
+<tr>
+	<td>{{faqTitle}}</td>
+	<td>{{faqContent}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="main-cofaq-list">
+{{#each coMemberList}}
+<tr>
+	<td>{{faqTitle}}</td>
+	<td>{{faqContent}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/openrec/scrollList.do?pageNum=1',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("openrec data : ",data);
+	printDataByMain(data, $('#openrecList_MainSection'), $('#main-openrec-list'));
+	printDataByMainAppend(data, $('#openrecSlide_MainSection'), $('#main-openrec-slide'));  
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/recruit/scrollList.do?pageNum=1',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("recruit data : ",data);
+	printDataByMain(data, $('#recruitList_MainSection'), $('#main-recruit-list'));
+	printDataByMainAppend(data, $('#recruitSlide_MainSection'), $('#main-recruit-slide'));
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/support/contestForMain.do',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("contest data : ",data);
+	printDataByMain(data, $('#contestList_MainSection'), $('#main-contest-list'));
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/support/mentoringForMain.do',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("mentoring data : ",data);
+	printDataByMain(data, $('#mentoringList_MainSection'), $('#main-mentoring-list')); 
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/community/publicworkForMain.do',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("publicwork data : ",data);
+	printDataByMain(data, $('#publicworkList_MainSection'), $('#main-publicwork-list')); 
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/community/faqForMain.do',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("faq data : ",data);
+	printDataByMain(data, $('#indfaqList_MainSection'), $('#main-indfaq-list'));
+	printDataByMain(data, $('#cofaqList_MainSection'), $('#main-cofaq-list'));
+});
+</script>
+
+<script>
+function printDataByMain(dataArr, target, templateObject) {
+	console.log("handlebars dataArr : " + dataArr);
+	var template = Handlebars.compile(templateObject.html());
+	var html = template(dataArr);
+	target.html(html);
+}
+</script>
+
+<script>
+function printDataByMainAppend(dataArr, target, templateObject) {
+	console.log("handlebars dataArr : " + dataArr);
+	var template = Handlebars.compile(templateObject.html());
+	var html = template(dataArr);
+	target.append(html);
+}
+</script>

@@ -18,6 +18,8 @@ public interface MemberDAO {
 	
 	MemberVO selectMemberById(String id)throws SQLException;
 	
+	List<MemberVO> selectCoMember(String name)throws SQLException;
+	
 	
 	public void insertMember(MemberVO member) throws SQLException;
 	

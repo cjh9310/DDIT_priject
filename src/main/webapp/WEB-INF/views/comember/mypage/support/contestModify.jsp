@@ -111,35 +111,45 @@
 
  $("#modifyBtn").on("click",function() {
 	 var param = $('#modifyForm').serialize();
-			 /* {	conTitle:$("input[name=conTitle]").val(),
-			 	conContent:$("input[name=conContent]").val(),
-			 	conField:$("input[name=conField]").val(),
-				conSdate:$("input[name=conSdate]").val(),
-			 	conEdate:$("input[name=conEdate]").val(),
-			 	conAward:$("input[name=conAward]").val()
-			 	//conEdate:$("input[name=conEdate]").val(),
-			 } */
 		 param = param.replaceAll('-','/');
 	 var conNo = ${contest.conNo};
 	 
-	 $.ajax({
-			type:"POST",
-			url:"contestModify.do",
-			data:param,
-			//contentType: "application.json; charset=utf-8",
-			dataType:"text",
-			success:(data)=>{
-				alert("수정성공");
-				location.replace("contestDetail.do?conNo=" + conNo);
-				opener.location.replace(opener.location.href);
-				
-			},
-			error:(request,status,error)=>{
-				
-				console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-	});
+	 Swal.fire({
+         icon: 'warning',
+			title: "프로그램을 수정하시겠습니까?",
+         type: "success",
+         showCancelButton: true,
+         confirmButtonText: "OK"
+	}).then(function(result){ 
+		if(result.value){
+	 
+		 $.ajax({
+				type:"POST",
+				url:"contestModify.do",
+				data:param,
+				//contentType: "application.json; charset=utf-8",
+				dataType:"text",
+				success:(data)=>{
+					//alert("수정성공");
+					Swal.fire({
+							icon: 'success',
+							title: '프로그램이 수정되었습니다.',
+							showConfirmButton: false,
+							timer: 1500
+					}).then(function(){
+					location.replace("contestDetail.do?conNo=" + conNo);
+					opener.location.replace(opener.location.href);
+					});
+					
+				},
+				error:(request,status,error)=>{
+					
+					console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+		});
+	}
 }); 
+ });
 
 </script>
 

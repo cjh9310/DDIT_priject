@@ -56,6 +56,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return member;
 	}
 
+
+	@Override
+	public List<MemberVO> selectCoMember(String name) throws SQLException {
+		List<MemberVO> memberVO = session.selectList("Member-Mapper.selectCoMember", name);
+		return memberVO;
+	}
+	
+	
 	@Override
 	public void insertMember(MemberVO member) throws SQLException {
 		session.update("Member-Mapper.insertMember", member);

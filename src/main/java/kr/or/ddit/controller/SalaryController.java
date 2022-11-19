@@ -27,10 +27,6 @@ public class SalaryController {
 	@Autowired
 	private NewsService newsService;
 	
-	
-	
-	
-	
 	@GetMapping("list")
 	public String salaryList(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "salary/list";

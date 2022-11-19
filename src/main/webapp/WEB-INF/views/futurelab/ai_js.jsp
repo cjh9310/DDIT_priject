@@ -559,7 +559,7 @@
 		
 		$.ajax({
 			type : "get",
-			url : "http://127.0.0.1:5000/idenPicture?id="+id,
+			url : "http://192.168.141.21:5000/idenPicture?id="+id,
 			dataType : 'text',
 			success : function(data) {
 				document.location.reload();

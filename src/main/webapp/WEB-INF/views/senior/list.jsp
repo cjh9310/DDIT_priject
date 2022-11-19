@@ -32,11 +32,11 @@
 	}
 	
 	#tootitle {
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  display: -webkit-box;
-	  -webkit-line-clamp: 2;
-	  -webkit-box-orient: vertical;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  display: -webkit-box;
+		  -webkit-line-clamp: 2;
+		  -webkit-box-orient: vertical;
 	}
 	
 	
@@ -132,10 +132,18 @@
 	            </div>
 	        </div>
 	    </div>    
-	</div> 
+	</div>  --%>
 	
-	--%>
 	
+<!-- ------------------------------------------------------------------------------------------ -->		
+
+	<div class="demo">
+	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">대덕구</button>
+	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">동구</button>
+	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">서구</button>
+	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">유성구</button>
+	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">중구</button>	   
+	</div>
 
 <!-- ------------------------------------------------------------------------------------------ -->	
 	
@@ -152,78 +160,94 @@
 						            <div class="card-header p-3">
 							            <div class="row">
 							                <div class="col-md-5" >
-							                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon6.png">
+							                	<c:choose>
+							                		<c:when test="${senior.snrType  == '1'}">
+							                			<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon5_1.png">
+							                		</c:when>
+							                		<c:when test="${senior.snrType  == '2'}">
+							                			<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon6.png">
+							                		</c:when>
+							                		<c:when test="${senior.snrType  == '3'}">
+							                			<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon8.png">
+							                		</c:when>
+							                		<c:when test="${senior.snrType  == '4'}">
+							                			<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon7.png">
+							                		</c:when>								                										                									                		
+							                	</c:choose>
+							                	
 							                </div>
 							                <div class="col-md-7">
-							                	<div class="title" style="width: 300px; height: 60px;">
-							                		<h3 id="tooltitle"><b>${senior.snrTitle }</b></h3>
+							                	<div class="title" id="tooltitle" style="width: 300px; height: 60px;">
+							                		<h3><b>${senior.snrTitle }</b></h3>
 							                	</div>
 							                </div>
 							            </div>
 						            </div>
 						            <div class="card-body" >
 						            	<div class="row">
-							            	<div class="col-6" style="height: 50px;">
-							            		<h5><b>사업체명 : </b> 서구시니어클럽 </h5>
+							            	<div class="col-6" style="height: 60px;">
+							            		<h5><b>사업체명 : </b> ${senior.snrConame }</h5>
 							            	</div>
+							            	<div class="col-6" style="height: 50px;">
+							            		<h5><b>구인인원 명수 : </b> &nbsp ${senior.snrVolume }명 </h5>
+							            	</div>							            	
 							            	<div class="col-6" style="height: 60px;">
-							            		<h5><b>주소 : </b> 대전 서구 용문동 593-1 </h5>
+							            		<h5><b>연락처 : </b> ${senior.snrTel } </h5>
 							            	</div>							            	
 							            	<div class="col-6" style="height: 50px;">
-							            		<h5><b>연락처 : </b> 042) 471 - 5545 </h5>
-							            	</div>							            	
-							            	<div class="col-6" style="height: 60px;">
-							            		<h5><b>근무지역 : </b> 연정상가 2층 </h5><br>
+							            		<h5><b>근무지역 : </b> 
+								            		<c:choose>
+								                		<c:when test="${senior.snrWorkplace  == '1'}">
+								                			대전광역시 대덕구
+								                		</c:when>
+								                		<c:when test="${senior.snrWorkplace  == '2'}">
+								                			대전광역시 동구
+								                		</c:when>
+								                		<c:when test="${senior.snrWorkplace  == '3'}">
+								                			대전광역시 서구
+								                		</c:when>
+								                		<c:when test="${senior.snrWorkplace  == '4'}">
+								                			대전광역시 유성구
+								                		</c:when>
+								                		<c:when test="${senior.snrWorkplace  == '5'}">
+								                			대전광역시 중구
+								                		</c:when>								                										                										                									                		
+								                	</c:choose>
+							            		 </h5><br>
 							            	</div>
 						            	</div>
-						            	<div style="height: 70px;">
+						            	<div style="height: 50px;">
 						            		<h4><b>${senior.snrContent }</b></h4>
 						            	</div>
 						            </div>
-		            	                <div class="card-footer">
-				                            <div>
-				                            	<span class="badge badge-warning badge-pill">접수중</span>  
-				                            	  2022-05-15 ~ 2022-12-31                          	
-				                            </div>
-		                      		    </div>
-							        </div>
-							    </div> 
-	                        </c:forEach>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-               
-<!-- ---------------------- pagenation ---------------------- -->
-
-	<div class="row">
-		<div class="col-lg-3"></div>
-			<div class="col-sm-6" style="flex: 10 auto;">
-				<div class="panel-container show">
-					<div class="panel-content">
-						<!-- <div class="frame-wrap">-->
-						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
-								<li class="page-item disabled"><a class="page-link"
-									href="#" tabindex="-1" aria-disabled="true"><</a></li>
-								<li class="page-item active" aria-current="page"><span
-									class="page-link"> 1 <span class="sr-only">(current)</span>
-								</span></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#">></a></li>
-							</ul>
-						</nav>
-						<!-- </div> -->
-					</div>
-				</div>
-			</div>
-		<div class="col-lg-3">
-		</div>
-	</div>	
+		            	            <div class="card-footer" style="padding-top:10px; padding-bottom: 4px; margin: 0;">
+		            	            	<div class="row" style="margin-right: 10px; float: right;">
+		            	            	<div style="margin-right: 10px;">
+		            	            		<h4><b>모집기간 : ${senior.snrSdate} ~ ${senior.snrEdate}</b></h4>
+		            	            	</div>
+		            	            	<div>
+						            		<c:choose>
+						                		<c:when test="${senior.snrState  == '진행중'}">
+						                			<h4><span class="badge badge-success">${senior.snrState}</span></h4>
+						                		</c:when>
+						                		<c:when test="${senior.snrState  == '마감임박'}">
+						                			<h4><span class="badge badge-danger">${senior.snrState}</span></h4>
+						                		</c:when>
+						                		<c:when test="${senior.snrState  == '종료'}">
+						                			<h4><span class="badge badge-secondary">${senior.snrState}</span></h4>
+						                		</c:when>
+						                	</c:choose>
+						                </div>
+						                </div>
+                      		  		</div>
+						        </div>
+						    </div> 
+                        </c:forEach>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </main>                                     
     
             

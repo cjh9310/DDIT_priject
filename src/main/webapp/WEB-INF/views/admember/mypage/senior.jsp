@@ -94,35 +94,16 @@ function openList(snrNo) {
 		success : function(result) {
 			console.log(result);
  			$('input[id=registsnrAdId]').val(result.snrAdid);
-			$('input[id=registWorkplace]').val(result.snrWorkplace);
-			$('#inputRegistVolume').val(result.snrVolume);
 			$('input[id=registSdate]').val(result.snrSdate);
 			$('input[id=registEdate]').val(result.snrEdate);
 			$('input[id=registConame]').val(result.snrConame);
 			$('input[id=registTel]').val(result.snrTel);
 			$('input[id=registTitle]').val(result.snrTitle);
 			$('#registContent').val(result.snrContent); 
-			if (result.snrType == "시니어 인턴십") {
-				$('#inputRegistType').val(1); 
-			} else if (result.snrType == "사회서비스형") {
-				$('#inputRegistType').val(2); 
-			} else if (result.snrType == "시장형") {
-				$('#inputRegistType').val(3);
-			} else if (result.snrType == "공익활동") {
-				$('#inputRegistType').val(4);
-			}
+			$('#inputRegistType').val(result.snrType);
+			$('#inputRegistWorkplace').val(result.snrWorkplace);
+			$('#inputRegistVolume').val(result.snrVolume);
 			
-			if (result.snrWorkplace == "대전광역시 대덕구") {
-				$('#inputRegistWorkplace').val(1);
-			} else if (result.snrWorkplace == "대전광역시 동구") {
-				$('#inputRegistWorkplace').val(2);
-			} else if (result.snrWorkplace == "대전광역시 서구") {
-				$('#inputRegistWorkplace').val(3);
-			} else if (result.snrWorkplace == "대전광역시 유성구") {
-				$('#inputRegistWorkplace').val(4);
-			}else if (result.snrWorkplace == "대전광역시 중구") {
-				$('#inputRegistWorkplace').val(5);
-			}
 		}
 	})
 }
@@ -132,7 +113,7 @@ function openList(snrNo) {
 
 <main id="js-page-content" role="main" class="page-content">
 
-<!-- -----------------------------------신고내역 리스트 ------------------------------------- -->
+<!-- ----------------------------------- 채용 리스트 ------------------------------------- -->
 
 	<div class="row">
 			<div class="col-6">
@@ -189,10 +170,43 @@ function openList(snrNo) {
 	                                		<c:set var="i" value="${i+1 }" />
 		                                    <tr onclick="openList('${seniorList.snrNo}');">
 		                                        <td style="text-align: center;"><c:out value="${i }" /></td>
-		                                        <td>${seniorList.snrType }</td>
+		                                        <td>
+								                	<c:choose>
+								                		<c:when test="${seniorList.snrType  == '1'}">
+								                			시니어 인턴십
+								                		</c:when>
+								                		<c:when test="${seniorList.snrType  == '2'}">
+								                			사회서비스형
+								                		</c:when>
+								                		<c:when test="${seniorList.snrType  == '3'}">
+								                			시장형
+								                		</c:when>
+								                		<c:when test="${seniorList.snrType  == '4'}">
+								                			공익활동
+								                		</c:when>								                										                									                		
+								                	</c:choose>		                                        
+		                                        </td>
 		                                        <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${seniorList.snrConame }</td>
 		                                        <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${seniorList.snrTitle }</td>
-		                                        <td>${seniorList.snrWorkplace }</td>
+		                                        <td>
+								            		<c:choose>
+								                		<c:when test="${seniorList.snrWorkplace  == '1'}">
+								                			대전광역시 대덕구
+								                		</c:when>
+								                		<c:when test="${seniorList.snrWorkplace  == '2'}">
+								                			대전광역시 동구
+								                		</c:when>
+								                		<c:when test="${seniorList.snrWorkplace  == '3'}">
+								                			대전광역시 서구
+								                		</c:when>
+								                		<c:when test="${seniorList.snrWorkplace  == '4'}">
+								                			대전광역시 유성구
+								                		</c:when>
+								                		<c:when test="${seniorList.snrWorkplace  == '5'}">
+								                			대전광역시 중구
+								                		</c:when>								                										                										                									                		
+								                	</c:choose>
+		                                        </td>
 		                                        <td>${seniorList.snrState}</td>
 		                                    </tr>
 		                                </c:forEach>
@@ -207,7 +221,7 @@ function openList(snrNo) {
 		</div>
 	</div>
 			
-<!-- -----------------------------------상세 신고 내역 ------------------------------------- -->
+<!-- -----------------------------------상세 채용공고 내역 ------------------------------------- -->
 			
 			<div class="col-xl-6">
 				<div id="panel-5" class="panel">
@@ -280,7 +294,7 @@ function openList(snrNo) {
 			                                                        <option value="9">9</option>
 			                                                        <option value="10">10</option>
 			                                                        <option value="15">15</option>
-			                                                        <option value="20">20</option>
+			                                                        <option value="20">20명 이상</option>
 			                                                    </select>
 			                                                </div>
 			                                                <input class="form-label" id="registVolume" name="snrVolume" value="" style="display: none;"></input>
@@ -522,21 +536,21 @@ function openList(snrNo) {
 <script>
 
 	function funType(){
-		var type = $('#inputGroupSelect01 option:checked').text()
+		var type = $('#inputGroupSelect01 option:checked').val()
 		
 		$('#typeLable').val(type)
 		console.log($('#typeLable').val());
 	};
 	
 	function workplaceType(){
-		var workplace = $('#inputGroupSelect02 option:checked').text()
+		var workplace = $('#inputGroupSelect02 option:checked').val()
 		
 		$('#workplaceLable').val(workplace)
 		console.log($('#workplaceLable').val());
 	};
 	
 	function volumeType(){
-		var volume = $('#inputGroupSelect03 option:checked').text()
+		var volume = $('#inputGroupSelect03 option:checked').val()
 		
 		$('#volumeLable').val(volume)
 		console.log($('#volumeLable').val());

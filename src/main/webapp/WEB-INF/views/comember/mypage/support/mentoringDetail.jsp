@@ -110,30 +110,41 @@ $('#deleteBtn').on('click',()=>{
 	
 	var menNo = ${mentoring.menNo};
 	
-	Swal.fire({
-        icon: 'warning',
-		title: "프로그램을 삭제하시겠습니까?",
-        type: "success",
-        showCancelButton: true,
-        confirmButtonText: "OK"
-    }).then(function(result){
-		
-	    //alert("삭제완료");
- 		Swal.fire({
+	 Swal.fire({
+         icon: 'warning',
+			title: "프로그램을 삭제하시겠습니까?",
+         type: "success",
+         showCancelButton: true,
+         confirmButtonText: "OK"
+	}).then(function(result){ 
+		if(result.value){
+	
+		$.ajax({
+			type:"post" ,
+			url: "/ddit/comember/mypage/mentoringRemove?menNo="+menNo,
+			data: menNo,
+			dataType:"text",
+			success:(rslt)=>{
+				
+				Swal.fire({
 					icon: 'success',
 					title: '프로그램이 삭제되었습니다.',
 					showConfirmButton: false,
-					timer: 1000
-		}).then(function(){
-			location.href = "mentoringRemove.do?menNo=" + menNo;
-			
-		    window.open("about:blank", "_self").close();
-			window.opener.location.reload();
+					timer: 1500
+			}).then(function(){
+				
+				window.close();
+				window.opener.location.reload();
 			})
-	
-    })
-    
+			},
+			error:(request,status,error)=>{
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+		}
+	});
 });
+	 
 </script>
 
 <script>

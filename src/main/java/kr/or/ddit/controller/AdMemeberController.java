@@ -30,6 +30,7 @@ import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.FaqService;
+import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.NewsService;
 import kr.or.ddit.service.PublicWorkService;
 import kr.or.ddit.service.ReportService;
@@ -58,6 +59,11 @@ public class AdMemeberController {
 	
 	@Autowired
 	private SeniorService seniorService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	
 
 	@GetMapping("/mypage/info")
 	public String myPageInfo() throws Exception {

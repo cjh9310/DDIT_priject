@@ -44,21 +44,18 @@
 							<tr class="text-left">
 								<td><strong>회사 이름:</strong></td>
 								<td>${loginUser.coNm }</td>
-								<td style="width: 100px;"></td>
-								<td><strong>사업자 번호:</strong></td>
-								<td>${loginUser.coRegNo }</td>
+								<td><strong>우편번호:</strong></td>
+								<td>${loginUser.coAddrno}</td>
 							</tr>
 							<tr class="text-left">
 								<td><strong>주소:</strong></td>
 								<td>${loginUser.coAddr }</td>
-								<td style="width: 100px;"></td>
 								<td><strong>상세 주소:</strong></td>
 								<td>${loginUser.coDeaddr }</td>
 							</tr>
 							<tr class="text-left">
-								<td><strong>우편번호:</strong></td>
-								<td>${loginUser.coAddrno}</td>
-								<td style="width: 100px;"></td>
+								<td><strong>사업자 번호:</strong></td>
+								<td>${loginUser.coRegNo }</td>
 								<td><strong>홈페이지 주소:</strong></td>
 								<td>${loginUser.coLink}</td>
 							</tr>

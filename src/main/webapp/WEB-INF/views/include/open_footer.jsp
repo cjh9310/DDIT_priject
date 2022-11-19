@@ -5,8 +5,7 @@
   		  
     
   
-		<!-- jQuery -->
-		<script src="<%=request.getContextPath()%>/resources/bootstrap/plugins/jquery/jquery.min.js" ></script>
+		
         <script src="<%=request.getContextPath()%>/resources/template/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>

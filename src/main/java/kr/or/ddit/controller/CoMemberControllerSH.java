@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,17 +47,6 @@ public class CoMemberControllerSH {
 	@Autowired
 	private ActivityService activityService;
 	
-	/*@GetMapping("/mypage/support")
-	public String  myPageSupport() throws Exception {
-		String url="comember/mypage/support/contest";
-		return url;
-	}
-	
-	@GetMapping("/mypage/supportContestRegistForm")
-	public String supportContestRegistForm() throws Exception {
-		String url="comember/mypage/support/contestRegist";
-		return url;
-	}*/
 	
 	@RequestMapping(value="/mypage/contestRegist", produces = "application/text; charset=UTF-8")
 	@ResponseBody
@@ -136,11 +126,21 @@ public class CoMemberControllerSH {
 	}
 	
 	
-	@RequestMapping(value="/mypage/contestRemove")
-	public void contestRemove(int conNo, RedirectAttributes rttr) throws Exception{
-		
+	/*
+	 * @RequestMapping(value="/mypage/contestRemove") public void contestRemove(int
+	 * conNo) throws Exception{ //String url =
+	 * "comember/mypage/support/contestRemove";
+	 * 
+	 * contestService.remove(conNo);
+	 * 
+	 * //return url; }
+	 */
+	
+	@RequestMapping(value="/mypage/contestRemove",method= RequestMethod.POST)
+	@ResponseBody    // 요게 있으면 아작스로 받겠다는 이야기
+	//스크립트에서 JSON문자열이나 배열문자열로 왔을때 @RequestBody로 받는다!
+	public void contestRemove(int conNo) throws SQLException { //박스안에서 찾으라는 의미인 requestBody
 		contestService.remove(conNo);
-		
 	}
 	
 	@RequestMapping("/mypage/contestSupporterList")
@@ -227,11 +227,19 @@ public class CoMemberControllerSH {
 		System.out.println(mentoring);
 	}
 	
-	@RequestMapping("mypage/mentoringRemove")
-	public void mentoringRemove(int menNo) throws Exception{
-		
+	
+	@RequestMapping(value="/mypage/mentoringRemove",method= RequestMethod.POST)
+	@ResponseBody    // 요게 있으면 아작스로 받겠다는 이야기
+	//스크립트에서 JSON문자열이나 배열문자열로 왔을때 @RequestBody로 받는다!
+	public void mentoringRemove(int menNo) throws SQLException { //박스안에서 찾으라는 의미인 requestBody
 		mentoringService.remove(menNo);
 	}
+	/*
+	 * @RequestMapping("mypage/mentoringRemove") public void mentoringRemove(int
+	 * menNo) throws Exception{
+	 * 
+	 * mentoringService.remove(menNo); }
+	 */
 	
 	
 }

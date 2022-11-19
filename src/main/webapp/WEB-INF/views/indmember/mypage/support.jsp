@@ -40,8 +40,7 @@
 									<th>No.</th>
 									<th>지원일자</th>
 									<th>멘토링명</th>
-									<th>프로그램 시작일자</th>
-									<th>프로그램 종료일자</th>
+									<th>멘토링기간</th>
 									<th>멘토링 진행상황</th>
 									<th>가산점</th>
 								</tr>
@@ -59,16 +58,19 @@
 										<td><fmt:formatDate value="${mentoring.actDate }"
 												pattern="yyyy-MM-dd" /></td>
 										<td>${mentoring.menTitle }</td>
-										<td><fmt:formatDate value="${mentoring.menSdate }"
-												pattern="yyyy-MM-dd" /></td>
-										<td><fmt:formatDate value="${mentoring.menEdate }"
-												pattern="yyyy-MM-dd" /></td>
-										<td><c:if test="${mentoring.actStatus eq 0 }">진행중 </c:if>
-											<c:if test="${mentoring.actStatus eq 1 }">프로그램 종료 </c:if> 
+										<td><fmt:formatDate value="${mentoring.menSdate }" pattern="yyyy-MM-dd" /> 
+											~ <fmt:formatDate value="${mentoring.menEdate }" pattern="yyyy-MM-dd" />
+										</td>
+										<td><c:if test="${mentoring.actStatus eq 0 }">신청완료 </c:if>
+											<c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now }">진행중 </c:if> 
+											<c:if test="${mentoring.menEdate < now }">진행완료 </c:if> 
+											<c:if test="${mentoring.actStatus eq 2 }">중도포기 </c:if> 
 										</td>
 										<td>
-											<c:if test="${mentoring.actScore eq 0 }"> 0 </c:if>
+											<c:if test="${mentoring.actScore eq 0 }"> 없음 </c:if>
 											<c:if test="${mentoring.actScore eq 1 }"> 1점 </c:if> 
+											<c:if test="${mentoring.actScore eq 2 }"> 2점 </c:if> 
+											<c:if test="${mentoring.actScore eq 3 }"> 3점 </c:if> 
 										</td>
 									</tr>
 								</c:forEach>
@@ -93,8 +95,7 @@
 									<th>No.</th>
 									<th>지원일자</th>
 									<th>공모전명</th>
-									<th>프로그램 시작일자</th>
-									<th>프로그램 종료일자</th>
+									<th>공고기간</th>
 									<th>공모전 진행상황</th>
 									<th>수상내역</th>
 									<th>가산점</th>
@@ -114,22 +115,24 @@
 												pattern="yyyy-MM-dd" /></td>
 										<td>${contest.conTitle }</td>
 										<td><fmt:formatDate value="${contest.conSdate }"
-												pattern="yyyy-MM-dd" /></td>
-										<td><fmt:formatDate value="${contest.conEdate }"
+												pattern="yyyy-MM-dd" />
+										~ <fmt:formatDate value="${contest.conEdate }"
 												pattern="yyyy-MM-dd" /></td>
 										<td>
-											<c:if test="${contest.actStatus eq 0 }">접수완료 </c:if>
-											<c:if test="${contest.conEdate < now }">심사중 </c:if> 
-											<c:if test="${contest.actStatus eq 1 }">심사완료 </c:if> 
+											
+											<c:if test="${contest.actStatus eq 0 }">접수완료</c:if>
+											<c:if test="${contest.conEdate <= now }">심사중 </c:if> 
+											<c:if test="${contest.actStatus eq 1  }">심사완료 </c:if> 
+											
 										</td>
 										<td>
-											<c:if test="${contest.actScore eq 0 }"> - </c:if>
+											<c:if test="${contest.actScore eq 0 }"> 없음 </c:if>
 											<c:if test="${contest.actScore eq 1 }">장려상 </c:if> 
 											<c:if test="${contest.actScore eq 2 }">최우수상 </c:if> 
 											<c:if test="${contest.actScore eq 3 }">대상 </c:if> 
 										</td>
 										<td>
-											<c:if test="${contest.actScore eq 0 }"> 0 </c:if>
+											<c:if test="${contest.actScore eq 0 }"> 없음 </c:if>
 											<c:if test="${contest.actScore eq 1 }"> 1점 </c:if> 
 											<c:if test="${contest.actScore eq 2 }"> 2점 </c:if> 
 											<c:if test="${contest.actScore eq 3 }"> 3점 </c:if> 
@@ -190,7 +193,7 @@
 											<c:if test="${support.supProcess eq 1 }">상담중 </c:if> <c:if
 												test="${support.supProcess eq 2 }">상담완료 <fmt:formatDate
 													value="${support.supEdate }" pattern="yyyy-MM-dd" />
-											</c:if> <c:if test="${support.supProcess eq 3 }">상담반려<span class="text-danger">(상담내용불일치)</span> </c:if></td>
+											</c:if> <c:if test="${support.supProcess eq 3 }">상담반려<span class="text-danger">(사유: 신청내용 부적절)</span> </c:if></td>
 										<td>
 										<c:if test="${support.counselorName eq 0 }">박혜인 상담사 </c:if>
 										<c:if test="${support.counselorName eq 1 }">이수진 상담사 </c:if>

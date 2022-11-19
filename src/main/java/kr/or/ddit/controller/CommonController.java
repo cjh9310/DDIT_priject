@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.MenuVO;
 import kr.or.ddit.service.ContestService;
 import kr.or.ddit.service.MenuService;
@@ -47,12 +46,14 @@ public class CommonController {
 	public String main(Model model) throws Exception {
 		String url = "common/main";
 		
-		Map<String, Object> openRecMap = openRecService.getOpenRecListForMain();
-		Map<String, Object> recruitMap = recruitService.getRecruitListForMain();
-		Map<String, Object> contestMap = contestService.getContestList();
-		model.addAttribute("openRecMap", openRecMap);
-		model.addAttribute("recruitMap", recruitMap);
-		model.addAttribute("contestMap", contestMap);
+		/*
+		 * Map<String, Object> openRecMap = openRecService.getOpenRecListForMain();
+		 * Map<String, Object> recruitMap = recruitService.getRecruitListForMain();
+		 * Map<String, Object> contestMap = contestService.getContestList();
+		 * model.addAttribute("openRecMap", openRecMap);
+		 * model.addAttribute("recruitMap", recruitMap);
+		 * model.addAttribute("contestMap", contestMap);
+		 */
 		
 		return url;
 	}
@@ -113,7 +114,7 @@ public class CommonController {
 	@GetMapping("/common/loginForm")
 	public String loginForm(@RequestParam(defaultValue = "") String error,
 			                @ModelAttribute("retUrl") String retUrl,
-			                HttpServletResponse response) {
+			                HttpServletResponse response, Model model) {
 		String url = "common/loginForm";
 		
 		if(error != null && error.contentEquals("-1")) {

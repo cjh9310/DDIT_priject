@@ -14,8 +14,7 @@
             
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
-<%-- <c:if test='${today gt "2022-11-01"}'><p>메롱</p></c:if>
-<c:if test='${today lt "2022-11-01"}'><p>안메롱</p></c:if> --%>
+
 <script>
 
 $(document).ready(function(){	
@@ -92,7 +91,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll" onclick="contestSupporterList(${contest.conNo})"> 
+			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll" onclick="contestSupporterList(${contest.conNo},'${contest.conTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.count }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${contest.conTitle }</td>
@@ -423,7 +422,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${mentoringList }" var="mentoring" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterList(${mentoring.menNo})"> 
+			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterList(${mentoring.menNo},'${mentoring.menTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.index+1 }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${mentoring.menTitle }</td>
@@ -914,45 +913,19 @@ $(document).ready(function(){
         <script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
-        <script>
-            $('#js_change_tab_direction input').on('change', function(){
-                var newclass = $('input[name=radioNameTabDirection]:checked', '#js_change_tab_direction').val();
-                $('#js_change_tab_direction').parent('.panel-tag').next('.nav.nav-tabs').removeClass().addClass(newclass);
-            });
-            $('#js_change_pill_direction input').on('change', function(){
-                var newclass = $('input[name=radioNamePillDirection]:checked', '#js_change_pill_direction').val();
-                $('#js_change_pill_direction').parent('.panel-tag').next('.nav.nav-pills').removeClass().addClass(newclass);
-            });
-
-        </script>
-        
 <script>
-    $(document).ready(function()
-    {
-
-        //"use strict";
-
-        
-
-        $("#js-sweetalert2-example-7").on("click", function()
-        {
-            Swal.fire(
-            {
-                title: "가산점을 부여하시겠습니까?",
-                type: "success",
-                showCancelButton: true,
-                confirmButtonText: "OK"
-            }).then(function(result)
-            {
-                if (result.value){
-                	
-                    Swal.fire("가산점이 부여되었습니다.", "", "success");
-                }
-            });
-        }); 
+    $('#js_change_tab_direction input').on('change', function(){
+        var newclass = $('input[name=radioNameTabDirection]:checked', '#js_change_tab_direction').val();
+        $('#js_change_tab_direction').parent('.panel-tag').next('.nav.nav-tabs').removeClass().addClass(newclass);
+    });
+    $('#js_change_pill_direction input').on('change', function(){
+        var newclass = $('input[name=radioNamePillDirection]:checked', '#js_change_pill_direction').val();
+        $('#js_change_pill_direction').parent('.panel-tag').next('.nav.nav-pills').removeClass().addClass(newclass);
     });
 
 </script>
+        
+
  <script>
 	(function() {
 		'use strict';
@@ -1057,7 +1030,7 @@ $(document).ready(function(){
 $('.mentoringAdBtn').on('click', function(){
 		
 		var menNo = $(this).val();
-		alert(menNo);
+		//alert(menNo);
 		
 		window.open('mentoringDetail.do?menNo='+ menNo,'멘토링 상세보기','width=900,height=750,left=300');
 				
@@ -1067,7 +1040,7 @@ $('.mentoringAdBtn').on('click', function(){
 <!-- mentoring -->
 <script>
 
-function mentoringSupporterList(m){  
+function mentoringSupporterList(m,t){  
 
    $.ajax({
       url:"mentoringSupporterList",
@@ -1075,17 +1048,18 @@ function mentoringSupporterList(m){
       data: {menNo: m},
       dataType:"json",
       success: function(data) {
-    	  ajaxHtmlMentoring(data);
+    	  ajaxHtmlMentoring(data,t);
 	},
       error:function(){alert("error");
       console.log(data)}
    });
 }
 
-   function ajaxHtmlMentoring(data){
+   function ajaxHtmlMentoring(data,t){
+	   console.log(t);
 	   if(data.activityMenList.length == 0){
 		  var html = "<div class = text-center>";
-			 html += "<h5>멘토링에 지원한 인원이 없습니다.</h5>";
+			 html += "<h5>'"+ t +"'</br>"+"멘토링에 지원한 인원이 없습니다.</h5>";
 			 html += "</div>";
 			 
 	   }else {
@@ -1129,7 +1103,7 @@ function mentoringSupporterList(m){
             html +=	"<td>"+obj.actTel+"</td>";
             html +=	"<td>"+ +"</td> ";
          	html +=	"<td>";
-            html +=	"<select class='form-control' id='mentoringScoreSelect'>";
+            html +=	"<select class='form-control' id='"+obj.actNo+"'>";
             
             if(obj.actScore == 0){
                 html +=	"<option value=0 selected>없음</option>";
@@ -1161,7 +1135,7 @@ function mentoringSupporterList(m){
             html +=	"</select>";
          	html +=	"</td>";
      		html +=	"<td>";
-     		html +=	"<button class='btn btn-sm btn-success shadow-0' onclick='scoreModifyBtn()'>수정</button>";
+     		html +=	"<button class='btn btn-sm btn-success shadow-0' onclick='scoreModifyBtn("+obj.actNo+")'>수정</button>";
      		html += "</td>";
 			html += "</tr>";
       })
@@ -1178,7 +1152,7 @@ function mentoringSupporterList(m){
 </script>
 
 <script> //가산점 부여
-function scoreModifyBtn(){
+function scoreModifyBtn(a){
 	Swal.fire({
                 icon: 'warning',
 				title: "가산점을 부여하시겠습니까?",
@@ -1192,7 +1166,8 @@ function scoreModifyBtn(){
     				url:"/ddit/comember/mypage/mentoringScoreModify",
     				contentType:"application/json; charset=UTF-8",
     				data: JSON.stringify({
-    					actScore:$('#mentoringScoreSelect').val()
+    					actNo:a,
+    					actScore:$('#'+a).val()
     				}),
     				success:function(p_rslt){
 						console.log(p_rslt)
@@ -1212,26 +1187,28 @@ function scoreModifyBtn(){
     });	
 }
 </script>
-
+<!-- contest -->
 <script>
 
-function contestSupporterList(c){  
+function contestSupporterList(c,t){  
 
    $.ajax({
       url:"contestSupporterList",
       type:"get",
       data: {conNo: c},
       dataType:"json",
-      success: ajaxHtmlContest,
+      success: function(data){
+    	  ajaxHtmlContest(data,t)
+      },
       error:function(){alert("error");
       console.log(data)}
    });
 }
 
-   function ajaxHtmlContest(data){
+   function ajaxHtmlContest(data,t){
 	   if(data.activityList.length == 0){
 		  var html = "<div class = text-center>";
-			 html += "<h5>공모전에 지원한 인원이 없습니다.</h5>";
+			 html += "<h5>'"+ t +"'</br>"+"공모전에 지원한 인원이 없습니다.</h5>";
 			 html += "</div>";
 			 
 	   }else {

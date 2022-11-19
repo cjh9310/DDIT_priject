@@ -274,6 +274,19 @@ public class CoMemeberController {
 		return url;
 	}
 	
+	@GetMapping("/mypage/authority")
+	public String authority(MemberVO member, HttpServletRequest request) throws Exception {
+		
+		String url ="성공";
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		member.setId(id);
+		return url;
+	}
+	
+	
+	
 	@GetMapping("/mypage/licence")
 	public ResponseEntity<Resource> getIdenPicture(@Param("folder") String folder, @Param("filename") String filename) {
 		

@@ -177,11 +177,9 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai1/main.do','M200000')">AI와
-								함께하는 취업 탐색</a> 
-							<a class="dropdown-item"
+								함께하는 취업 탐색</a> <a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai2/main.do','M210000')">AI와
-								함께하는 면접 준비</a>
-							<a class="dropdown-item"
+								함께하는 면접 준비</a> <a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/futurelab/ai3/main.do','M220000')">다양한
 								AI Service 체험하기</a>
 						</div></li>
@@ -228,9 +226,6 @@
 						role="button" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false"> 어르신을위한 채용정보 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item"
-								href="javascript:goPage('<%=request.getContextPath()%>/senior/main.do','M340000')">유형 확인
-								</a>
 							<a class="dropdown-item"
 								href="javascript:goPage('<%=request.getContextPath()%>/senior/list.do','M320000')">시니어
 								채용공고</a>

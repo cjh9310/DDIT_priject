@@ -12,17 +12,27 @@
 
 
 	<select id="selectAllSeniorList" resultType="senior">  
-		select *
-	  	  from (      
-			 select SearchAllSenior.*
-		   	   from (
-				   	 select *
-				   	   from recruit_senior
-				      where snr_no is not null
-				      	and snr_adid is not null
-				     <include refid="search" />
-				      order by snr_no desc
-				    ) SearchAllSenior )
+		SELECT *
+		  FROM (
+		    SELECT SEARCHALLSENIOR.*
+		      FROM (
+		        SELECT A.*
+		            ,(CASE
+		              WHEN TO_NUMBER(REPLACE(A.SNR_EDATE,'-','')) - TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDD')) <![CDATA[>]]> 5 THEN '진행중'
+		              WHEN TO_NUMBER(REPLACE(A.SNR_EDATE,'-','')) - TO_NUMBER(TO_CHAR(SYSDATE, 'YYYYMMDD')) <![CDATA[<]]> 0 THEN '종료'
+		              ELSE '마감임박'
+		               END
+		              ) AS SNR_STATE
+		          FROM RECRUIT_SENIOR A
+		         WHERE A.SNR_NO IS NOT NULL
+		           AND A.SNR_ADID IS NOT NULL
+		           AND A.SNR_EDATE IS NOT NULL
+		            ) SEARCHALLSENIOR
+		     ORDER BY CASE WHEN SNR_STATE = '마감임박' THEN 1
+		     			   WHEN SNR_STATE = '진행중' THEN 2
+		     			   ELSE 3
+		     			   END
+		        )
 	</select>
 	
 	
@@ -35,7 +45,7 @@
 	<insert id="insertSenior" parameterType="senior">
 		insert into recruit_senior
 		values ((select max(snr_no)+1 from recruit_senior),#{snrType},#{snrTitle},#{snrConame},#{snrWorkplace},#{snrTel},#{snrContent} 
-				,TO_CHAR(sysdate, 'YYYY-MM-DD'),#{snrEdate},#{snrVolume},#{snrState},#{snrAdid})                 
+				,TO_CHAR(sysdate, 'YYYY-MM-DD'),#{snrEdate},#{snrVolume},#{snrAdid})                 
 	</insert>
 	
 	

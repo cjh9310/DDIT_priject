@@ -114,7 +114,46 @@
 </main>
 <script>
 $('#deleteBtn').on('click',()=>{
-	//alert("누름");
+	var conNo = ${contest.conNo};
+	alert(conNo);
+	
+	 Swal.fire({
+         icon: 'warning',
+			title: "프로그램을 삭제하시겠습니까?",
+         type: "success",
+         showCancelButton: true,
+         confirmButtonText: "OK"
+	}).then(function(result){ 
+		if(result.value){
+	
+	
+	$.ajax({
+		type:"post" ,
+		url: "/ddit/comember/mypage/contestRemove?conNo="+conNo,
+		data: conNo,
+		
+		//contentType : "application/json; charset=utf-8",
+		dataType:"text",
+		success:(rslt)=>{
+			Swal.fire({
+				icon: 'success',
+				title: '프로그램이 삭제되었습니다.',
+				showConfirmButton: false,
+				timer: 1500
+		}).then(function(){
+			
+			window.close();
+			window.opener.location.reload();
+		})
+		},
+		error:(request,status,error)=>{
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	}
+});
+});
+/* 	//alert("누름");
 	var conNo = ${contest.conNo};
 	Swal.fire({
                 icon: 'warning',
@@ -131,11 +170,13 @@ $('#deleteBtn').on('click',()=>{
 				title: '프로그램이 삭제되었습니다.',
 				showConfirmButton: false,
 				timer: 1500
+		}).then(function(){
+			window.open("about:blank", "_self").close();
+			window.opener.location.reload();
 		})
-		window.open("about:blank", "_self").close();
-		window.opener.location.reload();
-    	}
-});
+		
+    	})
+}); */
 </script>
 
 <script>

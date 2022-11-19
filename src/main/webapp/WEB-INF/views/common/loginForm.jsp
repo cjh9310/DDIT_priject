@@ -250,12 +250,16 @@
 		<span class="color-fusion-900"></span>
 	</p>
 	<!-- END Color profile -->
-
 	<script
 		src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
 	<!-- Page related scripts -->
+	
+	<script>
+	
+	</script>
+	
 </body>
 <!-- END Body -->
 </html>

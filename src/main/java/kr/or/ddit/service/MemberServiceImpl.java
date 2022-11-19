@@ -55,6 +55,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public List<MemberVO> getSelectCoMember(String name) throws SQLException {
+		List<MemberVO> member = memberDAO.selectCoMember(name);
+		return member;
+	}
+
+	@Override
 	public void regist(MemberVO member) throws Exception {
 		memberDAO.insertMember(member);
 

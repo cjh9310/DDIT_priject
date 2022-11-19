@@ -108,34 +108,44 @@
 
  $("#modifyBtn").on("click",function() {
 	 var param = $('#modifyForm').serialize();
-			 /* {	conTitle:$("input[name=conTitle]").val(),
-			 	conContent:$("input[name=conContent]").val(),
-			 	conField:$("input[name=conField]").val(),
-				conSdate:$("input[name=conSdate]").val(),
-			 	conEdate:$("input[name=conEdate]").val(),
-			 	conAward:$("input[name=conAward]").val()
-			 	//conEdate:$("input[name=conEdate]").val(),
-			 } */
-			param = param.replaceAll('-','/');
+		 param = param.replaceAll('-','/');
 	 var menNo = ${mentoring.menNo};
 	 
-	 $.ajax({
-			type:"POST",
-			url:"mentoringModify.do",
-			data:param,
-			//contentType: "application.json; charset=utf-8",
-			dataType:"text",
-			success:(data)=>{
-				alert("수정성공");
-				location.replace("mentoringDetail.do?menNo=" + menNo);
-				opener.location.replace(opener.location.href);
-				
-			},
-			error:(request,status,error)=>{
-				
-				console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
+	 Swal.fire({
+         icon: 'warning',
+			title: "가산점을 부여하시겠습니까?",
+         type: "success",
+         showCancelButton: true,
+         confirmButtonText: "OK"
+	}).then(function(result){ 
+		if(result.value){
+		 $.ajax({
+				type:"POST",
+				url:"mentoringModify.do",
+				data:param,
+				//contentType: "application.json; charset=utf-8",
+				dataType:"text",
+				success:(data)=>{
+					//alert("수정성공");
+					Swal.fire({
+							icon: 'success',
+							title: '가산점이 부여 되었습니다.',
+							showConfirmButton: false,
+							timer: 1500
+					}).then(function(){
+						location.replace("mentoringDetail.do?menNo=" + menNo);
+						opener.location.replace(opener.location.href);
+						
+					});
+					
+					
+				},
+				error:(request,status,error)=>{
+					
+					console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+		});
+		}
 	});
-}); 
-
+});
 </script>

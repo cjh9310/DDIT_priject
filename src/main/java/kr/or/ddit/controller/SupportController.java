@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,6 +56,22 @@ public class SupportController {
 		model.addAttribute("dataMap",dataMap);
 		
 		return url;
+	}
+	
+	@RequestMapping(value = "/contestForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> contestForMain() throws Exception {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap = contestService.getContestList();
+		return dataMap;
+	}
+	
+	@RequestMapping(value = "/mentoringForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> mentoringForMain() throws Exception {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap = mentoringService.getMentoringList();
+		return dataMap;
 	}
 	
 	@RequestMapping("contest/activityRegist")

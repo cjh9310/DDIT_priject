@@ -195,6 +195,19 @@
 	});
 </script>
 
+
+<!-- --------------------------------검색 팝업----------------------------------- -->
+
+<script>
+
+$("#reCoName").click(function(){
+	window.open("<%=request.getContextPath()%>/community/report/coNameSearch" , 'nameSearch', 'width=600, height=500');
+});                                        
+
+</script>
+
+
+
 <!-- --------------------------등록일 오늘날짜로------------------------------------ -->
 <script>
 	document.getElementById('reSdate').value = new Date().toISOString()
