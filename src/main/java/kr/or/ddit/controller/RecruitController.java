@@ -1,5 +1,7 @@
 package kr.or.ddit.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,6 +29,7 @@ import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
+import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.EducationService;
@@ -93,9 +99,9 @@ public class RecruitController {
 		return url;
 	}
 	
-	@GetMapping("support")
-	public String recruitSupport(String recWantedno, HttpServletRequest request) throws Exception {
-		String url = "recruit/support";
+	@GetMapping("supply")
+	public String recruitSupply(String recWantedno, HttpServletRequest request) throws Exception {
+		String url = "recruit/supply";
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
@@ -118,6 +124,17 @@ public class RecruitController {
 		request.setAttribute("letMap", letMap);
 		
 		return url;
+	}
+	
+	@PostMapping("/supply/submit")
+	public String recruitSupplySubmit(@RequestParam List<String> letTitle, @RequestParam List<String> letContent) throws Exception {
+		for(String title : letTitle) {
+			System.out.println(title);
+		}
+		for(String content : letContent) {
+			System.out.println(content);
+		}
+		return "Success";
 	}
 	
 	@RequestMapping(value = "/scrollList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")

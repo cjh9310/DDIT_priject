@@ -4,7 +4,7 @@ public class OpenRecVO {
 	private int openSeqno; // 공고순번
 
 	// 상세검색옵션
-	private String openCocl; // 기업형태
+	private String openCOCL; // 기업형태
 	private String openType; // 고용형태
 	private String openCar; // 경력형태
 	private String openEdu; // 학력형태
@@ -78,12 +78,12 @@ public class OpenRecVO {
 		this.openSeqno = openSeqno;
 	}
 
-	public String getOpenCocl() {
-		return openCocl;
+	public String getOpenCOCL() {
+		return openCOCL;
 	}
 
-	public void setOpenCocl(String openCocl) {
-		this.openCocl = openCocl;
+	public void setOpenCOCL(String openCOCL) {
+		this.openCOCL = openCOCL;
 	}
 
 	public String getOpenType() {
@@ -207,7 +207,7 @@ public class OpenRecVO {
 
 	@Override
 	public String toString() {
-		return "OpenRecVO [openSeqno=" + openSeqno + ", openCocl=" + openCocl + ", openType=" + openType + ", openCar="
+		return "OpenRecVO [openSeqno=" + openSeqno + ", openCocl=" + openCOCL + ", openType=" + openType + ", openCar="
 				+ openCar + ", openEdu=" + openEdu + ", oepnJobscd=" + openJobscd + ", openConm=" + openConm
 				+ ", openHomepg=" + openHomepg + ", openTitle=" + openTitle + ", openSdate=" + openSdate
 				+ ", openEdate=" + openEdate + ", openAcptpsn=" + openAcptpsn + ", openContent=" + openContent

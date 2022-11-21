@@ -1,32 +1,35 @@
 package kr.or.ddit.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RecruitVO {
 
 	// 채용공고 필드
-	private String recWantedno; // 구인인증번호
-	private Date recRegdt; // 등록일자
-	private String coName; // 회사명
-	private int recMinsal; // 최소임금액
-	private int recMaxsal; // 최대임금액
-	private String recMinedubg; // 최소학력
-	private String recPersonal; // 근로자수
-	private String recCapitalamt; // 자본금
-	private String recYrsalesamt; // 연매출액
-	private String recIndtpcdnm; // 업종
-	private String recHomepg; // 회사홈페이지
-	private String recBusisize; // 회사규모
-	private String recJobsnm; // 모집집종
-	private String recWantedtitle; // 구인제목
-	private String recJobcont; // 직무내용
-	private String recReceiptclosedt; // 접수마감일
-	private String recCollectpsncnt; // 모집인원
-	private String recSaltpnm; // 임금조건
-	private String recEntertpnm; // 경력조건
-	private String recWorkdayworkhrcont; // 근무시간/형태
-	private String recFourins; // 연금4대 보험
-	private String recRegion; // 근무지
+	private String recWantedno; // 구인인증번호                        REC_WANTEDNO
+	private Date recRegdt; // 등록일자                                        SYSDATE
+	private String recWantedtitle; // 구인제목                        REC_WANTEDTITLE
+	private String recIndtpcdnm; // 업종					REC_INDTPCDNM
+	private String coName; // 회사명						CO_NAME
+	private int recMinsal; // 최소임금액					REC_MINSAL
+	private int recMaxsal; // 최대임금액					REC_MAXSAL
+	private String recEntertpnm; // 경력조건				REC_ENTERTPNM
+	private String recMinedubg;  // 학력조건 				REC_MINEDUBG
+	private String recPersonal; // 근로자수				REC_PERSONAL recPersonal
+	private String recCapitalamt; // 자본금				REC_CAPITALAMT
+	private String recYrsalesamt; // 연매출액				REC_YRSALESAMT
+	private String recFourins; // 복리후생				REC_FOURINS
+	private String recBusisize; // 회사규모				REC_BUSISIZE
+	private String recHomepg; // 회사홈페이지				REC_HOMEPG
+	private String recJobsnm; // 모집직종					REC_JOBSNM
+	private String recReceiptclosedt; // 접수마감일		REC_RECEIPTCLOSEDT
+	private String recJobcont; // 직무내용				REC_JOBCONT
+	private String recCollectpsncnt; // 모집인원			REC_COLLECTPSNCNT
+	private String recSaltpnm; // 임금조건				REC_SALTPNM
+	private String recWorkdayworkhrcont; // 근무시간/형태	REC_WORKDAYWORKHRCONT
+	private String recRegion; // 근무지					REC_REGION
+	
 	private String secCode; // 업종코드
 	private int idx; // rownum을 idx로 표기
 
@@ -94,7 +97,15 @@ public class RecruitVO {
 	}
 
 	public void setRecRegdt(Date recRegdt) {
-		this.recRegdt = recRegdt;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String parseDate = format.format(recRegdt);
+		try {
+			Date recRegistDt = format.parse(parseDate);
+			this.recRegdt = recRegistDt;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public int getRecMinsal() {
@@ -198,7 +209,10 @@ public class RecruitVO {
 	}
 
 	public void setRecReceiptclosedt(String recReceiptclosedt) {
-		this.recReceiptclosedt = recReceiptclosedt;
+		if(recReceiptclosedt.contains("-")) {
+			recReceiptclosedt = recReceiptclosedt.replace("-", "");
+			this.recReceiptclosedt = recReceiptclosedt;
+		}
 	}
 
 	public String getRecCollectpsncnt() {

@@ -1,10 +1,13 @@
 package kr.or.ddit.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.ReportVO;
 
@@ -16,8 +19,20 @@ public class FalseReportDAOImpl implements FalseReportDAO {
 	}
 
 	@Override
-	public List<FalseReportVO> selectAllFalseReportList(String indId) throws SQLException {
-		return session.selectList("FalseReport-Mapper.selectAllFalseReportList", indId);
+	public List<FalseReportVO> selectAllFalseReportList(String indId, Criteria cri) throws SQLException {
+		
+		int startRow = cri.getStartRowNum()+1;
+		int endRow = startRow+cri.getPerPageNum()-1;
+		
+		Map<String,Object> dataParam = new HashMap<String,Object>();
+		
+		dataParam.put("startRow",startRow);
+		dataParam.put("endRow",endRow);
+		dataParam.put("indId",indId);
+		
+		List<FalseReportVO> falseReportList = session.selectList("FalseReport-Mapper.selectAllFalseReportList", dataParam);
+
+		return falseReportList;
 	}
 
 	@Override
@@ -46,6 +61,12 @@ public class FalseReportDAOImpl implements FalseReportDAO {
 	@Override
 	public void registReportList(ReportVO reportVO) throws SQLException {
 		session.insert("FalseReport-Mapper.insertReportList", reportVO);
+	}
+
+	@Override
+	public int selectAllFalseReportListCount(String indId) {
+		int count = session.selectOne("FalseReport-Mapper.selectAllFalseReportListCount", indId);
+		return count;
 	}
 
 }

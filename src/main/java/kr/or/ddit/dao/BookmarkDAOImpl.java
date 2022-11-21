@@ -49,6 +49,10 @@ public class BookmarkDAOImpl implements BookmarkDAO {
 		session.update("Bookmark-Mapper.deleteBookmark", bookNo);
 	}
 
-	
-	
+	@Override
+	public List<Integer> selectBookmarkByRecruitNO(String recWantedno) throws SQLException {
+		List<Integer> bookno = null;
+		bookno = session.selectList("Bookmark-Mapper.selectBookmarkByRecruitNO", recWantedno);
+		return bookno;
+	}
 }

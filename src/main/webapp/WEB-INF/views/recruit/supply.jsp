@@ -69,8 +69,7 @@
 						</div>
 					</h2></td>
 				</tr>
-				<%-- <tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}'"> --%>
-				<tr onclick="goPage('<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}','M350000')">
+				<tr>
 					<td colspan="8" style="width: 1400px;">
 						<h2 style="margin: 0px;">${recruit.coName}-
 							${recruit.recWantedtitle} - 채용공고 지원중</h2>
@@ -78,7 +77,7 @@
 				</tr>
 			</table>
 			<div class="panel-toolbar ml-2">
-				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/support.do','${recruit.coName}-지원하기','fullscreen')"
+				<button type="button" onclick="rec_supply()"
 					class="btn btn-md btn-outline-info waves-effect waves-themed">
 					제출하기<span class="fas fa-arrow-alt-right ml-1"></span>
 				</button>
@@ -92,7 +91,7 @@
 			<div class="col-lg-12 col-xl-12">
 				<div id="panel-1" class="panel">
 					<div class="panel-hdr">
-						<h2>나의 이력서</h2>
+						<h2>${recruit.coName} 지원 이력서</h2>
 						<div class="btn-group" id="js-demo-nesting" role="group"
 							aria-label="Button group with nested dropdown">
 							<button type="button"
@@ -275,33 +274,11 @@
 										class="card-header py-2 d-flex align-items-center flex-wrap">
 										<div class="card-title">자기소개서</div>
 									</div>
-									<table class="table">
-										<c:if test="${empty letterList || (countOpenLetter == 0)}">
-											<tr>
-												<th colspan="6"
-													class="text-center border-top-0 table-scale-border-bottom fw-700">제목</th>
-											</tr>
-											<tr>
-												<td class="text-center fw-700" colspan="6">등록된 자기소개서가
-													없습니다.<br/><br/>나를 표현 해줄 수 있는 자기소개서를 동록하세요.</td>
-											</tr>
-										</c:if>
-										<c:forEach items="${letterList}" var="let">
-											<c:if test="${let.letIsnav == 1}">
-												<thead>
-													<tr>
-														<th colspan="6"
-															class="text-center border-top-0 table-scale-border-bottom fw-700">${let.letTitle}</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td class="text-left">${let.letContent}</td>
-													</tr>
-												</tbody>
-											</c:if>
-										</c:forEach>
-									</table>
+									<form method="post" id="recSupplyForm">	
+										<table class="table" id="letter_table">
+											
+										</table>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -317,7 +294,7 @@
 					<div id="letManage">
 						<div id="panel-1" class="panel">
 							<div class="panel-hdr">
-								<h2>자기소개서</h2>
+								<h2>지원 이력서에 자기소개서를 등록해보세요.</h2>
 								<div class="panel-toolbar ml-2">
 									<button type="button" onclick="manage_rendering('letManage')"
 										class="btn btn-xs btn-info waves-effect waves-themed">
@@ -331,9 +308,9 @@
 											<table class="table" id="letForm_section">
 												<thead>
 													<tr>
-														<th class="text-center border-top-0 table-scale-border-bottom fw-700">순번</th>
+														<th class="text-center border-top-0 table-scale-border-bottom fw-700">번호</th>
 														<th class="text-center border-top-0 table-scale-border-bottom fw-700">제목</th>
-														<th class="text-center border-top-0 table-scale-border-bottom fw-700">공개여부</th>
+														<th class="text-center border-top-0 table-scale-border-bottom fw-700">추가여부</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -344,16 +321,15 @@
 														</tr>
 													</c:if>
 													<c:forEach items="${letterList}" var="let">
-														<tr class="detailForm_load" id="${let.letSeqno}" name="letDetailForm">
+														<tr>
 															<td class="text-center">${let.letNo}</td>
-															<td class="text-center">${let.letTitle}</td>
+															<td class="detailForm_load text-center" id="${let.letSeqno}" name="letDetailForm">${let.letTitle}</td>
 															<td class="text-center">
-																<c:if test="${let.letIsnav == 0}">
-																	<span class="badge badge-danger">비공개</span>
-																</c:if> 
-																<c:if test="${let.letIsnav == 1}">
-																	<span class="badge badge-info">공개중</span>
-																</c:if>
+																<button class="supply_add_let" id="${let.letSeqno}" type="button"
+																	style="background-color: transparent; border: 0px;">
+																	<i class="badge border border-success text-success"> 
+																	지원 이력서에 추가하기</i>
+																</button>
 															</td>
 														</tr>
 													</c:forEach>
@@ -374,6 +350,51 @@
 <script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
 <script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
 <%@ include file="/WEB-INF/views/indmember/indmember_js.jsp"%>
+
+<script>
+var letterStatus;
+function letterTableSetting() {
+	
+	
+	var letterStartMessage = '<tr id="letterStartMessage"><td class="text-center fw-700" colspan="6">아직 추가한 자기소개서가 없습니다.<br/><br/>반드시 하나 이상의 자기소개서는 추가하여 지원하세요!</td></tr>';
+	if($('#letter_table').children().length == 0) {
+		$('#letter_table').append(letterStartMessage);
+		letterStatus = false;
+	} else {
+		$('#letter_table').children('#letterStartMessage').remove();
+		letterStatus = true;
+	}
+
+}
+
+letterTableSetting();
+
+function rec_supply() {
+	
+	if(!letterStatus) {
+		alert('반드시 한 개 이상의 자기소개서는 추가한 뒤 제출 가능합니다.');
+		return;
+	}
+	
+	form = $('#recSupplyForm').serialize();
+	console.log('recSupplyForm', form);
+	
+	var ajaxOption = {
+			url : '<%=request.getContextPath()%>/recruit/supply/submit.do',
+			async : true,
+			type : "POST",
+			data : form,
+			dataType : "text",
+			cache : false
+		};
+		
+	$.ajax(ajaxOption).done(function(data) {
+		console.log(data);
+	}); 
+	
+}
+</script>
+
 <script>
 	$("#resume_delete1").on("click", function() {
 		bootbox.confirm({
@@ -483,5 +504,68 @@
 
 			});
 </script>
+<script>
+$(document).ready(function() {
+	
+	$(document).on("click",".supply_add_let",function(){
+			
+		var button = $(this);
+		
+		var letSeqno = button.attr('id');	
+			
+		var letter_table = $('#letter_table');
+		
+		var ajaxOption = {
+				url : '<%=request.getContextPath()%>/indmember/getLetter.do?letSeqno=' + letSeqno,
+				async : true,
+				type : "GET",
+				dataType : "json",
+				cache : false
+			};
+			
+		$.ajax(ajaxOption).done(function(data) {
+			console.log("letter data : ", data);
+			var tableTemplate = '<thead id="letter_'+letSeqno+'"><tr><th colspan="6" class="text-center border-top-0 table-scale-border-bottom fw-700">'+data.letTitle+'</th></tr></thead>'+
+	        '<tbody id="letter_'+letSeqno+'"><tr><td class="text-left">'+data.letContent+'</td></tr></tbody>'+
+	        '<input type="hidden" name="letTitle" value="'+data.letTitle+'" /><input type="hidden" name="letContent" value="'+data.letContent+'" />';
+			letter_table.append(tableTemplate);
+			var td = button.parent('td');
+			var button_del = '<button class="supply_del_let" id="'+letSeqno+'" type="button"'+
+							 'style="background-color: transparent; border: 0px;">'+
+							 '<i class="badge border border-danger text-danger">지원 이력서에서 삭제하기</i></button>';
+			td.children('button').remove();
+			td.append(button_del);
+			letterTableSetting();
+			
+		});
+
+	});
+
+});
+
+</script>
+<script>
+
+$(document).ready(function() {
+	
+	$(document).on("click",".supply_del_let",function(){
+		
+		var button = $(this);
+		var letSeqno = button.attr('id');
+		var letter_table = $('#letter_table');
+		var td = button.parent('td');
+		var button_add = '<button class="supply_add_let" id="'+letSeqno+'" type="button"'+
+		 				 'style="background-color: transparent; border: 0px;">'+
+		 				 '<i class="badge border border-success text-success">지원 이력서에 추가하기</i></button>';
+		letter_table.children('#letter_'+letSeqno).remove();
+		td.children('button').remove();
+		td.append(button_add);
+		letterTableSetting();
+		
+	});
+
+});
+</script>
+
 
 

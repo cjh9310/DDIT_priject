@@ -1,6 +1,7 @@
 package kr.or.ddit.service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.dto.BookmarkVO;
@@ -17,6 +18,7 @@ public interface BookmarkService {
 	
 	void removeBookmark(int bookNo) throws SQLException;
 	
+	List<Integer> getBookNoByRecNo(String recWantedNo) throws SQLException;
 }
 
 

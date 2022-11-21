@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.FalseReportDAO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.ReportVO;
@@ -17,14 +19,22 @@ public class FalseReportServiceImpl implements FalseReportService {
 	}
 
 	@Override
-	public Map<String, Object> getAllFalseReportList(String indId) throws SQLException {
+	public Map<String, Object> getAllFalseReportList(String indId, Criteria cri) throws SQLException {
 		Map<String, Object> dataMap = null;
 		
-		List<FalseReportVO> falseReport = falseReportDAO.selectAllFalseReportList(indId);
+		List<FalseReportVO> falseReport = falseReportDAO.selectAllFalseReportList(indId, cri);
 		
+		int totalCount = falseReportDAO.selectAllFalseReportListCount(indId);
+		
+		// PageMaker 생성.
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+				
 		dataMap = new HashMap<String, Object>();
 		
 		dataMap.put("falseReportList",falseReport);
+		dataMap.put("pageMaker",pageMaker);
 		
 		return dataMap;
 	}

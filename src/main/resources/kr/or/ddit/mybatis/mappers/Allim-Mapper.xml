@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="Allim-Mapper">
+	
+	<select id="selectCoTotalCount" parameterType="str" resultType="int">
+		select COUNT(*) from allim
+		where to_id =#{to_id}
+	</select>
+	
+	<select id="selectToById" parameterType="str" resultType="allim">
+		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.ALM_CHECK_DATE, a.ALM_CHECK_OPEN, a.alm_type
+        ,a.OPEN_SEQNO
+		from member m, ind_member i, co_member c, allim a, open_rec o
+		where m.id = i.ind_id (+)
+		  and m.id = c.co_id (+)
+          and c.co_nm = o.OPEN_TITLE (+)
+		  and c.co_id = a.from_id (+)
+		  and a.to_id =#{toId}
+	</select>
+
+	<select id="selectFromById" parameterType="str" resultType="allim">
+		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.ALM_CHECK_DATE, a.ALM_CHECK_OPEN, a.ALM_TYPE
+		from member m, ind_member i, co_member c, allim a
+		where m.id = i.ind_id (+)
+		  and m.id = c.co_id (+)
+		  and a.to_id = c.co_id
+		  and a.from_id = #{from_id}
+	</select>
+	
+	<select id="selectNmTitleById" parameterType="str" resultType="allim">
+		  select a.co_id,a.open_seqno, a.co_nm, a.open_title, b.rec_wantedtitle, b.rec_wantedno
+          from (select cm.co_nm co_nm,
+                       cm.co_id co_id,
+                       orec.open_title open_title,
+                       orec.open_conm open_conm,
+                       orec.open_seqno open_seqno
+                  from co_member cm
+                       inner join open_rec orec on cm.co_nm = orec.open_conm
+                 where cm.co_id like 'isense2000'
+                ) a
+                       left outer join (select cm.co_nm co_nm,
+                                          r.REC_WANTEDTITLE REC_WANTEDTITLE,
+                                          r.rec_wantedno rec_wantedno
+                                     from co_member cm
+                                          inner join recruit r on cm.co_nm = r.co_name
+                                   ) b on a.co_nm = b.co_nm
+	</select>
+	<update id="insertAllim" parameterType="allim">
+		insert into allim (ALM_SEQNO, ALM_DATE, from_id, to_id, ALM_TYPE, open_seqno, rec_wantedno)
+		              values (allim_seq.nextval, sysdate, #{fromId}, #{toId}, #{almType}, #{openSeqno}, #{recWantedno})
+	</update>
+
+</mapper>

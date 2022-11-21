@@ -7,9 +7,9 @@
 <c:set var="openRecList" value="${dataMap.openRecList }" />
 <c:set var="i" value="0"/>
 
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.js'></script>
+<link href='../resources/bootstrap/plugins/fullcalendar/main.css' rel='stylesheet' />
+<script src='../resources/bootstrap/plugins/fullcalendar/main.js'></script>
+<script src='../resources/bootstrap/plugins/fullcalendar/locales-all.js'></script>
 
 <style>
 .careers-new {

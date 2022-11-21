@@ -5,22 +5,24 @@
 <mapper namespace="Mentoring-Mapper">
 	<select id="selectMentoringList" resultType="mentoring">
 	/* Mentoring-Mapper.selectMentoringList */
-		select
+	 	select
 		*
 		from
 		mentoring
 		where men_no is not null
-		order by men_date desc
-	</select>
+		order by men_sdate desc
+	</select> 
 	
 	<select id="selectMentoringListCount" resultType="int">
 	/* Mentoring-Mapper.selectMentoringListCount */
-		select
-		count(*)
-		from
-		mentoring
-		where men_no is not null
-		order by men_date desc
+		select    
+           a.*
+         , (select count(1) from activity b where a.men_no = b.men_no) as IND_COUNT
+		  from 
+		  	mentoring a
+          where 
+            men_no is not null
+         order by men_sdate desc
 	</select>
 	
 	<!-- -->

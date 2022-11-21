@@ -8,10 +8,20 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import kr.or.ddit.dto.AllimVO;
+
 public class webSocketListener extends TextWebSocketHandler{
 
 	//접속한 websocket sessione들을 저장 하려 해용
 	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
+	
+	
+	public void openAdviceAllim(AllimVO allim) throws Exception{
+		for(WebSocketSession single : list) {
+			TextMessage message = new TextMessage(allim.getFromId()+"가"+allim.getToId());
+			single.sendMessage(message);
+		}
+	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

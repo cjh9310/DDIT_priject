@@ -69,6 +69,10 @@
 		p:sqlSession-ref="sqlSession" />
 	<bean id="seniorDAO" class="kr.or.ddit.dao.SeniorDAOImpl"
 		p:sqlSession-ref="sqlSession" />
+	<bean id="allimDAO" class="kr.or.ddit.dao.AllimDAOImpl"
+		p:sqlSession-ref="sqlSession" />
+	<bean id="authReqDAO" class="kr.or.ddit.dao.AuthReqDAOImpl"
+		p:sqlSession-ref="sqlSession" />
 
 	<!-- Service -->
 	<bean id="menuService" class="kr.or.ddit.service.MenuServiceImpl"
@@ -148,5 +152,11 @@
 	<bean id="seniorService"
 		class="kr.or.ddit.service.SeniorServiceImpl"
 		p:seniorDAO-ref="seniorDAO"/>
+	<bean id="AllimService"
+		class="kr.or.ddit.service.AllimServiceImpl"
+		p:allimDAO-ref="allimDAO" />
+	<bean id="AuthReqService"
+		class="kr.or.ddit.service.AuthReqServiceImpl"
+		p:authReqDAO-ref="authReqDAO" />
 	
 </beans>

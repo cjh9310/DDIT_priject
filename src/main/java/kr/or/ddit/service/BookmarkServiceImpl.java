@@ -50,6 +50,12 @@ public class BookmarkServiceImpl implements BookmarkService {
 		bookmarkDAO.deleteBookmark(bookNo);
 	}
 
+	@Override
+	public List<Integer> getBookNoByRecNo(String recWantedNo) throws SQLException {
+		List<Integer> bookNo = bookmarkDAO.selectBookmarkByRecruitNO(recWantedNo);
+		return bookNo;
+	}
+
 	
 
 }

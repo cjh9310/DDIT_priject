@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.AdviceVO;
+import kr.or.ddit.dto.AllimVO;
 import kr.or.ddit.dto.BookmarkVO;
 import kr.or.ddit.dto.CareerVO;
 import kr.or.ddit.dto.CertificateVO;
@@ -28,12 +31,14 @@ import kr.or.ddit.dto.EducationVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.service.AdviceService;
+import kr.or.ddit.service.AllimService;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.EducationService;
 import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.OpenRecService;
 import kr.or.ddit.service.RecruitService;
+import kr.or.ddit.handler.webSocketListener;
 
 @Controller
 @RequestMapping("/talent")
@@ -59,6 +64,9 @@ public class TalentrController {
 	
 	@Autowired
 	private AdviceService adviceService;
+	
+	@Autowired
+	private AllimService allimService;
 
 	@GetMapping("list")
 	public String talentMain(Criteria cri, String open_conm ,HttpServletRequest request) throws Exception {
@@ -140,20 +148,23 @@ public class TalentrController {
 	
 	@PostMapping("/openAdviceRegist")
 	@ResponseBody
-	public AdviceVO openAdviceRegist(AdviceVO advice) throws SQLException {
+	public AdviceVO openAdviceRegist(AdviceVO advice, AllimVO allim, webSocketListener handler ) throws Exception {
 		
-		String indId = advice.getIndId();
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaas" +indId);
+		advice.getIndId();
+		allim.getFromId();
+		allim.getToId();
+		System.out.println("찾아줘"+advice.getOpenSeqno());
+		System.out.println("찾아줘"+allim.getOpenSeqno());
 		adviceService.registAdvice(advice);
+		allimService.registAllim(allim);
+		handler.openAdviceAllim(allim);
 		
-		System.out.println(advice);
 		
 //		String detail = adviceSerivce.registAdvice(indId);
 		
 		
 		return advice;
 	}
-	
 	
 	
 

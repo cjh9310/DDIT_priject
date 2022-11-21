@@ -81,11 +81,10 @@
 		order by REC_REGDT desc
 	</select>
 
-	<select id="selectRecruitByRecWantedno" parameterType="recruit" resultType="recruit">
+	<select id="selectRecruitByRecWantedno" parameterType="str" resultType="recruit">
 		select *
-		from
-		recruit
-		where REC_WANTEDNO=#{recWantedno}
+		  from recruit
+		 where REC_WANTEDNO=#{recWantedno}
 	</select>
 	
 	<select id="selectRecruitByDetail" parameterType="recruit" resultType="recruit">
@@ -106,10 +105,12 @@
 	<update id="insertRecruit" parameterType="recruit">
 		insert into recruit
 		(REC_WANTEDTITLE,REC_WANTEDNO,REC_REGDT,CO_NAME,REC_MINSAL,REC_MINEDUBG,REC_INDTPCDNM,
-		REC_JOBSNM,REC_WORKDAYWORKHRCONT,REC_FOURINS,REC_ENTERTPNM,REC_REGION,REC_RECEIPTCLOSEDT,REC_JOBCONT)
+		REC_JOBSNM,REC_WORKDAYWORKHRCONT,REC_FOURINS,REC_ENTERTPNM,REC_REGION,REC_RECEIPTCLOSEDT,REC_JOBCONT, REC_MAXSAL, REC_PERSONAL,
+		REC_CAPITALAMT, REC_YRSALESAMT, REC_BUSISIZE, REC_HOMEPG, REC_COLLECTPSNCNT,REC_SALTPNM)
 		values (
 		#{recWantedtitle},#{recWantedno},sysdate,#{coName},#{recMinsal},#{recMinedubg},#{recIndtpcdnm},#{recJobsnm},
-		#{recWorkdayworkhrcont},#{recFourins},#{recEntertpnm},#{recRegion},#{recReceiptclosedt},#{recJobcont})
+		#{recWorkdayworkhrcont},#{recFourins},#{recEntertpnm},#{recRegion},#{recReceiptclosedt},#{recJobcont},#{recMaxsal}, #{recPersonal}, 
+		#{recCapitalamt}, #{recYrsalesamt}, #{recBusisize}, #{recHomepg}, #{recCollectpsncnt}, #{recSaltpnm} )
 	</update>
 	
 	<update id="updateRecruit" parameterType="recruit">
@@ -124,15 +125,15 @@
 		REC_WANTEDNO=#{REC_WANTEDNO}
 	</update>
 
-	<update id="deleteRecruit" parameterType="string">
+	<update id="deleteRecruit" parameterType="str">
 		delete
 		from recruit
-		where REC_WANTEDNO=#{REC_WANTEDNO}
+		where REC_WANTEDNO=#{recWantedno}
 	</update>
 
-	<select id="selectRecruitSequenceNextValue" resultType="string">
+	<select id="selectRecruitSequenceNextValue" resultType="str">
 		select
-		'K18005221' || TO_CHAR(recruit_seq.nextval) as REC_WANTEDNO from dual
+		'K180105221' || TO_CHAR(recruit_seq.nextval) as REC_WANTEDNO from dual
 	</select>
 
 	<select id="selectRecruitListForMain" resultType="recruit">

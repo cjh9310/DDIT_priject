@@ -8,8 +8,6 @@ import java.util.Map;
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.RecruitDAO;
-import kr.or.ddit.dto.CareerVO;
-import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.RecruitVO;
 
 public class RecruitServiceImpl implements RecruitService {
@@ -85,9 +83,8 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public void regist(RecruitVO recruit) throws Exception {
 		String recWantedno = recruitDAO.selectRecruitSequenceNextValue();
-		System.out.println("구인인증번호"+recWantedno);
 		recruit.setRecWantedno(recWantedno);
-		
+		System.out.println(recWantedno);
 		recruitDAO.insertRecruit(recruit);
 	}
 
@@ -100,7 +97,6 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public void remove(String recWantedno) throws Exception {
 		recruitDAO.deleteRecruit(recWantedno);
-
 	}
 
 	@Override

@@ -5,10 +5,11 @@
 <mapper namespace="FalseReport-Mapper">
 
 
-	<select id="selectAllFalseReportList" parameterType="str" resultType="falseReport">
+	<select id="selectAllFalseReportList" resultType="falseReport">
 		select *
 		  from false_report
-		 where ind_id=#{indId} 
+		 where ind_id=#{indId}
+      order by fal_no asc
 	</select>
 
 	<select id="selectFalseReportByFalNo" parameterType="str" resultType="falseReport">	
@@ -49,4 +50,10 @@
 		insert into report_list (fal_no, rep_status)
 		values(#{falNo},  #{repStatus})
 	</insert>	
+	
+	<select id="selectAllFalseReportListCount" parameterType="str" resultType="int">
+		select count(*)
+		from false_report
+		where ind_id = #{indId}
+	</select>
 </mapper>

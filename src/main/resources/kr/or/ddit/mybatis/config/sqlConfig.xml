@@ -42,6 +42,8 @@
   		<typeAlias type="kr.or.ddit.dto.ReportListVO" alias="reportList"/>
   		<typeAlias type="kr.or.ddit.dto.AdviceVO" alias="advice"/>
   		<typeAlias type="kr.or.ddit.dto.SeniorVO" alias="senior"/>
+  		<typeAlias type="kr.or.ddit.dto.AllimVO" alias="allim"/>
+  		<typeAlias type="kr.or.ddit.dto.AuthReqVO" alias="auth"/>
   	</typeAliases>
 	
   </configuration>

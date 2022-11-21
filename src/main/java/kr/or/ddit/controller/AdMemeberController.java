@@ -28,6 +28,7 @@ import kr.or.ddit.dto.PublicWorkVO;
 import kr.or.ddit.dto.ReportListVO;
 import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
+import kr.or.ddit.service.AuthReqService;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.FaqService;
 import kr.or.ddit.service.MemberService;
@@ -63,7 +64,10 @@ public class AdMemeberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private AuthReqService authReqService;
 	
+
 
 	@GetMapping("/mypage/info")
 	public String myPageInfo() throws Exception {
@@ -298,13 +302,23 @@ public class AdMemeberController {
 
 		return url;
 	}
-
+	
+	@GetMapping("/mypage/authority")
+	public String myPageAuthority(Criteria cri, HttpServletRequest request) throws Exception{
+		String url="admember/mypage/authority";
+		
+		Map<String, Object> dataMap = null;
+		dataMap = authReqService.getAuthReqList(cri);
+		
+		request.setAttribute("dataMap", dataMap);
+		return url;
+	}
+	
 	@RequestMapping(value = "/mypage/newsDetail", method = RequestMethod.POST)
 	public @ResponseBody NewsVO detailNews(@RequestParam("newsNo") int newsNo, Model model) throws Exception {
 
 		NewsVO newsVO = newsService.getNews(newsNo);
 
-		System.out.println(newsVO);
 
 		model.addAttribute("newsDetail", newsVO);
 
@@ -321,7 +335,6 @@ public class AdMemeberController {
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 
 		String adId = loginUser.getId();
-		System.out.println(adId);
 
 		news.setAdId(adId);
 
@@ -334,7 +347,6 @@ public class AdMemeberController {
 
 	}
 
-	
 	  @RequestMapping(value="/mypage/newsModify", method = RequestMethod.POST)
 	  public String modifyNews(NewsVO news, HttpServletRequest request,
 	  RedirectAttributes rttr) throws Exception { 

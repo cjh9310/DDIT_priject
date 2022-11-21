@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<c:set var="mentoring" value="${mentoring }" />
 
 <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
@@ -24,16 +27,20 @@
                                  <div style="max-width: 100%;">
                                     
                                     <div>
-			                            <div class="row mx-md-n5">
+			                            <div>
 			                                <div class="col px-md-5">
 			                                    <div class="p-3">
-			                                      	
+			                                    	<img src="<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg" class="card-img-top" alt="...">
+			                                      	<h4><c:out value="${mentoring.menTitle }"/></h4>
+			                                      	<label>멘토링기간 : <fmt:formatDate value="${mentoring.menSdate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${mentoring.menEdate}" pattern="yyyy-MM-dd" /></label>
+			                                      	<label><c:out value="${mentoring.menContent }"/></label>
+			                                      	<label><c:out value="${mentoring.menTitle }"/></label>
 			                                    </div>
 			                                </div>
-		                                    <div class="col px-md-5">
+		                                    <div>
 		                                        <div class="p-3">
 		                                           	<h3 class="m-0" style="text-align:center;">
-		                                         		멘토링 신청
+		                                         		멘토링 신청 
 		                                    	    </h3>
 		                                    	    <form id="registForm">
 		                                    	    	<input type="hidden" name="menNo" value="" >
@@ -70,42 +77,7 @@
      
        <script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
-<script>
-$(document).ready(function()
-{
-    "use strict";
 
-    //A basic message
-    
-
-    $("#js-bootbox-example-9").on("click", function()
-    {
-        bootbox.confirm(
-        {
-            title: "공모전에 참여하시겠습니까?",
-            message: "공모신청 후 취소를 원하실 경우 [마이페이지]에서 취소 가능합니다.",
-            buttons:
-            {
-            	confirm:
-                {
-                    label: '신 청'
-                },
-                cancel:
-                {
-                    label: '취 소'
-                }
-                
-            },
-            callback: function(result)
-            {
-                console.log('This was logged in the callback: ' + result);
-            }
-        });
-    });
-
-});
-
-</script>
 
 <script>
 $("#mentoringReg").on("click", function(){

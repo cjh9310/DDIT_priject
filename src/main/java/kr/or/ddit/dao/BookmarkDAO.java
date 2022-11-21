@@ -20,4 +20,5 @@ public interface BookmarkDAO {
 	
 	void deleteBookmark(int bookNo) throws SQLException;
 	
+	List<Integer> selectBookmarkByRecruitNO(String recWantedno) throws SQLException;
 }

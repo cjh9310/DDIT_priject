@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,17 +40,27 @@ public class SalaryController {
 		return url;
 	}
 	
+	@RequestMapping(value = "/salaryListForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> salaryListForMain(Criteria cri) throws Exception {
+		Map<String, Object> dataMap = salaryService.getSalaryList(cri);
+		return dataMap;
+	}
+	
+	@RequestMapping(value = "/salaryNewsForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> salaryNewsForMain(Criteria cri) throws Exception {
+		Map<String,Object> dataMap = newsService.getNewsList(cri);
+		return dataMap;
+	}
+	
 	@GetMapping(value="news",produces="application/json;charset=utf-8")
 	@ResponseBody
 	public ModelAndView newsMain(Criteria cri, ModelAndView mnv) throws Exception {
 		String url = "salary/news";
-			
 			Map<String,Object> dataMap = newsService.getNewsList(cri);
-			
-
 			mnv.addObject("dataMap", dataMap);
 			mnv.setViewName(url);
-			
 			return mnv;
 		}
 

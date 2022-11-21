@@ -69,8 +69,7 @@ td { height: 80px; }
 						</div>
 					</h2></td>
 				</tr>
-				<%-- <tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}'"> --%>
-				<tr onclick="goPage('<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${recruit.recWantedno}','M350000')">
+				<tr>
 					<td colspan="8" style="width: 1400px;">
 						<h2 style="margin: 0px;">${recruit.coName}-
 							${recruit.recWantedtitle}</h2>
@@ -78,7 +77,7 @@ td { height: 80px; }
 				</tr>
 			</table>
 			<div class="panel-toolbar ml-2">
-				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/support.do?recWantedno=${recruit.recWantedno}','${recruit.coName}-지원하기','fullscreen')"
+				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/supply.do?recWantedno=${recruit.recWantedno}','${recruit.coName}-지원하기','fullscreen')"
 					class="btn btn-lg btn-outline-info waves-effect waves-themed">
 					즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
 				</button>

@@ -62,6 +62,12 @@
  		   <include refid="bookmarkTypeCheck" />
 	</select>
 	
+	<select id="selectBookmarkByRecruitNO" parameterType="str" resultType="int">
+		select book_no
+		  from bookmark
+		 where rec_wantedno = #{recWantedno}
+ 	</select>
+	
 	<update id="insertRecBookmark" parameterType="bookmark">
 		insert into bookmark (book_no, id, tal_id, rec_wantedno, book_type, co_name)
 		              values (bookmark_seq.nextval, #{id}, #{talId}, #{recWantedno}, #{bookType}, #{coName})

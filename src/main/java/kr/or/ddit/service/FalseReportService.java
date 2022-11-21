@@ -4,13 +4,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.ReportVO;
 
 public interface FalseReportService {
 	
 	// 전체보기
-	Map<String, Object> getAllFalseReportList(String indId)throws SQLException;
+	Map<String, Object> getAllFalseReportList(String indId, Criteria cri)throws SQLException;
 	
 	// 상세보기
 	FalseReportVO getFalseReport(int falNo)throws SQLException;

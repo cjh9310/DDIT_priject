@@ -58,7 +58,7 @@ img {
 								<div class="card-deck">
 									<div class="card">
 										<img src="<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg" class="card-img-top" alt="...">
-										<div class="card-body demo"style="height: 155.87px;">
+										<div class="card-body demo"style="height: 170px;">
 											<h4 class="card-title" data-toggle="tooltip"
 												data-placement="top" title=""
 												data-original-title="${mentoring.menTitle }">${mentoring.menTitle }</h4>
@@ -79,6 +79,10 @@ img {
 													<span class="badge badge-secondary badge-pill">종료</span>
 												</c:if>
 											</div>
+												<div>
+													현재지원가능 인원 수 : ${mentoring.numPeople-mentoring.indCount }명
+													<c:if test="${mentoring.numPeople-mentoring.indCount eq 0 }"> 선착순 마감완료 </c:if>
+												</div>
 											<div style="text-align: center; ">
 												<c:if test="${sDate > today }">
 													<button class="btn btn-success btn-pills waves-effect waves-themed detailBtn" type="button" id="detailBtn" value="${mentoring.menNo }">자세히 보기</button>

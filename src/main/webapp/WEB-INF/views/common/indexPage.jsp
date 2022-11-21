@@ -413,75 +413,7 @@
 						<div class="tab-pane" id="tab-messages" role="tabpanel">
 							<div class="custom-scroll h-100">
 								<ul class="notification">
-									<li class="unread"><a href="#"
-										class="d-flex align-items-center"> <span
-											class="status mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Melissa Ayre <span
-													class="badge badge-primary fw-n position-absolute pos-top pos-right mt-1">INBOX</span></span>
-												<span class="msg-a fs-sm">Re: New security codes</span> <span
-												class="msg-b fs-xs">Hello again and thanks for being
-													part...</span> <span class="fs-nano text-muted mt-1">56
-													seconds ago</span>
-										</span>
-									</a></li>
-									<li class="unread"><a href="#"
-										class="d-flex align-items-center"> <span
-											class="status mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Adison Lee</span> <span class="msg-a fs-sm">Msed
-													quia non numquam eius</span> <span class="fs-nano text-muted mt-1">2
-													minutes ago</span>
-										</span>
-									</a></li>
-									<li><a href="#" class="d-flex align-items-center"> <span
-											class="status status-success mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Oliver Kopyuv</span> <span class="msg-a fs-sm">Msed
-													quia non numquam eius</span> <span class="fs-nano text-muted mt-1">3
-													days ago</span>
-										</span>
-									</a></li>
-									<li><a href="#" class="d-flex align-items-center"> <span
-											class="status status-warning mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Dr. John Cook PhD</span> <span
-												class="msg-a fs-sm">Msed quia non numquam eius</span> <span
-												class="fs-nano text-muted mt-1">2 weeks ago</span>
-										</span>
-									</a></li>
-									<li><a href="#" class="d-flex align-items-center"> <span
-											class="status status-success mr-2"> <!-- <img src="img/demo/avatars/avatar-m.png" data-src="img/demo/avatars/avatar-h.png" class="profile-image rounded-circle" alt="Sarah McBrook" /> -->
-												<span class="profile-image rounded-circle d-inline-block"
-												style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Sarah McBrook</span> <span class="msg-a fs-sm">Msed
-													quia non numquam eius</span> <span class="fs-nano text-muted mt-1">3
-													weeks ago</span>
-										</span>
-									</a></li>
-									<li><a href="#" class="d-flex align-items-center"> <span
-											class="status status-success mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Anothony Bezyeth</span> <span
-												class="msg-a fs-sm">Msed quia non numquam eius</span> <span
-												class="fs-nano text-muted mt-1">one month ago</span>
-										</span>
-									</a></li>
-									<li><a href="#" class="d-flex align-items-center"> <span
-											class="status status-danger mr-2"> <span
-												class="profile-image rounded-circle d-inline-block" style=""></span>
-										</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-												class="name">Lisa Hatchensen</span> <span
-												class="msg-a fs-sm">Msed quia non numquam eius</span> <span
-												class="fs-nano text-muted mt-1">one year ago</span>
-										</span>
-									</a></li>
+									
 								</ul>
 							</div>
 						</div>
@@ -1745,6 +1677,115 @@
 
 	<%@ include file="/WEB-INF/views/common/index_js.jsp"%>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	var webSocket = new WebSocket("ws:192.168.141.21/<%=request.getContextPath()%>/readit");
+	
+	webSocket.onopen = function(e){
+		console.log("접속됨");
+	} 
+	
+	webSocket.onmessage = function(e){
+		console.log(e.data);
+	}
+	$.ajax({
+		url : '<%=request.getContextPath()%>/allim/list',
+		type : 'GET',
+		dataType:"json",
+		success : function(result) {
+			console.log("ajax1",result);
+			var count = result.count;
+			var almList = result.almList;
+			$.ajax({
+				url : '<%=request.getContextPath()%>/allim/list2',
+				type : 'GET',
+				dataType : "json",
+				success : function(result2) {
+			// 내일 할 일 : 현재 ajax1의 openSeqno와 ajax2의 openSeqno 둘 다 출력 됨. 이제 ajax1과 ajax2의 openSeqno를 연결해주면 된다.
+			// 연결 후 적용하면 끝날듯.
+					console.log("ajax2",result2);
+					console.log(count);
+					console.log(result.almList[0].toId);
+					var almNmTitleList = result2.almNmTitleList;
+					
+					console.log(result2.count);
+					if(count == 0){
+						//새로운 알림이 없을 때
+						console.log("0일때");
+						/* var v_list2 = "";
+						v_list2 += '<li class="">';
+						v_list2 += '<a href="#" class="d-flex align-items-center">';
+						v_list2 += '<span class="status mr-2">';
+						v_list2 += '<span class="profile-image rounded-circle d-inline-block" style=""></span>';
+						v_list2 += '</span>';
+						v_list2 += '<span class="d-flex flex-column flex-1 ml-1">';
+						v_list2 += '<span class="name">......</span>';
+						v_list2 += '<span class="msg-a fs-sm">새 알림이 없습니다</span> <span class="fs-nano text-muted mt-1">시간</span>';
+						v_list2 += '</span>';
+						v_list2 += '</a>';
+						v_list2 += '</li>'; */
+						var v_list = 
+						`<li class="">
+							<a href="#" class="d-flex align-items-center">
+								<span class="status mr-2"> <span
+										class="profile-image rounded-circle d-inline-block" style=""></span>
+								</span> <span class="d-flex flex-column flex-1 ml-1"> <span
+										class="name">......</span> 
+										<span class="msg-a fs-sm">새 알림이 없습니다</span> <span class="fs-nano text-muted mt-1">
+										시간</span>
+								</span>
+							</a>
+						</li>`;
+						
+						$('.notification').append(v_list);
+					}else{
+						//새로운 알림이 있을 때
+						for(total = 0; total <= count; total++){
+							/* var unreadList2 = '';
+							unreadList2 += '<li class="unread">';
+							unreadList2 += '<a href="#" class="d-flex align-items-center">';
+							unreadList2 += '<span class="status mr-2">';
+							unreadList2 += '<span class="profile-image rounded-circle d-inline-block" style=""></span>';
+							unreadList2 += '</span>';
+							unreadList2 += '<span class="d-flex flex-column flex-1 ml-1">';
+							unreadList2 += '<span class="name">' + result.almComemList[total].toId + '</span>' ;
+							unreadList2 += '<span class="msg-a fs-sm">' + result.almComemList[total].fromId + '</span>' ;
+							unreadList2 += '<span class="fs-nano text-muted mt-1">시간</span>'
+							unreadList2 += '</span>';
+							unreadList2 += '</a>';
+							unreadList2 += '</li>'; */
+							
+							var unreadList = 
+							`<li class="unread">
+								<a href="#" class="d-flex align-items-center">
+									<span class="status mr-2"> <span
+											class="profile-image rounded-circle d-inline-block" style=""></span>
+									</span> <span class="d-flex flex-column flex-1 ml-1"> <span
+											class="name">`+result.almList[total].toId+`</span>
+											<span class="msg-a fs-sm">`+result.almList[total].fromId+`</span> <span class="fs-nano text-muted mt-1">
+											시간</span>
+									</span>
+								</a>
+							</li>`;
+						$('.notification').append(unreadList);
+						}
+					}
+				}
+			});
+		},
+	
+		error : function(request, status, error) {
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+});
+
+
+
+</script>
+
 </body>
 <!-- END Body -->
 </html>
+
+

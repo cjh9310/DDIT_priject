@@ -236,7 +236,7 @@
                                                     <c:forEach items="${openRecList }" var="openRecList">
                                                         <a href="javascript:void(0);"
                                                            type="button"
-                                                           onclick="openAdviceRegist('${talent.id}','${openRecList.openSeqno}')"
+                                                           onclick="openAdviceRegist('${talent.id}','${openRecList.openSeqno}','${loginUser.id }')"
                                                            class="dropdown-item ${openRecList.openSeqno}"
                                                            data-toggle="modal">${openRecList.openTitle}</a>
                                                            
@@ -513,13 +513,13 @@
 </div>
 
 <script>
-function openAdviceRegist(p_id, p_openSeqno) {
+function openAdviceRegist(p_indId, p_openSeqno, p_coId) {
 	$.ajax({
 		url : '<%=request.getContextPath()%>/talent/openAdviceRegist',
 		type : 'POST',
-		data : {'indId' : p_id, 'openSeqno' : p_openSeqno},
+		data : {'indId' : p_indId, 'toId':p_indId,'openSeqno' : p_openSeqno ,'fromId' : p_coId},
 		success : function(result) {
-			console.log(JSON.stringify(result));
+//			console.log(JSON.stringify(result));
 		},
 		error : function(request, status, error) {
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

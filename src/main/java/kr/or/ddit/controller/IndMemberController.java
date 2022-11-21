@@ -1,5 +1,8 @@
 package kr.or.ddit.controller;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +28,11 @@ import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.CareerVO;
 import kr.or.ddit.dto.CertificateVO;
 import kr.or.ddit.dto.EducationVO;
+import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.LetterVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
+import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
 import kr.or.ddit.service.ActivityService;
 import kr.or.ddit.service.AdviceService;
@@ -292,6 +297,14 @@ public class IndMemberController {
 		
 		return url;
 	}
+	
+	@RequestMapping(value = "/getLetter", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public LetterVO getLetterForAjax(String letSeqno) throws Exception {
+		LetterVO letter = letterService.getLetterByLetSeqno(letSeqno);
+		return letter;
+	}
+	
 	//-----------------------------------------------------------------------------------------------
 	@GetMapping("mypage/support")
 	public String myPageSupport(Criteria cri, HttpServletRequest request) throws Exception {
@@ -347,18 +360,12 @@ public class IndMemberController {
 										HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 		
 		String url = "redirect:/indmember/mypage/supportDetail";
-		System.out.println("support NO" + support.getSupNo());
-		System.out.println("support" + support.getSupContent());
-		System.out.println("support" + support.getSupPdate());
 		
 		supportService.modify(support);
 		
 		support.setSupNo(supNo);
 		
 		rttr.addAttribute("supNo", support.getSupNo());
-//		rttr.addFlashAttribute("from", "supportModify");
-		System.out.println("modify 성공");
-		
 		
 		return url;
 		
@@ -383,10 +390,6 @@ public class IndMemberController {
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
-		
-		System.out.println(member.getName());
-		System.out.println(member.getTel());
-		System.out.println(member.getEmail());
 		member.setId(id);
 		memberService.modify(member);
 		
@@ -404,12 +407,16 @@ public class IndMemberController {
 	
 	
 	@GetMapping("mypage/report")
-	public String myPageReport(Criteria cri, String indId, HttpServletRequest request) throws Exception {
+	public String myPageReport(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "indmember/mypage/report";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
 		
 		Map<String, Object> dataMap = null;
 		
-		dataMap = falseReportService.getAllFalseReportList(indId);
+		dataMap = falseReportService.getAllFalseReportList(id, cri);
 		
 		request.setAttribute("dataMap", dataMap);
 		
@@ -431,5 +438,12 @@ public class IndMemberController {
 		
 		RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);
+	}
+	
+	@RequestMapping("mypage/reportDetail")
+	@ResponseBody
+	public FalseReportVO reportDetail(String falNo) throws SQLException, Exception {
+		FalseReportVO falseReportDetail = null;
+		return falseReportDetail;
 	}
 }

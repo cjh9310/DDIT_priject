@@ -167,14 +167,13 @@ public class CommunityController {
 		return url;
 	}	
 	
-	@GetMapping("report/nameSearch")
-	public String nameSearch(String name, HttpServletRequest request) throws Exception {
-		String url="community/report/regist";
-				
+	@PostMapping("report/nameSearch")
+	@ResponseBody
+	public List<MemberVO> nameSearch(String name, HttpServletRequest request) throws Exception {
+		
 		List<MemberVO> memberVO = memberService.getSelectCoMember(name);
 		request.setAttribute("memberVO", memberVO);
 		
-		
-		return url;
+		return memberVO;
 	}	
 }

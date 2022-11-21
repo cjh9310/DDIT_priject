@@ -28,6 +28,12 @@ th, td {
 	border-spacing: 0;
 	border-collapse: separate;
 }
+
+.fc .fc-popover {
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
+}
 </style>
 <script>
 $(document).ready(function(){	
@@ -51,6 +57,8 @@ $(document).ready(function(){
 		return obj;
 	};
 	document.getElementById('openSdate').value = new Date().toISOString().substring(0, 10);
+	
+	$('#recurit-content').hide();
 });
 </script>
 <script>
@@ -91,14 +99,33 @@ function recruitDetail(p_recno) {
 		data : {'recNo' : p_recno},
 		success : function(result) {
 			console.log(result);
-			console.log("Success");
+			$("#rno").val(result.recWantedno);
+			$("#recTitle").val(result.recWantedtitle);
+			$("#recIndpcd").val(result.recIndtpcdnm);
+			$("#recMin").val(result.recMinsal);
+			$("#recMax").val(result.recMaxsal);
+			$("#recEntertp").val(result.recEntertpnm);
+			$("#recMinedu").val(result.recMinedubg);
+			$("#recPersonalCnt").val(result.recPersonal);
+			$("#recCapital").val(result.recCapitalamt);
+			$("#recYrsale").val(result.recYrsalesamt);
+			$("#benefits").val(result.recFourins);
+			$("#FirmSize").val(result.recBusisize);
+			$("#recJobs").val(result.recJobsnm);
+			$("#recEdate").val(result.recReceiptclosedt);
+			$("#recCnt").val(result.recCollectpsncnt);
+			$("#recSalCon").val(result.recSaltpnm);
+			$("#recWorkTime").val(result.recWorkdayworkhrcont);
+			$("#recPlace").val(result.recRegion);
+			$("#recWorkContent").val(result.recJobcont);
 		},
 		error : function(xhr, status) {
 			console.log(xhr, status);
 		}
 	});
 };
-
+</script>
+<script>
 function cleanDetail() {
 	$("#my_div div").empty();
 	$("#supplyRec").empty();
@@ -135,8 +162,10 @@ function supplyOpenRec(p_openSeqno){
 				$("#supplyRec").append(DynamicTable);
 			}
 		},
-		error : function(xhr, status) {
-			console.log(xhr, status);
+		error : function(result) {
+			if(result == "SessionError") {
+				window.location.reload(); 
+			}
 		}
 	});
 };
@@ -164,25 +193,30 @@ function changeOpenBtn() {
 	const recBtn = document.getElementById('recBtn');
 	const openBtn = document.getElementById('openBtn');
 	const openDiv = document.getElementById('openRec-content');
-	const recDiv = document.getElementById('recruit-content');
+	const recDiv = document.getElementById('recurit-content');
+	const openDIVBtn = document.getElementById('openDIVBtn');
+	const recDIVBtn = document.getElementById('recDIVBtn');
 	
 	recBtn.style.display = 'none';
 	openBtn.style.display = 'block';
 	openDiv.style.display = 'block';
 	recDiv.style.display = 'none';
-	
+	openDIVBtn.style.display = 'block';
+	recDIVBtn.style.display = 'none';
 }
 
 function changeRecBtn() {
 	const recBtn = document.getElementById('recBtn');
 	const openBtn = document.getElementById('openBtn');
 	const openDiv = document.getElementById('openRec-content');
-	const recDiv = document.getElementById('recruit-content');
+	const recDiv = document.getElementById('recurit-content');
 	
 	recBtn.style.display = 'block';
 	openBtn.style.display = 'none';
 	openDiv.style.display = 'none';
 	recDiv.style.display = 'block';
+	openDIVBtn.style.display = 'none';
+	recDIVBtn.style.display = 'block';
 }
 </script>
 <script>
@@ -192,11 +226,6 @@ function changeRecBtn() {
 	console.log(today);
 	$("#openEdate").attr("min", today);
 </script>
-
-<script>
-
-</script>
-
 
 <c:set var="openRecList" value="${dataMap.openRecList }" />
 <c:set var="recruitList" value="${dataMap2.recruitList }" />
@@ -212,7 +241,7 @@ function changeRecBtn() {
 </ol>
 <div class="row">
 	<!-- 공고등록목록 & 지원자목록 -->
-	<div class="col-xl-6" style="height: 1090px;">
+	<div class="col-xl-6" style="height: 1090px; margin-bottom: 24px;">
 		<div>
 			<div class="col-xl-12">
 				<div id="panel-7" class="panel" style="height: 520px;">
@@ -286,10 +315,10 @@ function changeRecBtn() {
 										<thead class="bg-warning-200 mytable">
 											<tr>
 												<th style="width: 8%;">No</th>
-												<th style="width: 31%;">지원자명</th>
-												<th style="width: 31%;">이력서보기</th>
-												<th style="width : 15%;">모집마감일자</th>
-												<th style="width : 15%;">모집인원(명)</th>
+												<th style="width: 30%;">제목</th>
+												<th style="width: 42%;">모집내용</th>
+												<th nowrap style="width : 15%;">모집마감일자</th>
+												<th nowrap style="width : 15%;">모집인원(명)</th>
 											</tr>
 										</thead>
 										<c:if test="${empty recruitList }">
@@ -301,14 +330,14 @@ function changeRecBtn() {
 											</tbody>
 										</c:if>
 										<tbody>
-											<c:forEach items="${recruitList }" var="openRecList">
+											<c:forEach items="${recruitList }" var="recruitList">
 												<c:set var="i" value="${i + 1}"/>
 												<tr onclick="recruitDetail('${recruitList.recWantedno }');">
 													<td><c:out value="${i }"/></td>
 													<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; text-align: left;">${recruitList.recWantedtitle}</td>
 													<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; text-align: left;">${recruitList.recJobcont}</td>
 													<td>${recruitList.recReceiptclosedt}</td>
-													<td>${recruitList.recReceiptclosedt }</td>
+													<td>${recruitList.recCollectpsncnt}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -360,16 +389,23 @@ function changeRecBtn() {
 						<h2>공고글 상세보기</h2>					
 					</div>
 					<div class="col-md-3" style="padding : 0px; margin-left: 50px;">
-						<button type="button" class="btn btn-warning waves-effect waves-themed" id="openRecModifyBtn">수정</button>
-						<button type="button" class="btn btn-danger waves-effect waves-themed" id="openRecDeleteBtn">삭제</button>
+						<div id="openDIVBtn">						
+							<button type="button" class="btn btn-danger waves-effect waves-themed" id="openRecDeleteBtn">삭제</button>
+							<button type="button" class="btn btn-warning waves-effect waves-themed" id="openRecModifyBtn">수정</button>
+						</div>
+						<div id="recDIVBtn" style="display: none;">						
+							<button type="button" class="btn btn-danger waves-effect waves-themed" id="RecDeleteBtn">삭제</button>
+							<button type="button" class="btn btn-warning waves-effect waves-themed" id="RecModifyBtn">수정</button>
+						</div>
 					</div>
 				</div>
-				<div class="panel-container show" style="overflow: auto;">
+				<div id="AnnouncementContent" class="panel-container show" style="overflow: auto;">
 					<!-- 공개 채용 영역 -->
 					<div id="openRec-content" class="panel-content" style="height: 1010px;">
 						<form id="openRecModifyForm" style="height : 100%;" >
+						<div class="panel-content">
 		                    <div class="form-group">
-		                        <label class="form-label" for="simpleinput">제목</label>
+		                        <label class="form-label" for="simpleinput"><b>제목</b></label>
 		                        <input type="text" id="title" class="form-control" name="openTitle">
 		                        <input type="text" style="display: none;" id="no" class="form-control" name="openSeqno">
 		                    </div>
@@ -390,17 +426,19 @@ function changeRecBtn() {
 								</select>
 							</div>
 		                    <div class="form-group">
-		                        <label class="form-label" for="example-email-2">회사명</label>
-		                        <input type="text" id="company" name="openConm" class="form-control" placeholder="" disabled>
+		                        <label class="form-label" for="example-email-2"><b>회사명</b></label>
+		                        <input type="text" value="${loginUser.coNm }" class="form-control" placeholder="" disabled>
+		                        <input type="text" value="${loginUser.coNm }" name="openConm" style="display: none; "/>
 		                    </div>
 		                    <div class="form-group">
-		                        <label class="form-label" for="example-email-2">회사주소</label>
-		                        <input type="text" id="address" name="openRegion" class="form-control" placeholder="" disabled>
+		                        <label class="form-label" for="example-email-2"><b>회사주소</b></label>
+		                        <input type="text" value="${loginUser.coAddr } ${loginUser.coDeaddr}" class="form-control" placeholder="" disabled>
+		                        <input type="text" value="${loginUser.coAddr } ${loginUser.coDeaddr}" name="openRegion" style="display: none; "/>
 		                    </div>
 		                    <div class="form-group">
 		                    	<div class="row" style="margin-left: 0px; margin-right: 0px;">
 		                    		<div style = "display: inline; width: 25%; padding: 0px 5px 0px 0px;">
-		                    			<label class="form-label" for="example-select">기업형태</label>
+		                    			<label class="form-label" for="example-select"><b>기업형태</b></label>
 				                        <select class="form-control" id="coType" name="openCOCL">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">대기업</option>
@@ -411,7 +449,7 @@ function changeRecBtn() {
 				                        </select>
 		                    		</div>
 		                    		<div style = "display: inline; width: 25%; padding: 0px 5px 0px 5px;">
-		                    			<label class="form-label" for="example-select">고용형태</label>
+		                    			<label class="form-label" for="example-select"><b>고용형태</b></label>
 				                        <select class="form-control" id="empType" name="openType">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">정규직</option>
@@ -423,7 +461,7 @@ function changeRecBtn() {
 				                        </select>
 		                    		</div>
 		                    		<div style = "display: inline;  width: 25%; padding: 0px 5px 0px 5px;">
-		                    			<label class="form-label" for="example-select">경력형태</label>
+		                    			<label class="form-label" for="example-select"><b>경력형태</b></label>
 				                        <select class="form-control" id="carType" name="openCar">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">인턴</option>
@@ -433,7 +471,7 @@ function changeRecBtn() {
 				                        </select>
 		                    		</div>
 		                    		<div style = "display: inline;  width: 25%; padding: 0px 0px 0px 5px;">
-		                    			<label class="form-label" for="example-select">학력형태</label>
+		                    			<label class="form-label" for="example-select"><b>학력형태</b></label>
 				                        <select class="form-control" id="eduType" name="openEdu">
 				                        	<option value="0">선택하세요</option>
 				                            <option value="10">고등학교졸업</option>
@@ -448,72 +486,73 @@ function changeRecBtn() {
 		                    </div>
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 		                    	<div style="display: inline; width : 50%; padding : 0px 5px 0px 0px;">
-		                    		<label class="form-label" for="example-date">등록일</label>
+		                    		<label class="form-label" for="example-date"><b>등록일</b></label>
 		                        	<input class="form-control" id="sdate" type="date" name="openSdate" value="" disabled>
 		                    	</div>
 		                    	<div style="display: inline; width : 50%; padding : 0px 0px 0px 5px;">
-		                    		<label class="form-label" for="example-date">마감일</label>
+		                    		<label class="form-label" for="example-date"><b>마감일</b></label>
 		                        	<input class="form-control" id="edate" type="date" name="openEdate" value="">
 		                    	</div>
 		                    </div>
 		                    
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 	                    		<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 0px;">
-	                    			<label class="form-label" for="example-select">지원학력(상세)</label>
-			                        <input type="text" id="edunm" class="form-control" name="openCarnm">
+	                    			<label class="form-label" for="example-select"><b>지원학력(상세)</b></label>
+			                        <input type="text" id="edunm" class="form-control" name="openEdunm">
 	                    		</div>
 	                    		<div style = "display: inline;  width: 50%; padding: 0px 0px 0px 5px;">
-	                    			<label class="form-label" for="example-select">지원경력(상세)</label>
-			                        <input type="text" id="carnm" class="form-control" name="openEdunm">
+	                    			<label class="form-label" for="example-select"><b>지원경력(상세)</b></label>
+			                        <input type="text" id="carnm" class="form-control" name="openCarnm">
 	                    		</div>
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                        <label class="form-label" for="simpleinput">직무설명</label>
+		                        <label class="form-label" for="simpleinput"><b>직무설명</b></label>
 		                        <textarea style="resize: none;" class="form-control" id="content" name="openContent" rows="15"></textarea>
 		                    </div>
 		                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
 		                    	<div style="display: inline; width : 50%; padding : 0px 5px 0px 0px;">
-		                    		<label class="form-label" for="example-date">모집인원수(명)</label>
+		                    		<label class="form-label" for="example-date"><b>모집인원수(명)</b></label>
 		                        	<input class="form-control" id="cnt" type="text" name="openCnt" value="">
 		                    	</div>
 		                    	<div style="display: inline; width : 50%; padding : 0px 0px 0px 5px;">
-		                    		<label class="form-label" for="example-date">마감일</label>
+		                    		<label class="form-label" for="example-date"><b>마감일</b></label>
 		                        	<input class="form-control" id="example-select" type="date" name="openAcptpsn" value="">
 		                    	</div>
+		                    </div>
 		                    </div>
 		                </form>
 					</div>
 					
 					<!-- 일반 채용 영역 -->
-					<div id="recruit-content" class="panel-content" style = "height: 100%; display: none;">
+					<div id="recurit-content" class="panel-content" style="height: 1010px;">
 						<form class="needs-validation" novalidate="" method="post"
-							name="registForm" id="frm">
+							name="recuritModifyForm" id="recuritModifyForm">
 							<div class="panel-content">
 								<!-- 제목 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>공고제목</b>
+									<label class="form-label" for="validationCustom01"><b>제목</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="제목을 입력해주세요." value="" required=""
-										name="recWantedtitle">
+										class="form-control" id="recTitle" placeholder="제목을 입력해주세요." value=""
+										required="" name="recWantedtitle">
+										<input type="text" style="display: none;" id="rno" class="form-control" name="recWantedno">
 									<div class="invalid-feedback">제목을 입력해주세요.</div>
 								</div>
 								<!-- 업종 -->
 								<div class="form-group">
 									<label class="form-label" for="validationCustom03"><b>업종</b>
 										<span class="text-danger">*</span></label> <select
-										class="custom-select" required="" name="recIndtpcdnm">
-										<option value="10">서비스업</option>
-										<option value="20">제조·화학</option>
-										<option value="30">IT·웹·통신</option>
-										<option value="40">은행·금융업</option>
-										<option value="50">미디어·디자인</option>
-										<option value="60">교육업</option>
-										<option value="70">의료·제약·복지</option>
-										<option value="80">판매·유통</option>
-										<option value="90">건설업</option>
-										<option value="99">기관·협회</option>
+										class="custom-select" required="" id="recIndpcd" name="recIndtpcdnm">
+										<option value="0">서비스업</option>
+										<option value="1">제조·화학</option>
+										<option value="2">IT·웹·통신</option>
+										<option value="3">은행·금융업</option>
+										<option value="4">미디어·디자인</option>
+										<option value="5">교육업</option>
+										<option value="6">의료·제약·복지</option>
+										<option value="7">판매·유통</option>
+										<option value="8">건설업</option>
+										<option value="9">기관·협회</option>
 									</select>
 									<div class="invalid-feedback">상담유형을 선택해주세요.</div>
 								</div>
@@ -522,74 +561,160 @@ function changeRecBtn() {
 									<label class="form-label" for="example-palaceholder-disabled"><b>기업명</b></label>
 									<input type="text" id="example-palaceholder-disabled"
 										class="form-control" value="${loginUser.coNm }" disabled=""
-										name="coName" readonly="readonly">
+										name="coName" readonly="readonly"> <input type="text"
+										name="coName" value="${loginUser.coNm }"
+										style="display: none;" />
 								</div>
-								<!-- 경력 -->
+								<!-- 최대 최소 금액 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>경력</b>
+									<div class="row" style="margin-left: 0px; margin-right: 0px;">
+										<div
+											style="display: inline; width: 50%; padding: 0px 5px 0px 0px;">
+											<label class="form-label" for="simpleinput"><b>최소임금액(단위:만원)</b></label>
+											<input type="text" name="recMinsal" id="recMin" placeholder="금액을 입력해주세요."
+												class="form-control">
+										</div>
+										<div
+											style="display: inline; width: 50%; padding: 0px 5px 0px 5px;">
+											<label class="form-label" for="simpleinput"><b>최대임금액(단위:만원)</b></label>
+											<input type="text" name="recMaxsal" id="recMax" placeholder="금액을 입력해주세요."
+												class="form-control">
+										</div>
+									</div>
+								</div>
+								<!--학력 & 경력 -->
+								<div class="form-group">
+									<div class="row" style="margin-left: 0px; margin-right: 0px;">
+										<div
+											style="display: inline; width: 50%; padding: 0px 5px 0px 0px;">
+											<label class="form-label" for="example-select"><b>경력형태</b></label>
+											<select class="form-control" id="recEntertp" name="recEntertpnm">
+												<option value="0">선택하세요</option>
+												<option value="인턴">인턴</option>
+												<option value="신입">신입</option>
+												<option value="경력">경력</option>
+												<option value="무관">무관</option>
+											</select>
+										</div>
+										<div
+											style="display: inline; width: 50%; padding: 0px 5px 0px 5px;">
+											<label class="form-label" for="example-select"><b>학력형태</b></label>
+											<select class="form-control" id="recMinedu" name="recMinedubg">
+												<option value="0">선택하세요</option>
+												<option value="고등학교졸업">고등학교졸업</option>
+												<option value="대졸(2,3년)">대졸(2,3년)</option>
+												<option value="대졸(4년)">대졸(4년)</option>
+												<option value="석사">석사</option>
+												<option value="박사">박사</option>
+												<option value="학력무관">학력무관</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<!--근로자수 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근로자수(단위:명)</b></label>
+									<input type="text" class="form-control"
+										placeholder="근로자수를 입력해주세요."  required="" id="recPersonalCnt"
+										name="recPersonal">
+								</div>
+								<!-- 자본금 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>자본금(단위:만원)</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="최소경력을 입력해주세요." value="" required=""
-										name="recEntertpnm">
-									<div class="invalid-feedback">최소경력을 입력해주세요.</div>
-								</div>
-								<!-- 										학력 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>학력</b>
-										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="최소학력을 입력해주세요." value="" required=""
-										name="recMinedubg">
-									<div class="invalid-feedback">최소학력을 입력해주세요.</div>
-								</div>
-								<!-- 										근무지역 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>근무지역</b>
-										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="근무지역을 입력해주세요." value="" required=""
-										name="recRegion">
-									<div class="invalid-feedback">근무지역을 입력해주세요.</div>
-								</div>
-								<!-- 										임금 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>임금(단위:백만원)</b>
-										<span class="text-danger">*</span> </label> <input type="number"
-										class="form-control" id="validationCustom01"
-										placeholder="임금을 입력해주세요." value="" required=""
-										name="recMinsal">
-									<div class="invalid-feedback">임금을 입력해주세요.</div>
+										class="form-control" 
+										placeholder="자본금을 입력해주세요."  required="" id="recCapital"
+										name="recCapitalamt">
+									<div class="invalid-feedback">자본금을 입력해주세요.</div>
 								</div>
 								<!-- 근무형태 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>근무형태</b>
+									<label class="form-label" for="validationCustom01"><b>연매출액(단위:만원)</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="근무형태를 입력해주세요." value="" required=""
-										name="recWorkdayworkhrcont">
-									<div class="invalid-feedback">근무형태를 입력해주세요.</div>
+										class="form-control" 
+										placeholder="연매출액를 입력해주세요."  required="" id="recYrsale"
+										name="recYrsalesamt">
+									<div class="invalid-feedback">연매출액를 입력해주세요.</div>
 								</div>
-								복리후생
+								<!-- 복리후생 -->
 								<div class="form-group">
 									<label class="form-label" for="validationCustom01"><b>복리후생</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="복리후생을 입력해주세요." value="" required=""
+										class="form-control" 
+										placeholder="복리후생을 입력해주세요."  required="" id="benefits"
 										name='recFourins'>
 									<div class="invalid-feedback">복리후생을 입력해주세요.예:4대보험</div>
 								</div>
+								<!-- 회사규모 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>회사규모</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="회사규모를 입력해주세요."  required="" id="FirmSize"
+										name='recBusisize'>
+									<div class="invalid-feedback">회사규모을 입력해주세요.</div>
+								</div>
+								<!-- 홈페이지 hidden -->
+								<input type="text" style="display: none;" name="recHomepg"
+									value="${coInfo.coHomeurl}" />
 
+								<!-- 모집직종 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>모집직종</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="모집직종을 입력해주세요."  required="" id="recJobs"
+										name="recJobsnm">
+									<div class="invalid-feedback">모집직종을 입력해주세요.</div>
+								</div>
+								<!-- 모집마감일 -->
 								<div class="form-group">
 									<label class="form-label" for="example-date"><b>모집기간</b>&nbsp;※마감일을
-										선택해주세요</label> <input class="form-control" id="example-date"
-										type="date" name="date" value="" name="recReceiptclosedt">
+										선택해주세요</label> <input class="form-control" id="recEdate"
+										type="date"  name="recReceiptclosedt">
 								</div>
-
+								<!-- 모집인원수 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>모집인원(단위:명)</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="모집인원을 입력해주세요."  required="" id="recCnt"
+										name="recCollectpsncnt">
+									<div class="invalid-feedback">모집인원을 입력해주세요.</div>
+								</div>
+								<!-- 임금조건 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>임금조건</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="임금조건을 입력해주세요."  required="" id="recSalCon"
+										name="recSaltpnm">
+									<div class="invalid-feedback">임금조건을 입력해주세요.</div>
+								</div>
+								<!-- 근무시간/형태 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근무시간/형태</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="근무시간/형태을 입력해주세요."  required="" id="recWorkTime"
+										name="recWorkdayworkhrcont">
+									<div class="invalid-feedback">근무시간/형태을 입력해주세요.</div>
+								</div>
+								<!-- 근무지 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근무지</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="근무지(광역시/구)를 입력해주세요."  required="" id="recPlace"
+										name="recRegion">
+									<div class="invalid-feedback">근무지을 입력해주세요.</div>
+								</div>
+								<!-- 직무내용 -->
 								<div class="form-group">
 									<label class="form-label" for="validationTextarea2"><b>직무내용</b>
 										<span class="text-danger">*</span></label>
-									<textarea class="form-control" id="validationTextarea1"
-										placeholder="담당직무의 내용을 입력해주세요." rows="7" required=""
+									<textarea class="form-control" 
+										placeholder="담당직무의 내용을 입력해주세요." rows="7" required="" id="recWorkContent"
 										name="recJobcont"></textarea>
 									<div class="invalid-feedback">담당직무의 내용을 입력해주세요.</div>
 								</div>
@@ -629,17 +754,15 @@ function changeRecBtn() {
 						</div>
 					</div>
 					<div class="panel-container show" style = "height: 100%;">
-						<div class="panel-content">
-							
-						</div>
 						<form class="needs-validation" novalidate="" method="post"
-							name="registForm" id="frm">
+							name="recuritForm" id="recuritForm">
 							<div class="panel-content">
 								<!-- 제목 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>공고제목</b>
-										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
+									<label class="form-label" for="validationCustom01"><b>제목</b>
+										<span class="text-danger">*</span> </label> 
+									<input type="text"
+										class="form-control" id=""
 										placeholder="제목을 입력해주세요." value="" required=""
 										name="recWantedtitle">
 									<div class="invalid-feedback">제목을 입력해주세요.</div>
@@ -668,88 +791,159 @@ function changeRecBtn() {
 									<input type="text" id="example-palaceholder-disabled"
 										class="form-control" value="${loginUser.coNm }" disabled=""
 										name="coName" readonly="readonly">
+									<input type="text" name="coName" value = "${loginUser.coNm }" style="display: none;"/>
 								</div>
-								<!-- 경력 -->
+								<!-- 최대 최소 금액 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>경력</b>
+			                    	<div class="row" style="margin-left: 0px; margin-right: 0px;">
+										<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 0px;">
+			                        		<label class="form-label" for="simpleinput"><b>최소임금액(단위:만원)</b></label>
+			                        		<input type="text" name="recMinsal" placeholder="금액을 입력해주세요." class="form-control">
+			                    		</div>	
+			                    		<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 5px;">
+			                        		<label class="form-label" for="simpleinput"><b>최대임금액(단위:만원)</b></label>
+			                        		<input type="text" name="recMaxsal" placeholder="금액을 입력해주세요." class="form-control">
+			                    		</div>				                    	
+			                    	</div>
+			                    </div>
+			                    <!--학력 & 경력 -->
+								<div class="form-group">
+			                    	<div class="row" style="margin-left: 0px; margin-right: 0px;">
+			                    		<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 0px;">
+			                    			<label class="form-label" for="example-select"><b>경력형태</b></label>
+					                        <select class="form-control" id="example-select" name="recEntertpnm">
+					                        	<option value="0">선택하세요</option>
+					                            <option value="인턴">인턴</option>
+					                            <option value="신입">신입</option>
+					                            <option value="경력">경력</option>
+					                            <option value="무관">무관</option>
+					                        </select>
+			                    		</div>
+			                    		<div style = "display: inline;  width: 50%; padding: 0px 5px 0px 5px;">
+			                    			<label class="form-label" for="example-select"><b>학력형태</b></label>
+					                        <select class="form-control" id="example-select" name="recMinedubg">
+					                        	<option value="0">선택하세요</option>
+					                            <option value="고등학교졸업">고등학교졸업</option>
+					                            <option value="대졸(2,3년)">대졸(2,3년)</option>
+					                            <option value="대졸(4년)">대졸(4년)</option>
+					                            <option value="석사">석사</option>
+					                            <option value="박사">박사</option>
+					                            <option value="학력무관">학력무관</option>
+					                        </select>
+			                    		</div>
+			                    	</div>
+			                    </div>
+								<!--근로자수 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근로자수(단위:명)</b></label>
+									<input type="text"
+										class="form-control"
+										placeholder="근로자수를 입력해주세요." value="" required="" name="recPersonal">
+								</div>
+								<!-- 자본금 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>자본금(단위:만원)</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="최소경력을 입력해주세요." value="" required=""
-										name="recEntertpnm">
-									<div class="invalid-feedback">최소경력을 입력해주세요.</div>
-								</div>
-								<!-- 										학력 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>학력</b>
-										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="최소학력을 입력해주세요." value="" required=""
-										name="recMinedubg">
-									<div class="invalid-feedback">최소학력을 입력해주세요.</div>
-								</div>
-								<!-- 										근무지역 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>근무지역</b>
-										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="근무지역을 입력해주세요." value="" required=""
-										name="recRegion">
-									<div class="invalid-feedback">근무지역을 입력해주세요.</div>
-								</div>
-								<!-- 										임금 -->
-								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>임금(단위:백만원)</b>
-										<span class="text-danger">*</span> </label> <input type="number"
-										class="form-control" id="validationCustom01"
-										placeholder="임금을 입력해주세요." value="" required=""
-										name="recMinsal">
-									<div class="invalid-feedback">임금을 입력해주세요.</div>
+										class="form-control" 
+										placeholder="자본금을 입력해주세요." value="" required=""
+										name="recCapitalamt">
+									<div class="invalid-feedback">자본금을 입력해주세요.</div>
 								</div>
 								<!-- 근무형태 -->
 								<div class="form-group">
-									<label class="form-label" for="validationCustom01"><b>근무형태</b>
+									<label class="form-label" for="validationCustom01"><b>연매출액(단위:만원)</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
-										placeholder="근무형태를 입력해주세요." value="" required=""
-										name="recWorkdayworkhrcont">
-									<div class="invalid-feedback">근무형태를 입력해주세요.</div>
+										class="form-control" 
+										placeholder="연매출액를 입력해주세요." value="" required=""
+										name="recYrsalesamt">
+									<div class="invalid-feedback">연매출액를 입력해주세요.</div>
 								</div>
-								복리후생
+								<!-- 복리후생 -->
 								<div class="form-group">
 									<label class="form-label" for="validationCustom01"><b>복리후생</b>
 										<span class="text-danger">*</span> </label> <input type="text"
-										class="form-control" id="validationCustom01"
+										class="form-control" 
 										placeholder="복리후생을 입력해주세요." value="" required=""
 										name='recFourins'>
 									<div class="invalid-feedback">복리후생을 입력해주세요.예:4대보험</div>
 								</div>
-
+								<!-- 회사규모 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>회사규모</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="회사규모를 입력해주세요." value="" required=""
+										name='recBusisize'>
+									<div class="invalid-feedback">회사규모을 입력해주세요.</div>
+								</div>
+								<!-- 홈페이지 hidden -->
+								<input type="text" style="display: none;" name ="recHomepg" value="${coInfo.coHomeurl}"/>
+								<!-- 로고 hidden -->
+								
+								<!-- 모집직종 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>자본금</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="모집직종을 입력해주세요." value="" required=""
+										name="recJobsnm">
+									<div class="invalid-feedback">모집직종을 입력해주세요.</div>
+								</div>
+								<!-- 모집마감일 -->
 								<div class="form-group">
 									<label class="form-label" for="example-date"><b>모집기간</b>&nbsp;※마감일을
 										선택해주세요</label> <input class="form-control" id="example-date"
-										type="date" name="date" value="" name="recReceiptclosedt">
+										type="date" value="" name="recReceiptclosedt">
 								</div>
-
+								<!-- 모집인원수 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>모집인원</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="모집인원을 입력해주세요." value="" required=""
+										name="recCollectpsncnt">
+									<div class="invalid-feedback">모집인원을 입력해주세요.</div>
+								</div>
+								<!-- 임금조건 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>임금조건</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="임금조건을 입력해주세요." value="" required=""
+										name="recSaltpnm">
+									<div class="invalid-feedback">임금조건을 입력해주세요.</div>
+								</div>
+								<!-- 근무시간/형태 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근무시간/형태</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="근무시간/형태을 입력해주세요." value="" required=""
+										name="recWorkdayworkhrcont">
+									<div class="invalid-feedback">근무시간/형태을 입력해주세요.</div>
+								</div>
+								<!-- 근무지 -->
+								<div class="form-group">
+									<label class="form-label" for="validationCustom01"><b>근무지</b>
+										<span class="text-danger">*</span> </label> <input type="text"
+										class="form-control" 
+										placeholder="근무지을 입력해주세요." value="" required=""
+										name="recRegion">
+									<div class="invalid-feedback">근무지을 입력해주세요.</div>
+								</div>
+								<!-- 직무내용 -->
 								<div class="form-group">
 									<label class="form-label" for="validationTextarea2"><b>직무내용</b>
 										<span class="text-danger">*</span></label>
-									<textarea class="form-control" id="validationTextarea1"
+									<textarea class="form-control"
 										placeholder="담당직무의 내용을 입력해주세요." rows="7" required=""
 										name="recJobcont"></textarea>
 									<div class="invalid-feedback">담당직무의 내용을 입력해주세요.</div>
 								</div>
-
-								<!-- <div class="form-group mb-0">
-											<label class="form-label"><b>첨부파일</b></label>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="customFile">
-												<label class="custom-file-label" for="customFile">파일선택</label>
-											</div>
-										</div> -->
 							</div>
 							<div
 								class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
-								<!-- <div class="custom-control custom-checkbox">
+								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
 										id="invalidCheck" required=""> <label
 										class="custom-control-label" for="invalidCheck"> Agree
@@ -757,10 +951,10 @@ function changeRecBtn() {
 									</label>
 									<div class="invalid-feedback">You must agree before
 										submitting.</div>
-								</div> -->
-								<div class="modal-footer" style="float:right">
-                                	<button id="submit" onclick="regist_go();" type="submit" class="btn btn-success btn-pills ml-auto waves-effect waves-themed">Save changes</button>
-                                </div>
+								</div>
+								<button
+									class="btn btn-success btn-pills ml-auto waves-effect waves-themed"
+									type="button" id="recuritBtn">등록하기</button>
 							</div>
 						</form>
 					</div>
@@ -797,9 +991,6 @@ function changeRecBtn() {
 						</div>
 					</div>
 					<div class="panel-container show" style = "height: 100%;">
-						<div class="panel-content">
-							
-						</div>
 						<form class="needs-validation" novalidate="" method="post" action=""
 							name="openRecForm" id="openRecForm">
 							<div class="panel-content">
@@ -951,8 +1142,30 @@ function changeRecBtn() {
 	document.getElementById('openSdate').value = new Date().toISOString().substring(0, 10);
 </script>
 
+<script>
+/* 일반채용 Insert */
+$('#recuritBtn').on('click', function() {
+	var recuritParam = $('#recuritForm').serializeObject();
+	
+	console.log(recuritParam);
+	
+	$.ajax({
+		url : 'recruitRegist',
+		type : 'post',
+		data : recuritParam,
+		error : function(xhr, status) {
+			alert("실패");
+		},
+		success : function(data) {
+			alert("성공");
+			location.reload();
+		}
+	}); 
+});
+</script>
 
 <script>
+/* 공개채용 Insert */
 $('#openRecBtn').on("click", function() {
 	var openRecParam = $("#openRecForm").serializeObject();
 	
@@ -975,8 +1188,19 @@ $('#openRecBtn').on("click", function() {
 </script>
 
 <script>
+$('#RecModifyBtn').on('click',function() {
+	var recuritModifyForm = $("#recuritModifyForm").serializeObject();
+	
+	console.log(recuritModifyForm);
+});
+</script>
+
+<script>
+/* 공개채용 수정 */
 $('#openRecModifyBtn').on('click', function() {
 	var openRecModifyForm = $('#openRecModifyForm').serializeObject();
+	
+	console.log(openRecModifyForm);
 	
 	$.ajax({
 		url : 'openRecModify',
@@ -991,15 +1215,36 @@ $('#openRecModifyBtn').on('click', function() {
 		}
 	});
 });
-
 </script>
 
 <script>
+/* 일반채용 Delete*/
+$('#RecDeleteBtn').on('click', function() {
+	var recno = $('#rno').val();
+	
+	$.ajax({
+		url : 'recruitDelete',
+		type : 'post',
+		data : {'recno' : recno},
+		error : function(xhr, status) {
+			alert("실패");
+		},
+		success : function(data) {
+			alert("성공");
+			location.reload();
+		}
+	}); 
+});
+</script>
+
+
+<script>
+/* 공개채용 삭제 */
 $('#openRecDeleteBtn').on('click', function() {
 	var seqno = $('#no').val();
 	
 	$.ajax({
-		url : 'openRecDelte',
+		url : 'openRecDelete',
 		type : 'post',
 		data : {'openSeqno' : seqno} ,
 		success : function() {
@@ -1011,7 +1256,6 @@ $('#openRecDeleteBtn').on('click', function() {
 		}
 	});
 });
-
 </script>
 
 <script>

@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.ActivityVO;
 import kr.or.ddit.dto.ContestVO;
 import kr.or.ddit.dto.MemberVO;
+import kr.or.ddit.dto.MentoringVO;
 import kr.or.ddit.dto.SupportVO;
 import kr.or.ddit.service.ActivityService;
 import kr.or.ddit.service.ContestService;
@@ -143,10 +145,15 @@ public class SupportController {
 	}
 	
 	@GetMapping("mentoring/detail")
-	public String mentroringDetail()throws Exception {
+	public ModelAndView mentroringDetail(int menNo, ModelAndView mnv)throws Exception {
 		String url = "support/mentoring/detail";
 		
-		return url;
+		
+		MentoringVO mentoring = mentoringService.getMentoring(menNo);
+		
+		mnv.addObject("mentoring", mentoring);
+		mnv.setViewName(url);
+		return mnv;
 	}
 	
 	@RequestMapping("mentoring/activityRegist")
