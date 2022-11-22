@@ -59,12 +59,13 @@
 
 var cntxtPth = "${pageContext.request.contextPath}";
 console.log("cntxtPth = " + cntxtPth)
-function openList(falNo) {
-	console.log(falNo)
+function openList(falNo,coName) {
+	console.log(falNo,coName)
 	$.ajax({
 		url : 'reportDetail',
 		method : 'POST',
-		data : {'falNo' : falNo},
+		data : {'falNo' : falNo,
+				'coName' : coName},
 		success : function(result) {
 			console.log(result);
 			$('#openTitle').val(result.falTitle);
@@ -75,6 +76,11 @@ function openList(falNo) {
 			$('#openOdate').val(result.falOdate);
 			$('#openSdate').val(result.falSdate);
 			$('#openContent').val(result.falContent);
+			$('#openStatus').val(result.repStatus);
+			$('#coName').val(result.coName);
+			$('#coAddr').val(result.coDetail[0].coAddr);
+			
+			
 			
 			var rowStr = '';
 			$('#attachList').empty();
@@ -160,12 +166,12 @@ function openList(falNo) {
 	                            <table class="table table-bordered table-hover m-0">
 	                                <thead class="thead-themed">
 	                                    <tr>
-	                                        <th style="width: 8%;">NO</th>
-	                                        <th style="width: 20%">작성자</th>
-	                                        <th style="width: 20%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">신고 기업명</th>
-	                                        <th style="width: 20%">신고 유형</th>
-	                                        <th style="width: 20%">발생일</th>
-	                                        <th style="width: 12%;">처리상태</th>
+	                                        <th style="width: 8%;"><b>NO</b></th>
+	                                        <th style="width: 20%"><b>작성자</b></th>
+	                                        <th style="width: 20%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><b>신고 기업명</b></th>
+	                                        <th style="width: 20%"><b>신고 유형</b></th>
+	                                        <th style="width: 20%"><b>발생일</b></th>
+	                                        <th style="width: 12%;"><b>진행상태</b></th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -176,7 +182,7 @@ function openList(falNo) {
 	                                	</c:if>
 	                                	<c:forEach items="${ReportList }" var="reportList">
 	                                		<c:set var="i" value="${i+1 }" />
-		                                    <tr onclick="openList('${reportList.falNo}');">
+		                                    <tr onclick="openList('${reportList.falNo}','${reportList.coName }');">
 		                                        <td style="text-align: center;"><c:out value="${i }" /></td>
 		                                        <td>${reportList.indId }</td>
 		                                        <td>${reportList.coName }</td>
@@ -194,56 +200,73 @@ function openList(falNo) {
 	            </div>	
 	            
 <!-- --------------------------------------기업검색-------------------------------------------- -->
-				<div id="panel-5" class="panel" style="height: 500px;">
+
+				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" >
-			                <div class="frame-wrap">
-		                       	<div class="row">
-		                       		<div class="col-12" style="margin-bottom: 18px;">
-		                       			<ul class="nav nav-pills" role="tablist">
-											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 상세 신고 내역</a></li>
+	                    <div class="panel-content" style="height: 530px;">
+	                        <div class="frame-wrap" style="margin-bottom: 20px;">
+	                        	<div class="row">
+	                        		<div class="col-5" style="margin-bottom: 18px;">
+	                        			<ul class="nav nav-pills" role="tablist">
+											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 기업 상세 </a></li>
 										</ul>
-		                       		</div>
+	                        		</div>
 								</div>
-			                </div>
-			                <div class="panel-container show">
-			                    <div class="panel-content">
-			                        <div class="frame-wrap">
-			                            <table class="table table-bordered table-hover m-0">
-			                                <thead class="thead-themed">
-			                                    <tr>
-			                                        <th style="width: 8%;">NO</th>
-			                                        <th style="width: 20%">작성자</th>
-			                                        <th style="width: 20%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">신고 기업명</th>
-			                                        <th style="width: 20%">신고 유형</th>
-			                                        <th style="width: 20%">발생일</th>
-			                                        <th style="width: 12%;">처리상태</th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>			                        
-								
-											</tbody>
-										</table>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-		        </div>	            
-			</div>
+	                        	
+	                        	<div style="margin-bottom: 50px;">
+	                        	<table class="table table-bordered m-0">
+	                        		<thead>
+	                        			<tr>
+	                        				<th style="width: 10%;">기업명</th>
+	                        				<th style="width: 20%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 150px;" id="coName" readonly></th>
+	                        				<th style="width: 10%;">주소</th>
+	                        				<th style="width: 35%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 270px;" id="coAddr" readonly></th>
+	                        				<th style="width: 13%;">권한</th>
+	                        				<th style="width: 12%; padding: 3px;">
+	                        					<div class="statusBtn">
+	                        						<button type="button" class="btn btn-danger waves-effect waves-themed">권한 회수</button>
+	                        					</div>
+	                        				</th>
+	                        			</tr>		
+	                        		</thead>
+	                        	</table>
+	                        	</div>
+	                            <table class="table table-bordered m-0">
+	                                <thead>
+	                                    <tr>
+	                                        <th style="width: 10%;">No</th>
+	                                        <th>채용공고</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                	<tr>
+	                                		<td >1</td>
+	                                		<td>채용공고</td>
+	                                	</tr>
+	                                </tbody>
+	                            </table>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>	
+	        </div>
 			
 <!-- -----------------------------------상세 신고 내역 ------------------------------------- -->
 			
 			<div class="col-xl-6">
 				<div id="panel-5" class="panel">
 	                <div class="panel-container show">
-	                    <div class="panel-content" style="height: 1150px;">
+	                    <div class="panel-content" style="height: 1200px;">
 	                        <div class="frame-wrap">
 	                        	<div class="row">
-	                        		<div class="col-12" style="margin-bottom: 18px;">
+	                        		<div class="col-8" style="margin-bottom: 18px;">
 	                        			<ul class="nav nav-pills" role="tablist">
 											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 상세 신고 내역</a></li>
 										</ul>
+	                        		</div>
+	                        		<div class="col-4" style="margin-bottom: 18px; float: right;">
+	                        			<button type="button" class="btn btn-warning waves-effect waves-themed" id="workingOn">신고처리중</button>
+	                        			<button type="button" class="btn btn-info waves-effect waves-themed" id="complete" >처리 완료</button>
 	                        		</div>
 								</div>
 							<div id="faqpanel-2" class="panel">
@@ -259,8 +282,8 @@ function openList(falNo) {
 													</div>
 													
 														<div class="col-lg-6 mb-3">
-															<label class="form-label" for="validationCustom02"><b>신고 기업명</b>
-															</label> <input type="text" class="form-control" id="openCoName"
+															<label class="form-label" for="validationCustom02"><b>진행상태</b>
+															</label> <input type="text" class="form-control" id="openStatus"
 																 value="" disabled>
 														</div>														
 														
@@ -286,7 +309,12 @@ function openList(falNo) {
 															</label> <input type="text" class="form-control" id="openCategoryDetail"
 																 value="" disabled>
 														</div>																												
-																																																
+
+														<div class="col-lg-12 mb-3">
+															<label class="form-label" for="validationCustom02"><b>신고 기업명</b>
+															</label> <input type="text" class="form-control" id="openCoName"
+																 value="" disabled>
+														</div>																																																	
 														<div class="col-lg-12 mb-3">
 															<label class="form-label" for="validationCustom03"><b>제목</b>
 															</label> <input type="text" class="form-control" id="openTitle"
@@ -303,7 +331,7 @@ function openList(falNo) {
 																<div class="card-header">
 																	<b>첨부파일 다운로드</b>
 																</div>
-																<div class="card-footer">
+																<div class="card-footer" style="height: 80px;">
 																	<div class="row" id="attachList">
 																		<!-- 첨부파일 썸네일 -->
 																		<c:forEach items="${report.attachList }" var="attach">
@@ -324,20 +352,20 @@ function openList(falNo) {
 																	</div>
 																</div>
 															</div>
-														</div>													
-														<div class="col-12 mb-3">
-															<label class="form-label" for="validationTextarea1"><b>코몐트 작성</b></label>
+														</div>	
+														<div class="col-12" style="margin-top: 10px;">
+															<label class="form-label" for="validationTextarea1"><b style="color: red">코몐트 작성</b></label>
 															<textarea class="form-control" id="reportComment"
 																name="repComment" placeholder="코멘트를 입력하세요." rows="10"
 																required></textarea>
 														</div>														
-														<div class="col-lg-12">
+														<div class="col-lg-12" style="margin-top: 20px;">
 															<div style="float: right;">
 																<button class="btn btn-warning ml-auto" id="reportCommentBtn" type="button">코멘트 등록</button>
 															</div>
-														</div>
+														</div>																											
 													</div>
-												</div>
+												</div>											
 											</form>
 										</div>
 									</div>

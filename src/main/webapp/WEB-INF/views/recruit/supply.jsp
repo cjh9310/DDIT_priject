@@ -41,7 +41,45 @@
 <div class="col-xl-12 col-lg-12 card mb-g">
 	<div class="recruit-head panel-conteiner">
 		<div class="row w-100 p-0 m-0 h-100">
-			<table>
+			<table class="w-100">
+				<tr>
+					<td style="width:50px;">
+						<div class='icon-stack display-3 flex-shrink-0'
+							style="margin-left: 10px;">
+							<c:choose>
+								<c:when test="${recruit.recBookmark != null}">
+									<button id="${recruit.recWantedno}" class="bookMark_btn"
+										style="background-color: transparent; border: 0px;"
+										type="button" value="${recruit.recBookmark}">
+										<i name="recremove"
+											class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+									</button>
+								</c:when>
+								<c:when test="${recruit.recBookmark == null}">
+									<button name="recregist" id="${recruit.recWantedno}"
+										class="bookMark_btn"
+										style="background-color: transparent; border: 0px;"
+										type="button" value="${recruit.recBookmark}">
+										<i name="recregist"
+											class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+									</button>
+								</c:when>
+							</c:choose>
+						</div>
+					</td>
+					<td>
+						<h2 style="margin: 0px;">${recruit.coName}  -  ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
+						</h2>
+					</td>
+					<td>
+						<button type="button" onclick="rec_supply()"
+							class="btn btn-md btn-outline-info waves-effect waves-themed w-100">
+							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
+						</button>
+					</td>
+				</tr>
+			</table>
+			<%-- <table>
 				<tr>
 					<td colspan="1" rowspan="3"
 						style="width: 45px; padding-right: 16px;">
@@ -73,15 +111,14 @@
 					<td colspan="8" style="width: 1400px;">
 						<h2 style="margin: 0px;">${recruit.coName}-
 							${recruit.recWantedtitle} - 채용공고 지원중</h2>
-					</h2></td>
+						</h2>
+						<button type="button" onclick="rec_supply()"
+							class="btn btn-md btn-outline-info waves-effect waves-themed">
+							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
+						</button>
+					</td>
 				</tr>
-			</table>
-			<div class="panel-toolbar ml-2">
-				<button type="button" onclick="rec_supply()"
-					class="btn btn-md btn-outline-info waves-effect waves-themed">
-					제출하기<span class="fas fa-arrow-alt-right ml-1"></span>
-				</button>
-			</div>
+			</table> --%>
 		</div>
 	</div>
 </div>
@@ -276,8 +313,8 @@
 									</div>
 									<form method="post" id="recSupplyForm">	
 										<table class="table" id="letter_table">
-											
 										</table>
+										<input type="hidden" name="recWantedno" value="${recruit.recWantedno}" />
 									</form>
 								</div>
 							</div>
@@ -294,7 +331,7 @@
 					<div id="letManage">
 						<div id="panel-1" class="panel">
 							<div class="panel-hdr">
-								<h2>지원 이력서에 자기소개서를 등록해보세요.</h2>
+								<h2>자기소개서</h2>
 								<div class="panel-toolbar ml-2">
 									<button type="button" onclick="manage_rendering('letManage')"
 										class="btn btn-xs btn-info waves-effect waves-themed">
@@ -368,7 +405,8 @@ function letterTableSetting() {
 }
 
 letterTableSetting();
-
+</script>
+<script>
 function rec_supply() {
 	
 	if(!letterStatus) {
@@ -378,23 +416,24 @@ function rec_supply() {
 	
 	var recWantedno = '${recruit.recWantedno}';
 	console.log(recWantedno);
-	var ajaxOption = {
-			url : '<%=request.getContextPath()%>/recruit/supply/check',
-			async : true,
-			type : "POST",
-			data : {'recWantedno' : recWantedno},
-			dataType : "text",
-			cache : false
-		};
-		
-	$.ajax(ajaxOption).done(function(data) {
-		if(data == 'SupplyNotAllowed') {
-			alert('이미 지원한 채용공고입니다.');
-			window.close();
-		} else if(data == 'SupplyAllowed') {
-			rec_supply_submit();
+	
+	$.ajax({
+		type : "POST",
+		url : '<%=request.getContextPath()%>/recruit/supply/check',
+		data : {'recWantedno' : recWantedno},
+		dataType : 'text',
+		success : function(data) {
+			if(data == 'SupplyNotAllowed') {
+				alert('이미 지원한 채용공고입니다.');
+				window.close();
+			} else if(data == 'SupplyAllowed') {
+				rec_supply_submit();
+			}
+		},
+		error : function(request, status, error) {
+			console.log(request, status, error);
 		}
-	}); 
+	});  
 	
 }
 </script>
@@ -404,20 +443,23 @@ function rec_supply() {
 function rec_supply_submit() {
 	
 	form = $('#recSupplyForm').serialize();
-	console.log('recSupplyForm', form);
 	
-	var ajaxOption = {
-			url : '<%=request.getContextPath()%>/recruit/supply/submit.do',
-			async : true,
-			type : "POST",
-			data : form,
-			dataType : "text",
-			cache : false
-		};
-		
-	$.ajax(ajaxOption).done(function(data) {
-		console.log(data);
-	}); 
+	var coName = '${recruit.coName}';
+	
+	$.ajax({
+		type : "POST",
+		url : '<%=request.getContextPath()%>/recruit/supply/submit.do',
+		data : form,
+		dataType : 'text',
+		success : function(data) {
+			if(data == 'recruitSupplySuccess') {
+				alert(coName + '에 대한 채용 지원이 완료되었습니다.')
+			}
+		},
+		error : function(request, status, error) {
+			console.log(request, status, error);
+		}
+	});  
 	
 }
 
@@ -554,16 +596,16 @@ $(document).ready(function() {
 		$.ajax(ajaxOption).done(function(data) {
 			console.log("letter data : ", data);
 			var tableTemplate = '<thead id="letter_'+letSeqno+'"><tr><th colspan="6" class="text-center border-top-0 table-scale-border-bottom fw-700">'+data.letTitle+'</th></tr></thead>'+
-	        '<tbody id="letter_'+letSeqno+'"><tr><td class="text-left">'+data.letContent+'</td></tr></tbody>'+
-	        '<input type="hidden" name="letTitle" value="'+data.letTitle+'" /><input type="hidden" name="letContent" value="'+data.letContent+'" />';
+	        '<tbody id="letter_'+letSeqno+'"><tr><td class="text-left">'+data.letContent+'</td></tr>'+
+	        '<input type="hidden" name="letTitle" value="'+data.letTitle+'" /><input type="hidden" name="letContent" value="'+data.letContent+'" /></tbody>';
 			letter_table.append(tableTemplate);
+			letterTableSetting();
 			var td = button.parent('td');
 			var button_del = '<button class="supply_del_let" id="'+letSeqno+'" type="button"'+
 							 'style="background-color: transparent; border: 0px;">'+
 							 '<i class="badge border border-danger text-danger">지원 이력서에서 삭제하기</i></button>';
 			td.children('button').remove();
 			td.append(button_del);
-			letterTableSetting();
 			
 		});
 
@@ -586,9 +628,9 @@ $(document).ready(function() {
 		 				 'style="background-color: transparent; border: 0px;">'+
 		 				 '<i class="badge border border-success text-success">지원 이력서에 추가하기</i></button>';
 		letter_table.children('#letter_'+letSeqno).remove();
+		letterTableSetting();
 		td.children('button').remove();
 		td.append(button_add);
-		letterTableSetting();
 		
 	});
 

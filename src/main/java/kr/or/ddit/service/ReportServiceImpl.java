@@ -11,6 +11,7 @@ import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.ReportDAO;
 import kr.or.ddit.dto.AttachVO;
+import kr.or.ddit.dto.CoDetailListVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public class ReportServiceImpl implements ReportService {
@@ -79,5 +80,14 @@ public class ReportServiceImpl implements ReportService {
 			report.setAttachList(attachList);
 			
 	}
+
+
+	@Override
+	public List<CoDetailListVO> getCoDetail(String coName) throws SQLException {
+		List<CoDetailListVO> coDetail = reportDAO.selectCoDetail(coName);
+		return coDetail;
+	}
+	
+	
 
 }

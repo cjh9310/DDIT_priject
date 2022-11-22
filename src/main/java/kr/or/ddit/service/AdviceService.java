@@ -9,7 +9,7 @@ import kr.or.ddit.dto.BookmarkVO;
 
 public interface AdviceService {
 	
-	List<AdviceVO> getAdviceList(int open_seqno) throws SQLException;
+	List<AdviceVO> getAdviceList(String open_seqno) throws SQLException;
 
 	Map<String,Object> getAdviceRecruitList(String id)throws SQLException;
 	

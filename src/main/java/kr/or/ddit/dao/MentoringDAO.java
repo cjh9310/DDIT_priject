@@ -14,6 +14,8 @@ public interface MentoringDAO {
 	
 	int selectMentoringCriteriaTotalCount(Criteria cri) throws SQLException;
 	
+	int selectMentoringTotalCount() throws SQLException;
+	
 	List<MentoringVO> selectMentoringByCoId(String coId)throws SQLException;
 	
 	MentoringVO selectMentoringByMenNo(int menNo)throws SQLException;
@@ -29,6 +31,10 @@ public interface MentoringDAO {
 	void deleteMentoring(int menNo)throws SQLException;
 	
 	int selectMentoringSeqNext()throws SQLException;
+
+	
+
+	
 
 	
 

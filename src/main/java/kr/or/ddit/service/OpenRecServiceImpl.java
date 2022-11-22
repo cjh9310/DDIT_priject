@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.OpenRecDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 
@@ -16,6 +20,11 @@ public class OpenRecServiceImpl implements OpenRecService {
 	private OpenRecDAO openRecDAO;
 	public void setOpenRecDAO(OpenRecDAO openRecDAO) {
 		this.openRecDAO = openRecDAO;
+	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
 	}
 	
 	@Override
@@ -80,13 +89,49 @@ public class OpenRecServiceImpl implements OpenRecService {
 	}
 
 	@Override
-	public int regist(OpenRecVO openRec) throws SQLException {
-		return openRecDAO.insertOpenRec(openRec);
+	public int regist(OpenRecVO openRec, String savePath) throws SQLException {
+		String workDiv = "openRec"; // 필수
+		
+		List<AttachVO> attachList = null;
+		try {
+			// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
+			attachList = MultipartFileUploadResolver.fileUpload(openRec.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		openRec.setAttachList(attachList);
+		
+		if(openRec.getAttachList() != null) {
+			for(AttachVO attach : openRec.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(Integer.toString(openRec.getOpenSeqno()));
+				System.out.println("아이디 : "+openRec.getId());
+				attach.setAttacher(openRec.getId());
+				attachDAO.insertAttach(attach);
+			}
+		}
+		
+		openRecDAO.insertOpenRec(openRec);
+		
+		return 1;
 	}
 
 	@Override
 	public OpenRecVO getOpenRecListByNo(int open_seqNo) throws SQLException {
 		OpenRecVO openRecDetail = openRecDAO.selectOpenRecListByNo(open_seqNo);
+		
+		addAttachList(openRecDetail);
+		
+		if(openRecDetail!=null && openRecDetail.getAttachList()!=null) {
+			for(AttachVO attach:openRecDetail.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
+		
 		return openRecDetail;
 	}
 	
@@ -105,5 +150,17 @@ public class OpenRecServiceImpl implements OpenRecService {
 	@Override
 	public void delete(int openSeqno) throws SQLException {
 		openRecDAO.delete(openSeqno);
+	}
+	
+	private void addAttachList(OpenRecVO openRec) throws SQLException {
+
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(openRec.getOpenSeqno()));
+		attach.setWorkDiv("FalseReport");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		openRec.setAttachList(attachList);
+		
 	}
 }

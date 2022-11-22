@@ -14,6 +14,7 @@ public class ActivityVO {
 	private String actTel; //신청자가 공모응모페이지에서 직접 입력한 전화번호
 	private String actEmail; //신청자가 공모응모페이지에서 직접 입력한 이메일주소
 	private Date actDate; //신청자가 공모전신청하고 멘토링신청한 날짜
+	private Date actUdate; //수정되는 날짜
 	
 	//공모전
 	private Date conSdate; //시작일자
@@ -110,6 +111,14 @@ public class ActivityVO {
 		this.actDate = actDate;
 	}
 
+	public Date getActUdate() {
+		return actUdate;
+	}
+
+	public void setActUdate(Date actUdate) {
+		this.actUdate = actUdate;
+	}
+
 	public Date getConSdate() {
 		return conSdate;
 	}
@@ -186,17 +195,12 @@ public class ActivityVO {
 	public String toString() {
 		return "ActivityVO [actNo=" + actNo + ", indId=" + indId + ", conNo=" + conNo + ", menNo=" + menNo
 				+ ", actStatus=" + actStatus + ", actPrize=" + actPrize + ", actScore=" + actScore + ", actTel="
-				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", conSdate=" + conSdate + ", conEdate="
-				+ conEdate + ", conTitle=" + conTitle + ", conField=" + conField + ", menSdate=" + menSdate
-				+ ", menEdate=" + menEdate + ", menTitle=" + menTitle + ", menProgress=" + menProgress + ", name="
-				+ name + "]";
+				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", actUdate=" + actUdate + ", conSdate="
+				+ conSdate + ", conEdate=" + conEdate + ", conTitle=" + conTitle + ", conField=" + conField
+				+ ", menSdate=" + menSdate + ", menEdate=" + menEdate + ", menTitle=" + menTitle + ", menProgress="
+				+ menProgress + ", name=" + name + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+		
 	
 }

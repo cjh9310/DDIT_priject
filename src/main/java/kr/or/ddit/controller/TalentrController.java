@@ -82,13 +82,14 @@ public class TalentrController {
 		Map<String, Object> dataMap2 = null;
 		Map<String, Object> dataMap3 = null;
 		
+		// 회사 이름 따옴
 		open_conm = loginUser.getCoNm();
 		
 		
 		dataMap2 = openRecService.getOpenRecListByConm(open_conm);
 		dataMap3 = recruitService.getRecruitListByConm(open_conm);
 		
-		
+		System.out.println("asdasd"+dataMap3);
 		request.setAttribute("dataMap2", dataMap2);
 		request.setAttribute("dataMap3", dataMap3);
 		// 여기까지 500뜨
@@ -134,18 +135,6 @@ public class TalentrController {
 		return dataMap;
 	}
 	
-	/*
-	 * @PostMapping("/regist")
-	 * 
-	 * @ResponseBody public String openAdviceRegist(AdviceVO advice,
-	 * RedirectAttributes rttr) throws Exception { String url =
-	 * "redirect:/talent/list";
-	 * 
-	 * adviceSerivce.registAdvice(advice); rttr.addFlashAttribute("from", "regist");
-	 * 
-	 * return url; }
-	 */
-	
 	@PostMapping("/openAdviceRegist")
 	@ResponseBody
 	public AdviceVO openAdviceRegist(AdviceVO advice, AllimVO allim, webSocketListener handler ) throws Exception {
@@ -157,7 +146,7 @@ public class TalentrController {
 		System.out.println("찾아줘"+allim.getOpenSeqno());
 		adviceService.registAdvice(advice);
 		allimService.registAllim(allim);
-		handler.openAdviceAllim(allim);
+		handler.AdviceAllim(allim);
 		
 		
 //		String detail = adviceSerivce.registAdvice(indId);
@@ -166,6 +155,25 @@ public class TalentrController {
 		return advice;
 	}
 	
-	
+	@PostMapping("/recruitAdviceRegist")
+	@ResponseBody
+	public AdviceVO recruitAdviceRegist(AdviceVO advice, AllimVO allim, webSocketListener handler ) throws Exception {
+		
+		advice.getIndId();
+		allim.getFromId();
+		allim.getToId();
+		System.out.println("찾아줘"+advice.getRecWantedno());
+		System.out.println("찾아줘"+allim.getRecWantedno());
+		System.out.println("찾아줘"+advice.getOpenSeqno());
+		adviceService.registAdvice(advice);
+		allimService.registAllim(allim);
+		handler.AdviceAllim(allim);
+		
+		
+//		String detail = adviceSerivce.registAdvice(indId);
+		
+		
+		return advice;
+	}
 
 }

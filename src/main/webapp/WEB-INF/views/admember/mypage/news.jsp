@@ -274,25 +274,37 @@
  			.substring(0, 10);
 </script>
 
-
-
 <script>
 
  	$('#registBtn').click(function() {
+ 		
+		
 		var data = $("#myForm").serializeObject();
-		console.log(data);
 		$.ajax({
 			url : 'newsRegist',
 			type : 'POST',
 			data : data,			
 			success : function(data) {
-				window.location.replace(location.href);
-			},
+				Swal.fire({
+					target: document.getElementById('counselModal'),
+	                icon: 'success',
+					title: "뉴스가 등록되었습니다.",
+					text: "",
+	                type: "success",
+	                showCancelButton: false,
+	                confirmButtonText: "OK"
+	    		}).then(function(result){
+				 
+					window.location.replace(location.href);
+	    		});
+	    	},
 			error : function(request, status, error) {
 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 			}
 		});
-	}); 
+ 	});
+
+
 </script>
 <script>
 	$(document).ready(function() {
@@ -353,19 +365,20 @@
 			type : 'POST',
 			data : {'newsNo': newsNo},				
 			success : function(data) {
-				console.log(data);
 				Swal.fire({
-					icon:'success',
-					title:'삭제했습니다.',
-					showConfirmButton:false,
-					timer:1500
-				})
+					icon: 'success',
+					title: '삭제되었습니다.',
+					showConfirmButton: false,
+					timer: 1500
+			}).then(function(){	
+				
 				window.location.replace(location.href);
+			});
 			},
 			error : function(request, status, error) {
 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 			}
-		})	
+		});
 	}
   });		
 }
@@ -416,15 +429,17 @@ function Modify(){
  		document.querySelector('#textarea-hidden').innerText = text_content_by_summernote
  		
  	$("form[role='newsModifyForm']").submit();
- 	Swal.fire({
-			icon:'success',
-			title:'수정했습니다.',
-			showConfirmButton:false,
-			timer:1500
-		})
-}	
-  });
-	}
+ 		Swal.fire({
+			icon: 'success',
+			title: '수정되었습니다.',
+			showConfirmButton: false,
+			timer: 1500
+	}).then(function(){	
+		window.location.replace(location.href);
+	});
+  }	
+});
+}
 </script>
     	
     	

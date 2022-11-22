@@ -284,23 +284,24 @@ function openList(supNo) {
  	 			method : 'POST',
  	 			data : JSON.stringify({'supNo' : supNo,'supProcess':v_supProcess,'counselorName':v_counselorName }),
  	 			contentType:'application/json',
- 	 			success : function(result){
- 	 				Swal.fire({
- 	 	 				icon:'success',
- 	 	 				title:'수정했습니다.',
- 	 	 				showConfirmButton:false,
- 	 	 				timer:1500
- 	 	 			})
- 	 				window.location.replace(location.href);
- 	 			},
- 	 			
- 	 			error : function(request, status, error) {
- 	 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
- 	 			}
- 			})
+ 	 			success : function(data) {
+ 					Swal.fire({
+ 						icon: 'success',
+ 						title: '수정되었습니다.',
+ 						showConfirmButton: false,
+ 						timer: 1500
+ 				}).then(function(){	
+ 					
+ 					window.location.replace(location.href);
+ 				});
+ 				},
+ 				error : function(request, status, error) {
+ 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+ 				}
+ 			});
  		}
- 	});
- }
+ 	  });		
+ 	}
 </script>
 
 

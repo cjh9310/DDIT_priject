@@ -30,6 +30,7 @@ import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SeniorVO;
+import kr.or.ddit.dto.SupplyRecVO;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.EducationService;
@@ -150,14 +151,22 @@ public class RecruitController {
 	}
 	
 	@PostMapping("/supply/submit")
-	public String recruitSupplySubmit(@RequestParam List<String> letTitle, @RequestParam List<String> letContent) throws Exception {
-		for(String title : letTitle) {
-			System.out.println(title);
-		}
-		for(String content : letContent) {
-			System.out.println(content);
-		}
-		return "Success";
+	@ResponseBody
+	public String recruitSupplySubmit(String recWantedno, @RequestParam List<String> letTitle, @RequestParam List<String> letContent, HttpSession session) throws Exception {
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String indId = loginUser.getId();
+		
+		SupplyRecVO supplyRec = new SupplyRecVO();
+		supplyRec.setIndId(indId);
+		supplyRec.setRecWantedno(recWantedno);
+		
+		Map<String, List<String>> letterMap = new HashMap<String, List<String>>();
+		letterMap.put("titleList", letTitle);
+		letterMap.put("contentList", letContent);
+		
+		supplyRecService.supplyRecruit(supplyRec, letterMap);
+		
+		return "recruitSupplySuccess";
 	}
 	
 	@RequestMapping(value = "/scrollList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")

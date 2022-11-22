@@ -110,6 +110,8 @@
 		set
 			 act_tel = #{actTel}
 			,act_email = #{actEmail}
+			,act_status = #{actStatus}
+			,act_udate = sysdate
 		where
 			act_no = #{actNo}
 	</update>

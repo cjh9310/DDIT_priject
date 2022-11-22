@@ -74,7 +74,7 @@
             			<a href="javascript:void(0);" class="btn btn-danger btn-pills waves-effect waves-themed" id="">모집마감 완료</a>
             		</c:when>
             		<c:otherwise>
-            			<h4>${mentoring.numPeople - mentoring.indCount}명 신청가능합니다.</h4>
+            			<h4>${mentoring.numPeople - mentoring.indCount}자리 남았습니다.</h4>
             			<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="mentoringReg">신청하기</a>
             		</c:otherwise>
             	</c:choose>
@@ -92,18 +92,42 @@ $("#mentoringReg").on("click", function(){
 	
 	var param = $("#registForm").serialize();
 	//alert(param);
-	$.ajax({
-		url : 'activityRegist.do',
-		type : 'POST',
-		data : param,
-		cache : false,
-		async : true,
-		success : function(data){
-			alert("멘토링에 응모되었습니다! 신청하신 공모전은 마이페이지에서 확인가능합니다.");
-			window.open("about:blank", "_self").close();
-			window.opener.location.reload();
-		}
+	Swal.fire({
+                icon: 'warning',
+				title: "멘토링 프로그램을 신청하시겠습니까?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonText: "OK"
+    }).then(function(result){
+    		if(result.value){
+				$.ajax({
+					url : 'activityRegist.do',
+					type : 'POST',
+					data : param,
+					cache : false,
+					async : true,
+					success : function(data){
+						
+						Swal.fire({
+  							icon: 'success',
+  							title: '응모되었습니다!',
+  							text: '응모하신 내용은 [마이페이지]-[프로그램관리]에서 확인가능합니다.',
+  							showConfirmButton: true,
+  							confirmButtonText: "OK"
+						}).then(function(){
+							window.close();
+				    		window.opener.location.reload();
+				    		
+						})
+    				},
+    				error:(request,status,error)=>{
+    					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				
+					}
+				});
+    		}
 	});
+	
 });
 </script>
 

@@ -11,6 +11,9 @@ public class LetterVO {
 	
 	// 지원 전용 필드
 	private int supNo;
+	private int supletNo;
+	private String supletTitle;
+	private String supletContent;
 	
 	public String getLetSeqno() {
 		return letSeqno;
@@ -68,4 +71,28 @@ public class LetterVO {
 		this.supNo = supNo;
 	}
 
+	public int getSupletNo() {
+		return supletNo;
+	}
+
+	public void setSupletNo(int supletNo) {
+		this.supletNo = supletNo;
+	}
+
+	public String getSupletTitle() {
+		return supletTitle;
+	}
+
+	public void setSupletTitle(String supletTitle) {
+		this.supletTitle = supletTitle;
+	}
+
+	public String getSupletContent() {
+		return supletContent;
+	}
+
+	public void setSupletContent(String supletContent) {
+		this.supletContent = supletContent;
+	}
+	
 }

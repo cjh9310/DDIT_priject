@@ -29,7 +29,7 @@ public class AdviceVO {
 	private Date recRegdt;
 
 	// OPEN_REC FIELD
-	private int openSeqno;
+	private String openSeqno;
 	private String openTitle;
 	private String openConm;
 	private String openRegion;
@@ -148,11 +148,11 @@ public class AdviceVO {
 		this.recRegdt = recRegdt;
 	}
 
-	public int getOpenSeqno() {
+	public String getOpenSeqno() {
 		return openSeqno;
 	}
 
-	public void setOpenSeqno(int openSeqno) {
+	public void setOpenSeqno(String openSeqno) {
 		this.openSeqno = openSeqno;
 	}
 

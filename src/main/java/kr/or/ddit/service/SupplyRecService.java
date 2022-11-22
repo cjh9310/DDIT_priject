@@ -17,5 +17,11 @@ public interface SupplyRecService {
 	int getCountSupplyRecById(Map<String, Object> parameterMap) throws SQLException;
 	
 	int getCountSupplyOpenRecById(Map<String, Object> parameterMap) throws SQLException;
+	
+	void supplyRecruit(SupplyRecVO supplyRec, Map<String, List<String>> letterMap) throws SQLException;
+	
+	void supplyOpenRec(SupplyRecVO supplyRec, Map<String, List<String>> letterMap) throws SQLException;
+	
+	Map<String, Object> getSupplyResumeAllInfo(int supNo) throws SQLException;
 
 }

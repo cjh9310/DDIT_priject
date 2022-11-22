@@ -90,7 +90,8 @@
 		p:memberDAO-ref="memberDAO" />
 	<bean id="openRecService"
 		class="kr.or.ddit.service.OpenRecServiceImpl"
-		p:openRecDAO-ref="openRecDAO" />
+		p:openRecDAO-ref="openRecDAO" 
+		p:attachDAO-ref="attachDAO" />
 	<bean id="recruitService"
 		class="kr.or.ddit.service.RecruitServiceImpl"
 		p:recruitDAO-ref="recruitDAO" />

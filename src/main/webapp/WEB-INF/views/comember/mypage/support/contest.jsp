@@ -91,7 +91,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll" onclick="contestSupporterList(${contest.conNo},'${contest.conTitle }')"> 
+			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="contestSupporterListAll" onclick="contestSupporterListB(${contest.conNo},'${contest.conTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.count }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${contest.conTitle }</td>
@@ -132,7 +132,7 @@ $(document).ready(function(){
 			                                                    <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                    	<c:if test="${contest.conSdate > now and contest.conEdate >now}">
 				                                                        <c:set var="count1" value="${count1 + 1}" />
-					                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail">
+					                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail" onclick="contestSupporterListB(${contest.conNo},'${contest.conTitle }')">
 					                                                            <th class="text-center border-right" scope="row">${count1}</th>
 					                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 					                                                            <td>${contest.conTitle }</td>
@@ -183,7 +183,7 @@ $(document).ready(function(){
 			                                                        <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                    	<c:if test="${contest.conEdate > now }">
 			                                                    	<c:set var="count2" value="${count2 + 1}" />
-			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail">
+			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail" onclick="contestSupporterListB(${contest.conNo},'${contest.conTitle }')">
 			                                                            <th class="text-center border-right" scope="row">${count2}</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${contest.conTitle }</td>
@@ -234,7 +234,7 @@ $(document).ready(function(){
 			                                                        <c:forEach items="${contestList }" var="contest" varStatus="idxRow">
 			                                                    	<c:if test="${contest.conEdate < now }">
 			                                                        <c:set var="count3" value="${count3 + 1}" />
-			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail">
+			                                                        <tr style="cursor:pointer" name="${contest.conNo}" class="testcontdetail" onclick="contestSupporterList(${contest.conNo},'${contest.conTitle }')">
 			                                                            <th class="text-center border-right" scope="row">${count3}</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${contest.conDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${contest.conTitle }</td>
@@ -422,7 +422,7 @@ $(document).ready(function(){
 			                                                    </c:if>
 			                                                    <c:forEach items="${mentoringList }" var="mentoring" varStatus="idxRow">
 			                                                        <%-- <tr style="cursor:pointer" name="${contest.conNo}" class="contestDetail"> --%>
-			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterList(${mentoring.menNo},'${mentoring.menTitle }')"> 
+			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterListB(${mentoring.menNo},'${mentoring.menTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${idxRow.index+1 }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${mentoring.menTitle }</td>
@@ -465,7 +465,7 @@ $(document).ready(function(){
 			                                                    <c:forEach items="${mentoringList }" var="mentoring">
 			                                                    	<c:if test="${mentoring.menSdate > now }">
 			                                                    	<c:set var="count4" value="${count4 + 1}" />
-			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList"> 
+			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterListB(${mentoring.menNo},'${mentoring.menTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${count4 }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${mentoring.menTitle }</td>
@@ -518,7 +518,7 @@ $(document).ready(function(){
 			                                                    <c:forEach items="${mentoringList }" var="mentoring" varStatus="idxRow">
 			                                                    	<c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now }">
 			                                                    	<c:set var="count5" value="${count5 + 1}" />
-			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList"> 
+			                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterListB(${mentoring.menNo},'${mentoring.menTitle }')"> 
 			                                                            <th class="text-center border-right" scope="row">${count5 }</th>
 			                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 			                                                            <td>${mentoring.menTitle }</td>
@@ -571,7 +571,7 @@ $(document).ready(function(){
 			                                                        <c:forEach items="${mentoringList }" var="mentoring" varStatus="idxRow">
 			                                                    		<c:if test="${mentoring.menEdate < now }">
 			                                                    		<c:set var="count6" value="${count6 + 1}" />
-					                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList"> 
+					                                                        <tr style="cursor:pointer" name="${mentoring.menNo}" class="mentoringSupporterList" onclick="mentoringSupporterList(${mentoring.menNo},'${mentoring.menTitle }')"> 
 					                                                            <th class="text-center border-right" scope="row">${count6 }</th>
 					                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menDate }" pattern="yyyy-MM-dd"/></td>
 					                                                            <td>${mentoring.menTitle }</td>
@@ -1038,6 +1038,90 @@ $('.mentoringAdBtn').on('click', function(){
 	});
 </script>
 <!-- mentoring -->
+
+<!-- 종료전 상태에서 가산점 수정 안되게 -->
+<script>
+
+function mentoringSupporterListB(m,t){  
+
+   $.ajax({
+      url:"mentoringSupporterList",
+      type:"get",
+      data: {menNo: m},
+      dataType:"json",
+      success: function(data) {
+    	  ajaxHtmlMentoringB(data,t);
+	},
+      error:function(){alert("error");
+      console.log(data)}
+   });
+}
+
+   function ajaxHtmlMentoringB(data,t){
+	   console.log(t);
+	   if(data.activityMenList.length == 0){
+		  var html = "<div class = text-center>";
+			 html += "<h5>'"+ t +"'</br>"+"멘토링에 지원한 인원이 없습니다.</h5>";
+			 html += "</div>";
+			 
+	   }else {
+			console.log(data)
+			
+			var html = "<div class='frame-wrap' id='ajaxCureList'>";
+               	html += "<table class='table table-sm table-hover m-0'>";
+               	html += "<thead class='text-center'>";
+		        html += "<tr>";
+		        html += "<th>No</th>";
+		        html += "<th>지원일자</th>";
+		        html += "<th>지원자명</th>";
+		        html += "<th>회원ID</th>";
+		        html += "<th>연락처</th>";
+		        html += "<th></th>";
+		        html += "</tr>";
+		        html += "</thead>";
+		        html += "<tbody>";
+			
+		      /* var html="<table class='table table-bordered' id='userListTable'>";
+		      html+="<tr>";
+		      html+="<th>진료일자</th>";
+		      html+="<th>진료의사</th>";
+		      html+="<th>진료내역</th>";
+		      html+="<th>이름</th>";
+		      html+="<th>연령|성별</th>";
+		          
+		      html+="</tr>"; */
+	   }
+      
+      
+      $.each(data.activityMenList, (index, obj)=>{
+    	  
+    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
+          	html +=	"<th scope='row'>"+index+"</th>";
+            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.name+"</td>";
+            html +=	"<td>"+obj.indId+"</td>";
+            html +=	"<td>"+obj.actTel+"</td>";
+            
+            if(obj.actStatus == 3){
+            	html += "<td>중도포기</td>";
+            }else{
+            	html += "<td></td>";
+            }
+			html += "</tr>";
+      })
+      html+="</tbody>";
+      html+="</table>";
+      html+="</div>";
+      
+      $("#ajaxCureList").html(html);
+      //$("#mentoringScoreSelect").val(obj.actScore);
+   }
+
+
+
+</script>
+
+<!-- 종료된 상태일때 가산점 줄 수 있게  -->
 <script>
 
 function mentoringSupporterList(m,t){  
@@ -1188,10 +1272,82 @@ function scoreModifyBtn(a){
 }
 </script>
 <!-- contest -->
+<!-- 가산점 수정 없는 함수-->
+<script>
+
+function contestSupporterListB(c,t){  
+   console.log(event.target);
+   $.ajax({
+      url:"contestSupporterList",
+      type:"get",
+      data: {conNo: c},
+      dataType:"json",
+      success: function(data){
+    	  ajaxHtmlContestB(data,t)
+      },
+      error:function(){alert("error");
+      console.log(data)}
+   });
+}
+
+   function ajaxHtmlContestB(data,t){
+	   if(data.activityList.length == 0){
+		  var html = "<div class = text-center>";
+			 html += "<h5>'"+ t +"'</br>"+"공모전에 지원한 인원이 없습니다.</h5>";
+			 html += "</div>";
+			 
+	   }else {
+			console.log(data)
+			
+			var html = "<div class='frame-wrap' id='ajaxConList'>";
+               	html += "<table class='table table-sm table-hover m-0'>";
+               	html += "<thead class='text-center'>";
+		        html += "<tr>";
+		        html += "<th>No</th>";
+		        html += "<th>지원일자</th>";
+		        html += "<th>지원자명</th>";
+		        html += "<th>연락처</th>";
+		        html += "<th>제출파일</th>";
+		        html += "</tr>";
+		        html += "</thead>";
+		        html += "<tbody>";
+			
+		      /* var html="<table class='table table-bordered' id='userListTable'>";
+		      html+="<tr>";
+		      html+="<th>진료일자</th>";
+		      html+="<th>진료의사</th>";
+		      html+="<th>진료내역</th>";
+		      html+="<th>이름</th>";
+		      html+="<th>연령|성별</th>";
+		          
+		      html+="</tr>"; */
+	   }
+      
+      
+      $.each(data.activityList, (index, obj)=>{
+    	  
+    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
+          	html +=	"<th scope='row'>"+index+"</th>";
+            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.indId+"</td>";
+            html +=	"<td>"+obj.actTel+"</td>";
+            html +=	"<td>"+ +"</td>";
+			html += "</tr>";
+      })
+      html+="</tbody>";
+      html+="</table>";
+      html+="</div>";
+      
+      $("#ajaxConList").html(html);
+   }
+
+</script>
+
+<!-- 가산점 수정하는 폼 있는 함수 -->
 <script>
 
 function contestSupporterList(c,t){  
-
+   console.log(event.target);
    $.ajax({
       url:"contestSupporterList",
       type:"get",
@@ -1242,7 +1398,7 @@ function contestSupporterList(c,t){
 	   }
       
       
-      $.each(data.activityConList, (index, obj)=>{
+      $.each(data.activityList, (index, obj)=>{
     	  
     	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
           	html +=	"<th scope='row'>"+index+"</th>";

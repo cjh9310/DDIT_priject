@@ -16,12 +16,13 @@ public class webSocketListener extends TextWebSocketHandler{
 	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
 	
 	
-	public void openAdviceAllim(AllimVO allim) throws Exception{
+	public void AdviceAllim(AllimVO allim) throws Exception{
 		for(WebSocketSession single : list) {
 			TextMessage message = new TextMessage(allim.getFromId()+"가"+allim.getToId());
 			single.sendMessage(message);
 		}
 	}
+	
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

@@ -184,7 +184,7 @@
 											<div class="input-group input-group-lg">
 												<div class="input-group-append">
 													<button class="btn btn-success shadow-0"
-														onclick="faceOn()" type="button" id="button-addon5">
+														onclick="faceOn(); FaceUnLock();" type="button" id="button-addon5">
 														얼굴인식 잠금해제
 													</button>
 												</div>

@@ -7,27 +7,20 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.parser.Entity;
 
 import org.apache.ibatis.annotations.Param;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,12 +30,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.ApplicantsVO;
 import kr.or.ddit.dto.AuthReqVO;
-import kr.or.ddit.dto.BookmarkVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SupplyRecVO;
-import kr.or.ddit.service.ApplicantsService;
 import kr.or.ddit.service.AuthReqService;
 import kr.or.ddit.service.BookmarkService;
 import kr.or.ddit.service.CareerService;
@@ -84,6 +75,7 @@ public class CoMemeberController {
 
 	@Autowired
 	private CorporationService corporationService;
+	
 	@Autowired
 	private AuthReqService authReqService;
 
@@ -187,11 +179,13 @@ public class CoMemeberController {
 	}
 
 	@RequestMapping(value = "/mypage/opendetail", method = RequestMethod.POST)
-	public @ResponseBody OpenRecVO openDetail(@RequestParam("openSeqno") String param) throws SQLException {
+	public @ResponseBody OpenRecVO openDetail(@RequestParam("openSeqno") String param,  Model model) throws SQLException {
 		OpenRecVO detail = null;
 
 		int openSeqno = Integer.parseInt(param);
 		detail = openRecService.getOpenRecListByNo(openSeqno);
+
+		model.addAttribute("openReportDetail", detail);
 
 		return detail;
 	}
@@ -235,14 +229,25 @@ public class CoMemeberController {
 		return url;
 	}
 
+	@Resource(name = "fileUploadPath")
+	private String fileUploadPath;
+
 	// 공개채용 입력
 	@RequestMapping(value = "/mypage/openRecRegist", method = RequestMethod.POST)
 	@ResponseBody
 	public String openRecRegist(OpenRecVO openRec, HttpServletRequest request, RedirectAttributes rttr)
 			throws Exception {
 		String url = "redirect:/mypage/recruit";
-
-		openRecService.regist(openRec);
+		
+		String savePath = this.fileUploadPath;	
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		
+		String coId = loginUser.getId();
+		openRec.setId(coId);
+		
+		openRecService.regist(openRec, savePath);
 
 		rttr.addFlashAttribute("from", "regist");
 
@@ -305,7 +310,7 @@ public class CoMemeberController {
 
 	@RequestMapping(value = "/mypage/comembermodify", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
 	@ResponseBody
-	public String comembermodify(MemberVO member, HttpServletRequest request, RedirectAttributes rttr)
+	public String comembermodify(MemberVO member,HttpServletRequest request, RedirectAttributes rttr)
 			throws Exception {
 		String url = "redirect:/mypage/info";
 
@@ -327,9 +332,9 @@ public class CoMemeberController {
 
 		folder = folder + "\\";
 
-		Resource resource = new FileSystemResource(path + folder + filename);
+		Resource resource = (Resource) new FileSystemResource(path + folder + filename);
 
-		if (!resource.exists()) {
+		if (!((FileSystemResource) resource).exists()) {
 			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
 		}
 

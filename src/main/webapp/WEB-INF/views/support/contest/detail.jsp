@@ -106,18 +106,42 @@ $("#contestReg").on("click", function(){
 	
 	var param = $("#registForm").serialize();
 	//alert(param);
-	$.ajax({
-		url : 'activityRegist.do',
-		type : 'POST',
-		data : param,
-		cache : false,
-		async : true,
-		success : function(data){
-			alert("공모전에 응모되었습니다! 신청하신 공모전은 마이페이지에서 확인가능합니다.");
-			window.open("about:blank", "_self").close();
-			window.opener.location.reload();
-		}
-	});
+	
+	Swal.fire({
+        icon: 'warning',
+		title: "응모하시겠습니까?",
+        type: "success",
+        showCancelButton: true,
+        confirmButtonText: "OK"
+}).then(function(result){
+	if(result.value){
+		$.ajax({
+			url : 'activityRegist.do',
+			type : 'POST',
+			data : param,
+			cache : false,
+			async : true,
+			success : function(data){
+				
+				Swal.fire({
+						icon: 'success',
+						title: '신청되었습니다!',
+						text: '신청하신 공모전은 [마이페이지]-[프로그램관리]에서 확인가능합니다.',
+						showConfirmButton: true,
+						confirmButtonText: "OK"
+				}).then(function(){
+					window.close();
+		    		window.opener.location.reload();
+		    		
+				})
+			},
+			error:(request,status,error)=>{
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			
+			}
+		});
+	}
+});
 });
 </script>
 

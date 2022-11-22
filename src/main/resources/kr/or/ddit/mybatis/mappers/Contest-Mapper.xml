@@ -10,7 +10,7 @@
 		from
 		contest
 		where CON_NO is not null
-		order by CON_DATE desc
+		order by CON_SDATE desc
 	</select>
 	
 	<select id="selectContestListByCoId" resultType="contest">
@@ -19,7 +19,7 @@
 		from
 		contest
 		where co_id = #{coId}
-		order by CON_DATE desc
+		order by CON_EDATE desc
 	</select>
 	
 	<select id="selectContestListByIndId" resultType="contest">
@@ -28,7 +28,7 @@
 		from
 		contest
 		where ind_id = #{indId}
-		order by CON_DATE desc
+		order by CON_EDATE desc
 	</select>
 	
 	<select id="selectContestListCount" resultType="int">

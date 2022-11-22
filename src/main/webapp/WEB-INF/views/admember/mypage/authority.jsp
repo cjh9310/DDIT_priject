@@ -90,7 +90,7 @@
 													
 														<c:if test="${authReq.coConfirm  eq 'N'}">
 														<button type="button"
-														class="btn-sm btn-warning waves-themed" id="modify"
+														class="btn-sm btn-warning waves-themed mb-2" id="modify"
 														onclick="Modify('${authReq.coId}')">승인
 														</button>
 														</c:if>

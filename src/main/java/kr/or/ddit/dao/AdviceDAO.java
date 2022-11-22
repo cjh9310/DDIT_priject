@@ -7,7 +7,7 @@ import kr.or.ddit.dto.AdviceVO;
 
 public interface AdviceDAO {
 
-	List<AdviceVO> selectAdviceByNo(int open_seqno) throws SQLException;
+	List<AdviceVO> selectAdviceByNo(String open_seqno) throws SQLException;
 	
 	List<AdviceVO> selectAdivceRecListById(String id) throws SQLException;
 

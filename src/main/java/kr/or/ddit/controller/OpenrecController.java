@@ -100,19 +100,4 @@ public class OpenrecController {
 		return url;
 	}
 	
-	@PostMapping("regist")
-	public String regist(OpenRecVO openRec, HttpServletRequest req, RedirectAttributes rttr) throws SQLException {
-		String url = "redirect:/openrec/list.do";
-		
-		int check = openRecService.regist(openRec);
-		
-		if(check != 1) {
-			String insertErrorContext = "insert 안됨";
-			System.out.println(insertErrorContext);
-		}
-		
-		rttr.addFlashAttribute("from","regist");
-		
-		return url;
-	}
 }

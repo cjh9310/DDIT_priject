@@ -58,4 +58,19 @@
 			   natural join report_list R)
 	   	 where fal_no=#{falNo}		  
 	</select>
+	
+	<select id="selectCoDetail" parameterType="str" resultType="coDetailList">
+		select a.co_id
+		      ,a.co_addr
+		      ,a.co_deaddr
+		      ,a.co_nm as co_Name
+		      ,a.co_confirm
+		      ,b.rec_wantedtitle
+		      ,c.open_title
+		 from co_member a, recruit b, open_rec c
+		where a.co_nm=b.co_name
+	 	  and a.co_nm=c.open_conm
+	 	  and a.co_nm like '%'||#{coName}||'%'
+	</select>
+	
 </mapper>

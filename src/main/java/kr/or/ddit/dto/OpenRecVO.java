@@ -1,5 +1,9 @@
 package kr.or.ddit.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class OpenRecVO {
 	private int openSeqno; // 공고순번
 
@@ -26,6 +30,10 @@ public class OpenRecVO {
 	private String openLogo; // 회사로고
 
 	private String id;
+	
+	private List<MultipartFile> uploadFile;
+	
+	private List<AttachVO> attachList;
 
 	// 즐겨찾기필드
 	private String coBookmark;
@@ -213,5 +221,21 @@ public class OpenRecVO {
 				+ ", openEdate=" + openEdate + ", openAcptpsn=" + openAcptpsn + ", openContent=" + openContent
 				+ ", openRegion=" + openRegion + ", openCarnm=" + openCarnm + ", openEdunm=" + openEdunm + ", openCnt="
 				+ openCnt + ", idx=" + idx + ", openLogo=" + openLogo + "]";
+	}
+
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
 	}
 }

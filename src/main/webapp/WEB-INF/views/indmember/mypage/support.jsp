@@ -28,7 +28,7 @@
 	<div class="col-xl-6">
 		<div id="panel" class="panel">
 			<div class="panel-hdr">
-				<h2>멘토링 내역</h2>
+				<h2>멘토링 신청 목록</h2>
 			</div>
 			<div class="panel-container show">
 				<div class="panel-content">
@@ -62,17 +62,20 @@
 											~ <fmt:formatDate value="${mentoring.menEdate }" pattern="yyyy-MM-dd" />
 										</td>
 										<td>
-											
-											<c:if test="${mentoring.actStatus eq 0 }">신청완료 </c:if>
-											<c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now  }">진행중 </c:if> 
-											<c:if test="${mentoring.menEdate < now or mentoring.actStatus eq 2 }">진행완료 </c:if> 
-											<c:if test="${mentoring.actStatus eq 3 }">중도포기 </c:if> 
+											<c:choose>
+												<c:when test="${mentoring.actStatus eq 3 }">중도포기 </c:when>
+												<c:when test="${mentoring.menSdate > now }">신청완료 </c:when>
+												<c:when test="${mentoring.menSdate <= now and mentoring.menEdate >= now  }">진행중 </c:when> 
+												<c:when test="${mentoring.menEdate < now}">진행완료 </c:when> 
+											</c:choose>
 										</td>
 										<td>
-											<c:if test="${mentoring.actScore eq 0 }"> 없음 </c:if>
-											<c:if test="${mentoring.actScore eq 1 }"> 1점 </c:if> 
-											<c:if test="${mentoring.actScore eq 2 }"> 2점 </c:if> 
-											<c:if test="${mentoring.actScore eq 3 }"> 3점 </c:if> 
+											<c:choose>
+												<c:when test="${mentoring.actScore eq 0 }"> 없음 </c:when>
+												<c:when test="${mentoring.actScore eq 1 }"> 1점 </c:when> 
+												<c:when test="${mentoring.actScore eq 2 }"> 2점 </c:when> 
+												<c:when test="${mentoring.actScore eq 3 }"> 3점 </c:when>
+											</c:choose>
 										</td>
 									</tr>
 								</c:forEach>
@@ -85,7 +88,7 @@
 	<div class="col-xl-6">
 		<div id="panel" class="panel">
 			<div class="panel-hdr">
-				<h2>공모전 내역</h2>
+				<h2>공모전 참여 목록</h2>
 			</div>
 			<div class="panel-container show">
 				<div class="panel-content">
@@ -152,7 +155,7 @@
 		<!--Table small-->
 		<div id="panel" class="panel">
 			<div class="panel-hdr">
-				<h2>상담신청내역</h2>
+				<h2>상담신청목록</h2>
 			</div>
 			<div class="panel-container show">
 				<div class="panel-content">

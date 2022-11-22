@@ -24,10 +24,14 @@ public class MentoringServiceImpl implements MentoringService {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		
 		List<MentoringVO> mentoringList = mentoringDAO.selectMentoringList();
+		
 		dataMap.put("mentoringList",mentoringList);
+		
 		
 		return dataMap;
 	}
+	
+
 
 	@Override
 	public Map<String, Object> getMentoringList(Criteria cri) throws SQLException {
@@ -104,6 +108,8 @@ public class MentoringServiceImpl implements MentoringService {
 		MentoringVO mentoring = mentoringDAO.selectMentoringByMenNo(menNo);
 		return mentoring;
 	}
+
+	
 
 	
 	

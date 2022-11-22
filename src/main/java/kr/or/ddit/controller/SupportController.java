@@ -148,7 +148,6 @@ public class SupportController {
 	public ModelAndView mentroringDetail(int menNo, ModelAndView mnv)throws Exception {
 		String url = "support/mentoring/detail";
 		
-		
 		MentoringVO mentoring = mentoringService.getMentoring(menNo);
 		
 		mnv.addObject("mentoring", mentoring);

@@ -5,12 +5,14 @@
 <mapper namespace="Mentoring-Mapper">
 	<select id="selectMentoringList" resultType="mentoring">
 	/* Mentoring-Mapper.selectMentoringList */
-	 	select
-		*
-		from
-		mentoring
-		where men_no is not null
-		order by men_sdate desc
+	 	select    
+           a.*
+         , (select count(1) from activity b where a.men_no = b.men_no) as IND_COUNT
+		  from 
+		  	mentoring a
+          where 
+            men_no is not null
+         order by men_sdate desc
 	</select> 
 	
 	<select id="selectMentoringListCount" resultType="int">
@@ -45,11 +47,10 @@
 	
 	<select id="selectMentoringByMenNo" resultType="mentoring">
 	/* Mentoring-Mapper.selectMentoringByMenNo */
-		select
-		*
-		from
-		mentoring
-		where MEN_NO = #{menNo}
+		select a.*
+    		  , (select count(1) from activity b where a.men_no = b.men_no) as ind_count /*참여자수 제한을위한  count*/
+		  from mentoring a
+		 where men_no = #{menNo}
 	</select>
 	
 	<insert id="insertAllMentoring" parameterType="mentoring">

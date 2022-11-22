@@ -16,6 +16,16 @@ public class CareerVO {
 	private int crrAnnual;
 	private int crrStatus;
 	private String strStatus;
+	
+	// 지원 필드
+	private int supNo;
+	private int supcrrNo;
+	private String supcrrSec;
+	private String supcrrCor;
+	private String supcrrJob;
+	private String supcrrPos;
+	private Date supcrrSdate;
+	private Date supcrrEdate;
 
 	public int getCrrStatus() {
 		return crrStatus;
@@ -113,4 +123,68 @@ public class CareerVO {
 		this.crrAnnual = crrAnnual;
 	}
 
+	public int getSupNo() {
+		return supNo;
+	}
+
+	public void setSupNo(int supNo) {
+		this.supNo = supNo;
+	}
+
+	public int getSupcrrNo() {
+		return supcrrNo;
+	}
+
+	public void setSupcrrNo(int supcrrNo) {
+		this.supcrrNo = supcrrNo;
+	}
+
+	public String getSupcrrSec() {
+		return supcrrSec;
+	}
+
+	public void setSupcrrSec(String supcrrSec) {
+		this.supcrrSec = supcrrSec;
+	}
+
+	public String getSupcrrCor() {
+		return supcrrCor;
+	}
+
+	public void setSupcrrCor(String supcrrCor) {
+		this.supcrrCor = supcrrCor;
+	}
+
+	public String getSupcrrJob() {
+		return supcrrJob;
+	}
+
+	public void setSupcrrJob(String supcrrJob) {
+		this.supcrrJob = supcrrJob;
+	}
+
+	public String getSupcrrPos() {
+		return supcrrPos;
+	}
+
+	public void setSupcrrPos(String supcrrPos) {
+		this.supcrrPos = supcrrPos;
+	}
+
+	public Date getSupcrrSdate() {
+		return supcrrSdate;
+	}
+
+	public void setSupcrrSdate(Date supcrrSdate) {
+		this.supcrrSdate = supcrrSdate;
+	}
+
+	public Date getSupcrrEdate() {
+		return supcrrEdate;
+	}
+
+	public void setSupcrrEdate(Date supcrrEdate) {
+		this.supcrrEdate = supcrrEdate;
+	}
+	
 }

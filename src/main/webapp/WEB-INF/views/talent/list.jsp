@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <c:set var="talentList" value="${dataMap.talentList}" />
 <c:set var="talent" value="${talent }" />
 <c:set var="today" value="<%=new java.util.Date()%>" />
@@ -11,7 +11,6 @@
 	<fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" />
 </c:set>
 
-<c:set var="recruitList" value="${dataMap3.recruitList }" />
 
 <style>
 .custom-scroll {
@@ -205,6 +204,7 @@
 					style="padding: 24px;" id="openAdvRecForm">
 					<c:forEach items="${talentList}" var="talent">
 						<c:set var="openRecList" value="${dataMap2.openRecList}" />
+						<c:set var="recruitList" value="${dataMap3.recruitList }"/>
 						<div class="panel-content card-wrapper col-2" style="margin: 0px;">
 							<div class="card-deck">
 								<div
@@ -218,13 +218,13 @@
 												class="profile-image rounded-circle" alt="회원사진" />
 											</span>
 											<div class="info-card-text flex-1" style="margin-left: 15px;">
-												<a href="javascript:void(0);"
+												<a href="javascript:void(0);" style="z-index: 1;"
 													class="fs-xl text-truncate text-truncate-lg text-info"
 													data-toggle="dropdown" aria-expanded="false"
 													data-filter-tags="${talent.name}">${talent.name} <i
 													class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
 												</a>
-												<div class="dropdown-menu">
+												<div class="dropdown-menu" style="z-index: 1;"> 
 													<a class="dropdown-item" 
 													   onclick="talentDetail('${talent.id}')"
 													   data-toggle="modal"
@@ -233,15 +233,24 @@
                                                     <div class="dropdown-item">채용 권유하기
                                                     </div>
                                                     <div class="dropdown-menu">
+                                                    <c:if test="${openRecList ne null }">
                                                     <c:forEach items="${openRecList }" var="openRecList">
                                                         <a href="javascript:void(0);"
                                                            type="button"
                                                            onclick="openAdviceRegist('${talent.id}','${openRecList.openSeqno}','${loginUser.id }')"
                                                            class="dropdown-item ${openRecList.openSeqno}"
                                                            data-toggle="modal">${openRecList.openTitle}</a>
-                                                           
-                                                     
                                                     </c:forEach>
+                                                    </c:if> 
+                                                    <c:if test="${recruitList ne null}">
+                                                    <c:forEach items="${recruitList }" var="recruit">
+                                                        <a href="javascript:void(0);"
+                                                           type="button"
+                                                           onclick="recruitAdviceRegist('${talent.id}','${recruit.recWantedno}','${loginUser.id }')"
+                                                           class="dropdown-item ${recruit.recWantedno}"
+                                                           data-toggle="modal">${recruit.recWantedtitle}</a>
+                                                    </c:forEach>
+                                                    </c:if>
                                                     </div>
                                                 </div>
 												</div>
@@ -514,10 +523,37 @@
 
 <script>
 function openAdviceRegist(p_indId, p_openSeqno, p_coId) {
+	 
 	$.ajax({
 		url : '<%=request.getContextPath()%>/talent/openAdviceRegist',
 		type : 'POST',
 		data : {'indId' : p_indId, 'toId':p_indId,'openSeqno' : p_openSeqno ,'fromId' : p_coId},
+		success : function(result) {
+			Swal.fire({
+				target: document.getElementById('counselModal'),
+                icon: 'success',
+				title: "권유가 완료되었습니다.",
+				text: "",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+    		}).then(function(result){
+			 
+				window.location.replace(location.href);
+    		});
+
+      },
+
+		error : function(request, status, error) {
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		   }
+    });     
+}
+function recruitAdviceRegist(p_indId, p_recWantedno, p_coId) {
+	$.ajax({
+		url : '<%=request.getContextPath()%>/talent/recruitAdviceRegist',
+		type : 'POST',
+		data : {'indId' : p_indId, 'toId':p_indId,'recWantedno' : p_recWantedno ,'fromId' : p_coId},
 		success : function(result) {
 //			console.log(JSON.stringify(result));
 		},
@@ -526,6 +562,7 @@ function openAdviceRegist(p_indId, p_openSeqno, p_coId) {
 		}
 	});
 };
+
 </script>
 
 

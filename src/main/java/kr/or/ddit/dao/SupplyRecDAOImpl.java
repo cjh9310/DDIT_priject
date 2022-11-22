@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.dto.CareerVO;
+import kr.or.ddit.dto.CertificateVO;
+import kr.or.ddit.dto.EducationVO;
 import kr.or.ddit.dto.LetterVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SupplyRecVO;
@@ -56,6 +59,17 @@ public class SupplyRecDAOImpl implements SupplyRecDAO {
 	}
 	
 	@Override
+	public int selectSupResLetSeqNextVal() throws SQLException {
+		int supLetNo = session.selectOne("SupplyRec-Mapper.selectSupResLetSeqNextVal");
+		return supLetNo;
+	}
+	
+	@Override
+	public void insertSupplyRec(SupplyRecVO supplyRec) throws SQLException {
+		session.update("SupplyRec-Mapper.insertSupplyRec", supplyRec);
+	}
+	
+	@Override
 	public void copyCareerToSupResCrr(Map<String, Object> parameterMap) throws SQLException {
 		session.update("SupplyRec-Mapper.copyCareerToSupResCrr", parameterMap);
 	}
@@ -76,8 +90,38 @@ public class SupplyRecDAOImpl implements SupplyRecDAO {
 	}
 	
 	@Override
-	public void insertLetterForSupply(List<LetterVO> letterList) throws SQLException {
-		session.update("SupplyRec-Mapper.insertLetterForSupply", letterList);
+	public void insertLetterForSupply(Map<String, Object> parameterMap) throws SQLException {
+		session.update("SupplyRec-Mapper.insertLetterForSupply", parameterMap);
+	}
+	
+	@Override
+	public SupplyRecVO selectSupResume(int supNo) throws SQLException {
+		SupplyRecVO supInfo = session.selectOne("SupplyRec-Mapper.selectSupResume", supNo);
+		return supInfo;
+	}
+	
+	@Override
+	public List<EducationVO> selectSupResEduList(int supNo) throws SQLException {
+		List<EducationVO> eduList = session.selectList("SupplyRec-Mapper.selectSupResEduList", supNo);
+		return eduList;
+	}
+	
+	@Override
+	public List<CareerVO> selectSupResCrrList(int supNo) throws SQLException {
+		List<CareerVO> crrList = session.selectList("SupplyRec-Mapper.selectSupResCrrList", supNo);
+		return crrList;
+	}
+	
+	@Override
+	public List<CertificateVO> selectSupResCerList(int supNo) throws SQLException {
+		List<CertificateVO> cerList = session.selectList("SupplyRec-Mapper.selectSupResCerList", supNo);
+		return cerList;
+	}
+	
+	@Override
+	public List<LetterVO> selectSupResLetList(int supNo) throws SQLException {
+		List<LetterVO> letList = session.selectList("SupplyRec-Mapper.selectSupResLetList", supNo);
+		return letList;
 	}
 
 }

@@ -377,13 +377,13 @@
 			<!-- 알림 -->
 			<div>
 				<a href="#" class="header-icon" data-toggle="dropdown" title="알림">
-					<i class="fal fa-bell"></i> <span class="badge badge-icon">11</span>
+					<i class="fal fa-bell"></i> <span class="badge badge-icon" id="allimIcon" style="display : none"></span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-animated dropdown-xl">
 					<div
 						class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top mb-2">
 						<h4 class="m-0 text-center color-white">
-							11 New <small class="mb-0 opacity-80">User Notifications</small>
+							New <small class="mb-0 opacity-80">User Notifications</small>
 						</h4>
 					</div>
 					<ul class="nav nav-tabs nav-tabs-clean" role="tablist">
@@ -1700,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if(count == 0){
 				var v_list = 
 				`<li class="">
-					<a href="#" class="d-flex align-items-center">
+					<a href="#" class="d-flex align-items-center pageUrl" >
 						<span class="status mr-2"> <span
 								class="profile-image rounded-circle d-inline-block" style=""></span>
 						</span> <span class="d-flex flex-column flex-1 ml-1"> <span
@@ -1710,12 +1710,11 @@ document.addEventListener('DOMContentLoaded', () => {
 						</span>
 					</a>
 				</li>`;
-				
 				$('.notification').append(v_list);
 			}else{
+				$('#allimIcon').css("display", "block");
+				$('#allimIcon').html(count);
 				for(var i=0; i<=count; i++){
-					
-				
 					var unreadList = 
 					`<li class="unread">
 						<a href="#" class="d-flex align-items-center">
@@ -1724,13 +1723,14 @@ document.addEventListener('DOMContentLoaded', () => {
 							</span> <span class="d-flex flex-column flex-1 ml-1"> <span
 									class="name">`+result.almList[i].toId+`</span>
 									<span class="coNm">`+result.almList[i].coNm+`</span>
-									<span class="msg-a fs-sm">`+result.almList[i].fromId+`</span> <span class="fs-nano text-muted mt-1">
-									시간</span>
+									<span class="fs-nano text-muted mt-1">`+result.almList[i].almDate+`</span>
 							</span>
 						</a>
 					</li>`;
 				$('.notification').append(unreadList);
+				
 				}
+				
 			}
 			
 		},
@@ -1740,7 +1740,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 });
-
 
 
 </script>

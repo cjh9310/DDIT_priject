@@ -41,6 +41,13 @@ public class MentoringDAOImpl implements MentoringDAO{
 		int count = session.selectOne("Mentoring-Mapper.selectMentoringListCount",cri);
 		return count;
 	}
+	
+	@Override
+	public int selectMentoringTotalCount() throws SQLException {
+		
+		int count = session.selectOne("Mentoring-Mapper.selectMentoringListCount");
+		return count;
+	}
 
 	@Override
 	public List<MentoringVO> selectMentoringByCoId(String coId) throws SQLException {

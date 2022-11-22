@@ -21,6 +21,8 @@ public class ReportListVO {
 	
 	private List<AttachVO> attachList;
 	
+	private List<CoDetailListVO> coDetail;
+	 
 	public int getFalNo() {
 		return falNo;
 	}
@@ -118,15 +120,28 @@ public class ReportListVO {
 	public void setAttachList(List<AttachVO> attachList) {
 		this.attachList = attachList;
 	}
+			
+	/**
+	 * @return the coDetail
+	 */
+	public List<CoDetailListVO> getCoDetail() {
+		return coDetail;
+	}
+	/**
+	 * @param coDetail the coDetail to set
+	 */
+	public void setCoDetail(List<CoDetailListVO> coDetail) {
+		this.coDetail = coDetail;
+	}
 	@Override
 	public String toString() {
 		return "ReportListVO [falNo=" + falNo + ", indId=" + indId + ", falSdate=" + falSdate + ", falOdate=" + falOdate
 				+ ", falEdate=" + falEdate + ", falTitle=" + falTitle + ", coName=" + coName + ", falContent="
 				+ falContent + ", falCategory=" + falCategory + ", falCategorydetail=" + falCategorydetail + ", adId="
 				+ adId + ", repStatus=" + repStatus + ", repComment=" + repComment + ", repApprove=" + repApprove
-				+ ", attachList=" + attachList + "]";
+				+ ", attachList=" + attachList + ", coDetail=" + coDetail + "]";
 	}
-	
-	
 
+
+	
 }

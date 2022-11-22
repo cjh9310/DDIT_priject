@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dto.CoDetailListVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public class ReportDAOImpl implements ReportDAO {
@@ -45,6 +46,13 @@ public class ReportDAOImpl implements ReportDAO {
 		ReportListVO reportList =  session.selectOne("ReportList-Mapper.selectReportListByFalNo", falNo);
 		return reportList;
 	}
+
+	@Override
+	public List<CoDetailListVO> selectCoDetail(String coName) throws SQLException {
+		List<CoDetailListVO> coDetail = session.selectList("ReportList-Mapper.selectCoDetail", coName);
+		return coDetail;
+	}
+	
 	
 	
 }

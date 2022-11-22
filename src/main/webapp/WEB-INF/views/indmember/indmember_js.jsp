@@ -254,7 +254,8 @@ function faceOn() {
 	
 }
 </script>
-<script>
+<%-- <script>
+function FaceUnLock() {
 setTimeout(function() {
 	$.ajax({
 		url : '<%=request.getContextPath()%>/indmember/mypage/result',
@@ -268,7 +269,8 @@ setTimeout(function() {
 			}
 		});
 	}, 5000);
-</script>
+}
+</script> --%>
 <script>
 	function face_rendering(check_password) {
 		var user_password = "${loginUser.pwd}";

@@ -60,11 +60,16 @@
           from dual
 	</select>
 	
+	<select id="selectSupResLetSeqNextVal" resultType="int">
+		select SUP_RES_LET_SEQ.nextval
+          from dual
+	</select>
+	
 	<insert id="insertSupplyRec" parameterType="supplyRec">
 		/* SupplyRec-Mapper.insertSupplyRec */
 		
-		insert into supply_rec (sup_no, rec_wantedno, ind_id, open_seqno, sup_date, sup_status, sup_type)
-		values (#{supNo}, #{recWantedno}, #{indId}, #{openSeqno}, sysdate, #{supStatus}, #{supType})
+		insert into supply_rec (sup_no, rec_wantedno, ind_id, sup_date, sup_type)
+		values (#{supNo}, #{recWantedno}, #{indId}, sysdate, #{supType})
 		
 	</insert>
 	
@@ -140,7 +145,7 @@
                     and b.sup_no=#{supNo}) cer
 	</insert>
 	
-	<insert id="insertLetterForSupply" parameterType="java.util.List">
+	<update id="insertLetterForSupply" parameterType="map">
 		/* SupplyRec-Mapper.insertLetterForSupply */
 		
 		insert into sup_res_let 
@@ -148,12 +153,40 @@
 		values 
 		(
 		sup_res_let_seq.nextval,
-		<foreach item="item" index="index" collection="list">
-		#{item.supNo},
-		#{item.letTitle},
-		#{item.letContent}
-		</foreach>
+		#{supNo},
+		#{supletTitle},
+		#{supletContent}
 		)
-	</insert>
+	</update>
+	
+	<select id="selectSupResume" parameterType="int" resultType="supplyRec">
+		select *
+ 		  from sup_resume
+ 		 where sup_no=#{supNo}
+	</select>
+	
+	<select id="selectSupResEduList" parameterType="int" resultType="education">
+		select *
+ 		  from sup_res_edu
+ 		 where sup_no=#{supNo}
+	</select>
+	
+	<select id="selectSupResCrrList" parameterType="int" resultType="career">
+		select * 
+ 		  from sup_res_crr
+ 		 where sup_no=#{supNo}
+	</select>
+	
+	<select id="selectSupResCerList" parameterType="int" resultType="certificate">
+		select *
+ 		  from sup_res_cer
+ 		 where sup_no=#{supNo}
+	</select>
+	
+	<select id="selectSupResLetList" parameterType="int" resultType="letter">
+		select *
+ 		  from sup_res_let
+ 		 where sup_no=#{supNo}
+	</select>
 	
 </mapper>

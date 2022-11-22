@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dao.SeniorDAO;
 import kr.or.ddit.dto.AuthReqVO;
+import kr.or.ddit.dto.CoDetailListVO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.FaqVO;
 import kr.or.ddit.dto.MemberVO;
@@ -124,9 +125,12 @@ public class AdMemeberController {
 	}
 
 	@RequestMapping(value = "/mypage/reportDetail", method = RequestMethod.POST)
-	public @ResponseBody ReportListVO reportDetail(@RequestParam("falNo") int falNo, Model model) throws Exception {
+	public @ResponseBody ReportListVO reportDetail(@RequestParam("falNo") int falNo, String coName, Model model) throws Exception {
+		System.out.println("falNo : " + falNo + coName );
 		ReportListVO reportListVO = reportService.getReport(falNo);
-
+		List<CoDetailListVO> coDetailList = reportService.getCoDetail(coName);
+		
+		reportListVO.setCoDetail(coDetailList);
 		model.addAttribute("openReportDetail", reportListVO);
 
 		return reportListVO;

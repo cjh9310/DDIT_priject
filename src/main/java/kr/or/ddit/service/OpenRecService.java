@@ -23,7 +23,7 @@ public interface OpenRecService {
 	
 	OpenRecVO getOpenRecListByDetail(OpenRecVO openRec) throws SQLException;
 	
-	public int regist(OpenRecVO openRec) throws SQLException;
+	public int regist(OpenRecVO openRec, String savePath) throws SQLException;
 	
 	public int modify(OpenRecVO openRec) throws SQLException;
 

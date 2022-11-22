@@ -15,7 +15,7 @@ public class AdviceDAOImpl implements AdviceDAO{
 		this.session = session;
 	}
 	@Override
-	public List<AdviceVO>selectAdviceByNo(int open_seqno) throws SQLException{
+	public List<AdviceVO>selectAdviceByNo(String open_seqno) throws SQLException{
 		List<AdviceVO> adviceList =
 				session.selectList("Advice-mapper.selectAdviceByNo",open_seqno);
 		return adviceList;

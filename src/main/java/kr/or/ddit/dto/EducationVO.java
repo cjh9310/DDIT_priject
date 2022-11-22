@@ -14,6 +14,17 @@ public class EducationVO {
 	private int eduStatus;
 	private String eduScore;
 	private String strStatus;
+	
+	// 지원 필드
+	private int supNo;
+	private int supeduNo;
+	private String supeduDep;
+	private String supeduName;
+	private String supeduMajor;
+	private String supeduScore;
+	private String supeduStatus;
+	private Date supeduSdate;
+	private Date supeduEdate;
 
 	public String getStrStatus() {
 		return strStatus;
@@ -93,6 +104,78 @@ public class EducationVO {
 
 	public void setEduScore(String eduScore) {
 		this.eduScore = eduScore;
+	}
+
+	public int getSupeduNo() {
+		return supeduNo;
+	}
+
+	public void setSupeduNo(int supeduNo) {
+		this.supeduNo = supeduNo;
+	}
+
+	public String getSupeduDep() {
+		return supeduDep;
+	}
+
+	public void setSupeduDep(String supeduDep) {
+		this.supeduDep = supeduDep;
+	}
+
+	public String getSupeduName() {
+		return supeduName;
+	}
+
+	public void setSupeduName(String supeduName) {
+		this.supeduName = supeduName;
+	}
+
+	public String getSupeduMajor() {
+		return supeduMajor;
+	}
+
+	public void setSupeduMajor(String supeduMajor) {
+		this.supeduMajor = supeduMajor;
+	}
+
+	public String getSupeduScore() {
+		return supeduScore;
+	}
+
+	public void setSupeduScore(String supeduScore) {
+		this.supeduScore = supeduScore;
+	}
+
+	public String getSupeduStatus() {
+		return supeduStatus;
+	}
+
+	public void setSupeduStatus(String supeduStatus) {
+		this.supeduStatus = supeduStatus;
+	}
+
+	public Date getSupeduSdate() {
+		return supeduSdate;
+	}
+
+	public void setSupeduSdate(Date supeduSdate) {
+		this.supeduSdate = supeduSdate;
+	}
+
+	public Date getSupeduEdate() {
+		return supeduEdate;
+	}
+
+	public void setSupeduEdate(Date supeduEdate) {
+		this.supeduEdate = supeduEdate;
+	}
+
+	public int getSupNo() {
+		return supNo;
+	}
+
+	public void setSupNo(int supNo) {
+		this.supNo = supNo;
 	}
 
 }

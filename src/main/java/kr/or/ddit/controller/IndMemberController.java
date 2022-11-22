@@ -35,6 +35,7 @@ import kr.or.ddit.dto.LetterVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.MentoringVO;
 import kr.or.ddit.dto.OpenRecVO;
+import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
 import kr.or.ddit.service.ActivityService;
@@ -270,13 +271,31 @@ public class IndMemberController {
 		Map<String, Object> advOpenMap = adviceService.getAdviceOpenRecList(id);
 		Map<String, Object> supRecMap = supplyRecService.getSupplyRecruitList(id);
 		Map<String, Object> supOpenMap = supplyRecService.getSupplyOpenRecList(id);
-		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListById(id);
 		request.setAttribute("supRecMap", supRecMap);
 		request.setAttribute("supOpenMap", supOpenMap);
 		request.setAttribute("advRecMap", advRecMap);
 		request.setAttribute("advOpenMap",advOpenMap);
 		
-		request.setAttribute("bookmarkMap", bookmarkMap);
+		return url;
+	}
+	
+	@GetMapping("mypage/recruit/supplyResume")
+	public String supplyResume(int supNo, String recWantedno, HttpServletRequest request) throws Exception {
+		String url = "indmember/mypage/supplyResume";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		RecruitVO recruitParam = new RecruitVO();
+		recruitParam.setIndId(id);
+		recruitParam.setRecWantedno(recWantedno);
+		
+		RecruitVO recruit = recruitService.getRecruitDetail(recruitParam);
+		Map<String, Object> resumeMap = supplyRecService.getSupplyResumeAllInfo(supNo);
+		
+		request.setAttribute("recruit", recruit);
+		request.setAttribute("resumeMap", resumeMap);
 		
 		return url;
 	}

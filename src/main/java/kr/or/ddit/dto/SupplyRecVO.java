@@ -17,8 +17,8 @@ public class SupplyRecVO {
 	private int supNo;
 	private String indId;
 	private Date supDate;
-	private int supStatus;
-
+	private int supType;
+	
 	// RECRUIT FIELD
 	private String coName;
 	private String recWantedno;
@@ -35,6 +35,15 @@ public class SupplyRecVO {
 	private String openRegion;
 	private String openSdate;
 	private String openEdate;
+	
+	// SUP_RESUME FIELD
+	private int supresNo;
+	private String supresName;
+	private String supresBir;
+	private String supresEmail;
+	private String supresTel;
+	private String supresAddr;
+	private String supresPic;
 
 	public String getId() {
 		return id;
@@ -98,14 +107,6 @@ public class SupplyRecVO {
 
 	public void setSupDate(Date supDate) {
 		this.supDate = supDate;
-	}
-
-	public int getSupStatus() {
-		return supStatus;
-	}
-
-	public void setSupStatus(int supStatus) {
-		this.supStatus = supStatus;
 	}
 
 	public String getRecWantedno() {
@@ -210,6 +211,70 @@ public class SupplyRecVO {
 
 	public void setCoName(String coName) {
 		this.coName = coName;
+	}
+
+	public int getSupType() {
+		return supType;
+	}
+
+	public void setSupType(int supType) {
+		this.supType = supType;
+	}
+
+	public int getSupresNo() {
+		return supresNo;
+	}
+
+	public void setSupresNo(int supresNo) {
+		this.supresNo = supresNo;
+	}
+
+	public String getSupresName() {
+		return supresName;
+	}
+
+	public void setSupresName(String supresName) {
+		this.supresName = supresName;
+	}
+
+	public String getSupresBir() {
+		return supresBir;
+	}
+
+	public void setSupresBir(String supresBir) {
+		this.supresBir = supresBir;
+	}
+
+	public String getSupresEmail() {
+		return supresEmail;
+	}
+
+	public void setSupresEmail(String supresEmail) {
+		this.supresEmail = supresEmail;
+	}
+
+	public String getSupresTel() {
+		return supresTel;
+	}
+
+	public void setSupresTel(String supresTel) {
+		this.supresTel = supresTel;
+	}
+
+	public String getSupresAddr() {
+		return supresAddr;
+	}
+
+	public void setSupresAddr(String supresAddr) {
+		this.supresAddr = supresAddr;
+	}
+
+	public String getSupresPic() {
+		return supresPic;
+	}
+
+	public void setSupresPic(String supresPic) {
+		this.supresPic = supresPic;
 	}
 
 }

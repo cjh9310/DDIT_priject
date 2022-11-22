@@ -17,7 +17,7 @@ public class AdviceServiceImpl implements AdviceService {
 	
 	
 	@Override
-	public List<AdviceVO> getAdviceList(int open_seqno) throws SQLException {
+	public List<AdviceVO> getAdviceList(String open_seqno) throws SQLException {
 		
 		List<AdviceVO> adviceList = adviceDAO.selectAdviceByNo(open_seqno);
 		return adviceList;

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dto.CoDetailListVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public interface ReportService {
@@ -14,6 +15,11 @@ public interface ReportService {
 	
 	// 상세보기
 	ReportListVO getReport(int falNo) throws SQLException;
+	
+	// 기업상세보기
+	List<CoDetailListVO> getCoDetail(String coName) throws SQLException;
+	
+	
 	
 
 
