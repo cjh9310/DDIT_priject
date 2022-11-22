@@ -34,5 +34,7 @@ public interface MemberService {
 	public void modify(MemberVO member)throws Exception;
 	
 	//회원탈퇴
-	public void remove(String id)throws Exception; 
+	public void remove(String id)throws Exception;
+
+	void modifyAuthority(String id) throws Exception; 
 }

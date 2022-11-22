@@ -1,5 +1,7 @@
 package kr.or.ddit.dto;
 
+import java.util.List;
+
 public class ReportListVO {
 	
 	private int falNo; // 게시글번호
@@ -17,6 +19,7 @@ public class ReportListVO {
 	private String repComment; // 처리내용
 	private String repApprove; // 처리결과
 	
+	private List<AttachVO> attachList;
 	
 	public int getFalNo() {
 		return falNo;
@@ -103,12 +106,25 @@ public class ReportListVO {
 		this.repApprove = repApprove;
 	}
 	
+	/**
+	 * @return the attachList
+	 */
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	/**
+	 * @param attachList the attachList to set
+	 */
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
 	@Override
 	public String toString() {
 		return "ReportListVO [falNo=" + falNo + ", indId=" + indId + ", falSdate=" + falSdate + ", falOdate=" + falOdate
 				+ ", falEdate=" + falEdate + ", falTitle=" + falTitle + ", coName=" + coName + ", falContent="
 				+ falContent + ", falCategory=" + falCategory + ", falCategorydetail=" + falCategorydetail + ", adId="
-				+ adId + ", repStatus=" + repStatus + ", repComment=" + repComment + ", repApprove=" + repApprove + "]";
+				+ adId + ", repStatus=" + repStatus + ", repComment=" + repComment + ", repApprove=" + repApprove
+				+ ", attachList=" + attachList + "]";
 	}
 	
 	

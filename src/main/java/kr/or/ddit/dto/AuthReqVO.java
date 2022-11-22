@@ -2,13 +2,14 @@ package kr.or.ddit.dto;
 
 public class AuthReqVO {
 
-	public String coId;
-	public String adId;
-	public String authTitle;
-	public String authContent;
-	public String authFile;
-	public int authNo;
-	public String authSdate;
+	private String coId;
+	private String adId;
+	private String authTitle;
+	private String authContent;
+	private String authFile;
+	private int authNo;
+	private String authSdate;
+	private String coConfirm;
 	
 	
 	public String getCoId() {
@@ -53,11 +54,20 @@ public class AuthReqVO {
 	public void setAuthSdate(String authSdate) {
 		this.authSdate = authSdate;
 	}
+	
+	public String getCoConfirm() {
+		return coConfirm;
+	}
+	public void setCoConfirm(String coConfirm) {
+		this.coConfirm = coConfirm;
+	}
 	@Override
 	public String toString() {
 		return "AuthReqVO [coId=" + coId + ", adId=" + adId + ", authTitle=" + authTitle + ", authContent="
-				+ authContent + ", authFile=" + authFile + ", authNo=" + authNo + ", authSdate=" + authSdate + "]";
+				+ authContent + ", authFile=" + authFile + ", authNo=" + authNo + ", authSdate=" + authSdate
+				+ ", coConfirm=" + coConfirm + "]";
 	}
+	
 	
 	
 	

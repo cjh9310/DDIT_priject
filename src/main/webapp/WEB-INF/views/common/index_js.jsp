@@ -61,9 +61,17 @@ function goPage(url,mCode){
 	} else {
 	    location.hash = "#"+mCode;
 	}
+	
 } */
-goPage('<%=request.getContextPath()%>${menu.murl}','${menu.mcode}');
-subMenu_go('${menu.mcode}'.substring(0,3)+"0000");
+
+var frame = document.getElementById('ifr').contentWindow;
+console.log("frame", frame);
+if(!frame.OpenWindow) {
+	goPage('<%=request.getContextPath()%>${menu.murl}','${menu.mcode}');
+	subMenu_go('${menu.mcode}'.substring(0,3)+"0000");
+}
+
+
 </script>
 <script>
     // default list filter
@@ -108,7 +116,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 	<div class="card-header">
 		<a href="javascript:void(0);" class="card-title collapsed"
 			aria-expanded="false"
-			data-filter-tags="{{coName}} {{recWantedtitle}} {{recRegion}} {{recEntertpnm}}">
+			data-filter-tags="{{coName}} {{recWantedno}} {{recWantedtitle}} {{recRegion}} {{recEntertpnm}}">
 			<table>
 				<tr>
 					<td colspan="1" rowspan="3"

@@ -132,6 +132,6 @@ img {
 $('.detailBtn').on('click',function() {
 	var menNo = $(this).val();
 	//alert(menNo);
-	window.open('detail.do?menNo='+menNo, '멘토링 신청화면', 990,920);
+	window.open('detail.do?menNo='+menNo, 'OpenWindow', 990,920);
 });
 </script>

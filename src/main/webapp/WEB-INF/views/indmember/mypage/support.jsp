@@ -52,7 +52,7 @@
 								</c:if>
 								<c:forEach items="${activityMenMap }" var="mentoring">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
-									<tr style="cursor: pointer;">
+									<tr style="cursor: pointer;" onclick="OpenWindow('menDetail.do?actNo=${mentoring.actNo }','멘토링 신청상세보기', 800,700);">
 										<c:set var="count" value="${count + 1}" />
 										<th scope="row">${count }</th>
 										<td><fmt:formatDate value="${mentoring.actDate }"
@@ -61,10 +61,12 @@
 										<td><fmt:formatDate value="${mentoring.menSdate }" pattern="yyyy-MM-dd" /> 
 											~ <fmt:formatDate value="${mentoring.menEdate }" pattern="yyyy-MM-dd" />
 										</td>
-										<td><c:if test="${mentoring.actStatus eq 0 }">신청완료 </c:if>
-											<c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now }">진행중 </c:if> 
-											<c:if test="${mentoring.menEdate < now }">진행완료 </c:if> 
-											<c:if test="${mentoring.actStatus eq 2 }">중도포기 </c:if> 
+										<td>
+											
+											<c:if test="${mentoring.actStatus eq 0 }">신청완료 </c:if>
+											<c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now  }">진행중 </c:if> 
+											<c:if test="${mentoring.menEdate < now or mentoring.actStatus eq 2 }">진행완료 </c:if> 
+											<c:if test="${mentoring.actStatus eq 3 }">중도포기 </c:if> 
 										</td>
 										<td>
 											<c:if test="${mentoring.actScore eq 0 }"> 없음 </c:if>
@@ -107,8 +109,8 @@
 										<td colspan="7"><strong>참여하신 공모전내역이 없습니다.</strong></td>
 								</c:if>
 								<c:forEach items="${activityConMap }" var="contest">
-									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
-									<tr style="cursor: pointer;">
+									
+									<tr style="cursor: pointer;" onclick="OpenWindow('conDetail.do?actNo=${contest.actNo}','공모전 지원내용 상세보기', 650,730);">
 										<c:set var="count1" value="${count1 + 1}" />
 										<th scope="row">${count1 }</th>
 										<td><fmt:formatDate value="${contest.actDate }"

@@ -122,7 +122,7 @@ public class CoMemberControllerSH {
 	public void contestModify( ContestVO contest )throws Exception{
 		
 		contestService.modify(contest);
-		System.out.println(contest);
+		
 	}
 	
 	

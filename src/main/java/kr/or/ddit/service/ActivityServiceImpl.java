@@ -80,11 +80,19 @@ public class ActivityServiceImpl implements ActivityService {
 		return dataMap;
 	}
 
+	
 	@Override
-	public ActivityVO getActivity(int actNo) throws SQLException {
-		ActivityVO activity = activityDAO.selectActivityByActNo(actNo);
+	public ActivityVO getActivityCon(int actNo) throws SQLException {
+		ActivityVO activity = activityDAO.selectActivityConByActNo(actNo);
 		return activity;
 	}
+
+	@Override
+	public ActivityVO getActivityMen(int actNo) throws SQLException {
+		ActivityVO activity = activityDAO.selectActivityMenByActNo(actNo);
+		return activity;
+	}
+
 
 	@Override
 	public void registContest(ActivityVO activity) throws SQLException {
@@ -118,6 +126,7 @@ public class ActivityServiceImpl implements ActivityService {
 
 	}
 
+	
 	
 
 }

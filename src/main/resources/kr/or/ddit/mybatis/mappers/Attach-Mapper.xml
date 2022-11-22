@@ -3,23 +3,51 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Attach-Mapper">
-	<select id="selectAttachByPno" resultType="attach">
-		select * 
-		from attach 
-		where pno = #{pno}
+	<select id="selectAttachesByWorkInfo" parameterType="attach" resultType="attach">
+		select ATT_NO				/*등록번호*/
+			 , UPLOADPATH           /*저장경로*/
+			 , FILENAME             /*파일명*/
+			 , FILETYPE             /*파일확장자명*/
+			 , ATTACHER             /*작성자*/
+			 , TO_CHAR(REGDATE, 'YYYY-MM-DD') AS REGDATE_STR  /*등록일시STR*/
+			 , FILESEQ_NO           /*파일순번*/
+			 , WORK_DIV             /*업무구분*/
+			 , WORK_PK				/*업무PK*/ 
+		from FILE_ATTACH 
+		where WORK_DIV = #{workDiv}
+		  and WORK_PK = #{workPk}
+		order by FILESEQ_NO
 	</select>	
 	
-	<select id="selectAttachByAno" resultType="attach">
+	<select id="selectAttachByAttNo" resultType="attach">
 		select *
-		from attach
-		where ano=#{ano}
+		from FILE_ATTACH
+		where ATT_NO=#{attNo}
 	</select>
 	
-	<update id="insertAttach">
-		insert into 
-		attach (ano, uploadpath, filename, filetype, pno, attacher)
-		values (attach_seq.nextval, #{uploadPath}, #{fileName},#{fileType}, 
-				#{pno},#{attacher} )
+	<update id="insertAttach" parameterType="attach" >
+		INSERT INTO FILE_ATTACH 			/*파일정보*/
+			 (
+			   ATT_NO				/*등록번호*/
+			 , UPLOADPATH           /*저장경로*/
+			 , FILENAME             /*파일명*/
+			 , FILETYPE             /*파일확장자명*/
+			 , ATTACHER             /*작성자*/
+			 , REGDATE              /*등록일시*/
+			 , FILESEQ_NO           /*파일순번*/
+			 , WORK_DIV             /*업무구분*/
+			 , WORK_PK				/*업무PK*/
+			 ) VALUES (
+			   ATTACH_SEQ.NEXTVAL   /*등록번호*/
+			 , #{uploadpath}        /*저장경로*/
+			 , #{filename}          /*파일명*/
+			 , #{filetype}          /*파일확장자명*/
+			 , #{attacher}          /*작성자*/
+			 , SYSDATE              /*등록일시*/
+			 , #{fileseqNo}         /*파일순번*/
+			 , #{workDiv}           /*업무구분*/
+			 , #{workPk}            /*업무PK*/
+			 )
 	</update>
 	
 	<update id="deleteAttach">

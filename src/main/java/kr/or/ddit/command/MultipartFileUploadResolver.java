@@ -18,17 +18,22 @@ public class MultipartFileUploadResolver extends FileUploadResolver {
 		
 		// 저장 -> attachVO -> list.add
 		if(multiFiles != null) {
+			int fileseqNo = 1;
 			for(MultipartFile multi : multiFiles) {
 				String fileName = MakeFileName.toUUIDFileName(multi.getOriginalFilename(), "$$");
 				File target = new File(savePath, fileName);
 				
 				target.mkdirs();
 				
+				multi.transferTo(target);
+				
 				AttachVO attach = new AttachVO();
-				attach.setUploadPath(savePath);
-				attach.setFileName(fileName);
-				attach.setFileType(fileName.substring(fileName.lastIndexOf('.') + 1).toUpperCase());
+				attach.setUploadpath(savePath);
+				attach.setFilename(fileName);
+				attach.setFiletype(fileName.substring(fileName.lastIndexOf('.') + 1).toUpperCase());
+				attach.setFileseqNo(fileseqNo);
 				attachList.add(attach);
+				fileseqNo++;
 			}
 		}
 		return attachList;

@@ -184,8 +184,8 @@
 
 <script>
 
-$("#registBtn").click(function(){
-	window.open("<%=request.getContextPath()%>/community/report/registForm" , 'regist', 'width=1200, height=1000');
+$("#registBtn").on('click', function(){
+	window.open("insertForm" , 'GetfalseRegistForm', 'width=1200, height=1000');
 });                                        
 
 </script>

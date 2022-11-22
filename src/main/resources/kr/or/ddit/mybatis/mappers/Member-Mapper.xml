@@ -59,9 +59,11 @@
 	</select>
 	
 	<select id="selectCoMember" parameterType="str" resultType="member">
-		select *
-		  from co_member
+		select b.id
+		       ,a.*
+		  from co_member a , member b
 		 where co_id is not null
+		   and a.co_id = b.id
 		   and co_nm like '%'||#{keyword}||'%'
 	</select>
 	
@@ -84,11 +86,12 @@
 		CO_DEADDR=#{coDeaddr},CO_ADDRNO=#{coAddrno},CO_LINK=#{coLink}
 		where co_id=#{id}
 	</update>
-	<update id="comUpdateMember2" parameterType="member">
+	<update id="comUpdateMember2" parameterType="str">
 	update co_member
 		set
-		CO_CONFIRM=#{coConfirm}
+		CO_CONFIRM='Y'
 		where co_id=#{id}
+		and CO_CONFIRM='N'
 	</update>
 	
 </mapper>

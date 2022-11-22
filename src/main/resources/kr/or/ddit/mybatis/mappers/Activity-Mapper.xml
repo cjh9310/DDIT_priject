@@ -50,13 +50,20 @@
 		order by act_date desc
 	</select>
 	
-	<select id="selectActivityByActNo" resultType="activity">
-	/* Activity-Mapper.selectActivityByActNo */
-		select
-		*
-		from
-		activity
-		where act_no = #{actNo}
+	<select id="selectActivityConByActNo" resultType="activity">
+	/* Activity-Mapper.selectActivityConByActNo */
+		select a.*, b.con_sdate, b.con_Edate, b.con_title, b.con_field
+ 		  from activity a, contest b
+		 where a.con_no = b.con_no
+           and a.act_no = #{actNo}
+	</select>
+	
+	<select id="selectActivityMenByActNo" resultType="activity">
+	/* Activity-Mapper.selectActivityMenByActNo */
+		select a.*, b.men_Sdate, b.men_Edate, b.men_title, round(100/(b.men_edate-b.men_sdate))*(trunc(sysdate)-b.men_sdate) as men_progress
+ 		  from activity a, mentoring b
+ 		 where a.men_no = b.men_no
+    	   and a.act_no = #{actNo}
 	</select>
 	
 	<insert id="insertActivityContest" parameterType="activity">

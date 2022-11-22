@@ -803,7 +803,7 @@
 				<!-- BEGIN Page Content -->
 				<!-- the #js-page-content id is needed for some plugins to initialize -->
 				<main id="js-page-content" role="main" class="page-content"
-					style="padding:0px;"> <iframe name="ifr"
+					style="padding:0px;"> <iframe name="ifr" id="ifr"
 					src="" frameborder="0"
 					scrolling=yes style="width: 100%; height: 100%;">
 				</iframe> </main>
@@ -1696,82 +1696,43 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log("ajax1",result);
 			var count = result.count;
 			var almList = result.almList;
-			$.ajax({
-				url : '<%=request.getContextPath()%>/allim/list2',
-				type : 'GET',
-				dataType : "json",
-				success : function(result2) {
-			// 내일 할 일 : 현재 ajax1의 openSeqno와 ajax2의 openSeqno 둘 다 출력 됨. 이제 ajax1과 ajax2의 openSeqno를 연결해주면 된다.
-			// 연결 후 적용하면 끝날듯.
-					console.log("ajax2",result2);
-					console.log(count);
-					console.log(result.almList[0].toId);
-					var almNmTitleList = result2.almNmTitleList;
+			console.log(result.almList[0].toId);
+			if(count == 0){
+				var v_list = 
+				`<li class="">
+					<a href="#" class="d-flex align-items-center">
+						<span class="status mr-2"> <span
+								class="profile-image rounded-circle d-inline-block" style=""></span>
+						</span> <span class="d-flex flex-column flex-1 ml-1"> <span
+								class="name">......</span> 
+								<span class="msg-a fs-sm">새 알림이 없습니다</span> <span class="fs-nano text-muted mt-1">
+								시간</span>
+						</span>
+					</a>
+				</li>`;
+				
+				$('.notification').append(v_list);
+			}else{
+				for(var i=0; i<=count; i++){
 					
-					console.log(result2.count);
-					if(count == 0){
-						//새로운 알림이 없을 때
-						console.log("0일때");
-						/* var v_list2 = "";
-						v_list2 += '<li class="">';
-						v_list2 += '<a href="#" class="d-flex align-items-center">';
-						v_list2 += '<span class="status mr-2">';
-						v_list2 += '<span class="profile-image rounded-circle d-inline-block" style=""></span>';
-						v_list2 += '</span>';
-						v_list2 += '<span class="d-flex flex-column flex-1 ml-1">';
-						v_list2 += '<span class="name">......</span>';
-						v_list2 += '<span class="msg-a fs-sm">새 알림이 없습니다</span> <span class="fs-nano text-muted mt-1">시간</span>';
-						v_list2 += '</span>';
-						v_list2 += '</a>';
-						v_list2 += '</li>'; */
-						var v_list = 
-						`<li class="">
-							<a href="#" class="d-flex align-items-center">
-								<span class="status mr-2"> <span
-										class="profile-image rounded-circle d-inline-block" style=""></span>
-								</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-										class="name">......</span> 
-										<span class="msg-a fs-sm">새 알림이 없습니다</span> <span class="fs-nano text-muted mt-1">
-										시간</span>
-								</span>
-							</a>
-						</li>`;
-						
-						$('.notification').append(v_list);
-					}else{
-						//새로운 알림이 있을 때
-						for(total = 0; total <= count; total++){
-							/* var unreadList2 = '';
-							unreadList2 += '<li class="unread">';
-							unreadList2 += '<a href="#" class="d-flex align-items-center">';
-							unreadList2 += '<span class="status mr-2">';
-							unreadList2 += '<span class="profile-image rounded-circle d-inline-block" style=""></span>';
-							unreadList2 += '</span>';
-							unreadList2 += '<span class="d-flex flex-column flex-1 ml-1">';
-							unreadList2 += '<span class="name">' + result.almComemList[total].toId + '</span>' ;
-							unreadList2 += '<span class="msg-a fs-sm">' + result.almComemList[total].fromId + '</span>' ;
-							unreadList2 += '<span class="fs-nano text-muted mt-1">시간</span>'
-							unreadList2 += '</span>';
-							unreadList2 += '</a>';
-							unreadList2 += '</li>'; */
-							
-							var unreadList = 
-							`<li class="unread">
-								<a href="#" class="d-flex align-items-center">
-									<span class="status mr-2"> <span
-											class="profile-image rounded-circle d-inline-block" style=""></span>
-									</span> <span class="d-flex flex-column flex-1 ml-1"> <span
-											class="name">`+result.almList[total].toId+`</span>
-											<span class="msg-a fs-sm">`+result.almList[total].fromId+`</span> <span class="fs-nano text-muted mt-1">
-											시간</span>
-									</span>
-								</a>
-							</li>`;
-						$('.notification').append(unreadList);
-						}
-					}
+				
+					var unreadList = 
+					`<li class="unread">
+						<a href="#" class="d-flex align-items-center">
+							<span class="status mr-2"> <span
+									class="profile-image rounded-circle d-inline-block" style=""></span>
+							</span> <span class="d-flex flex-column flex-1 ml-1"> <span
+									class="name">`+result.almList[i].toId+`</span>
+									<span class="coNm">`+result.almList[i].coNm+`</span>
+									<span class="msg-a fs-sm">`+result.almList[i].fromId+`</span> <span class="fs-nano text-muted mt-1">
+									시간</span>
+							</span>
+						</a>
+					</li>`;
+				$('.notification').append(unreadList);
 				}
-			});
+			}
+			
 		},
 	
 		error : function(request, status, error) {

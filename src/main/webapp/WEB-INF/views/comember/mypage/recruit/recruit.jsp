@@ -134,7 +134,7 @@ function cleanDetail() {
 </script>
 <script>
 function supplyOpenDetail(p_id) {
-	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?id="+p_id, 'detail', 'location=no, width=700, height=1300, status=no, toolbar=no');
+	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?id="+p_id, 'OpenWindow', 'location=no, width=700, height=1300, status=no, toolbar=no');
 }
 </script>
 <script>

@@ -39,4 +39,16 @@ public class SupplyRecServiceImpl implements SupplyRecService {
 		supOpenMap.put("supOpenList", supOpenList);
 		return supOpenMap;
 	}
+	
+	@Override
+	public int getCountSupplyRecById(Map<String, Object> parameterMap) throws SQLException {
+		int count = supplyRecDAO.selectCountSupplyRecById(parameterMap);
+		return count;
+	}
+	
+	@Override
+	public int getCountSupplyOpenRecById(Map<String, Object> parameterMap) throws SQLException {
+		int count = supplyRecDAO.selectCountSupplyOpenRecById(parameterMap);
+		return count;
+	}
 }

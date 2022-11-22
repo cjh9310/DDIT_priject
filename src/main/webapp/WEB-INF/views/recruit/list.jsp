@@ -298,7 +298,7 @@
 								<div class="card-header">
 									<a href="javascript:void(0);" class="card-title collapsed"
 										aria-expanded="false"
-										data-filter-tags="${recruit.coName} ${recruit.recWantedtitle} ${recruit.recRegion} ${recruit.recEntertpnm}">
+										data-filter-tags="${recruit.coName} ${recruit.recWantedtitle} ${recruit.recWantedno} ${recruit.recRegion} ${recruit.recEntertpnm}">
 										<table>
 											<tr>
 												<td colspan="1" rowspan="3"

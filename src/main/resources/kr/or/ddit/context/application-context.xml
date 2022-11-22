@@ -14,6 +14,11 @@
 		<constructor-arg value="${member.picture.upload}" />
 	</bean>
 
+	<!-- file upload -->
+	<bean id="fileUploadPath" class="java.lang.String">
+		<constructor-arg value="${file.upload}"/>
+	</bean>
+	
 	<!-- Repository -->
 	<bean id="menuDAO" class="kr.or.ddit.dao.MenuDAOImpl"
 		p:session-ref="sqlSession" />
@@ -133,7 +138,8 @@
 		p:mentoringDAO-ref="mentoringDAO" />
 	<bean id="falseReportService"
 		class="kr.or.ddit.service.FalseReportServiceImpl"
-		p:falseReportDAO-ref="falseReportDAO" />
+		p:falseReportDAO-ref="falseReportDAO" 
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="LetterService"
 		class="kr.or.ddit.service.LetterServiceImpl"
 		p:letterDAO-ref="letterDAO" />
@@ -142,7 +148,8 @@
 		p:documentDAO-ref="documentDAO" />
 	<bean id="reportService"
 		class="kr.or.ddit.service.ReportServiceImpl"
-		p:reportDAO-ref="reportDAO"/>
+		p:reportDAO-ref="reportDAO"
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="adviceService"
 		class="kr.or.ddit.service.AdviceServiceImpl"
 		p:adviceDAO-ref="adviceDAO"/>
@@ -158,5 +165,8 @@
 	<bean id="AuthReqService"
 		class="kr.or.ddit.service.AuthReqServiceImpl"
 		p:authReqDAO-ref="authReqDAO" />
+	<bean id="AttachService"
+		class="kr.or.ddit.service.AttachServiceImpl"
+		p:attachDAO-ref="attachDAO" />
 	
 </beans>

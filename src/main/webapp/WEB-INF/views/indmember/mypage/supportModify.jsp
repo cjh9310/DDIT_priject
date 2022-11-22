@@ -80,7 +80,7 @@
 			<div class="demo" style="text-align: right;">
 				<button type="button" id="modifyBtn"
 					class="btn btn-success btn-pills waves-effect waves-themed">등 록</button>
-				<button type="button" onclick="CloseWindow();"
+				<button type="button" onclick="window.close();"
 					class="btn btn-dark btn-pills waves-effect waves-themed">취 소</button>
 			</div>
 		</div>
@@ -97,20 +97,39 @@
 				supContent:$("textarea[name=supContent]").val()
 			}
 	 var supNo = ${support.supNo};
-	 $.ajax({
-			type:"post",
-			url:"supportModify.do?supNo=" + supNo,
-			data:param,
-			//contentType: "application.json; charset=utf-8",
-			dataType:"text",
-			success:(data)=>{
-				location.href=location.href;
-				opener.location.replace(opener.location.href);
-			},
-			error:(request,status,error)=>{
-				console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 Swal.fire({
+	        icon: 'warning',
+				title: "상담신청내용을 수정하시겠습니까?",
+	        type: "success",
+	        showCancelButton: true,
+	        confirmButtonText: "OK"
+		}).then(function(result){ 
+			if(result.value){
+		
+				 $.ajax({
+						type:"post",
+						url:"/ddit/indmember/mypage/supportModify?supNo="+supNo,
+						data:param,
+						//contentType: "application.json; charset=utf-8",
+						dataType:"text",
+						success:(data)=>{
+							Swal.fire({
+								icon: 'success',
+								title: '내용이 수정되었습니다.',
+								showConfirmButton: false,
+								timer: 1500
+						}).then(function(){	
+						
+							location.href="/ddit/indmember/mypage/supportDetail.do?supNo="+supNo;
+							opener.location.replace(opener.location.href);
+						});
+						},
+						error:(request,status,error)=>{
+							console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+				});
 			}
-	});
+		});
 }); 
 
 </script>

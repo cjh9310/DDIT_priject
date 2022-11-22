@@ -28,7 +28,7 @@
 				<i class="fal fa-plus"></i>
 			</button>
 			<button
-				onclick="location.href='<%=request.getContextPath()%>/indmember/mypage/resume.do'"
+				onclick="window.location.reload()"
 				class="btn btn-xs btn-icon width-1 fs-xl btn-primary ml-1 waves-effect waves-themed">
 				<i class="fal fa-reply"></i>
 			</button>

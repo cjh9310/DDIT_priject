@@ -9,7 +9,7 @@ import kr.or.ddit.dto.ReportVO;
 
 public interface FalseReportDAO {
 	
-	List<FalseReportVO> selectAllFalseReportList(String indId, Criteria cri)throws SQLException;
+	List<FalseReportVO> selectAllFalseReportList(Criteria cri, String indId)throws SQLException;
 	
 	FalseReportVO selectFalseReportByFalNo(int falNo)throws SQLException;
 	

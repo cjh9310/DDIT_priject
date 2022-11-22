@@ -60,8 +60,14 @@ public class ActivityDAOImpl implements ActivityDAO {
 	}
 	
 	@Override
-	public ActivityVO selectActivityByActNo(int actNo) throws SQLException {
-		ActivityVO activity = session.selectOne("Activity-Mapper.selectActivityByActNo", actNo);
+	public ActivityVO selectActivityConByActNo(int actNo) throws SQLException {
+		ActivityVO activity = session.selectOne("Activity-Mapper.selectActivityConByActNo", actNo);
+		return activity;
+	}
+
+	@Override
+	public ActivityVO selectActivityMenByActNo(int actNo) throws SQLException {
+		ActivityVO activity = session.selectOne("Activity-Mapper.selectActivityMenByActNo", actNo);
 		return activity;
 	}
 
@@ -100,6 +106,8 @@ public class ActivityDAOImpl implements ActivityDAO {
 		int seq_num = session.selectOne("Activity-Mapper.selectActivitySeqNext");
 		return seq_num;
 	}
+
+	
 
 	
 	

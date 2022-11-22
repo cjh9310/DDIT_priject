@@ -131,7 +131,7 @@
 
 $("tr").click(function(){
 	var pubNo = this.children[0].innerHTML;
-	window.open("<%=request.getContextPath()%>/community/publicwork/detail.do?from=list&pubNo="+pubNo ,'detail', 'width=1000, height=800');
+	window.open("<%=request.getContextPath()%>/community/publicwork/detail.do?from=list&pubNo="+pubNo ,'OpenWindow', 'width=1000, height=800');
 });                                        
 
 </script>

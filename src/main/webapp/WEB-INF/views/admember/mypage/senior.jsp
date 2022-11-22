@@ -334,7 +334,7 @@ function openList(snrNo) {
 															<textarea class="form-control" id="registContent"
 																name="snrContent" placeholder="내용을 간략하게 입력해주세요. (50자 내외)" rows="10"
 																required></textarea>
-														</div>
+														</div>													
 														<div class="col-lg-12">
 															<div style="float: right;">
 																<button class="btn btn-warning ml-auto" id="snrModifyBtn" type="button">수정하기</button>

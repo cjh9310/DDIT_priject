@@ -6,35 +6,43 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.FalseReportDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.ReportVO;
 
+
 public class FalseReportServiceImpl implements FalseReportService {
+	
 	
 	private FalseReportDAO falseReportDAO;
 	public void setFalseReportDAO(FalseReportDAO falseReportDAO) {
 		this.falseReportDAO = falseReportDAO;
 	}
-
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
+	}
+	
 	@Override
-	public Map<String, Object> getAllFalseReportList(String indId, Criteria cri) throws SQLException {
-		Map<String, Object> dataMap = null;
+	public Map<String, Object> getAllFalseReportList(Criteria cri, String indId) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		
-		List<FalseReportVO> falseReport = falseReportDAO.selectAllFalseReportList(indId, cri);
+		List<FalseReportVO> falseReport = falseReportDAO.selectAllFalseReportList(cri, indId);
 		
 		int totalCount = falseReportDAO.selectAllFalseReportListCount(indId);
 		
-		// PageMaker 생성.
+		// pageMaker 생성
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
-				
-		dataMap = new HashMap<String, Object>();
-		
+						
 		dataMap.put("falseReportList",falseReport);
-		dataMap.put("pageMaker",pageMaker);
+		dataMap.put("pageMaker", pageMaker);
 		
 		return dataMap;
 	}
@@ -46,9 +54,47 @@ public class FalseReportServiceImpl implements FalseReportService {
 	}
 
 	@Override
-	public int regist(FalseReportVO falseReport) throws SQLException {
+	public void regist(FalseReportVO falseReport, String savePath) throws SQLException {
 		
-		return falseReportDAO.insertFalse(falseReport);
+		/*********** 거짓구인광고신고 등록  start************/
+		falseReportDAO.insertFalse(falseReport);
+		/*********** 거짓구인광고신고 등록  start************/
+		
+		/*********** 첨부파일 등록  start************/
+		// 첨부파일등록
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+		String workDiv = "FalseReport"; // 필수
+		//file 저장 -> List<AttachVO>
+		List<AttachVO> attachList = null;
+		try {
+			attachList = MultipartFileUploadResolver.fileUpload(falseReport.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 파일저장정보 목록을 FalseReportVO에 세팅
+		falseReport.setAttachList(attachList);	
+		
+		if (falseReport.getAttachList() != null) {
+			for (AttachVO attach : falseReport.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(Integer.toString(falseReport.getFalNo()));
+				attach.setAttacher(falseReport.getIndId());
+				attachDAO.insertAttach(attach);
+			}
+		}
+		/*********** 첨부파일 등록   end**************/
+		
+		/*********** 신고내역관리등록  start*********/
+		ReportVO reportVO = new ReportVO();
+		reportVO.setFalNo(falseReport.getFalNo());
+		reportVO.setRepStatus("신고접수중");
+		
+		falseReportDAO.registReportList(reportVO);
+		/*********** 신고내역관리등록 end************/
+		
+		System.out.println("내용 :" + falseReport.getFalContent());
 		
 	}
 
@@ -61,12 +107,6 @@ public class FalseReportServiceImpl implements FalseReportService {
 	@Override
 	public void remove(int falNo) throws SQLException {
 		falseReportDAO.deleteFalse(falNo);
-		
-	}
-
-	@Override
-	public void registReportList(ReportVO reportVO) throws SQLException {
-		falseReportDAO.registReportList(reportVO);
 		
 	}
 

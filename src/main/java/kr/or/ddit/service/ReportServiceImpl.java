@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.ReportDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public class ReportServiceImpl implements ReportService {
@@ -16,6 +19,12 @@ public class ReportServiceImpl implements ReportService {
 	public void setReportDAO(ReportDAO reportDAO) {
 		this.reportDAO = reportDAO;
 	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
+	}
+	
 
 	@Override
 	public Map<String, Object> getAllReportList(Criteria cri) throws SQLException {
@@ -45,9 +54,30 @@ public class ReportServiceImpl implements ReportService {
 		
 		ReportListVO report = reportDAO.selectReportListByFalNo(falNo);
 		
+		
+		addAttachList(report);
+		
+		if(report!=null && report.getAttachList()!=null) {
+			for(AttachVO attach:report.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
+		
 		return report;
 	}
 
-		
+	private void addAttachList(ReportListVO report) throws SQLException {
+
+			AttachVO attach = new AttachVO();
+			attach.setWorkPk(Integer.toString(report.getFalNo()));
+			attach.setWorkDiv("FalseReport");
+			
+			List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+			
+			report.setAttachList(attachList);
+			
+	}
 
 }

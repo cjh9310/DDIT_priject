@@ -10,14 +10,34 @@
 	</select>
 	
 	<select id="selectToById" parameterType="str" resultType="allim">
-		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.ALM_CHECK_DATE, a.ALM_CHECK_OPEN, a.alm_type
-        ,a.OPEN_SEQNO
-		from member m, ind_member i, co_member c, allim a, open_rec o
-		where m.id = i.ind_id (+)
-		  and m.id = c.co_id (+)
-          and c.co_nm = o.OPEN_TITLE (+)
-		  and c.co_id = a.from_id (+)
-		  and a.to_id =#{toId}
+		select
+		nm.open_seqno,alm.OPEN_SEQNO,alm.ALM_SEQNO, nm.co_nm,nm.open_title,
+		 alm.FROM_ID,alm.TO_ID,alm.ALM_DATE,alm.ALM_CHECK_DATE,alm.ALM_CHECK_OPEN,alm.alm_type
+		from
+		    (select a.co_id,a.open_seqno, a.co_nm, a.open_title, b.rec_wantedtitle, b.rec_wantedno
+		          from (select cm.co_nm co_nm,
+                       cm.co_id co_id,
+                       orec.open_title open_title,
+                       orec.open_conm open_conm,
+                       orec.open_seqno open_seqno
+                  from co_member cm
+                       inner join open_rec orec on cm.co_nm = orec.open_conm
+                ) a
+                       left outer join (select cm.co_nm co_nm,
+                                          r.REC_WANTEDTITLE REC_WANTEDTITLE,
+                                          r.rec_wantedno rec_wantedno
+                                     from co_member cm
+                                          inner join recruit r on cm.co_nm = r.co_name
+                                   ) b on a.co_nm = b.co_nm)nm
+	      ,(select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.ALM_CHECK_DATE, a.ALM_CHECK_OPEN, a.alm_type
+	        ,a.OPEN_SEQNO
+			from member m, ind_member i, co_member c, allim a, open_rec o
+			where m.id = i.ind_id (+)
+			  and m.id = c.co_id (+)
+	          and c.co_nm = o.OPEN_TITLE (+)
+			  and c.co_id = a.from_id (+)
+			  and a.to_id =#{toId})alm
+	          where nm.open_seqno=alm.OPEN_SEQNO
 	</select>
 
 	<select id="selectFromById" parameterType="str" resultType="allim">

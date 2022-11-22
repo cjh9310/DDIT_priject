@@ -4,18 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
@@ -23,7 +22,6 @@ import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.FaqVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.PublicWorkVO;
-import kr.or.ddit.dto.ReportVO;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.FaqService;
 import kr.or.ddit.service.MemberService;
@@ -129,31 +127,39 @@ public class CommunityController {
 		return url;
 	}
 
-	@GetMapping("report/registForm")
+	@RequestMapping(value="report/insertForm",method= {RequestMethod.POST, RequestMethod.GET})
 	public String reportrRegist() throws Exception {
 		String url = "community/report/regist";
 		
 		return url;
 	}	
 	
+	// 파일업로드 경로
+	@Resource(name = "fileUploadPath")
+	private String fileUploadPath;
+	
+	/**
+	 * @see 신고 등록
+	 * @author KYM
+	 * @param falseReport
+	 * @param request
+	 * @param rttr
+	 * @return url
+	 * @throws Exception
+	 */
 	@PostMapping("report/regist")
 	public String reportSuccess(FalseReportVO falseReport, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 		String url = "redirect:/community/report/list";
 		
+		String savePath = this.fileUploadPath;	
+		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-
+		
 		String indId = loginUser.getId();
 		falseReport.setIndId(indId);
-		int falNo = falseReportService.regist(falseReport);
-		
-		ReportVO reportVO = new ReportVO();
-		reportVO.setFalNo(falseReport.getFalNo());
-		reportVO.setRepStatus("신고접수중");
-		
-		falseReportService.registReportList(reportVO);
-		
-		System.out.println("내용 :" + falseReport.getFalContent());
+		//거짓구인광고신고 등록, 파일 등록, 신고내역관리 등록
+		falseReportService.regist(falseReport, savePath);
 		
 		rttr.addFlashAttribute("from", "registForm");
 		
@@ -167,7 +173,7 @@ public class CommunityController {
 		return url;
 	}	
 	
-	@PostMapping("report/nameSearch")
+	@PostMapping("/report/nameSearch")
 	@ResponseBody
 	public List<MemberVO> nameSearch(String name, HttpServletRequest request) throws Exception {
 		

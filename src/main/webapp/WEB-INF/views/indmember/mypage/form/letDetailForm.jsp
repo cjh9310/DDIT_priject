@@ -14,7 +14,7 @@
 						aria-label="Example text with two button addons"
 						aria-describedby="button-addon3" placeholder="${let.letTitle}">
 					<button style="width:37.1px;"
-						onclick="location.href='<%=request.getContextPath()%>/indmember/mypage/resume.do'"
+						onclick="window.location.reload()"
 						class="btn btn-xs btn-icon width-1 fs-xl btn-primary ml-1 waves-effect waves-themed">
 						<i class="fal fa-reply"></i>
 					</button>

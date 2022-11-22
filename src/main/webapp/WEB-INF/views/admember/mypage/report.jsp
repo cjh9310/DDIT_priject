@@ -57,6 +57,8 @@
 
 <script>
 
+var cntxtPth = "${pageContext.request.contextPath}";
+console.log("cntxtPth = " + cntxtPth)
 function openList(falNo) {
 	console.log(falNo)
 	$.ajax({
@@ -65,14 +67,42 @@ function openList(falNo) {
 		data : {'falNo' : falNo},
 		success : function(result) {
 			console.log(result);
-			$('input[id=openTitle]').val(result.falTitle);
-			$('input[id=openIndId]').val(result.indId);
-			$('input[id=openCoName]').val(result.coName);
-			$('input[id=openCategory]').val(result.falCategory);
-			$('input[id=openCategoryDetail]').val(result.falCategorydetail);
-			$('input[id=openOdate]').val(result.falOdate);
-			$('input[id=openSdate]').val(result.falSdate);
+			$('#openTitle').val(result.falTitle);
+			$('#openIndId').val(result.indId);
+			$('#openCoName').val(result.coName);
+			$('#openCategory').val(result.falCategory);
+			$('#openCategoryDetail').val(result.falCategorydetail);
+			$('#openOdate').val(result.falOdate);
+			$('#openSdate').val(result.falSdate);
 			$('#openContent').val(result.falContent);
+			
+			var rowStr = '';
+			$('#attachList').empty();
+			if(result.attachList.length > 0){
+				$.each(result.attachList, function(key, val){
+					console.log(val)
+					console.log(val.attNo)
+					console.log(val.filename)
+					console.log(cntxtPth)
+						rowStr += '<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href=\''+ cntxtPth+ '/attach/getFile.do?attNo=' + val.attNo + '\';">'
+						rowStr += '<div class="info-box">'
+						rowStr += '<span class="info-box-icon bg-yellow">'
+						rowStr += '<i class="fa fa-copy"></i>'
+						rowStr += '</span>'
+						rowStr += '<div class="info-box-content">'
+						rowStr +=' <span class ="info-box-text"></span>'
+						rowStr +=' <span class ="info-box-number">' + val.filename + '</span>'
+						rowStr +=' </div></div></div>'
+						
+				});
+				
+			}else{
+				rowStr = '<span>저장된 첨부 파일이 없습니다.</span>'
+			}
+			
+			$('#attachList').append(rowStr);
+
+			
 		}
 	})
 }
@@ -165,22 +195,41 @@ function openList(falNo) {
 	            
 <!-- --------------------------------------기업검색-------------------------------------------- -->
 				<div id="panel-5" class="panel" style="height: 500px;">
-	                <div class="panel-hdr">
-                   		<ul class="nav nav-pills" role="tablist">
-							<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 기업 검색 </a></li>
-						</ul>
-	                </div>
 	                <div class="panel-container show">
-	                    <div class="panel-content">
-	                        <div class="frame-wrap">
-
-
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>	            
-	            
-	            	
+	                    <div class="panel-content" >
+			                <div class="frame-wrap">
+		                       	<div class="row">
+		                       		<div class="col-12" style="margin-bottom: 18px;">
+		                       			<ul class="nav nav-pills" role="tablist">
+											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 상세 신고 내역</a></li>
+										</ul>
+		                       		</div>
+								</div>
+			                </div>
+			                <div class="panel-container show">
+			                    <div class="panel-content">
+			                        <div class="frame-wrap">
+			                            <table class="table table-bordered table-hover m-0">
+			                                <thead class="thead-themed">
+			                                    <tr>
+			                                        <th style="width: 8%;">NO</th>
+			                                        <th style="width: 20%">작성자</th>
+			                                        <th style="width: 20%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">신고 기업명</th>
+			                                        <th style="width: 20%">신고 유형</th>
+			                                        <th style="width: 20%">발생일</th>
+			                                        <th style="width: 12%;">처리상태</th>
+			                                    </tr>
+			                                </thead>
+			                                <tbody>			                        
+								
+											</tbody>
+										</table>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+		        </div>	            
 			</div>
 			
 <!-- -----------------------------------상세 신고 내역 ------------------------------------- -->
@@ -197,115 +246,107 @@ function openList(falNo) {
 										</ul>
 	                        		</div>
 								</div>
-	                        
-                       			<form class="needs-validation" novalidate method="post" name="comentForm" id="myForm">
-									
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-1">
-											<label class="form-label" style="margin-top: 10px;"><b>제목</b></label> 
-										</div>
-										<div class="col-lg-11" style="padding-left: 28px;">
-											<input type="text" class="form-control" id="openTitle" style="width: 706px;"
-												value="" name="" disabled  />
+							<div id="faqpanel-2" class="panel">
+								<div class="panel-container show">
+									<div class="panel-content p-0">
+										<form class="needs-validation" novalidate method="post"  id="snrRegistForm">
+											<div class="panel-content">
+												<div class="form-row">
+													<div class="col-lg-6 mb-3">
+														<label class="form-label" for="validationCustom01"><b>작성자</b></label> 
+														<input type="text" class="form-control" id="openIndId"
+															value=""  disabled required /> 
+													</div>
+													
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="validationCustom02"><b>신고 기업명</b>
+															</label> <input type="text" class="form-control" id="openCoName"
+																 value="" disabled>
+														</div>														
+														
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="example-date"><b>등록일</b></label> 
+															<input class="form-control"
+																id="openSdate" type="date" value=""  disabled
+																required>
+														</div>
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="example-date"><b>발생일</b> </label> 
+															<input class="form-control"
+																id="openOdate" type="date" value=""
+																disabled>
+														</div>		
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="validationCustom02"> <b>신고유형</b>
+															</label> <input type="text" class="form-control" id="openCategory"
+																 value="" disabled>
+														</div>	
+														<div class="col-lg-6 mb-3">
+															<label class="form-label" for="validationCustom02"><b>상세신고유형</b>
+															</label> <input type="text" class="form-control" id="openCategoryDetail"
+																 value="" disabled>
+														</div>																												
+																																																
+														<div class="col-lg-12 mb-3">
+															<label class="form-label" for="validationCustom03"><b>제목</b>
+															</label> <input type="text" class="form-control" id="openTitle"
+																 value="" disabled>
+														</div>
+														<div class="col-lg-12 mb-3">
+															<label class="form-label" for="validationTextarea1"><b>내용</b></label>
+															<textarea class="form-control" id="openContent"
+															    rows="10"
+																disabled></textarea>
+														</div>
+														<div class="col-lg-12 mb-2">								
+															<div class="card card-outline card-success">
+																<div class="card-header">
+																	<b>첨부파일 다운로드</b>
+																</div>
+																<div class="card-footer">
+																	<div class="row" id="attachList">
+																		<!-- 첨부파일 썸네일 -->
+																		<c:forEach items="${report.attachList }" var="attach">
+																			<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;"
+																			 onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?attNo=${attach.attNo }';">
+																			<div class="info-box">	
+																			 	<span class="info-box-icon bg-yellow">
+																					<i class="fa fa-copy"></i>
+																				</span>
+																				<div class="info-box-content">
+																					<span class ="info-box-text">
+																					</span>
+																					<span class ="info-box-number">${attach.filename }</span>
+																				</div>
+																			</div>
+																		 </div>			
+																		</c:forEach>
+																	</div>
+																</div>
+															</div>
+														</div>													
+														<div class="col-12 mb-3">
+															<label class="form-label" for="validationTextarea1"><b>코몐트 작성</b></label>
+															<textarea class="form-control" id="reportComment"
+																name="repComment" placeholder="코멘트를 입력하세요." rows="10"
+																required></textarea>
+														</div>														
+														<div class="col-lg-12">
+															<div style="float: right;">
+																<button class="btn btn-warning ml-auto" id="reportCommentBtn" type="button">코멘트 등록</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
 										</div>
 									</div>
-									
-							
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>작성자</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openIndId"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>신고 기업명</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCoName"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-									</div>													
-									
-									<div class="row col-lg-12 mb-3">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>신고유형</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCategory"
-														value="" name="" disabled  /> 
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>상세신고유형</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="text" class="form-control" id="openCategoryDetail"
-														value="" name="" disabled  /> 
-												</div>
-											</div>
-										</div>
-									</div>														
-									
-									<div class="row col-lg-12 mb-4">
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3" style="padding-left: 10px;">
-													<label class="form-label" style="margin-top: 10px;"><b>발생일</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="date" class="form-control" id="openOdate"
-														value="" name="" disabled  />
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="row col-lg-12">
-												<div class="col-lg-3">
-													<label class="form-label" style="margin-top: 10px;"><b>등록일</b></label> 
-												</div>
-												<div class="col-lg-9">
-													<input type="date" class="form-control" id="openSdate"
-														value="" name="" disabled />
-												</div>
-											</div>
-										</div>
-									</div>														
-											
-									<div class="col-lg-12 mt-4">
-										<label class="form-label" for="validationTextarea2"><b>내용</b></label>
-										<textarea class="form-control" id="openContent" style="height: 250px;"
-											name="" disabled></textarea>
-									</div>
-									
-									<div class="col-lg-12 mt-3">
-										<label class="form-label" for="validationCustom02"><b>첨부파일 </b></label> 
-										<div style="border: solid 1px rgb(233,233,233); height: 70px;">
-										
-										</div>
-									</div>									
-									
-								</form>
+								</div>
 	                        </div>
 	                    </div>
 	                </div>
-	            </div>		
-					            
-			</div>
+	            </div>
+	        </div>		
 		</div>
 </main>
 

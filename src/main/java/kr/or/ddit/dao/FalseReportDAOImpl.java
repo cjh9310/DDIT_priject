@@ -19,7 +19,7 @@ public class FalseReportDAOImpl implements FalseReportDAO {
 	}
 
 	@Override
-	public List<FalseReportVO> selectAllFalseReportList(String indId, Criteria cri) throws SQLException {
+	public List<FalseReportVO> selectAllFalseReportList(Criteria cri, String indId) throws SQLException {
 		
 		int startRow = cri.getStartRowNum()+1;
 		int endRow = startRow+cri.getPerPageNum()-1;
@@ -28,8 +28,8 @@ public class FalseReportDAOImpl implements FalseReportDAO {
 		
 		dataParam.put("startRow",startRow);
 		dataParam.put("endRow",endRow);
-		dataParam.put("indId",indId);
-		
+		dataParam.put("id", indId);
+	
 		List<FalseReportVO> falseReportList = session.selectList("FalseReport-Mapper.selectAllFalseReportList", dataParam);
 
 		return falseReportList;

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dao.SeniorDAO;
+import kr.or.ddit.dto.AuthReqVO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.FaqVO;
 import kr.or.ddit.dto.MemberVO;
@@ -48,33 +49,31 @@ public class AdMemeberController {
 
 	@Autowired
 	private FaqService faqService;
-	
+
 	@Autowired
 	private ReportService reportService;
 
 	@Autowired
 	private NewsService newsService;
-	
+
 	@Autowired
 	private SupportService supportService;
-	
+
 	@Autowired
 	private SeniorService seniorService;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private AuthReqService authReqService;
-	
-
 
 	@GetMapping("/mypage/info")
 	public String myPageInfo() throws Exception {
 		String url = "admember/mypage/lockedinfo";
 		return url;
 	}
-	
+
 	@GetMapping("/mypage/support")
 	public String myPageSupport(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/support";
@@ -86,7 +85,7 @@ public class AdMemeberController {
 
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/mypage/supportDetail", method = RequestMethod.POST)
 	public @ResponseBody SupportVO detailSuppory(@RequestParam("supNo") int supNo, Model model) throws Exception {
 
@@ -99,33 +98,31 @@ public class AdMemeberController {
 		return supportVO;
 
 	}
-	  @ResponseBody
-	  @RequestMapping(value="/mypage/supportModify", method = RequestMethod.POST)
-	  public String modifySupport(@RequestBody SupportVO support, HttpServletRequest request,
-	  RedirectAttributes rttr) throws Exception { 
-	
-	  String msg ="성공";
-	  
-	  
-	  supportService.updateSupportCounselor(support);
-	  
-	  return msg;
-	  
-	  }
-	
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/mypage/supportModify", method = RequestMethod.POST)
+	public String modifySupport(@RequestBody SupportVO support, HttpServletRequest request, RedirectAttributes rttr)
+			throws Exception {
+
+		String msg = "성공";
+
+		supportService.updateSupportCounselor(support);
+
+		return msg;
+
+	}
+
 	@GetMapping("/mypage/report")
 	public String myPageReport(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/report";
-		
-		Map<String, Object> dataMap= reportService.getAllReportList(cri);
-		
+
+		Map<String, Object> dataMap = reportService.getAllReportList(cri);
+
 		request.setAttribute("dataMap", dataMap);
-		
+
 		return url;
 	}
-	
-	
+
 	@RequestMapping(value = "/mypage/reportDetail", method = RequestMethod.POST)
 	public @ResponseBody ReportListVO reportDetail(@RequestParam("falNo") int falNo, Model model) throws Exception {
 		ReportListVO reportListVO = reportService.getReport(falNo);
@@ -135,23 +132,23 @@ public class AdMemeberController {
 		return reportListVO;
 
 	}
-	
+
 	@GetMapping("/mypage/senior")
 	public String myPageSenior(String adId, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/senior";
-		
+
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-		
+
 		adId = loginUser.getId();
-		
+
 		List<SeniorVO> seniorVO = seniorService.getAllSeniorList();
-		
+
 		request.setAttribute("SeniorList", seniorVO);
-		
+
 		return url;
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/mypage/seniorRegist")
 	public String registSenior(SeniorVO senior, RedirectAttributes rttr) throws Exception {
@@ -163,19 +160,19 @@ public class AdMemeberController {
 
 		return url;
 
-	}	
+	}
 
 	@ResponseBody
-	@RequestMapping(value="/mypage/seniorDetail", method = RequestMethod.POST)
-	public SeniorVO DetailSenior(@RequestParam("snrNo") int snrNo,  Model model) throws Exception {
+	@RequestMapping(value = "/mypage/seniorDetail", method = RequestMethod.POST)
+	public SeniorVO DetailSenior(@RequestParam("snrNo") int snrNo, Model model) throws Exception {
 		SeniorVO seniorVO = seniorService.getSenior(snrNo);
-		
+
 		model.addAttribute("seniorDetail", seniorVO);
-		
+
 		return seniorVO;
 
 	}
-	
+
 	@GetMapping("/mypage/community")
 	public String myPageCommunity(String adId, HttpServletRequest request) throws Exception {
 		String url = "admember/mypage/community";
@@ -199,7 +196,7 @@ public class AdMemeberController {
 	@RequestMapping(value = "/mypage/communityPubDetail", method = RequestMethod.POST)
 	public @ResponseBody PublicWorkVO detailPubwork(@RequestParam("pubNo") int pubNo, Model model) throws Exception {
 		PublicWorkVO publicWokrVO = publicWorkService.getPublicWork(pubNo);
-		
+
 		model.addAttribute("openPubDetail", publicWokrVO);
 
 		return publicWokrVO;
@@ -302,23 +299,22 @@ public class AdMemeberController {
 
 		return url;
 	}
-	
+
 	@GetMapping("/mypage/authority")
-	public String myPageAuthority(Criteria cri, HttpServletRequest request) throws Exception{
-		String url="admember/mypage/authority";
-		
+	public String myPageAuthority(Criteria cri, HttpServletRequest request) throws Exception {
+		String url = "admember/mypage/authority";
+
 		Map<String, Object> dataMap = null;
 		dataMap = authReqService.getAuthReqList(cri);
-		
+
 		request.setAttribute("dataMap", dataMap);
 		return url;
 	}
-	
+
 	@RequestMapping(value = "/mypage/newsDetail", method = RequestMethod.POST)
 	public @ResponseBody NewsVO detailNews(@RequestParam("newsNo") int newsNo, Model model) throws Exception {
 
 		NewsVO newsVO = newsService.getNews(newsNo);
-
 
 		model.addAttribute("newsDetail", newsVO);
 
@@ -328,8 +324,8 @@ public class AdMemeberController {
 	@PostMapping("/mypage/newsRegist")
 	@ResponseBody
 	public String registNews(NewsVO news, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
-		
-		String url ="redirect:/admember/mypage/news";
+
+		String url = "redirect:/admember/mypage/news";
 
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
@@ -347,26 +343,24 @@ public class AdMemeberController {
 
 	}
 
-	  @RequestMapping(value="/mypage/newsModify", method = RequestMethod.POST)
-	  public String modifyNews(NewsVO news, HttpServletRequest request,
-	  RedirectAttributes rttr) throws Exception { 
-	
-	  String url ="redirect:/admember/mypage/news";
-	  
-	  newsService.modify(news);
-	  
-	  rttr.addAttribute("from","modify");
-	  
-	  return url;
-	  
-	  }
-	 
+	@RequestMapping(value = "/mypage/newsModify", method = RequestMethod.POST)
+	public String modifyNews(NewsVO news, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+
+		String url = "redirect:/admember/mypage/news";
+
+		newsService.modify(news);
+
+		rttr.addAttribute("from", "modify");
+
+		return url;
+
+	}
+
 	@PostMapping("/mypage/newsRemove")
-	
 	@ResponseBody
 	public String removeNews(int newsNo, RedirectAttributes rttr) throws Exception {
 
-		String url ="redirect:/admember/mypage/news";
+		String url = "redirect:/admember/mypage/news";
 
 		newsService.remove(newsNo);
 
@@ -374,8 +368,18 @@ public class AdMemeberController {
 
 		return url;
 	}
-	
+
+	@RequestMapping(value = "/mypage/authReqModify", method = RequestMethod.POST)
+	@ResponseBody
+	public String modifyAuthority(@RequestParam("coId") String id, AuthReqVO AuthReq, HttpServletRequest request,
+			RedirectAttributes rttr) throws Exception {
+
+		String url = "admember/mypage/authority";
+
+		memberService.modifyAuthority(id);
+
+		return url;
+
+	}
+
 }
-	
-
-

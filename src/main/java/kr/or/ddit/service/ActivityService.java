@@ -19,7 +19,8 @@ public interface ActivityService {
 	Map<String, Object> getActivityListByMenNo(int menNo) throws SQLException;
 	
 	//상세보기
-	ActivityVO getActivity(int actNo)throws SQLException;
+	ActivityVO getActivityCon(int actNo)throws SQLException;
+	ActivityVO getActivityMen(int actNo)throws SQLException;
 	
 	//등록
 	void registContest(ActivityVO activity)throws SQLException;

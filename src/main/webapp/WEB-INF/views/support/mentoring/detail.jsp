@@ -69,7 +69,15 @@
                  
              </div>
             <div style="text-align:center; margin:30px; ">
-            	<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="mentoringReg">신청하기</a>
+            	<c:choose>
+            		<c:when test="${mentoring.numPeople - mentoring.indCount eq 0 }">
+            			<a href="javascript:void(0);" class="btn btn-danger btn-pills waves-effect waves-themed" id="">모집마감 완료</a>
+            		</c:when>
+            		<c:otherwise>
+            			<h4>${mentoring.numPeople - mentoring.indCount}명 신청가능합니다.</h4>
+            			<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="mentoringReg">신청하기</a>
+            		</c:otherwise>
+            	</c:choose>
             </div>
          </div>
      </div>

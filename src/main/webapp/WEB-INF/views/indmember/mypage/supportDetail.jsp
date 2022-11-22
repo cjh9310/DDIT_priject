@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@ page trimDirectiveWhitespaces="true" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <c:set var="supportList" value="${dataMap.supportList }" />
@@ -75,19 +75,67 @@
 				    </div>
 				    
 				    <div class="demo" style="text-align: right;">
-			          	<button type="button" id="modifyBtn" onclick="location.href='supportModifyForm.do?supNo=${support.supNo}';" class="btn btn-warning btn-pills waves-effect waves-themed">수 정</button>
-			          	<button type="button" id="deleteBtn" onclick="location.href='supportRemove.do?supNo=${support.supNo}';" class="btn btn-danger btn-pills waves-effect waves-themed">삭 제</button>
-			          	<button type="button" id="listBtn" onclick="CloseWindow();" class="btn btn-dark btn-pills waves-effect waves-themed">닫 기</button>
+				    	<c:choose>
+				    		<c:when test="${support.supProcess eq 0 }">
+					          	<button type="button" id="modifyBtn" onclick="location.href='supportModifyForm.do?supNo=${support.supNo}';" class="btn btn-warning btn-pills waves-effect waves-themed">수 정</button>
+					          	<%-- <button type="button" id="deleteBtn" onclick="location.href='supportRemove.do?supNo=${support.supNo}';" class="btn btn-danger btn-pills waves-effect waves-themed">삭 제</button> --%>
+					          	<button type="button" id="deleteBtn"  class="btn btn-danger btn-pills waves-effect waves-themed">삭 제</button>
+					         </c:when>	
+					         <c:otherwise></c:otherwise>
+			          	</c:choose>
+			          	<button type="button" id="listBtn" onclick="window.close();" class="btn btn-dark btn-pills waves-effect waves-themed">닫 기</button>
 			        </div>
 			        </div>
 			     </div>
 			</main>
 			
 			
-<script>
+<!-- <script>
  <c:if test="${from eq 'remove'}">
 	alert("삭제되었습니다.");
   window.close();
   window.opener.location.reload();
   </c:if>
+</script> -->
+<script>
+$('#deleteBtn').on('click',()=>{
+	var supNo = ${support.supNo};
+	//alert(supNo);
+	
+	Swal.fire({
+        icon: 'warning',
+			title: "상담신청을 취소하시겠습니까?",
+        type: "success",
+        showCancelButton: true,
+        confirmButtonText: "OK"
+	}).then(function(result){ 
+		if(result.value){
+	
+	
+	$.ajax({
+		type:"post" ,
+		url: "/ddit/indmember/mypage/supportRemove?supNo="+supNo,
+		data: supNo,
+		
+		//contentType : "application/json; charset=utf-8",
+		dataType:"text",
+		success:(rslt)=>{
+			Swal.fire({
+				icon: 'success',
+				title: '상담신청이 취소되었습니다.',
+				showConfirmButton: false,
+				timer: 1500
+		}).then(function(){
+			
+			window.close();
+			window.opener.location.reload();
+		})
+		},
+		error:(request,status,error)=>{
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+	}
+});
+});
 </script>

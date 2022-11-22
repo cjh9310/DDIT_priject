@@ -147,6 +147,6 @@ $('.detailBtn').on('click',function() {
 	
 	var conNo = $(this).val();
 	//alert(conNo);
-	window.open('detail.do?conNo='+conNo, '공모전 신청화면', 990,920);
+	window.open('detail.do?conNo='+conNo, 'OpenWindow', 990,920);
 });
 </script>

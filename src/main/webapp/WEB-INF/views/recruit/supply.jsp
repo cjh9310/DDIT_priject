@@ -376,6 +376,33 @@ function rec_supply() {
 		return;
 	}
 	
+	var recWantedno = '${recruit.recWantedno}';
+	console.log(recWantedno);
+	var ajaxOption = {
+			url : '<%=request.getContextPath()%>/recruit/supply/check',
+			async : true,
+			type : "POST",
+			data : {'recWantedno' : recWantedno},
+			dataType : "text",
+			cache : false
+		};
+		
+	$.ajax(ajaxOption).done(function(data) {
+		if(data == 'SupplyNotAllowed') {
+			alert('이미 지원한 채용공고입니다.');
+			window.close();
+		} else if(data == 'SupplyAllowed') {
+			rec_supply_submit();
+		}
+	}); 
+	
+}
+</script>
+
+<script>
+
+function rec_supply_submit() {
+	
 	form = $('#recSupplyForm').serialize();
 	console.log('recSupplyForm', form);
 	
@@ -393,6 +420,7 @@ function rec_supply() {
 	}); 
 	
 }
+
 </script>
 
 <script>

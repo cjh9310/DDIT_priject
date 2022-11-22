@@ -77,10 +77,13 @@ public class MemberDAOImpl implements MemberDAO {
 //		}
 		if(member.getCoNm() != null) {
 			session.update("Member-Mapper.comUpdateMember1", member);
-		}
-		if(member.getCoNm() != null) {
-			session.update("Member-Mapper.comUpdateMember2", member);
-		}
+		}	
+	}
+		@Override
+		public void updateAuthority(String id) throws SQLException {
+		
+			session.update("Member-Mapper.comUpdateMember2", id);
+	
 		
 	}
 

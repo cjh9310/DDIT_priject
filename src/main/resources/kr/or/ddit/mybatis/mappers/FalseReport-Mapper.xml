@@ -7,9 +7,22 @@
 
 	<select id="selectAllFalseReportList" resultType="falseReport">
 		select *
-		  from false_report
-		 where ind_id=#{indId}
-      order by fal_no asc
+		  from (
+		    select rownum as rnum,SearchPublicWorkResult.*
+		    from ( 
+		    		select * 
+					  from false_report
+					 where ind_id = #{id}
+					  		
+				order by FAL_NO asc
+		    )  SearchPublicWorkResult
+		    <![CDATA[
+		    where rownum <= #{endRow}
+		    ]]>
+		)
+		 <![CDATA[
+		where rnum >= #{startRow}	
+		]]>
 	</select>
 
 	<select id="selectFalseReportByFalNo" parameterType="str" resultType="falseReport">	
@@ -25,7 +38,7 @@
 			select max(fal_no)+1 from false_report
 		</selectKey>
 		insert into false_report
-		values(#{falNo}, #{indId}, #{falTitle}, #{falContent}, #{coName}, TO_CHAR(sysdate, 'YYYY-MM-DD'), #{falEdate}, #{falOdate}, #{falCategory}, #{falCategorydetail})
+		values(#{falNo}, #{indId}, #{falTitle}, #{falContent}, #{coName}, TO_CHAR(sysdate, 'YYYY-MM-DD'), #{falEdate}, #{falOdate}, #{falCategory}, #{falCategorydetail}, #{coId})
 	</insert>	
 	
 		
@@ -33,7 +46,7 @@
 	<update id="updateFalse" parameterType="falseReport">
 		update false_report
 		   set 
-		   fal_title=#{falTitle}, fal_content=#{falContent}, co_name=#{coName}, fal_odate=#{falOdate}, fal_category=#{falCategory}, fal_categorydetail=#{falCategorydetail}
+		   fal_title=#{falTitle}, fal_content=#{falContent}, co_name=#{coName}, fal_odate=#{falOdate}, fal_category=#{falCategory}, fal_categorydetail=#{falCategorydetail}, co_id = #{coId} 
 		 where fal_no=#{falNo}
 		   and ind_id=#{indId}
 	</update>

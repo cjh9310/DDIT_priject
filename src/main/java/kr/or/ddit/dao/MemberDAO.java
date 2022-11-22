@@ -28,5 +28,7 @@ public interface MemberDAO {
 	void deleteMember(String id) throws SQLException;
 	
 	MemberVO selectMemberByPicture(String picture) throws SQLException;
+
+	void updateAuthority(String id) throws SQLException;
 	
 }

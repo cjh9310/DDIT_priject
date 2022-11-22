@@ -8,7 +8,10 @@ public class LetterVO {
 	private String letContent;
 	private int letNo;
 	private int letIsnav;
-
+	
+	// 지원 전용 필드
+	private int supNo;
+	
 	public String getLetSeqno() {
 		return letSeqno;
 	}
@@ -55,6 +58,14 @@ public class LetterVO {
 
 	public void setLetIsnav(int letIsnav) {
 		this.letIsnav = letIsnav;
+	}
+
+	public int getSupNo() {
+		return supNo;
+	}
+
+	public void setSupNo(int supNo) {
+		this.supNo = supNo;
 	}
 
 }

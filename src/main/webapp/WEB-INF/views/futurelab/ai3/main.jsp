@@ -75,7 +75,7 @@
 							<li>고용 관련 지표에 대한 향후 예측치를 제공해드립니다.</li>
 						</ul>
 						<br> <a
-							href="javascript:window.open('trend/recommand.do','AI의 고용동향 예측','fullscreen');"
+							href="javascript:window.open('trend/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary"> AI의 고용동향 예측 이용하기</a>
 					</div>
 				</div>
@@ -104,7 +104,7 @@
 							<li>기업이 원하는 인재상에 맞는 인재를 추천해드립니다.</li>
 						</ul>
 						<br> <a
-							href="javascript:window.open('talent/recommand.do','AI의 인재 추천','fullscreen');"
+							href="javascript:window.open('talent/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary">AI의 인재 추천 이용하기</a>
 					</div>
 				</div>
@@ -132,7 +132,7 @@
 							<li>당신을 더욱 빛나게 해줄 공모전을 추천해드립니다.</li>
 						</ul>
 						<a
-							href="javascript:window.open('contest/recommand.do','AI의 공모전 추천','fullscreen');"
+							href="javascript:window.open('contest/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary">AI의 공모전 추천 이용하기</a>
 					</div>
 				</div>
@@ -160,7 +160,7 @@
 							<li>고용 관련 지표에 대한 향후 예측치를 제공해드립니다.</li>
 						</ul>
 						<a
-							href="javascript:window.open('recruit/recommand.do','AI의 채용공고 추천','fullscreen');"
+							href="javascript:window.open('recruit/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary">AI의 채용공고 추천 이용하기</a>
 					</div>
 				</div>
@@ -188,7 +188,7 @@
 							<li>고용 관련 지표에 대한 향후 예측치를 제공해드립니다.</li>
 						</ul>
 						<a
-							href="javascript:window.open('salary/recommand.do','AI의 연봉 추천','fullscreen');"
+							href="javascript:window.open('salary/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary"> AI의 연봉 추천 이용하기</a>
 					</div>
 				</div>
@@ -216,7 +216,7 @@
 							<li>고용 관련 지표에 대한 향후 예측치를 제공해드립니다.</li>
 						</ul>
 						<a
-							href="javascript:window.open('company/recommand.do','AI의 기업 추천','fullscreen');"
+							href="javascript:window.open('company/recommand.do','OpenWindow','fullscreen');"
 							class="btn btn-sm btn-outline-primary"> AI의 기업 추천 이용하기</a>
 					</div>
 				</div>

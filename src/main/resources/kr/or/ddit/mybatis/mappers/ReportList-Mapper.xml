@@ -13,7 +13,8 @@
 		</if>		
 	</sql>
 
-	<select id="selectAllReportList" resultType="reportList">  
+	<select id="selectAllReportList" resultType="reportList">
+		/*selectAllReportList*/
 		select *
 	  	  from (      
 			 select rownum as rnum,SearchAllReport.*
@@ -36,6 +37,7 @@
 	
 	
 	<select id="selectSearchReportListCount" resultType="int">
+		/*selectSearchReportListCount*/
 		select count(*)
 		  from 
 		       (select *
@@ -48,6 +50,7 @@
 	
 	
 	<select id="selectReportListByFalNo" parameterType="int" resultType="reportList">
+		/*selectReportListByFalNo*/
 		select *
 		  from 
 		       (select *

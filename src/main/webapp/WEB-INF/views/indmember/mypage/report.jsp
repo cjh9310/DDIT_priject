@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
 <c:set var="cri" value="${dataMap.pageMaker.cri }" />
 <c:set var="falseReportList" value="${dataMap.falseReportList }" />
@@ -53,11 +51,12 @@
 					<option value="10">정렬개수</option>
 				</select>
 				<!-- 필수! -->
+				<!-- 필수! -->
 				<div class="panel-container show">
 					<div class="panel-content">
 						<h5 class="frame-heading">신고내역테이블</h5>
 						<div class="frame-wrap" style="text-align: center;">
-							<table class="table table-sm table-hover m-0">
+							<table id="DataTable" class="table table-striped table-bordered">
 								<thead class="bg-primary-700" style="background-color: #08c5a7;">
 									<tr>
 										<th>No</th>
@@ -67,8 +66,8 @@
 										<th>진행상태</th>
 									</tr>
 								</thead>
-								<c:if test="${!empty falseReportList }">
-									<tbody>
+								<tbody>
+									<c:if test="${!empty falseReportList }">
 										<c:forEach var="falseReportList" items="${falseReportList }">
 											<tr id="falseReportDetail">
 												<td>${falseReportList.falNo }</td>
@@ -76,16 +75,53 @@
 												<td>${falseReportList.falCategory }</td>
 												<td>${falseReportList.falTitle }</td>
 												<td>추가해야함</td>
-											</tr>									
+											</tr>
 										</c:forEach>
-									</tbody>
-								</c:if>
+									</c:if>
+								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-			</div>
-			<%@ include file="../../include/pagination.jsp" %>
+			</div>  
+ 
+			<form id="jobForm">	
+				<input type='hidden' name="page" value="" />
+				<input type='hidden' name="perPageNum" value=""/>
+			</form>
+
+ 
+		 	<!-- pagination -->
+		<nav aria-label="Navigation">
+			<ul class="pagination justify-content-center m-0">
+				<li class="page-item">
+					<a class="page-link" href="javascript:list_pagination(1);">
+						<i class="fas fa-angle-double-left"></i>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="javascript:list_pagination('${pageMaker.prev ? pageMaker.startPage-1 : cri.page}');">
+						<i class="fas fa-angle-left"></i>
+					</a>						
+				</li>
+			
+			<c:forEach var="pageNum" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" >
+				<li class="page-item ${cri.page == pageNum?'active':''}">
+					<a class="page-link" href="javascript:list_pagination('${pageNum}');" >${pageNum }</a>
+				</li>
+			</c:forEach>
+				<li class="page-item">
+					<a class="page-link" href="javascript:list_pagination('${pageMaker.next ? pageMaker.endPage+1 :cri.page}');">
+						<i class="fas fa-angle-right" ></i>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="javascript:list_pagination('${pageMaker.realEndPage}');">
+						<i class="fas fa-angle-double-right"></i>
+					</a>
+				</li>	
+			</ul>
+		</nav>   
 		</div>
 	
 		<div class="col-xl-6">
@@ -140,7 +176,6 @@
 	                        <label class="form-label" for="">카테고리상세</label>
 	                        <input type="text" id="company" name="falCategorydetail" class="form-control" placeholder="">
 	                    </div>
-						
 					</div>
 				</div>
 			</div>
@@ -165,6 +200,24 @@ $("#falseReportDetail").addEventListener("click", function() {
 			alert("Error");
 		}
 	});
+
+</script>
+
+<script>
+function list_pagination(page,url){
+	//alert(page);
+	if(!url) {
+		url="report.do";
+	}
+	
+	var jobForm=$('#jobForm');
+	jobForm.find("[name='page']").val(page);
+	jobForm.find("[name='perPageNum']").val($('select[name="perPageNum"]').val());
+	jobForm.attr({
+		action:url,
+		method:'get'
+	}).submit(); 
+}
 
 </script>
 

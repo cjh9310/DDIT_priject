@@ -15,14 +15,14 @@ public class AttachDAOImpl implements AttachDAO {
 		this.session = session;
 	}
 
-	private AttachDAO attachDAO; 
-	public void setAttachDAO(AttachDAO attachDAO) {
-		this.attachDAO = attachDAO;
-	}
+//	private AttachDAO attachDAO; 
+//	public void setAttachDAO(AttachDAO attachDAO) {
+//		this.attachDAO = attachDAO;
+//	}
 
 	@Override
-	public List<AttachVO> selectAttachesByPno(int pno) throws SQLException {
-		List<AttachVO> attachList=session.selectList("Attach-Mapper.selectAttachByPno",pno);
+	public List<AttachVO> selectAttachesByWorkInfo( AttachVO attach) throws SQLException {
+		List<AttachVO> attachList=session.selectList("Attach-Mapper.selectAttachesByWorkInfo",attach);
 		return attachList;
 	}
 
@@ -45,5 +45,11 @@ public class AttachDAOImpl implements AttachDAO {
 	@Override
 	public void deleteAllAttach(int pno) throws SQLException {
 		session.update("Attach-Mapper.deleteAllAttach",pno);		
+	}
+
+	@Override
+	public AttachVO selectAttachByAttNo(int attNo) {
+		AttachVO attach=session.selectOne("Attach-Mapper.selectAttachByAttNo",attNo);
+		return attach;
 	}
 }

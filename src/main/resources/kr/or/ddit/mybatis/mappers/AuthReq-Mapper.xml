@@ -5,9 +5,11 @@
 <mapper namespace="AuthReq-Mapper">
 
 	<select id="selectAuthReqList" resultType="auth">
-		select * from Auth_Req
-		where auth_no is not null
-		order by auth_sdate desc
+		select  au.co_id,ad_id,auth_title,auth_content,auth_no,auth_sdate,cm.co_confirm
+		from Auth_Req au, co_member cm
+		where au.co_id=cm.co_id
+        and auth_no is not null
+		order by auth_sdate desc	
 	</select>
 	
 	<select id="selectAuthReqListCount" resultType="int">

@@ -319,7 +319,7 @@ div {
 					<h2>관심 기업</h2>
 					<div class="panel-toolbar ml-2">
 						<button type="button"
-							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/company/recommand.do','AI의 기업 추천','fullscreen')"
+							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/company/recommand.do','OpenWindow','fullscreen')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
 							AI에게 더 많은 기업 추천받기</button>
 					</div>
@@ -360,7 +360,7 @@ div {
 					<h2>관심 채용공고</h2>
 					<div class="panel-toolbar ml-2">
 						<button type="button"
-							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/recruit/recommand.do','AI의 기업 추천','fullscreen')"
+							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/recruit/recommand.do','OpenWindow','fullscreen')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
 							AI에게 더 많은 채용공고 추천받기</button>
 					</div>

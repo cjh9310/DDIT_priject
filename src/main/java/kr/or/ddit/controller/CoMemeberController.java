@@ -160,8 +160,9 @@ public class CoMemeberController {
 		return url;
 	}
 
-	@GetMapping("/mypage/authority")
-	public String authority(AuthReqVO authReq, MemberVO member, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/mypage/authority", method = RequestMethod.POST )
+	@ResponseBody
+	public String registAuthority(AuthReqVO authReq, MemberVO member, HttpServletRequest request) throws Exception {
 
 		String url = "성공";
 		HttpSession session = request.getSession();

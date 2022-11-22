@@ -70,6 +70,11 @@ public class MemberServiceImpl implements MemberService {
 	public void modify(MemberVO member) throws Exception {
 		memberDAO.updateMember(member);
 	}
+	@Override
+	public void modifyAuthority(String id) throws Exception {
+		memberDAO.updateAuthority(id);
+	}
+
 
 	@Override
 	public void remove(String id) throws Exception {

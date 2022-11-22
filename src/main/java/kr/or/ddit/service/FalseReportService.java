@@ -11,21 +11,17 @@ import kr.or.ddit.dto.ReportVO;
 public interface FalseReportService {
 	
 	// 전체보기
-	Map<String, Object> getAllFalseReportList(String indId, Criteria cri)throws SQLException;
+	Map<String, Object> getAllFalseReportList(Criteria cri, String indId)throws SQLException;
 	
 	// 상세보기
 	FalseReportVO getFalseReport(int falNo)throws SQLException;
 	
 	// 등록
-	int regist(FalseReportVO falseReport)throws SQLException;
+	void regist(FalseReportVO falseReport, String savePath)throws SQLException;
 	
 	// 수정
 	void modify(FalseReportVO falseReport)throws SQLException;
 	
 	// 삭제
 	void remove(int falNo)throws SQLException;
-	
-	// 리포트리스트(관리자페이지) 등록
-	void registReportList(ReportVO reportVO)throws SQLException;
-
 }

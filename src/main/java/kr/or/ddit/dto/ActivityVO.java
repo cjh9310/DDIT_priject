@@ -19,132 +19,181 @@ public class ActivityVO {
 	private Date conSdate; //시작일자
 	private Date conEdate;//마감일자
 	private String conTitle;//제목
+	private String conField; //공모분야
 	
 	//멘토링
 	private Date menSdate;//시작일자
 	private Date menEdate;//마감일자
-	private String menTitle;//재목
+	private String menTitle;//제목
 	private int menProgress;//진행률
 	
 	//회원명
 	private String name;
-	
+
 	public int getActNo() {
 		return actNo;
 	}
+
 	public void setActNo(int actNo) {
 		this.actNo = actNo;
 	}
+
 	public String getIndId() {
 		return indId;
 	}
+
 	public void setIndId(String indId) {
 		this.indId = indId;
 	}
+
 	public int getConNo() {
 		return conNo;
 	}
+
 	public void setConNo(int conNo) {
 		this.conNo = conNo;
 	}
+
 	public int getMenNo() {
 		return menNo;
 	}
+
 	public void setMenNo(int menNo) {
 		this.menNo = menNo;
 	}
+
 	public int getActStatus() {
 		return actStatus;
 	}
+
 	public void setActStatus(int actStatus) {
 		this.actStatus = actStatus;
 	}
+
 	public int getActPrize() {
 		return actPrize;
 	}
+
 	public void setActPrize(int actPrize) {
 		this.actPrize = actPrize;
 	}
+
 	public int getActScore() {
 		return actScore;
 	}
+
 	public void setActScore(int actScore) {
 		this.actScore = actScore;
 	}
+
 	public String getActTel() {
 		return actTel;
 	}
+
 	public void setActTel(String actTel) {
 		this.actTel = actTel;
 	}
+
 	public String getActEmail() {
 		return actEmail;
 	}
+
 	public void setActEmail(String actEmail) {
 		this.actEmail = actEmail;
 	}
+
 	public Date getActDate() {
 		return actDate;
 	}
+
 	public void setActDate(Date actDate) {
 		this.actDate = actDate;
 	}
+
 	public Date getConSdate() {
 		return conSdate;
 	}
+
 	public void setConSdate(Date conSdate) {
 		this.conSdate = conSdate;
 	}
+
 	public Date getConEdate() {
 		return conEdate;
 	}
+
 	public void setConEdate(Date conEdate) {
 		this.conEdate = conEdate;
 	}
+
 	public String getConTitle() {
 		return conTitle;
 	}
+
 	public void setConTitle(String conTitle) {
 		this.conTitle = conTitle;
 	}
+
+	public String getConField() {
+		return conField;
+	}
+
+	public void setConField(String conField) {
+		this.conField = conField;
+	}
+
 	public Date getMenSdate() {
 		return menSdate;
 	}
+
 	public void setMenSdate(Date menSdate) {
 		this.menSdate = menSdate;
 	}
+
 	public Date getMenEdate() {
 		return menEdate;
 	}
+
 	public void setMenEdate(Date menEdate) {
 		this.menEdate = menEdate;
 	}
+
 	public String getMenTitle() {
 		return menTitle;
 	}
+
 	public void setMenTitle(String menTitle) {
 		this.menTitle = menTitle;
 	}
+
 	public int getMenProgress() {
 		return menProgress;
 	}
+
 	public void setMenProgress(int menProgress) {
 		this.menProgress = menProgress;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	@Override
 	public String toString() {
 		return "ActivityVO [actNo=" + actNo + ", indId=" + indId + ", conNo=" + conNo + ", menNo=" + menNo
 				+ ", actStatus=" + actStatus + ", actPrize=" + actPrize + ", actScore=" + actScore + ", actTel="
 				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", conSdate=" + conSdate + ", conEdate="
-				+ conEdate + ", conTitle=" + conTitle + ", menSdate=" + menSdate + ", menEdate=" + menEdate
-				+ ", menTitle=" + menTitle + ", menProgress=" + menProgress + ", name=" + name + "]";
+				+ conEdate + ", conTitle=" + conTitle + ", conField=" + conField + ", menSdate=" + menSdate
+				+ ", menEdate=" + menEdate + ", menTitle=" + menTitle + ", menProgress=" + menProgress + ", name="
+				+ name + "]";
 	}
+	
+	
+	
 	
 	
 	

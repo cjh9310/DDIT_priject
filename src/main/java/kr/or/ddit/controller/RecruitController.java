@@ -36,6 +36,7 @@ import kr.or.ddit.service.EducationService;
 import kr.or.ddit.service.EmpstatsService;
 import kr.or.ddit.service.LetterService;
 import kr.or.ddit.service.RecruitService;
+import kr.or.ddit.service.SupplyRecService;
 import kr.or.ddit.service.SupportService;
 
 @Controller
@@ -55,7 +56,9 @@ public class RecruitController {
 	private CertificateService certificateService;
 	@Autowired
 	private LetterService letterService;
-
+	@Autowired
+	private SupplyRecService supplyRecService;
+	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> recruitlist(@PathVariable("page") int page)throws Exception {
 		ResponseEntity<Map<String, Object>> entity = null;
@@ -124,6 +127,26 @@ public class RecruitController {
 		request.setAttribute("letMap", letMap);
 		
 		return url;
+	}
+	
+	@PostMapping("supply/check")
+	@ResponseBody
+	public String recruitSupplyCheck(@RequestParam("recWantedno") String recWantedno, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String indId = loginUser.getId();
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("recWantedno", recWantedno);
+		parameterMap.put("indId", indId);
+		
+		int count = supplyRecService.getCountSupplyRecById(parameterMap);
+		
+		if(count == 0) {
+			return "SupplyAllowed";
+		} else {
+			return "SupplyNotAllowed";
+		}
+		
 	}
 	
 	@PostMapping("/supply/submit")

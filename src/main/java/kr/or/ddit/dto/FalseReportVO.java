@@ -1,5 +1,9 @@
 package kr.or.ddit.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class FalseReportVO {
 	
 	private int falNo; // 게시글번호
@@ -9,10 +13,14 @@ public class FalseReportVO {
 	private String falEdate; // 종료일
 	private String falTitle; // 제목
 	private String coName; // 기업명
+	private String coId; // 기업명
 	private String falContent; // 내용
 	private String falCategory; // 카테고리
 	private String falCategorydetail; // 카테고리상세
 	
+	private List<MultipartFile> uploadFile; //파일업로드
+	
+	private List<AttachVO> attachList;
 	
 	public String getFalCategory() {
 		return falCategory;
@@ -68,6 +76,12 @@ public class FalseReportVO {
 	public void setCoName(String coName) {
 		this.coName = coName;
 	}
+	public String getCoId() {
+		return coId;
+	}
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
 	public String getFalContent() {
 		return falContent;
 	}
@@ -75,7 +89,19 @@ public class FalseReportVO {
 		this.falContent = falContent;
 	}
 	
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
 	@Override
 	public String toString() {
 		return "FalseReportVO [falNo=" + falNo + ", indId=" + indId + ", falSdate=" + falSdate + ", falOdate="

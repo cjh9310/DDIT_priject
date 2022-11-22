@@ -41,4 +41,119 @@
            and ind_id=#{id}
 	</select>
 	
+	<select id="selectCountSupplyRecById" parameterType="map" resultType="int">
+		select count(*) 
+		  from supply_rec 
+         where rec_wantedno=#{recWantedno}
+           and ind_id=#{indId}
+	</select>
+
+	<select id="selectCountSupplyOpenRecById" parameterType="map" resultType="int">
+		select count(*) 
+		  from supply_rec 
+         where open_seqno=#{openSeqno}
+           and ind_id=#{indId}
+	</select>
+	
+	<select id="selectSupplyRecSeqNextVal" resultType="int">
+		select SUPPLY_REC_SEQ.nextval
+          from dual
+	</select>
+	
+	<insert id="insertSupplyRec" parameterType="supplyRec">
+		/* SupplyRec-Mapper.insertSupplyRec */
+		
+		insert into supply_rec (sup_no, rec_wantedno, ind_id, open_seqno, sup_date, sup_status, sup_type)
+		values (#{supNo}, #{recWantedno}, #{indId}, #{openSeqno}, sysdate, #{supStatus}, #{supType})
+		
+	</insert>
+	
+	<insert id="copyInfoToSupResume" parameterType="map">
+		/* SupplyRec-Mapper.copyInfoToSupResume */
+	
+		insert into sup_resume (supres_no, sup_no, supres_name, supres_bir, supres_email, supres_tel, supres_addr, supres_pic)
+        select sup_resume_seq.nextval, resume.* 
+          from (select c.sup_no,
+               		   a.name, 
+               		   b.ind_bir,
+               		   a.email,
+               		   a.tel,
+               		   b.ind_addr,
+               		   a.picture
+          		  from member a, ind_member b, supply_rec c
+        		 where a.id=b.ind_id
+           		   and a.id=c.ind_id
+           		   and a.id=#{indId}
+           		   and c.sup_no=#{supNo}) resume
+	</insert>
+	
+	<insert id="copyEducationToSupResEdu" parameterType="map">
+		/* SupplyRec-Mapper.copyEducationToSupResEdu */
+	
+		insert into sup_res_edu (supedu_no, sup_no, supedu_dep, supedu_name, supedu_major, supedu_score, supedu_status, supedu_sdate, supedu_edate)
+        select sup_res_edu_seq.nextval, edu.* 
+        from ( select b.sup_no,
+                      a.edu_dep,
+                      a.edu_name,
+               a.edu_major,
+               a.edu_score,
+               a.edu_status,
+               a.edu_sdate,
+               a.edu_edate
+          from education a, supply_rec b
+         where a.ind_id=b.ind_id 
+           and a.ind_id=#{indId}
+           and b.sup_no=#{supNo}) edu
+	</insert>
+	
+	<insert id="copyCareerToSupResCrr" parameterType="map">
+		/* SupplyRec-Mapper.copyCareerToSupResCrr */
+	
+		insert into sup_res_crr (supcrr_no, sup_no, supcrr_sec, supcrr_cor, supcrr_job, supcrr_pos, supcrr_sdate, supcrr_edate)
+        select sup_res_crr_seq.nextval, crr.*
+          from ( select b.sup_no,
+                        a.crr_sector,
+                        a.crr_corname,
+                        a.crr_job,
+                        a.crr_position,
+                        a.crr_sdate,
+                        a.crr_edate
+                   from career a, supply_rec b
+                  where a.ind_id=b.ind_id
+                    and a.ind_id=#{indId}
+                    and b.sup_no=#{supNo}) crr
+	</insert>
+	
+	<insert id="copyCertificateToSupResCer" parameterType="map">
+		/* SupplyRec-Mapper.copyCertificateToSupResCer */
+	
+		insert into sup_res_cer (supcer_no, sup_no, supcer_host, supcer_name, supcer_sdate, supcer_edate)
+        select sup_res_cer_seq.nextval, cer.*
+          from ( select b.sup_no,
+                        a.cer_host,
+                        a.cer_name,
+                        a.cer_sdate,
+                        a.cer_edate
+                   from certificate a, supply_rec b
+                  where a.ind_id=b.ind_id
+                    and a.ind_id=#{indId}
+                    and b.sup_no=#{supNo}) cer
+	</insert>
+	
+	<insert id="insertLetterForSupply" parameterType="java.util.List">
+		/* SupplyRec-Mapper.insertLetterForSupply */
+		
+		insert into sup_res_let 
+		(suplet_no, sup_no, suplet_title, suplet_content)
+		values 
+		(
+		sup_res_let_seq.nextval,
+		<foreach item="item" index="index" collection="list">
+		#{item.supNo},
+		#{item.letTitle},
+		#{item.letContent}
+		</foreach>
+		)
+	</insert>
+	
 </mapper>

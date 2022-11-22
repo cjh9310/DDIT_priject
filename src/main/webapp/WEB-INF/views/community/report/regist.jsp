@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 
@@ -13,23 +12,6 @@
 		background-size: contain;
 		background-position: center;
 	}
-
-
-	.card {
-	  margin-top: 100px;
-	}
-	.btn-upload {
-	    padding: 10px 20px;
-	    margin-left: 10px;
-	}
-	.upload-input-group {
-	    margin-bottom: 10px;
-	}
-	
-	.input-group>.custom-select:not(:last-child), .input-group>.form-control:not(:last-child) {
-	  height: 45px;
-	}
-
 
 </style>
             
@@ -43,18 +25,18 @@
 	                    <div class="panel-content">
 	                        <form role="falseReportForm" method="POST" action="<%=request.getContextPath()%>/community/report/regist" enctype="multipart/form-data">
 	                            <div class="row">
-		                            <div class="col-sm-6 mb-3">
+		                            <div class="col-6 mb-3">
 										<label class="form-label" for="example-date">아이디 <span
 											class="text-danger">*</span></label><input class="form-control"
 											id="reId" type="text" name="indId" value="${loginUser.id }" disabled required> 
 											<input type="hidden"/>
 									</div>
-									<div class="col-sm-6 mb-3">
+									<div class="col-6 mb-3">
 										<label class="form-label" for="example-date">등록일 <span
 											class="text-danger">*</span></label> <input class="form-control"
 											id="reSdate" type="date" value="" disabled required>
 									</div>
-									<div class="col-sm-6 mb-3">
+									<div class="col-6 mb-3">
 										<label class="form-label" for="example-date">신고유형 <span class="text-danger">*</span></label>
 	                                    <select class="custom-select" id="selectReport" onchange="funCategory(this)">
 	                                        <option selected="">카테고리를 선택하세요</option>
@@ -64,29 +46,30 @@
 	                                    </select>
 	                                    <input class="form-label" id="rsCategory" name="falCategory" value="" style="display: none;"></input>
 	                                </div>	
-									<div class="col-sm-6 mb-3">
+									<div class="col-6 mb-3">
 										<label class="form-label" for="example-date">상세신고유형 <span class="text-danger">*</span></label>
 	                                    <select class="custom-select" id="reportOption" onchange="funCategoryDe()">
 	                                        <option selected="">상세 신고유형을 선택하세요</option>
 	                                    </select>
 	                                     <input class="form-label" id="rsCategoryDetail" name="falCategorydetail" value="" style="display: none;"></input>
 	                                </div>	
-									<div class="col-sm-12 mb-3">
+									<div class="col-6 mb-3">
 										<label class="form-label" for="example-date">발생일 </label> 
 										<input class="form-control"
 											id="reOdate" type="date" name="falOdate" value="" required>
 									</div>
-									<div class="col-sm-12 mb-3">
+									<div class="col-6 mb-3">
 										<label class="form-label" for="example-date">업체명 <span
-											class="text-danger">*</span></label> <input class="form-control"
-											id="reCoName" type="text" name="coName" value="" required>
+											class="text-danger">*</span></label> 
+											<input id="reCoId" type="hidden" name="coId" value="" />
+											<input class="form-control" id="reCoName" type="text" name="coName" value="" required>
 									</div>	
-									<div class="col-sm-12 mb-3">
+									<div class="col-12 mb-3">
 										<label class="form-label" for="example-date">제목 <span
 											class="text-danger">*</span></label> <input class="form-control"
 											id="reTitle" type="text" name="falTitle" value="" required>
 									</div>
-									<div class="col-lg-12 mb-3">
+									<div class="col-12 mb-3">
 										<label class="form-label" for="validationTextarea2"><b>상세내용</b>
 											<span class="text-danger">*</span></label>
 										<!-- <div id="reContent" name="falContent"></div> -->
@@ -95,63 +78,24 @@
 										<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 										<!-- <input class="form-label" id="repContent" name="reportContent" value="" style="display: none;"></input> -->
 									</div>
-									<div class="form-group" align="left">
-										<label for="subject">파일:</label>
-										<input type="file" class="form-control-file border" name="upfile" multiple="multiple">
+									<div class="col-12 mb-3">
+										<label class="form-label" for="example-date">첨부파일 
+<!-- 											<span class="text-danger">*</span> -->
+										</label>
+										<div class="form-group">								
+											<div class="card card-outline card-success">
+												<div class="card-header">
+<!-- 													<h5 style="display:inline;line-height:40px;">첨부파일 : </h5> -->
+													&nbsp;&nbsp;<button class="btn btn-xs btn-primary"
+													onclick="addFile_go(3);"	type="button" id="addFileBtn">파일 첨부</button>
+												</div>									
+												<div class="card-footer fileInput">
+												</div>`
+											</div>
+										</div>
 									</div>
-
-
-
-
-
-
-
-<!-- 										<div class="col-lg-12"> -->
-<!-- 											<div class="card"> -->
-<!-- 												<div class="card-body card-block"> -->
-<!-- 													<form action="" method="post" enctype="multipart/form-data" class="form-horizontal"> -->
-<!-- 														<div class="row form-group"> -->
-<!-- 															<div class="col-12 col-md-12"> -->
-<!-- 																<div class="control-group" id="fields"> -->
-<!-- 																	<label class="control-label" for="field1"> -->
-<!-- 																		Requests </label> -->
-<!-- 																	<div class="controls"> -->
-<!-- 																		<div class="entry input-group upload-input-group"> -->
-<!-- 																			<input class="form-control" name="fields[]" -->
-<!-- 																				type="file"> -->
-<!-- 																			<button class="btn btn-upload btn-success btn-add" -->
-<!-- 																				type="button"> -->
-<!-- 																				<i class="fa fa-plus"></i> -->
-<!-- 																			</button> -->
-<!-- 																		</div> -->
-<!-- 																	</div> -->
-<!-- 																	<button class="btn btn-primary">Upload</button> -->
-<!-- 																</div> -->
-<!-- 															</div> -->
-<!-- 														</div> -->
-<!-- 													</form> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-
-
-
-
-
-
-
-
-
-
-								<!-- 									<div class="col-lg-9 mb-3"> -->
-<!-- 										<label class="form-label"><b>첨부파일</b></label> -->
-<!-- 										<div class="custom-file"> -->
-<!-- 											<input type="file" class="custom-file-input" -->
-<!-- 												id="customFile"> <label class="custom-file-label" -->
-<!-- 												for="customFile">파일선택</label> -->
-<!-- 										</div> -->
-<!-- 									</div>									 -->
-									<div class="col-lg-3 mt-4">
+									
+									<div class="col-12 mt-2">
 										<div style="float: right;">
 											<button class="btn btn-success ml-auto" id="reportBtn" type="button">등록</button>
 										</div>
@@ -172,6 +116,18 @@
 
 <!-- --------------------------등록일 오늘날짜로------------------------------------ -->
 <script>
+	
+	window.onload=function(){
+		$('.fileInput').on('change','input[type="file"]',function(event){
+			//alert(this.files[0].size);
+			if(this.files[0].size>1024*1024*50){
+	 			alert("파일 용량이 50MB를 초과하였습니다.");
+	 			this.click();
+	 			this.value="";	 					
+	 			return false;
+	 		} 
+		});
+	}
 
 	$(function () {
 	    $(document).on('click', '.btn-add', function (e) {
@@ -201,7 +157,7 @@
 <script>
 
 $("#reCoName").click(function(){
-	window.open("<%=request.getContextPath()%>/community/report/coNameSearch" , 'nameSearch', 'width=600, height=500');
+	window.open("<%=request.getContextPath()%>/community/report/coNameSearch" , 'OpenWindow', 'width=600, height=500');
 });                                        
 
 </script>
@@ -304,11 +260,17 @@ const editor = new toastui.Editor({
           ['hr', 'quote'],
           ['table', 'image', 'link'],
         ],
-      height: '355px'
+      height: '255px'
 	});
 		
 /* 	document.querySelector('#repContent').insertAdjacentHTML('afterbegin' ,editor.getHTML());
 	console.log(editor.getHTML()); */
 </script>
 
-
+<!-- --------------------------- 첨부파일 --------------------------------- -->
+<script>
+	function nameSearch_callBack(id, nm){
+		$('#reCoId').val(id);
+		$('#reCoName').val(nm);
+	}
+</script>

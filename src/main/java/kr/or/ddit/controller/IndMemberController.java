@@ -25,12 +25,15 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dto.ActivityVO;
 import kr.or.ddit.dto.CareerVO;
 import kr.or.ddit.dto.CertificateVO;
+import kr.or.ddit.dto.ContestVO;
 import kr.or.ddit.dto.EducationVO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.LetterVO;
 import kr.or.ddit.dto.MemberVO;
+import kr.or.ddit.dto.MentoringVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.SeniorVO;
 import kr.or.ddit.dto.SupportVO;
@@ -305,7 +308,7 @@ public class IndMemberController {
 		return letter;
 	}
 	
-	//-----------------------------------------------------------------------------------------------
+	//취업지원-----------------------------------------------------------------------------------------------
 	@GetMapping("mypage/support")
 	public String myPageSupport(Criteria cri, HttpServletRequest request) throws Exception {
 		String url = "indmember/mypage/support";
@@ -356,29 +359,98 @@ public class IndMemberController {
 	
 	@PostMapping(value="mypage/supportModify")
 	@ResponseBody
-	public String myPageSupportModify(int supNo, SupportVO support, @RequestParam Map<String, Object> param,
-										HttpServletRequest request, RedirectAttributes rttr) throws Exception {
-		
-		String url = "redirect:/indmember/mypage/supportDetail";
+	public void myPageSupportModify(SupportVO support) throws Exception {
 		
 		supportService.modify(support);
-		
-		support.setSupNo(supNo);
-		
-		rttr.addAttribute("supNo", support.getSupNo());
-		
-		return url;
 		
 	}
 	
 	@RequestMapping(value="/mypage/supportRemove")
-	public String myPageSupportRemove(int supNo, RedirectAttributes rttr) throws Exception{
-		String url = "redirect:/indmember/mypage/supportDetail";
+	@ResponseBody
+	public void myPageSupportRemove(int supNo) throws Exception{
+		
 		supportService.remove(supNo);
 		
-		rttr.addAttribute("supNo", supNo);
-		rttr.addFlashAttribute("from","remove");
-		return url;
+	}
+	
+	@RequestMapping("mypage/menDetail")
+	public ModelAndView myPageMentoringDetail(int actNo, ModelAndView mnv) throws Exception{
+		
+		String url="indmember/mypage/mentoringDetail";
+		
+		ActivityVO activity = activityService.getActivityMen(actNo);
+		
+		mnv.addObject("activity", activity);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("mypage/menModifyForm")
+	public ModelAndView myPageMentoringModifyForm(int actNo, ModelAndView mnv) throws Exception{
+		
+		String url = "indmember/mypage/mentoringModify";
+		
+		ActivityVO activity = activityService.getActivityMen(actNo);
+		
+		mnv.addObject("activity", activity);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@PostMapping(value="mypage/menModify")
+	@ResponseBody
+	public void myPageMentoringModify(ActivityVO activity) throws Exception {
+		activityService.modify(activity);
+		
+	}
+	
+	@PostMapping(value="mypage/menRemove")
+	@ResponseBody
+	public void myPageMentoringRemove(int actNo) throws Exception {
+		activityService.remove(actNo);
+		
+	}
+	
+	@RequestMapping("mypage/conDetail")
+	public ModelAndView myPageContestDetail(int actNo, ModelAndView mnv) throws Exception{
+		
+		String url="indmember/mypage/contestDetail";
+		
+		ActivityVO activity = activityService.getActivityCon(actNo);
+		
+		mnv.addObject("activity", activity);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@RequestMapping("mypage/conModifyForm")
+	public ModelAndView myPageContestModifyForm(int actNo, ModelAndView mnv) throws Exception{
+		
+		String url = "indmember/mypage/contestModify";
+		
+		ActivityVO activity = activityService.getActivityCon(actNo);
+		
+		mnv.addObject("activity", activity);
+		mnv.setViewName(url);
+		
+		return mnv;
+	}
+	
+	@PostMapping(value="mypage/conModify")
+	@ResponseBody
+	public void myPageContestModify(ActivityVO activity) throws Exception {
+		activityService.modify(activity);
+		
+	}
+	
+	@RequestMapping(value="mypage/conRemove" )
+	@ResponseBody
+	public void myPageContestRemove(int actNo) throws Exception {
+		activityService.remove(actNo);
+		
 	}
 	//개인회원 수정-----------------------------------------------------------------------------------------------
 	
@@ -414,9 +486,7 @@ public class IndMemberController {
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
 		
-		Map<String, Object> dataMap = null;
-		
-		dataMap = falseReportService.getAllFalseReportList(id, cri);
+		Map<String, Object> dataMap = falseReportService.getAllFalseReportList(cri ,id);;
 		
 		request.setAttribute("dataMap", dataMap);
 		

@@ -98,7 +98,7 @@
 								</div>
 							</div>
 							<div class="row justify-content-center mt-1">
-								<input id="paycomma" style="height: 40px; width: 300px; font-size: 20px; text-align:right;"
+								<input id="paycomma" style="height: 40px; width: 300px; font-size: 18px; text-align:right;"
 									type="text" title="연봉" value="1,200,000" maxlength="20">
 								<div class="center1"
 									style="position: relative; margin-left:5px; top: 10px; font-size: 18px;">
@@ -143,32 +143,62 @@
 												<td style="text-align: right" id="monthTax">0원</td>
 											</tr>
 											<tr>
-												<td>국민연금</td>
+												<td>국민연금
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="과세금액의4.5%를 공제하며,비과세금액이 있을 경우 비과세액을 제외한 과세금액에서만 세액이 공제됩니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="pension">0원</td>
 											</tr>
 											<tr>
-												<td>건강보험</td>
+												<td>건강보험
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="과세금액의3.495%를 공제하며,비과세금액이 있을 경우 비과세액을 제외한 과세금액에서만 세액이 공제됩니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="health">0원</td>
 											</tr>
 											<tr>
-												<td>장기요양</td>
+												<td>장기요양
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="건강보험 금액의 12.27%를 공제합니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="care">0원</td>
 											</tr>
 											<tr>
-												<td>고용보험</td>
+												<td>고용보험
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="과세금액의 0.9%를 공제하며,비과세금액이 있을 경우 비과세액을 제외한 과세금액에서만 세액이 공제됩니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="hire">0원</td>
 											</tr>
 											<tr>
-												<td>소득세</td>
+												<td>소득세
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="부양가족수와 20세 이하 자녀수에 따라, 국세청의 근로소득 간이세액표 자료를 기준으로 공제됩니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="incomeTax">0원</td>
 											</tr>
 											<tr>
-												<td>지방소득세</td>
+												<td>지방소득세
+												<button type="button" 
+													class="btn btn-default btn-xs btn-icon rounded-circle waves-effect waves-themed mb-1"
+													data-toggle="tooltip" data-placement="top" title=""
+													data-original-title="소득세의 10%를 공제합니다.">
+													?</button></td>
 												<td></td>
 												<td style="text-align: right" id="incomeTaxLocal">0원</td>
 											</tr>

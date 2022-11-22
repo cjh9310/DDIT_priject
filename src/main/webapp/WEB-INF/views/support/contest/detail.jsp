@@ -30,7 +30,7 @@
 			                                      	<%-- <img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" 
 			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" style="cursor:pointer" > --%>
 			                                      	<img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" 
-			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" onclick="window.open(this.src,'info','width='+this.naturalWidth+' height='+this.naturalHeight+' menubar=no status=no toolbar=no location=no'); return false;" style="cursor:pointer;"/>
+			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" onclick="window.open(this.src,'OpenWindow','width='+this.naturalWidth+' height='+this.naturalHeight+' menubar=no status=no toolbar=no location=no'); return false;" style="cursor:pointer;"/>
 			                                    </div>
 			                                </div>
 		                                    <div class="col px-md-5">

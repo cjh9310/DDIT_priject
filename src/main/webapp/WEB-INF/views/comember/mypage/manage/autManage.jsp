@@ -45,7 +45,7 @@
 						<b class="ml-5 mt-3 mb-2">기업회원 권한 요청하기<br> 권한 승인 후 기업 공모전
 							등록 및 멘토링 등록이 가능합니다.
 						</b>
-						<c:if test="${loginUser.coConfirm eq y }">
+						<c:if test="${loginUser.coConfirm eq 'y'}">
 							<td class="text-center fw-700 ">이미 권한을 받은 기업입니다.
 						</c:if>
 						<div style="margin-right: 20px; margin-top: 10px;">
@@ -100,10 +100,10 @@
 														placeholder="ex)멘토링과공모전 등록권한요청합니다." rows="7"></textarea>
 													<div class="invalid-feedback">내용을 입력해주세요.</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" style="display:none" >
 													<label class="form-label" for="supTitle"><b>관리자</b>
 														<span class="text-danger">*</span> </label> <input type="text"
-														class="form-control" id="adId" name="adId"
+														class="form-control" id="adId" name="adId" value="ddit401"
 														placeholder="제목을 입력해주세요.">
 													<div class="invalid-feedback">제목을 입력해주세요.</div>
 												</div>
@@ -111,7 +111,7 @@
 											<div class="row justify-content-end mt-3 mr-2 mb-3">
 												<button
 													class="btn btn-success btn-pills ml-auto waves-effect waves-themed "
-													type="button" id="ask" >신청하기</button>
+													type="button" id="regist" >신청하기</button>
 											</div>
 										</form>
 									</div>
@@ -129,7 +129,7 @@
 <%@ include file="/WEB-INF/views/comember/comember_js.jsp"%>
 
 <script>
-$('#ask').click(function() {
+$('#regist').click(function() {
 		var data = $("#myForm").serializeObject();
 		console.log(data);
 		$.ajax({

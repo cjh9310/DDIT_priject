@@ -24,7 +24,9 @@ public interface ActivityDAO {
 	
 	int selectActivityCriteriaTotalCount(Criteria cri) throws SQLException;
 	
-	ActivityVO selectActivityByActNo(int actNo) throws SQLException;
+	ActivityVO selectActivityConByActNo(int actNo) throws SQLException;
+	
+	ActivityVO selectActivityMenByActNo(int actNo) throws SQLException;
 	
 	void insertActivityContest(ActivityVO activity) throws SQLException;
 	void insertActivityMentoring(ActivityVO activity) throws SQLException;
