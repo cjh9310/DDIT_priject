@@ -121,7 +121,7 @@
 									<th style="width: 30%;" id="" colspan="2"><input
 										type="text" style="border: 0px; width:420px;" id="newsOneContent" name="newsOneContent"></th>
 									<th style="width: 10%;">등록일</th>
-									<th style="width: 25%;"><input type="date"
+									<th style="width: 25%;"><input type="text"
 										style="border: 0px;" id="newsSdate" name="newsSdate" ></th>
 									<th
 										style="width: 20%; text-align: center; padding-top: 0px; padding-bottom: 5px; padding-right: 0px; padding-left: 0px;">
@@ -247,7 +247,7 @@
 												</div>
 												
 												<div class="col-lg-4 mt-4">
-													<div style="float: right;">
+													<div>
 														<button class="btn btn-primary ml-auto" id="registBtn"
 															type="button">등록</button>
 													</div>
@@ -286,7 +286,7 @@
 			data : data,			
 			success : function(data) {
 				Swal.fire({
-					target: document.getElementById('counselModal'),
+					target: document.getElementById('my_modal'),
 	                icon: 'success',
 					title: "뉴스가 등록되었습니다.",
 					text: "",

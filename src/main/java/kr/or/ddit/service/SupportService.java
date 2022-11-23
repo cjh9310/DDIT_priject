@@ -17,7 +17,7 @@ public interface SupportService {
 	SupportVO getSupport(int supNo) throws SQLException;
 	
 	//등록
-	void regist(SupportVO support) throws SQLException;
+	void regist(SupportVO support, String savePath) throws SQLException;
 	
 	//수정
 	void modify(SupportVO support) throws SQLException;
@@ -26,5 +26,7 @@ public interface SupportService {
 	void remove(int supNo) throws SQLException;
 
 	void updateSupportCounselor(SupportVO support) throws SQLException;
+
+	
 	
 }

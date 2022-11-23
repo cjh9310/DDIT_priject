@@ -11,7 +11,7 @@
 			order by open_edate desc
 		</if>
 		<if test="searchType == null">
-			order by open_sdate asc
+			order by open_edate desc
 		</if>
 	</sql>
 	
@@ -20,7 +20,7 @@
        		   open_title,
        		   open_edate
   		  from open_rec
- 		 order by open_sdate desc
+ 		 <include refid="search"/>
 	</select>
 	
 	<select id = "selectOpenRecList" resultType="openRec">
@@ -42,7 +42,7 @@
                              from bookmark
                             where id=#{id}) b
          where a.open_conm = b.co_name (+)
-		<include refid="search"/>
+		 order by to_date(a.open_edate) desc
 	</select>
 	
 	<select id="selectOpenRecListByScroll" parameterType="hashMap" resultType="openRec">
@@ -86,7 +86,10 @@
 	</select>
 	
 	<insert id="insertOpenRec" parameterType="openRec">
-		insert into open_Rec values((select max(open_seqno)+1 from open_Rec), #{openCOCL}, #{openType}, #{openCar}, #{openJobscd},
+		<selectKey resultType="int" keyProperty="openSeqno" order="BEFORE">
+			select max(open_seqno)+1 from open_Rec
+		</selectKey>
+		insert into open_Rec values(#{openSeqno}, #{openCOCL}, #{openType}, #{openCar}, #{openJobscd},
 		                           #{openTitle}, to_char(sysdate, 'YY/MM/DD'), #{openEdate}, #{openAcptpsn}, #{openContent},
 		                           #{openRegion}, #{openCarnm}, #{openEdunm}, #{openCnt}, #{openConm},
 		                           #{openHomepg}, #{openLogo}, #{openEdu})

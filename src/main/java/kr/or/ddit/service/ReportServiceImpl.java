@@ -87,6 +87,13 @@ public class ReportServiceImpl implements ReportService {
 		List<CoDetailListVO> coDetail = reportDAO.selectCoDetail(coName);
 		return coDetail;
 	}
+
+
+	@Override
+	public void updateReportChangeStatus(ReportListVO reportList) throws SQLException {
+		reportDAO.updateReportChangeStatus(reportList);
+		
+	}
 	
 	
 

@@ -90,6 +90,10 @@ public class OpenRecServiceImpl implements OpenRecService {
 
 	@Override
 	public int regist(OpenRecVO openRec, String savePath) throws SQLException {
+		
+		/*********** 첨부파일 등록  start************/
+		// 첨부파일등록
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
 		String workDiv = "openRec"; // 필수
 		
 		List<AttachVO> attachList = null;
@@ -104,10 +108,11 @@ public class OpenRecServiceImpl implements OpenRecService {
 		openRec.setAttachList(attachList);
 		
 		if(openRec.getAttachList() != null) {
-			for(AttachVO attach : openRec.getAttachList()) {
+			for (AttachVO attach : openRec.getAttachList()) {
+				System.out.println("파일경로 : " + workDiv);
 				attach.setWorkDiv(workDiv);
 				attach.setWorkPk(Integer.toString(openRec.getOpenSeqno()));
-				System.out.println("아이디 : "+openRec.getId());
+				System.out.println("아이디 : "+openRec.getOpenConm());
 				attach.setAttacher(openRec.getId());
 				attachDAO.insertAttach(attach);
 			}

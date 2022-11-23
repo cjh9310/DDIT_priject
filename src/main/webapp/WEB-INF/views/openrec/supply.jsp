@@ -44,81 +44,20 @@
 			<table class="w-100">
 				<tr>
 					<td style="width:50px;">
-						<div class='icon-stack display-3 flex-shrink-0'
-							style="margin-left: 10px;">
-							<c:choose>
-								<c:when test="${recruit.recBookmark != null}">
-									<button id="${recruit.recWantedno}" class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recremove"
-											class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-								<c:when test="${recruit.recBookmark == null}">
-									<button name="recregist" id="${recruit.recWantedno}"
-										class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recregist"
-											class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-							</c:choose>
-						</div>
+						<img src="${openrec.openLogo}" class="card-img-top" alt="..."  style="display: block; height: 100%; width: auto;" />
 					</td>
 					<td>
-						<h2 style="margin: 0px;">${recruit.coName}  -  ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
+						<h2 style="margin: 0px;">${openrec.openConm} - ${openrec.openTitle}  -  공채 지원중</h2>
 						</h2>
 					</td>
 					<td>
-						<button type="button" onclick="rec_supply()"
+						<button type="button" onclick="openrec_supply()"
 							class="btn btn-md btn-outline-info waves-effect waves-themed w-100">
 							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
 						</button>
 					</td>
 				</tr>
 			</table>
-			<%-- <table>
-				<tr>
-					<td colspan="1" rowspan="3"
-						style="width: 45px; padding-right: 16px;">
-						<div class='icon-stack display-3 flex-shrink-0'
-							style="margin-left: 10px;">
-							<c:choose>
-								<c:when test="${recruit.recBookmark != null}">
-									<button id="${recruit.recWantedno}" class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recremove"
-											class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-								<c:when test="${recruit.recBookmark == null}">
-									<button name="recregist" id="${recruit.recWantedno}"
-										class="bookMark_btn"
-										style="background-color: transparent; border: 0px;"
-										type="button" value="${recruit.recBookmark}">
-										<i name="recregist"
-											class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-									</button>
-								</c:when>
-							</c:choose>
-						</div>
-					</h2></td>
-				</tr>
-				<tr>
-					<td colspan="8" style="width: 1400px;">
-						<h2 style="margin: 0px;">${recruit.coName}-
-							${recruit.recWantedtitle} - 채용공고 지원중</h2>
-						</h2>
-						<button type="button" onclick="rec_supply()"
-							class="btn btn-md btn-outline-info waves-effect waves-themed">
-							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
-						</button>
-					</td>
-				</tr>
-			</table> --%>
 		</div>
 	</div>
 </div>
@@ -128,7 +67,7 @@
 			<div class="col-lg-12 col-xl-12">
 				<div id="panel-1" class="panel">
 					<div class="panel-hdr">
-						<h2>${recruit.coName} 지원 이력서</h2>
+						<h2>${openrec.openConm} 지원 이력서</h2>
 						<div class="btn-group" id="js-demo-nesting" role="group"
 							aria-label="Button group with nested dropdown">
 							<button type="button"
@@ -311,10 +250,10 @@
 										class="card-header py-2 d-flex align-items-center flex-wrap">
 										<div class="card-title">자기소개서</div>
 									</div>
-									<form method="post" id="recSupplyForm">	
+									<form method="post" id="openrecSupplyForm">	
 										<table class="table" id="letter_table">
 										</table>
-										<input type="hidden" name="recWantedno" value="${recruit.recWantedno}" />
+										<input type="hidden" name="openSeqno" value="${openrec.openSeqno}" />
 									</form>
 								</div>
 							</div>
@@ -407,52 +346,51 @@ function letterTableSetting() {
 letterTableSetting();
 </script>
 <script>
-function rec_supply() {
+function openrec_supply() {
 	
 	if(!letterStatus) {
 		alert('반드시 한 개 이상의 자기소개서는 추가한 뒤 제출 가능합니다.');
 		return;
 	}
 	
-	var recWantedno = '${recruit.recWantedno}';
-	console.log(recWantedno);
+	var openSeqno = ${openrec.openSeqno};
+	console.log(openSeqno);
 	
 	$.ajax({
 		type : "POST",
-		url : '<%=request.getContextPath()%>/recruit/supply/check',
-		data : {'recWantedno' : recWantedno},
+		url : '<%=request.getContextPath()%>/openrec/supply/check',
+		data : {'openSeqno' : openSeqno},
 		dataType : 'text',
 		success : function(data) {
 			if(data == 'SupplyNotAllowed') {
 				alert('이미 지원한 채용공고입니다.');
 				window.close();
 			} else if(data == 'SupplyAllowed') {
-				rec_supply_submit();
+				openrec_supply_submit();
 			}
 		},
 		error : function(request, status, error) {
 			console.log(request, status, error);
 		}
-	});  
+	});   
 	
 }
 </script>
 
 <script>
 
-function rec_supply_submit() {
+function openrec_supply_submit() {
+	form = $('#openrecSupplyForm').serialize();
 	
-	form = $('#recSupplyForm').serialize();
-	
-	var coName = '${recruit.coName}';
+	var coName = '${openrec.openConm}';
 	
 	$.ajax({
 		type : "POST",
-		url : '<%=request.getContextPath()%>/recruit/supply/submit.do',
+		url : '<%=request.getContextPath()%>/openrec/supply/submit.do',
 		data : form,
 		dataType : 'text',
 		success : function(data) {
-			if(data == 'recruitSupplySuccess') {
+			if(data == 'openrecSupplySuccess') {
 				alert(coName + '에 대한 채용 지원이 완료되었습니다.');
 				window.close();
 				

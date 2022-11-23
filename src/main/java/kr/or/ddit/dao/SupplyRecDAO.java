@@ -27,6 +27,8 @@ public interface SupplyRecDAO {
 	int selectSupResLetSeqNextVal() throws SQLException;
 	
 	void insertSupplyRec(SupplyRecVO supplyRec) throws SQLException;
+
+	void insertSupplyOpenRec(SupplyRecVO supplyRec) throws SQLException;
 	
 	void copyInfoToSupResume(Map<String, Object> parameterMap) throws SQLException;
 	

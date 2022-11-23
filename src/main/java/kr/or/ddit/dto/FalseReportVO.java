@@ -8,15 +8,24 @@ public class FalseReportVO {
 	
 	private int falNo; // 게시글번호
 	private String indId; // 작성자
-	private String falSdate; // 글작성일
-	private String falOdate; // 사건발생일
-	private String falEdate; // 종료일
 	private String falTitle; // 제목
-	private String coName; // 기업명
-	private String coId; // 기업명
 	private String falContent; // 내용
+	private String coName; // 기업명
+	private String falSdate; // 글작성일
+	private String falEdate; // 종료일
+	private String falOdate; // 사건발생일
 	private String falCategory; // 카테고리
 	private String falCategorydetail; // 카테고리상세
+	private String coId; // 기업명
+	//private String adId;
+	private String repStatus;
+	
+	public String getRepStatus() {
+		return repStatus;
+	}
+	public void setRepStatus(String repStatus) {
+		this.repStatus = repStatus;
+	}
 	
 	private List<MultipartFile> uploadFile; //파일업로드
 	

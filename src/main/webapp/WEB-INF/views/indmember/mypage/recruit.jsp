@@ -17,6 +17,8 @@
 <c:set var="advOpenMap" value="${advOpenMap}" />
 <c:set var="advOpenList" value="${advOpenMap.advOpenList }" />
 
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set> 
 
 <style>
 
@@ -86,20 +88,27 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${supRecList}" var="supRec" varStatus="vs">
-												<tr role="row" class="odd"
-												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
-													<td class="dtr-control sorting_1 text-center" tabindex="0">
-														지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
-													</td>
-													<td>${supRec.coName}</td>
-													<td>${supRec.recWantedtitle}</td>
-													<td>${supRec.recRegion}</td>
-													<td>${supRec.recReceiptclosedt}</td>
-												</tr>
-												<!--  모달창 시작 -->
-												<div class="modal fade"
-													id="default-example-modal-lg-center${vs.index}"
-													tabindex="-1" role="dialog" aria-hidden="true"></div>
+												<c:choose>
+														<c:when test="${supRec.recReceiptclosedt != '채용시까지'}">
+															<fmt:parseDate var="strRecReceiptclosedt" value="${supRec.recReceiptclosedt}" pattern="yyyyMMdd" />
+															<fmt:formatDate var="recReceiptclosedt" value="${strRecReceiptclosedt}" pattern="yyyy-MM-dd" />
+														</c:when>
+														<c:when test="${supRec.recReceiptclosedt == '채용시까지'}">
+															<c:set var="recReceiptclosedt" value="${supRec.recReceiptclosedt}" />
+														</c:when>
+												</c:choose>
+												<c:if test="${recReceiptclosedt == '채용시까지' or recReceiptclosedt >= today}">
+													<tr role="row" class="odd"
+													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
+														<td class="dtr-control sorting_1 text-center" tabindex="0">
+															지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
+														</td>
+														<td>${supRec.coName}</td>
+														<td>${supRec.recWantedtitle}</td>
+														<td>${supRec.recRegion}</td>
+														<td>${recReceiptclosedt}</td>
+													</tr>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -125,20 +134,27 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${supRecList}" var="supRec" varStatus="vs">
-												<tr role="row" class="odd"
-												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
-													<td class="dtr-control sorting_1 text-center" tabindex="0">
-														지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
-													</td>
-													<td>${supRec.coName}</td>
-													<td>${supRec.recWantedtitle}</td>
-													<td>${supRec.recRegion}</td>
-													<td>${supRec.recReceiptclosedt}</td>
-												</tr>
-												<!--  모달창 시작 -->
-												<div class="modal fade"
-													id="default-example-modal-lg-center${vs.index}"
-													tabindex="-1" role="dialog" aria-hidden="true"></div>
+												<c:choose>
+														<c:when test="${supRec.recReceiptclosedt != '채용시까지'}">
+															<fmt:parseDate var="strRecReceiptclosedt" value="${supRec.recReceiptclosedt}" pattern="yyyyMMdd" />
+															<fmt:formatDate var="recReceiptclosedt" value="${strRecReceiptclosedt}" pattern="yyyy-MM-dd" />
+														</c:when>
+														<c:when test="${supRec.recReceiptclosedt == '채용시까지'}">
+															<c:set var="recReceiptclosedt" value="${supRec.recReceiptclosedt}" />
+														</c:when>
+												</c:choose>
+												<c:if test="${recReceiptclosedt != '채용시까지' and recReceiptclosedt < today}">
+													<tr role="row" class="odd"
+													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
+														<td class="dtr-control sorting_1 text-center" tabindex="0">
+															지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
+														</td>
+														<td>${supRec.coName}</td>
+														<td>${supRec.recWantedtitle}</td>
+														<td>${supRec.recRegion}</td>
+														<td>${recReceiptclosedt}</td>
+													</tr>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -185,22 +201,20 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${supOpenList}" var="open" varStatus="vs">
-												<tr role="row" class="odd" data-toggle="modal"
-													data-target="#default-example-modal-lg-center${vs.index}">
+												<fmt:parseDate var="strOpenEdate" value="${open.openEdate}" pattern="yy/MM/dd" />
+												<fmt:formatDate var="openEdate" value="${strOpenEdate}" pattern="yyyy-MM-dd" />
+												<c:if test="${today <= openEdate}" >
+												<tr role="row" class="odd" 
+												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','fullscreen')">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														지원일자 -<fmt:formatDate value="${open.supDate}" pattern="yyyy-MM-dd" />
 													</td>
 													<td>${open.openConm}</td>
 													<td>${open.openTitle}</td>
 													<td>${open.openRegion}</td>
-													<td>${open.openEdate}</td>
-													<%-- <td><fmt:formatDate value="${open.openSdate}"
-															pattern="yyyy-MM-dd" /></td> --%>
+													<td>${openEdate}</td>
 												</tr>
-												<!--  모달창 시작 -->
-												<div class="modal fade"
-													id="default-example-modal-lg-center${vs.index}"
-													tabindex="-1" role="dialog" aria-hidden="true"></div>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -226,22 +240,20 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${supOpenList}" var="open" varStatus="vs">
-												<tr role="row" class="odd" data-toggle="modal"
-													data-target="#default-example-modal-lg-center${vs.index}">
-													<td class="dtr-control sorting_1" tabindex="0">
-														<fmt:formatDate value="${open.supDate}" pattern="yyyy-MM-dd" />
+												<fmt:parseDate var="strOpenEdate" value="${open.openEdate}" pattern="yy/MM/dd" />
+												<fmt:formatDate var="openEdate" value="${strOpenEdate}" pattern="yyyy-MM-dd" />
+												<c:if test="${today > openEdate}" >
+												<tr role="row" class="odd" 
+												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','fullscreen')">
+													<td class="dtr-control sorting_1 text-center" tabindex="0">
+														지원일자 -<fmt:formatDate value="${open.supDate}" pattern="yyyy-MM-dd" />
 													</td>
 													<td>${open.openConm}</td>
 													<td>${open.openTitle}</td>
 													<td>${open.openRegion}</td>
-													<td>20${open.openEdate}</td>
-													<%-- <td><fmt:formatDate value="${open.openSdate}"
-															pattern="yyyy-MM-dd" /></td> --%>
+													<td>${openEdate}</td>
 												</tr>
-												<!--  모달창 시작 -->
-												<div class="modal fade"
-													id="default-example-modal-lg-center${vs.index}"
-													tabindex="-1" role="dialog" aria-hidden="true"></div>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>

@@ -1,6 +1,9 @@
 package kr.or.ddit.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class SupportVO {
 	
@@ -14,6 +17,9 @@ public class SupportVO {
 	private String supPdate; //상담희망일자
 	private Date supEdate; //상담완료일자
 	private String counselorName; //상담사이름
+	
+	private List<MultipartFile> uploadFile; //파일 업로드
+	private List<AttachVO> attachList;
 	
 	
 	public String getCounselorName() {
@@ -77,12 +83,26 @@ public class SupportVO {
 		this.supEdate = supEdate;
 	}
 	
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
+	
 	@Override
 	public String toString() {
 		return "SupportVO [supNo=" + supNo + ", indId=" + indId + ", supType=" + supType + ", supTitle=" + supTitle
 				+ ", supContent=" + supContent + ", supDate=" + supDate + ", supProcess=" + supProcess + ", supPdate="
 				+ supPdate + ", supEdate=" + supEdate + ", counselorName=" + counselorName + "]";
 	}
+	
 	
 	
 	

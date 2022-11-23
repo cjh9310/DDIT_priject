@@ -239,7 +239,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 							</i>
 						</button>
 					{{/nullCheck}}
-				<i class="badge border border-success text-success">{{openSdate}}까지</i>
+				<i class="badge border border-success text-success">{{openEdate}}까지</i>
 			</div>
 		</div>
 	</div>

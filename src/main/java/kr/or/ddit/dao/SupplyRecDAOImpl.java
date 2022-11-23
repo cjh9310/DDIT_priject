@@ -70,6 +70,11 @@ public class SupplyRecDAOImpl implements SupplyRecDAO {
 	}
 	
 	@Override
+	public void insertSupplyOpenRec(SupplyRecVO supplyRec) throws SQLException {
+		session.update("SupplyRec-Mapper.insertSupplyOpenRec", supplyRec);
+	}
+	
+	@Override
 	public void copyCareerToSupResCrr(Map<String, Object> parameterMap) throws SQLException {
 		session.update("SupplyRec-Mapper.copyCareerToSupResCrr", parameterMap);
 	}

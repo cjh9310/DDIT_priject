@@ -49,6 +49,7 @@ import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.LetterService;
 import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.MentoringService;
+import kr.or.ddit.service.OpenRecService;
 import kr.or.ddit.service.RecruitService;
 import kr.or.ddit.service.SupplyRecService;
 import kr.or.ddit.service.SupportService;
@@ -86,7 +87,8 @@ public class IndMemberController {
 	private MemberService memberService;
 	@Autowired
 	private FalseReportService falseReportService;
-	
+	@Autowired
+	private OpenRecService openRecService;
 	
 	@GetMapping("mypage/info")
 	public String myPageInfo(HttpServletRequest request) throws Exception {
@@ -279,9 +281,9 @@ public class IndMemberController {
 		return url;
 	}
 	
-	@GetMapping("mypage/recruit/supplyResume")
-	public String supplyResume(int supNo, String recWantedno, HttpServletRequest request) throws Exception {
-		String url = "indmember/mypage/supplyResume";
+	@GetMapping("mypage/recruit/supplyRecResume")
+	public String supplyRecResume(int supNo, String recWantedno, HttpServletRequest request) throws Exception {
+		String url = "indmember/mypage/supplyRecResume";
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
@@ -295,6 +297,27 @@ public class IndMemberController {
 		Map<String, Object> resumeMap = supplyRecService.getSupplyResumeAllInfo(supNo);
 		
 		request.setAttribute("recruit", recruit);
+		request.setAttribute("resumeMap", resumeMap);
+		
+		return url;
+	}
+	
+	@GetMapping("mypage/recruit/supplyOpenRecResume")
+	public String supplyOpenRecResume(int supNo, int openSeqno, HttpServletRequest request) throws Exception {
+		String url = "indmember/mypage/supplyOpenRecResume";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		OpenRecVO openrecParam = new OpenRecVO();
+		openrecParam.setId(id);
+		openrecParam.setOpenSeqno(openSeqno);
+		
+		OpenRecVO openRec = openRecService.getOpenRecListByDetail(openrecParam);
+		Map<String, Object> resumeMap = supplyRecService.getSupplyResumeAllInfo(supNo);
+		
+		request.setAttribute("openRec", openRec);
 		request.setAttribute("resumeMap", resumeMap);
 		
 		return url;

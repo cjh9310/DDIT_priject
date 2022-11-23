@@ -1088,8 +1088,8 @@ function supplyOpenRec(p_openSeqno){
 						</div>
 					</div>
 					<div class="panel-container show" style="height: 100%;">
-						<form class="needs-validation" novalidate="" method="post"
-							action="" name="openRecForm" id="openRecForm"
+						<form class="needs-validation" role="openRecRegistForm" novalidate="" method="post"
+							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" name="openRecForm" id="openRecForm"
 							enctype="multipart/form-data">
 							<div class="panel-content">
 								<div class="form-group">
@@ -1306,12 +1306,13 @@ function supplyOpenRec(p_openSeqno){
 		var openRecParam = $("#openRecForm").serializeObject();
 
 		console.log(openRecParam);
-
+		
+		//$("form[role='openRecRegistForm']").submit();
+		
 		$.ajax({
 			url : 'openRecRegist',
 			type : 'post',
 			data : openRecParam,
-			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			success : function(data) {
 				$("#openRec-Form").modal('hide');
 				location.reload();

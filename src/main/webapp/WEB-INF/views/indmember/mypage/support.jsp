@@ -124,11 +124,11 @@
 										~ <fmt:formatDate value="${contest.conEdate }"
 												pattern="yyyy-MM-dd" /></td>
 										<td>
-											
-											<c:if test="${contest.actStatus eq 0 }">접수완료</c:if>
-											<c:if test="${contest.conEdate <= now }">심사중 </c:if> 
-											<c:if test="${contest.actStatus eq 1  }">심사완료 </c:if> 
-											
+											<c:choose>
+											<c:when test="${contest.conEdate >= now }">심사중 </c:when> 
+											<c:when test="${contest.actStatus eq 0 }">접수완료</c:when>
+											<c:when test="${contest.actStatus eq 1  }">심사완료 </c:when> 
+											</c:choose>
 										</td>
 										<td>
 											<c:if test="${contest.actScore eq 0 }"> 없음 </c:if>

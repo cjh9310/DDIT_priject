@@ -67,38 +67,13 @@
 				<div class="row w-100 p-0 m-0 h-100">
 					<table>
 						<tr>
-							<td colspan="1" rowspan="3"
-								style="width: 45px; padding-right: 16px;">
-								<div class='icon-stack display-3 flex-shrink-0'
-									style="margin-left: 10px;">
-									<c:choose>
-										<c:when test="${recruit.recBookmark != null}">
-											<button id="${recruit.recWantedno}" class="bookMark_btn"
-												style="background-color: transparent; border: 0px;"
-												type="button" value="${recruit.recBookmark}">
-												<i name="recremove"
-													class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-											</button>
-										</c:when>
-										<c:when test="${recruit.recBookmark == null}">
-											<button name="recregist" id="${recruit.recWantedno}"
-												class="bookMark_btn"
-												style="background-color: transparent; border: 0px;"
-												type="button" value="${recruit.recBookmark}">
-												<i name="recregist"
-													class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-											</button>
-										</c:when>
-									</c:choose>
-								</div>
-								</h2>
+							<td colspan="1" rowspan="3" style="width: 45px; padding-right: 16px;">
+								<img src="${openRec.openLogo}" class="card-img-top" alt="..."  style="display: block; height: 100%; width: auto;" />
 							</td>
 						</tr>
 						<tr>
 							<td colspan="8" style="width: 1400px;">
-								<h2 style="margin: 0px;">${recruit.coName}-
-									${recruit.recWantedtitle}</h2>
-								</h2>
+								<h2 style="margin:0px 0px 0px 60px;">${openRec.openConm} - ${openRec.openTitle}</h2>
 							</td>
 						</tr>
 					</table>
@@ -118,74 +93,67 @@
 							<div class="border bg-light rounded-top">
 								<div class="table-responsive">
 									<table class="table table-sm table-bordered table-hover m-0">
-										<thead class="thead-themed text-center">
-											<tr>
-												<th>기업명</th>
-												<th>업종</th>
-												<th>지역</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td align="center" valign="middle"><h2>${recruit.coName}<c:choose>
-															<c:when test="${recruit.coBookmark != null}">
-																<button class="bookMark_btn" id="${recruit.coName}"
-																	value="${recruit.coBookmark}" type="button"
-																	style="background-color: transparent; border: 0px;">
-																	<i name="comremove"
-																		class="badge border border-danger text-danger"> 나의
-																		관심 기업 </i>
-																</button>
-															</c:when>
-															<c:when test="${recruit.coBookmark == null}">
-																<button class="bookMark_btn" id="${recruit.coName}"
-																	value="${recruit.coBookmark}" type="button"
-																	style="background-color: transparent; border: 0px;">
-																	<i name="comregist"
-																		class="badge border border-info text-info"> 관심 기업
-																		등록하기 </i>
-																</button>
-															</c:when>
-														</c:choose>
-													</h2></td>
-												<td><h2>${recruit.recIndtpcdnm}</h2></td>
-												<td><h2>${recruit.recRegion}</h2></td>
-											</tr>
-										</tbody>
-									</table>
+								<thead class="thead-themed text-center">
+									<tr>
+										<th>기업명</th>
+										<th>지역</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="center" valign="middle"><h2>${openRec.openConm}
+											<c:choose>
+												<c:when test="${openRec.coBookmark != null}">
+													<button class="bookMark_btn" id="${openRec.openConm}"
+														value="${openRec.coBookmark}" type="button"
+														style="background-color: transparent; border: 0px;">
+														<i name="comremove"
+															class="badge border border-danger text-danger"> 나의 관심
+															기업 </i>
+													</button>
+												</c:when>
+												<c:when test="${openRec.coBookmark == null}">
+													<button class="bookMark_btn" id="${openRec.openConm}"
+														value="${openRec.coBookmark}" type="button"
+														style="background-color: transparent; border: 0px;">
+														<i name="comregist"
+															class="badge border border-info text-info"> 관심 기업
+															등록하기 </i>
+													</button>
+												</c:when>
+											</c:choose>
+										</h2></td>
+										<td><h2>${openRec.openRegion}</h2></td>
+									</tr>
+								</tbody>
+							</table>
 								</div>
 							</div>
 							<div class="border bg-light rounded-top">
 								<div class="table-responsive">
 									<table class="table table-sm table-bordered table-hover m-0">
-										<thead class="thead-themed text-center">
-											<tr>
-												<th>자본금</th>
-												<th>회사규모</th>
-												<th>연매출액</th>
-												<th>근로자수</th>
-												<c:if test="${recruit.recHomepg != null}">
-													<th>홈페이지</th>
-												</c:if>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><h2>${recruit.recCapitalamt}</h2></td>
-												<td><h2>${recruit.recBusisize}</h2></td>
-												<td><h2>${recruit.recYrsalesamt}</h2></td>
-												<td><h2>${recruit.recPersonal}</h2></td>
-												<c:if test="${recruit.recHomepg != null}">
-													<td><h2>
-															<a href="//${recruit.recHomepg}" target="_blank"> <i
-																class="badge border border-success text-success">
-																	${recruit.coName} 홈페이지 방문하기</i>
-															</a>
-														</h2></td>
-												</c:if>
-											</tr>
-										</tbody>
-									</table>
+								<thead class="thead-themed text-center">
+									<tr>
+										<th>자본금</th>
+										<th>회사규모</th>
+										<th>연매출액</th>
+										<th>홈페이지</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><h2>${corporation.coContent}</h2></td>
+										<td><h2>${corporation.coSummary}</h2></td>
+										<td><h2>${corporation.coBusino}</h2></td>
+										<td><h2>
+											<a href="${corporation.coHomeurl}" target="_blank">
+												<i class="badge border border-success text-success"> 
+													${openRec.openConm} 홈페이지 방문하기</i>
+											</a>
+										</h2></td>
+									</tr>
+								</tbody>
+							</table>
 								</div>
 							</div>
 						</div>
@@ -196,7 +164,7 @@
 
 		<div class="card mb-g p-0">
 			<div class="panel-hdr w-100">
-				<h2>채용공고 상세정보</h2>
+				<h2>공채 상세정보</h2>
 			</div>
 			<div class="card-body p-0">
 				<div class="custom-scroll recruit-content">
@@ -205,77 +173,59 @@
 						<div class="border bg-light rounded-top">
 							<div class="table-responsive">
 								<table class="table table-sm table-bordered table-hover m-0">
-									<thead class="thead-themed text-center">
-										<tr>
-											<th style="width: 900px;">직무내용</th>
-											<th>등록일</th>
-											<th>마감일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td style="width: 900px;"><h2>${recruit.recJobcont}</h2></td>
-											<td><h2>
-													<fmt:formatDate value="${recruit.recRegdt}"
-														pattern="yyyy-MM-dd" />
-												</h2></td>
-											<td><h2>
-													<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
-														<fmt:parseDate var="dateString"
-															value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
-														<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd" />
-													</c:if>
-													<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
-											${recruit.recReceiptclosedt}
-										</c:if>
-												</h2></td>
-										</tr>
-									</tbody>
-								</table>
+							<thead class="thead-themed text-center">
+								<tr>
+									<th style="width:900px;">직무내용</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="width:900px;"><h2>${openRec.openContent}</h2></td>
+								</tr>
+							</tbody>
+						</table>
 							</div>
 						</div>
 						<div class="border bg-light rounded-top">
 							<div class="table-responsive">
 								<table class="table table-sm table-bordered table-hover m-0">
-									<thead class="thead-themed text-center">
-										<tr>
-											<th>경력조건</th>
-											<th>학력</th>
-											<th>모집인원</th>
-											<th>모집집종</th>
-											<th>근무예정지</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><h2>${recruit.recEntertpnm}</h2></td>
-											<td><h2>${recruit.recMinedubg}</h2></td>
-											<td><h2>${recruit.recCollectpsncnt}명</h2></td>
-											<td><h2>${recruit.recJobsnm}</h2></td>
-											<td><h2>${recruit.recRegion}</h2></td>
-										</tr>
-									</tbody>
-								</table>
+							<thead class="thead-themed text-center">
+								<tr>
+									<th>경력조건</th>
+									<th>학력</th>
+									<th>모집인원</th>
+									<th>근무예정지</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><h2>${openRec.openCarnm}</h2></td>
+									<td><h2>${openRec.openEdunm}</h2></td>
+									<td><h2>${openRec.openCnt}명</h2></td>
+									<td><h2>${openRec.openRegion}</h2></td>
+								</tr>
+							</tbody>
+						</table>
 							</div>
 						</div>
 						<div class="border bg-light rounded-top">
 							<div class="table-responsive">
 								<table class="table table-sm table-bordered table-hover m-0">
-									<thead class="thead-themed text-center">
-										<tr>
-											<th>임금조건</th>
-											<th>근무시간 / 근무형태</th>
-											<th>사회보험</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>${recruit.recSaltpnm}</td>
-											<td>${recruit.recWorkdayworkhrcont}</td>
-											<td>${recruit.recFourins}</td>
-										</tr>
-									</tbody>
-								</table>
+							<thead class="thead-themed text-center">
+								<tr>
+									<th>채용시작일</th>
+									<th>채용마감일</th>
+									<th>합격자발표일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><h2>${openRec.openSdate}</h2></td>
+									<td><h2>${openRec.openEdate}</h2></td>
+									<td><h2>${openRec.openAcptpsn}</h2></td>
+								</tr>
+							</tbody>
+						</table>
 							</div>
 						</div>
 					</div>
@@ -311,7 +261,7 @@
 											<td class="border p-0" rowspan="5"
 												style="width: 126px; height: 176px;"><img
 												style="display: block; width: 100%; height: auto;"
-												src="<%=request.getContextPath()%>/member/getPicture.do?id=${loginUser.id}"
+												src="<%=request.getContextPath()%>/member/getPicture.do?id=${supInfo.indId}"
 												onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
 												alt="증명사진" /></td>
 										</tr>
@@ -372,14 +322,17 @@
 													<td class="text-center">${edu.supeduName}</td>
 													<td class="text-center">${edu.supeduMajor}</td>
 													<td class="text-center">${edu.supeduScore}</td>
-													<td class="text-center"><c:if
-															test="${edu.supeduStatus == 0}">
-															<span class="badge badge-primary"></span>
-														</c:if> <c:if test="${edu.supeduStatus == 1}">
-															<span class="badge badge-info"></span>
-														</c:if> <c:if test="${edu.supeduStatus == 2}">
-															<span class="badge badge-success"></span>
-														</c:if></td>
+													<td class="text-center">
+														<c:if test="${edu.eduStatus == 0}">
+															<span class="badge badge-primary">${edu.strStatus}</span>
+														</c:if> 
+														<c:if test="${edu.eduStatus == 1}">
+															<span class="badge badge-info">${edu.strStatus}</span>
+														</c:if> 
+														<c:if test="${edu.eduStatus == 2}">
+															<span class="badge badge-success">${edu.strStatus}</span>
+														</c:if>
+													</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -499,7 +452,6 @@
 	src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
-<%@ include file="/WEB-INF/views/indmember/indmember_js.jsp"%>
 
 <script>
 	$("#resume_delete1").on("click", function() {
@@ -610,92 +562,5 @@
 
 			});
 </script>
-<script>
-$(document).ready(function() {
-	
-	$(document).on("click",".supply_add_let",function(){
-			
-		var button = $(this);
-		
-		var letSeqno = button.attr('id');	
-			
-		var letter_table = $('#letter_table');
-		
-		var ajaxOption = {
-				url : '<%=request.getContextPath()%>
-	/indmember/getLetter.do?letSeqno='
-														+ letSeqno,
-												async : true,
-												type : "GET",
-												dataType : "json",
-												cache : false
-											};
-
-											$
-													.ajax(ajaxOption)
-													.done(
-															function(data) {
-																console
-																		.log(
-																				"letter data : ",
-																				data);
-																var tableTemplate = '<thead id="letter_'+letSeqno+'"><tr><th colspan="6" class="text-center border-top-0 table-scale-border-bottom fw-700">'
-																		+ data.letTitle
-																		+ '</th></tr></thead>'
-																		+ '<tbody id="letter_'+letSeqno+'"><tr><td class="text-left">'
-																		+ data.letContent
-																		+ '</td></tr>'
-																		+ '<input type="hidden" name="letTitle" value="'+data.letTitle+'" /><input type="hidden" name="letContent" value="'+data.letContent+'" /></tbody>';
-																letter_table
-																		.append(tableTemplate);
-																letterTableSetting();
-																var td = button
-																		.parent('td');
-																var button_del = '<button class="supply_del_let" id="'+letSeqno+'" type="button"'+
-							 'style="background-color: transparent; border: 0px;">'
-																		+ '<i class="badge border border-danger text-danger">지원 이력서에서 삭제하기</i></button>';
-																td
-																		.children(
-																				'button')
-																		.remove();
-																td
-																		.append(button_del);
-
-															});
-
-										});
-
-					});
-</script>
-<script>
-	$(document)
-			.ready(
-					function() {
-
-						$(document)
-								.on(
-										"click",
-										".supply_del_let",
-										function() {
-
-											var button = $(this);
-											var letSeqno = button.attr('id');
-											var letter_table = $('#letter_table');
-											var td = button.parent('td');
-											var button_add = '<button class="supply_add_let" id="'+letSeqno+'" type="button"'+
-		 				 'style="background-color: transparent; border: 0px;">'
-													+ '<i class="badge border border-success text-success">지원 이력서에 추가하기</i></button>';
-											letter_table.children(
-													'#letter_' + letSeqno)
-													.remove();
-											letterTableSetting();
-											td.children('button').remove();
-											td.append(button_add);
-
-										});
-
-					});
-</script>
-
 
 

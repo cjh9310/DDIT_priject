@@ -115,7 +115,8 @@
 		p:publicWorkDAO-ref="publicWorkDAO" />
 	<bean id="supportService"
 		class="kr.or.ddit.service.SupportServiceImpl"
-		p:supportDAO-ref="supportDAO"/>
+		p:supportDAO-ref="supportDAO"
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="CorporationService"
 		class="kr.or.ddit.service.CorporationServiceImpl"
 		p:corporationDAO-ref="corporationDAO"/>

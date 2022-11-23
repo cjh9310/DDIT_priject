@@ -19,7 +19,8 @@ public interface ReportService {
 	// 기업상세보기
 	List<CoDetailListVO> getCoDetail(String coName) throws SQLException;
 	
-	
+	// 처리상태 바꾸기
+	void updateReportChangeStatus(ReportListVO reportList) throws SQLException;
 	
 
 

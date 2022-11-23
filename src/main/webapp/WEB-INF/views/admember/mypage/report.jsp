@@ -58,16 +58,17 @@
 <script>
 
 var cntxtPth = "${pageContext.request.contextPath}";
-console.log("cntxtPth = " + cntxtPth)
+// console.log("cntxtPth = " + cntxtPth)
 function openList(falNo,coName) {
-	console.log(falNo,coName)
+// 	console.log(falNo,coName)
 	$.ajax({
 		url : 'reportDetail',
 		method : 'POST',
 		data : {'falNo' : falNo,
 				'coName' : coName},
 		success : function(result) {
-			console.log(result);
+// 			console.log(result);
+			$('#openFalNo').val(result.falNo);
 			$('#openTitle').val(result.falTitle);
 			$('#openIndId').val(result.indId);
 			$('#openCoName').val(result.coName);
@@ -78,18 +79,28 @@ function openList(falNo,coName) {
 			$('#openContent').val(result.falContent);
 			$('#openStatus').val(result.repStatus);
 			$('#coName').val(result.coName);
-			$('#coAddr').val(result.coDetail[0].coAddr);
+			$('#coAddr').val(result.coAddr+' '+result.coDeaddr);
+			$('#coName1').val(result.coName);
+			$('#coAddr1').val(result.coAddr+' '+result.coDeaddr);
+			
+			if(result.repStatus=='신고접수중'){
+				$('#workingOn').show();
+				
+			}else if(result.repStatus=='신고처리중'){
+				$('#complete').show();
+			}
 			
 			
 			
+			console.log("length : " + result.attachList.length)
 			var rowStr = '';
 			$('#attachList').empty();
 			if(result.attachList.length > 0){
 				$.each(result.attachList, function(key, val){
-					console.log(val)
-					console.log(val.attNo)
-					console.log(val.filename)
-					console.log(cntxtPth)
+// 					console.log(val)
+// 					console.log(val.attNo)
+// 					console.log(val.filename)
+// 					console.log(cntxtPth)
 						rowStr += '<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href=\''+ cntxtPth+ '/attach/getFile.do?attNo=' + val.attNo + '\';">'
 						rowStr += '<div class="info-box">'
 						rowStr += '<span class="info-box-icon bg-yellow">'
@@ -108,12 +119,29 @@ function openList(falNo,coName) {
 			
 			$('#attachList').append(rowStr);
 
-			
 		}
 	})
 }
+</script>
 
+<script>
+window.onload=function(){
 
+	$('#workingOn').on('click',function(){
+		$.ajax({
+			url : 'reportChangeStatus',
+			method : 'POST',
+			data : {'repStatus' : $('#workingOn').text(),
+				    'falNo' : $('#openFalNo').val()},
+			success : function(result) {
+				
+			},
+			error : function(request, status, error) {
+				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+			}
+		})
+	})
+}
 
 </script>
 
@@ -218,9 +246,9 @@ function openList(falNo,coName) {
 	                        		<thead>
 	                        			<tr>
 	                        				<th style="width: 10%;">기업명</th>
-	                        				<th style="width: 20%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 150px;" id="coName" readonly></th>
+	                        				<th style="width: 20%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 150px;" id="coName1" readonly></th>
 	                        				<th style="width: 10%;">주소</th>
-	                        				<th style="width: 35%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 270px;" id="coAddr" readonly></th>
+	                        				<th style="width: 35%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 270px;" id="coAddr1" readonly></th>
 	                        				<th style="width: 13%;">권한</th>
 	                        				<th style="width: 12%; padding: 3px;">
 	                        					<div class="statusBtn">
@@ -238,10 +266,9 @@ function openList(falNo,coName) {
 	                                        <th>채용공고</th>
 	                                    </tr>
 	                                </thead>
-	                                <tbody>
+	                                <tbody id="coDetailList">
 	                                	<tr>
-	                                		<td >1</td>
-	                                		<td>채용공고</td>
+	                                		<td colspan="2"><span> 등록된 채용 공고가 없습니다.</span></td>
 	                                	</tr>
 	                                </tbody>
 	                            </table>
@@ -264,9 +291,9 @@ function openList(falNo,coName) {
 											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 상세 신고 내역</a></li>
 										</ul>
 	                        		</div>
-	                        		<div class="col-4" style="margin-bottom: 18px; float: right;">
-	                        			<button type="button" class="btn btn-warning waves-effect waves-themed" id="workingOn">신고처리중</button>
-	                        			<button type="button" class="btn btn-info waves-effect waves-themed" id="complete" >처리 완료</button>
+	                        		<div class="col-4" style="margin-bottom: 18px; float: right !important;">
+	                        			<button type="button" class="btn btn-warning waves-effect waves-themed" id="workingOn" style="display: none;">신고처리중</button>
+	                        			<button type="button" class="btn btn-info waves-effect waves-themed" id="complete"  style="display: none;">처리 완료</button>
 	                        		</div>
 								</div>
 							<div id="faqpanel-2" class="panel">
@@ -314,6 +341,7 @@ function openList(falNo,coName) {
 															<label class="form-label" for="validationCustom02"><b>신고 기업명</b>
 															</label> <input type="text" class="form-control" id="openCoName"
 																 value="" disabled>
+															<input type="hidden" id="openFalNo" value=""/>
 														</div>																																																	
 														<div class="col-lg-12 mb-3">
 															<label class="form-label" for="validationCustom03"><b>제목</b>
@@ -334,21 +362,21 @@ function openList(falNo,coName) {
 																<div class="card-footer" style="height: 80px;">
 																	<div class="row" id="attachList">
 																		<!-- 첨부파일 썸네일 -->
-																		<c:forEach items="${report.attachList }" var="attach">
-																			<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;"
-																			 onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?attNo=${attach.attNo }';">
-																			<div class="info-box">	
-																			 	<span class="info-box-icon bg-yellow">
-																					<i class="fa fa-copy"></i>
-																				</span>
-																				<div class="info-box-content">
-																					<span class ="info-box-text">
-																					</span>
-																					<span class ="info-box-number">${attach.filename }</span>
-																				</div>
-																			</div>
-																		 </div>			
-																		</c:forEach>
+<%-- 																		<c:forEach items="${report.attachList }" var="attach"> --%>
+<!-- 																			<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" -->
+<%-- 																			 onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?attNo=${attach.attNo }';"> --%>
+<!-- 																			<div class="info-box">	 -->
+<!-- 																			 	<span class="info-box-icon bg-yellow"> -->
+<!-- 																					<i class="fa fa-copy"></i> -->
+<!-- 																				</span> -->
+<!-- 																				<div class="info-box-content"> -->
+<!-- 																					<span class ="info-box-text"> -->
+<!-- 																					</span> -->
+<%-- 																					<span class ="info-box-number">${attach.filename }</span> --%>
+<!-- 																				</div> -->
+<!-- 																			</div> -->
+<!-- 																		 </div>			 -->
+<%-- 																		</c:forEach> --%>
 																	</div>
 																</div>
 															</div>

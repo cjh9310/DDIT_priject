@@ -52,7 +52,10 @@ public class ReportDAOImpl implements ReportDAO {
 		List<CoDetailListVO> coDetail = session.selectList("ReportList-Mapper.selectCoDetail", coName);
 		return coDetail;
 	}
-	
-	
+
+	@Override
+	public void updateReportChangeStatus(ReportListVO reportList) throws SQLException {
+		session.update("ReportList-Mapper.updateReportChangeStatus", reportList);
+	}
 	
 }

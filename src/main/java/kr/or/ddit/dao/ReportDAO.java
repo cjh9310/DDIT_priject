@@ -16,4 +16,6 @@ public interface ReportDAO {
 	ReportListVO selectReportListByFalNo(int falNo)throws SQLException;
 	
 	List<CoDetailListVO> selectCoDetail(String coName)throws SQLException;
+	
+	void updateReportChangeStatus(ReportListVO reportList)throws SQLException;
 }

@@ -4,6 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set> 
+
 <style>
 .recruit-content {
 	width: 100%;
@@ -77,10 +80,33 @@ td { height: 80px; }
 				</tr>
 			</table>
 			<div class="panel-toolbar ml-2">
+			<%-- <c:choose>
+				<c:when test="${recruit.recReceiptclosedt != '채용시까지'}">
+					<fmt:parseDate var="strRecReceiptclosedt" value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
+					<fmt:formatDate var="recReceiptclosedt" value="${strRecReceiptclosedt}" pattern="yyyy-MM-dd" />
+				</c:when>
+				<c:when test="${recruit.recReceiptclosedt == '채용시까지'}">
+					<c:set var="recReceiptclosedt" value="${recruit.recReceiptclosedt}" />
+				</c:when>
+			</c:choose>
+			<c:choose>
+				<c:when test="${recReceiptclosedt != '채용시까지' and recReceiptclosedt < today}">
+					<button type="button" 
+						class="btn btn-lg btn-outline-danger waves-effect waves-themed">
+						이미 종료된 채용공고입니다.<span class="fas fa-engine-warning ml-1"></span>
+					</button>
+				</c:when>
+				<c:when test="${recReceiptclosedt == '채용시까지' or recReceiptclosedt >= today}">
+					<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/supply.do?recWantedno=${recruit.recWantedno}','OpenWindow','fullscreen')"
+						class="btn btn-lg btn-outline-info waves-effect waves-themed">
+						즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
+					</button>
+				</c:when>
+			</c:choose> --%>
 				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/supply.do?recWantedno=${recruit.recWantedno}','OpenWindow','fullscreen')"
-					class="btn btn-lg btn-outline-info waves-effect waves-themed">
-					즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
-				</button>
+						class="btn btn-lg btn-outline-info waves-effect waves-themed">
+						즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
+					</button>
 			</div>
 		</div>
 	</div>
@@ -197,14 +223,14 @@ td { height: 80px; }
 									<td style="width:900px;"><h2>${recruit.recJobcont}</h2></td>
 									<td><h2><fmt:formatDate value="${recruit.recRegdt}"
 											pattern="yyyy-MM-dd" /></h2></td>
-									<td><h2><c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
+									<%-- <td><h2><c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
 											<fmt:parseDate var="dateString"
 												value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
 											<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd" />
 										</c:if> <c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
-											${recruit.recReceiptclosedt}
+											${recReceiptclosedt}
 										</c:if>
-									</h2></td>
+									</h2></td> --%>
 								</tr>
 							</tbody>
 						</table>

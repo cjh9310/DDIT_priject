@@ -130,12 +130,24 @@ public class AdMemeberController {
 		ReportListVO reportListVO = reportService.getReport(falNo);
 		List<CoDetailListVO> coDetailList = reportService.getCoDetail(coName);
 		
-		reportListVO.setCoDetail(coDetailList);
+		reportListVO.setCoDetailList(coDetailList);
 		model.addAttribute("openReportDetail", reportListVO);
 
 		return reportListVO;
 
 	}
+	
+	@ResponseBody
+	@PostMapping("/mypage/reportChangeStatus")
+	public String reportChangeStatus(String repStatus,int falNo) throws Exception {
+		ReportListVO reportListVO = new ReportListVO();
+		reportListVO.setRepStatus(repStatus);
+		reportListVO.setFalNo(falNo);
+		reportService.updateReportChangeStatus(reportListVO);
+		
+		return "succ";
+	}
+	
 
 	@GetMapping("/mypage/senior")
 	public String myPageSenior(String adId, HttpServletRequest request) throws Exception {

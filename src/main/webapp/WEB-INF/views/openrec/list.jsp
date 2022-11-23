@@ -238,7 +238,7 @@
 												</button>
 											</c:when>
 										</c:choose>
-										<i class="badge border border-success text-success">${openRec.openSdate}까지</i>
+										<i class="badge border border-success text-success">${openRec.openEdate}까지</i>
 									</div>
 								</div>
 							</div>

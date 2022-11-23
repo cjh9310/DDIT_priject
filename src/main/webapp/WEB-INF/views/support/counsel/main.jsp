@@ -78,7 +78,7 @@ $(document).ready(function(){
 														<p>궁금하신 사항이 있다면 언제든 신청해주세요. 친절히 상담을 도와드리겠습니다.</p>
 													</div>
 												</div>
-												<form class="needs-validation" novalidate="" method="post" name="registForm" id="registForm" enctype="multipart/form-data">
+												<form class="needs-validation"  method="post" name="registForm" id="registForm" enctype="multipart/form-data">
 													<div class="panel-content">
 														<!-- <input type="hidden" name="supNo" value="0"> -->
 														<div class="form-group">
@@ -119,10 +119,19 @@ $(document).ready(function(){
 														</div>
 
 														<div class="form-group mb-0">
-															<label class="form-label"><b>첨부파일</b></label>
-															<div class="custom-file">
-																<input type="file" class="custom-file-input" id="registFile">
-																<label class="custom-file-label" for="registFile">파일선택</label>
+															<label class="form-label" for="example-date">첨부파일 
+					<!-- 											<span class="text-danger">*</span> -->
+															</label>
+															<div class="form-group">								
+																<div class="card card-outline card-success">
+																	<div class="card-header">
+					<!-- 													<h5 style="display:inline;line-height:40px;">첨부파일 : </h5> -->
+																		&nbsp;&nbsp;<button class="btn btn-xs btn-primary"
+																		onclick="addFile_go(3);"	type="button" id="addFileBtn">파일 첨부</button>
+																	</div>									
+																	<div class="card-footer fileInput">
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -209,4 +218,41 @@ $(document).ready(function(){
 			
 		});
 	});		
+</script>
+
+<!-- --------------------------파일등록------------------------------------ -->
+<script>
+	
+	window.onload=function(){
+		$('.fileInput').on('change','input[type="file"]',function(event){
+			//alert(this.files[0].size);
+			if(this.files[0].size>1024*1024*50){
+	 			alert("파일 용량이 50MB를 초과하였습니다.");
+	 			this.click();
+	 			this.value="";	 					
+	 			return false;
+	 		} 
+		});
+	}
+
+	$(function () {
+	    $(document).on('click', '.btn-add', function (e) {
+	        e.preventDefault();
+	
+	        var controlForm = $('.controls:first'),
+	            currentEntry = $(this).parents('.entry:first'),
+	            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+	
+	        newEntry.find('input').val('');
+	        controlForm.find('.entry:not(:last) .btn-add')
+	            .removeClass('btn-add').addClass('btn-remove')
+	            .removeClass('btn-success').addClass('btn-danger')
+	            .html('<span class="fa fa-trash"></span>');
+	    }).on('click', '.btn-remove', function (e) {
+	        $(this).parents('.entry:first').remove();
+	
+	        e.preventDefault();
+	        return false;
+	    });
+	});
 </script>

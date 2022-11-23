@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +47,9 @@ public class SupportController {
 	
 	@Autowired
 	private ActivityService activityService;
+	
+	@Resource(name="fileUploadPath")
+	private String fileUploadPath;
 	
 	@GetMapping("contest/list")
 	public String contestList(Criteria cri, Model model) throws Exception {
@@ -101,7 +105,7 @@ public class SupportController {
 		model.addAttribute("contestMap",contestMap);
 		return url;
 	}
-	
+//취업상담----------------------------------------------------------------------------------
 	@GetMapping("counsel/main")
 	public String counselMain() throws Exception {
 		String url = "support/counsel/main";
@@ -118,13 +122,17 @@ public class SupportController {
 		
 		String url = "redirect:/support/counsel/main";
 		
+		//파일업로드 경로 
+		String savePath = this.fileUploadPath;
+		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		
 		String indId = loginUser.getId();
 		support.setIndId(indId);
 		
-		supportService.regist(support);
+		//상담신청내용 등록, 파일등록 서비스 호출(경로포함)
+		supportService.regist(support, savePath);
 		
 		rttr.addFlashAttribute("form", "regist");
 		

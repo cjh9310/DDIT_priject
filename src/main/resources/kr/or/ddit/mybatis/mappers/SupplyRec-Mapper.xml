@@ -11,24 +11,23 @@
 	</select>
 
 	<select id="selectSupplyRecruitListById" parameterType="str" resultType="supplyRec">
-		select rownum,
-		a.*,
-		b.rec_wantedno,
-		b.co_name,
-		b.rec_indtpcdnm,
-		b.rec_wantedtitle,
-		b.rec_receiptclosedt,
-		b.rec_regdt,
-		b.rec_region
-		from supply_rec a, recruit b
-		where a.rec_wantedno = b.rec_wantedno
-		and a.rec_wantedno is not null
-		and ind_id=#{id}
+		select  a.*,
+				b.rec_wantedno,
+				b.co_name,
+				b.rec_indtpcdnm,
+				b.rec_wantedtitle,
+				b.rec_receiptclosedt,
+				b.rec_regdt,
+				b.rec_region
+				from supply_rec a, recruit b
+				where a.rec_wantedno = b.rec_wantedno
+				and a.rec_wantedno is not null
+				and ind_id=#{id}
+				order by a.sup_date desc
 	</select>
 
 	<select id="selectSupplyOpenRecListById" parameterType="str" resultType="supplyRec">
-		select rownum,
-               a.*,
+		select a.*,
                b.open_seqno,
                b.open_title,
                b.open_conm,
@@ -39,6 +38,7 @@
          where a.open_seqno = b.open_seqno
            and a.open_seqno is not null
            and ind_id=#{id}
+         order by a.sup_date desc
 	</select>
 	
 	<select id="selectCountSupplyRecById" parameterType="map" resultType="int">
@@ -70,7 +70,13 @@
 		
 		insert into supply_rec (sup_no, rec_wantedno, ind_id, sup_date, sup_type)
 		values (#{supNo}, #{recWantedno}, #{indId}, sysdate, #{supType})
+	</insert>
+	
+	<insert id="insertSupplyOpenRec" parameterType="supplyRec">
+		/* SupplyRec-Mapper.insertSupplyRec */
 		
+		insert into supply_rec (sup_no, open_seqno, ind_id, sup_date, sup_type)
+		values (#{supNo}, #{openSeqno}, #{indId}, sysdate, #{supType})
 	</insert>
 	
 	<insert id="copyInfoToSupResume" parameterType="map">
@@ -160,33 +166,41 @@
 	</update>
 	
 	<select id="selectSupResume" parameterType="int" resultType="supplyRec">
-		select *
- 		  from sup_resume
- 		 where sup_no=#{supNo}
+		select a.*, b.ind_id
+ 		  from sup_resume a, supply_rec b
+ 		 where a.sup_no = b.sup_no 
+           and a.sup_no=#{supNo}
 	</select>
 	
 	<select id="selectSupResEduList" parameterType="int" resultType="education">
-		select *
- 		  from sup_res_edu
+		select a.*,
+			   (select stat_name from status b
+                  where b.stat_no=a.supedu_status
+                    and b.stat_col='EDU_STATUS') as "STR_STATUS"
+ 		  from sup_res_edu a
  		 where sup_no=#{supNo}
+ 		 order by a.supedu_sdate
 	</select>
 	
 	<select id="selectSupResCrrList" parameterType="int" resultType="career">
 		select * 
  		  from sup_res_crr
  		 where sup_no=#{supNo}
+ 		 order by supcrr_edate
 	</select>
 	
 	<select id="selectSupResCerList" parameterType="int" resultType="certificate">
 		select *
  		  from sup_res_cer
  		 where sup_no=#{supNo}
+ 		 order by supcer_sdate
 	</select>
 	
 	<select id="selectSupResLetList" parameterType="int" resultType="letter">
 		select *
  		  from sup_res_let
  		 where sup_no=#{supNo}
+ 		 order by suplet_no asc
 	</select>
 	
 </mapper>

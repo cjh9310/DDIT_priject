@@ -7,8 +7,11 @@ import java.util.Map;
 
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.SupportDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.SupportVO;
 
 public class SupportServiceImpl implements SupportService {
@@ -16,6 +19,11 @@ public class SupportServiceImpl implements SupportService {
 	private SupportDAO supportDAO;
 	public void setSupportDAO(SupportDAO supportDAO) {
 		this.supportDAO = supportDAO;
+	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
 	}
 	
 	@Override
@@ -59,9 +67,37 @@ public class SupportServiceImpl implements SupportService {
 
 
 	@Override
-	public void regist(SupportVO support) throws SQLException {
+	public void regist(SupportVO support, String savePath) throws SQLException {
 		int supNo = supportDAO.selectSupportSeqNext();
 		support.setSupNo(supNo);
+		
+		// 첨부파일등록
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+		String workDiv = "Support"; // 필수
+		//file 저장 -> List<AttachVO>
+		List<AttachVO> attachList = null;
+		try {
+			// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
+			attachList = MultipartFileUploadResolver.fileUpload(support.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 파일저장정보 목록을 FalseReportVO에 세팅
+		support.setAttachList(attachList);	
+		
+		// 파일정보를 첨부파일 테이블에 등록
+		if (support.getAttachList() != null) {
+			for (AttachVO attach : support.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(Integer.toString(support.getSupNo()));
+				attach.setAttacher(support.getIndId());
+				attachDAO.insertAttach(attach);
+			}
+		}
+		/*********** 첨부파일 등록   end**************/
+				
 		supportDAO.insertSupport(support);
 	}
 
@@ -83,7 +119,4 @@ public class SupportServiceImpl implements SupportService {
 		supportDAO.updateSupportCounselor(support);
 		
 	}
-
-	
-
 }

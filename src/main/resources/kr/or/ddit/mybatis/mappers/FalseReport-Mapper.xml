@@ -10,11 +10,11 @@
 		  from (
 		    select rownum as rnum,SearchPublicWorkResult.*
 		    from ( 
-		    		select * 
-					  from false_report
-					 where ind_id = #{id}
-					  		
-				order by FAL_NO asc
+		    		select *
+					  from false_report fr
+			  NATURAL join report_list rl 
+			         where fr.ind_id = #{id}
+				  order by fal_no asc
 		    )  SearchPublicWorkResult
 		    <![CDATA[
 		    where rownum <= #{endRow}
@@ -35,10 +35,35 @@
 	
 	<insert id="insertFalse" parameterType="falseReport" >
 		<selectKey resultType="int" keyProperty="falNo" order="BEFORE">
-			select max(fal_no)+1 from false_report
+			SELECT MAX(FAL_NO)+1 FROM FALSE_REPORT
 		</selectKey>
-		insert into false_report
-		values(#{falNo}, #{indId}, #{falTitle}, #{falContent}, #{coName}, TO_CHAR(sysdate, 'YYYY-MM-DD'), #{falEdate}, #{falOdate}, #{falCategory}, #{falCategorydetail}, #{coId})
+		/*FalseReport-Mapper.insertFalse*/
+		INSERT INTO FALSE_REPORT
+			 (
+			   FAL_NO
+			 , IND_ID
+			 , FAL_TITLE
+			 , FAL_CONTENT
+			 , CO_NAME
+			 , FAL_SDATE
+			 , FAL_EDATE
+			 , FAL_ODATE
+			 , FAL_CATEGORY
+			 , FAL_CATEGORYDETAIL
+			 , CO_ID
+			 ) VALUES (
+			   #{falNo}
+			 , #{indId}
+			 , #{falTitle}
+			 , #{falContent}
+			 , #{coName}
+			 , TO_CHAR(sysdate, 'YYYY-MM-DD')
+			 , #{falEdate}
+			 , #{falOdate}
+			 , #{falCategory}
+			 , #{falCategorydetail}
+			 , #{coId}
+			 )
 	</insert>	
 	
 		

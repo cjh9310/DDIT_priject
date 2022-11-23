@@ -1,6 +1,8 @@
 package kr.or.ddit.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,8 +25,15 @@ import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.CorporationVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
+import kr.or.ddit.dto.RecruitVO;
+import kr.or.ddit.dto.SupplyRecVO;
+import kr.or.ddit.service.CareerService;
+import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.CorporationService;
+import kr.or.ddit.service.EducationService;
+import kr.or.ddit.service.LetterService;
 import kr.or.ddit.service.OpenRecService;
+import kr.or.ddit.service.SupplyRecService;
 
 @Controller
 @RequestMapping("/openrec")
@@ -33,9 +43,18 @@ public class OpenrecController {
 	
 	@Autowired
 	private OpenRecService openRecService;
-
 	@Autowired
 	private CorporationService corporationService; 
+	@Autowired
+	private EducationService educationService;
+	@Autowired
+	private CareerService careerService;
+	@Autowired
+	private CertificateService certificateService;
+	@Autowired
+	private LetterService letterService;
+	@Autowired
+	private SupplyRecService supplyRecService;
 	
 	@GetMapping("list")
 	public String openrecList(Criteria cri, HttpServletRequest request) throws Exception {
@@ -65,6 +84,71 @@ public class OpenrecController {
 		request.setAttribute("openRec", openRec);
 		request.setAttribute("corporation", corporation);
 		return url;
+	}
+	
+	@GetMapping("supply")
+	public String openRecSupply(int openSeqno, HttpServletRequest request) throws Exception {
+		String url = "openrec/supply";
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		OpenRecVO openrecParam = new OpenRecVO();
+		openrecParam.setId(id);
+		openrecParam.setOpenSeqno(openSeqno);
+		
+		OpenRecVO openrec = openRecService.getOpenRecListByDetail(openrecParam);
+		Map<String, Object> eduMap = educationService.getEducationListById(id);
+		Map<String, Object> crrMap = careerService.getCareerListById(id);
+		Map<String, Object> cerMap = certificateService.getCertificateListById(id);
+		Map<String, Object> letMap = letterService.getLetterListByIndId(id);
+		
+		request.setAttribute("openrec", openrec);
+		request.setAttribute("eduMap", eduMap);
+		request.setAttribute("crrMap", crrMap);
+		request.setAttribute("cerMap", cerMap);
+		request.setAttribute("letMap", letMap);
+		
+		return url;
+	}
+	
+	@PostMapping("supply/check")
+	@ResponseBody
+	public String recruitSupplyCheck(@RequestParam("openSeqno") int openSeqno, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String indId = loginUser.getId();
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("openSeqno", openSeqno);
+		parameterMap.put("indId", indId);
+		
+		int count = supplyRecService.getCountSupplyOpenRecById(parameterMap);
+		
+		if(count == 0) {
+			return "SupplyAllowed";
+		} else {
+			return "SupplyNotAllowed";
+		}
+	}
+	
+	@PostMapping("/supply/submit")
+	@ResponseBody
+	public String recruitSupplySubmit(int openSeqno, @RequestParam List<String> letTitle, @RequestParam List<String> letContent, HttpSession session) throws Exception {
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String indId = loginUser.getId();
+		
+		SupplyRecVO supplyRec = new SupplyRecVO();
+		supplyRec.setIndId(indId);
+		supplyRec.setOpenSeqno(openSeqno);
+		
+		Map<String, List<String>> letterMap = new HashMap<String, List<String>>();
+		letterMap.put("titleList", letTitle);
+		letterMap.put("contentList", letContent);
+		
+		supplyRecService.supplyOpenRec(supplyRec, letterMap);
+		
+		return "openrecSupplySuccess";
 	}
 	
 	@RequestMapping(value="/companyInfo")

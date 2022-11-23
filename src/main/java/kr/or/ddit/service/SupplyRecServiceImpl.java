@@ -88,7 +88,31 @@ public class SupplyRecServiceImpl implements SupplyRecService {
 	
 	@Override
 	public void supplyOpenRec(SupplyRecVO supplyRec, Map<String, List<String>> letterMap) throws SQLException {
+		String indId = supplyRec.getIndId();
+		int supNo = supplyRecDAO.selectSupplyRecSeqNextVal();
 		
+		supplyRec.setSupNo(supNo);
+		supplyRec.setSupType(2);
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("indId", indId);
+		parameterMap.put("supNo", supNo);
+		
+		supplyRecDAO.insertSupplyOpenRec(supplyRec);
+		supplyRecDAO.copyInfoToSupResume(parameterMap);
+		supplyRecDAO.copyEducationToSupResEdu(parameterMap);
+		supplyRecDAO.copyCareerToSupResCrr(parameterMap);
+		supplyRecDAO.copyCertificateToSupResCer(parameterMap);
+		
+		List<String> titleList = letterMap.get("titleList");
+		List<String> contentList = letterMap.get("contentList");
+		for(int i=0; i < titleList.size(); i++) {
+			Map<String, Object> letterParameterMap = new HashMap<String, Object>();
+			letterParameterMap.put("supNo", supNo);
+			letterParameterMap.put("supletTitle", titleList.get(i));
+			letterParameterMap.put("supletContent", contentList.get(i));
+			supplyRecDAO.insertLetterForSupply(letterParameterMap);
+		}
 	}
 	
 	@Override

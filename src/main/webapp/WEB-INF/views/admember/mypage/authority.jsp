@@ -95,7 +95,7 @@
 														</button>
 														</c:if>
 														<c:if test="${ authReq.coConfirm  eq 'Y'}">
-																<div class="text-danger">이미승인된기업입니다.</div>
+																<div class="text-danger">권한부여된기업입니다.</div>
 														</c:if>
 												</th>
 											</tr>

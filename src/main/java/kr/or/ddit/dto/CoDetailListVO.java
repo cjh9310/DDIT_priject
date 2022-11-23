@@ -2,6 +2,7 @@ package kr.or.ddit.dto;
 
 public class CoDetailListVO {
 	
+	private String type; // 기업id
 	private String coId; // 기업id
 	private String coAddr; // 기업 주소1
 	private String coDeaddr; // 기업주소2
@@ -9,6 +10,18 @@ public class CoDetailListVO {
 	private String coConfirm; // 기업회원 권한
 	private String recWantedtitle; // 공개채용 제목
 	private String openTitle; // 일반채용 목록
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 	/**
 	 * @return the coId
 	 */
@@ -95,8 +108,9 @@ public class CoDetailListVO {
 	}
 	@Override
 	public String toString() {
-		return "CoDetailListVO [coId=" + coId + ", coAddr=" + coAddr + ", coDeaddr=" + coDeaddr + ", coNm=" + coNm
-				+ ", coConfirm=" + coConfirm + ", recWantedtitle=" + recWantedtitle + ", openTitle=" + openTitle + "]";
+		return "CoDetailListVO [type=" + type + ", coId=" + coId + ", coAddr=" + coAddr + ", coDeaddr=" + coDeaddr
+				+ ", coNm=" + coNm + ", coConfirm=" + coConfirm + ", recWantedtitle=" + recWantedtitle + ", openTitle="
+				+ openTitle + "]";
 	}
 	
 	
