@@ -25,7 +25,6 @@ import kr.or.ddit.service.AllimService;
 @RequestMapping("/allim")
 public class AllimController {
 
-	
 	@Autowired
 	private AllimService allimService;
 	
@@ -36,34 +35,21 @@ public class AllimController {
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
+//      두가지의 맵을 담기 위해 hashMap을 생성하고 담아줌..  상위호환?		
+		Map<String, Object> alertForOpenList = allimService.getAllimOpenList(id);
+		Map<String, Object> alertForRecList = allimService.getAllimRecList(id);
 		
-		Map<String, Object> almMap = allimService.getAllimToList(id);
-		ResponseEntity<Map<String, Object>> entity = new ResponseEntity<Map<String, Object>>(almMap,HttpStatus.OK);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("alertForOpenList", alertForOpenList);
+		dataMap.put("alertForRecList", alertForRecList);
+		
+		ResponseEntity<Map<String, Object>> entity = new ResponseEntity<Map<String, Object>>(dataMap,HttpStatus.OK);
+		
 		
 		return entity;
 	}
 
-	
-	
- // login기준이 현재 일반회원인데 기업회원이여야 함
-	@GetMapping("list2")
-	@ResponseBody
-	public ResponseEntity<Map<String, Object>> list2(HttpServletRequest request) throws Exception {
-		
-		HttpSession session = request.getSession();
-		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-		String id = loginUser.getId();
-//		AllimVO allim = null;
-//		
-//		String openSeqno = allim.getOpenSeqno();
-//		
-//		
-		Map<String, Object> almNmTitleMap = allimService.getAllimNmTitleList(id);
-//		System.out.println("찾아라"+almNmTitleMap);
-		
-		ResponseEntity<Map<String, Object>> entity = new ResponseEntity<Map<String, Object>>(almNmTitleMap,HttpStatus.OK);
-		return entity;
-	}
+
 
 
 }

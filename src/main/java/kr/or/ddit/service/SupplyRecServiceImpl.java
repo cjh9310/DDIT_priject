@@ -133,5 +133,12 @@ public class SupplyRecServiceImpl implements SupplyRecService {
 		
 		return resumeMap;
 	}
+
+	@Override
+	public List<SupplyRecVO> getSupplyRecruit(String recWantedNo) throws SQLException {
+		List<SupplyRecVO> supplyRecList = supplyRecDAO.selectSupplyRecByRNo(recWantedNo);
+		
+		return supplyRecList;
+	}
 	
 }

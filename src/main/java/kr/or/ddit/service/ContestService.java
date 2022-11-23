@@ -18,7 +18,7 @@ public interface ContestService {
 	ContestVO getContest(int conNo) throws SQLException;
 	
 	//등록
-	void regist(ContestVO contest) throws SQLException;
+	void regist(ContestVO contest, String savePath) throws SQLException;
 	
 	//수정
 	void modify(ContestVO contest) throws SQLException;

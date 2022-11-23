@@ -18,6 +18,8 @@ public interface SupplyRecDAO {
 
 	List<SupplyRecVO> selectSupplyOpenRecListById(String id) throws SQLException;
 	
+	List<SupplyRecVO> selectSupplyRecByRNo(String recWantedNo) throws SQLException;
+	
 	int selectCountSupplyRecById(Map<String, Object> parameterMap) throws SQLException;
 	
 	int selectCountSupplyOpenRecById(Map<String, Object> parameterMap) throws SQLException;

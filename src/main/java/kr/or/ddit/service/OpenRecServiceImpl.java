@@ -1,9 +1,14 @@
 package kr.or.ddit.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.command.MakeFileName;
@@ -16,6 +21,8 @@ import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 
 public class OpenRecServiceImpl implements OpenRecService {
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private OpenRecDAO openRecDAO;
 	public void setOpenRecDAO(OpenRecDAO openRecDAO) {
@@ -90,18 +97,15 @@ public class OpenRecServiceImpl implements OpenRecService {
 
 	@Override
 	public int regist(OpenRecVO openRec, String savePath) throws SQLException {
-		
-		/*********** 첨부파일 등록  start************/
-		// 첨부파일등록
-		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+
+		openRecDAO.insertOpenRec(openRec);
+
 		String workDiv = "openRec"; // 필수
 		
 		List<AttachVO> attachList = null;
 		try {
-			// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
 			attachList = MultipartFileUploadResolver.fileUpload(openRec.getUploadFile(), savePath + "/" + workDiv);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -109,16 +113,13 @@ public class OpenRecServiceImpl implements OpenRecService {
 		
 		if(openRec.getAttachList() != null) {
 			for (AttachVO attach : openRec.getAttachList()) {
-				System.out.println("파일경로 : " + workDiv);
 				attach.setWorkDiv(workDiv);
 				attach.setWorkPk(Integer.toString(openRec.getOpenSeqno()));
-				System.out.println("아이디 : "+openRec.getOpenConm());
-				attach.setAttacher(openRec.getId());
+				attach.setAttacher(openRec.getOpenConm());
 				attachDAO.insertAttach(attach);
 			}
 		}
 		
-		openRecDAO.insertOpenRec(openRec);
 		
 		return 1;
 	}
@@ -161,7 +162,7 @@ public class OpenRecServiceImpl implements OpenRecService {
 
 		AttachVO attach = new AttachVO();
 		attach.setWorkPk(Integer.toString(openRec.getOpenSeqno()));
-		attach.setWorkDiv("FalseReport");
+		attach.setWorkDiv("openRec");
 		
 		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
 		

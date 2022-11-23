@@ -31,6 +31,13 @@
 		 where fal_no=#{falNo}
 		   and ind_id=#{indId}
 	</select>	
+	
+	<select id="selectFalseReportById" resultType="falseReport">
+		select *
+		from false_report
+		where fal_no = #{falNo}
+		and   ind_id = #{id}
+	</select>
 		
 	
 	<insert id="insertFalse" parameterType="falseReport" >

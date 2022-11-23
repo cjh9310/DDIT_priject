@@ -1687,6 +1687,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	webSocket.onmessage = function(e){
 		console.log(e.data);
+		
+		var allim = '${allim.toId}';
+		console.log("asd"+allim);
 	}
 	$.ajax({
 		url : '<%=request.getContextPath()%>/allim/list',
@@ -1694,9 +1697,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		dataType:"json",
 		success : function(result) {
 			console.log("ajax1",result);
-			var count = result.count;
+			var count = result.alertForOpenList.count;
 			var almList = result.almList;
-			console.log(result.almList[0].toId);
 			if(count == 0){
 				var v_list = 
 				`<li class="">
@@ -1723,6 +1725,7 @@ document.addEventListener('DOMContentLoaded', () => {
 							</span> <span class="d-flex flex-column flex-1 ml-1"> <span
 									class="name">`+result.almList[i].toId+`</span>
 									<span class="coNm">`+result.almList[i].coNm+`</span>
+									<span class="coNm">`+result.almList[i].openTitle+`</span>
 									<span class="fs-nano text-muted mt-1">`+result.almList[i].almDate+`</span>
 							</span>
 						</a>

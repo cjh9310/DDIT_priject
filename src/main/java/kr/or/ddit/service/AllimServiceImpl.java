@@ -14,49 +14,35 @@ public class AllimServiceImpl implements AllimService{
 	public void setAllimDAO(AllimDAO allimDAO) {
 		this.allimDAO = allimDAO;
 	}
+	
 	@Override
-	public Map<String, Object> getAllimFromList(String id) throws SQLException {
-		Map<String, Object> almComemMap = new HashMap<String, Object>();
-		int count = allimDAO.selectCoTotalCount(id);
-		almComemMap.put("count",count);
-		
-		if(count > 0) {
-			List<AllimVO> almComemList = allimDAO.selectFromIdById(id);
-			almComemMap.put("almComemList",almComemList);
-		}
-		
-		return almComemMap;
-	}
-	@Override
-	public Map<String, Object> getAllimToList(String id) throws SQLException {
+	public Map<String, Object> getAllimOpenList(String id) throws SQLException {
 		Map<String, Object> almMap = new HashMap<String, Object>();
 		int count = allimDAO.selectCoTotalCount(id);
 		almMap.put("count", count);
 		if(count > 0) {
-			List<AllimVO> almList = allimDAO.selectToById(id);
+			List<AllimVO> almList = allimDAO.selectToOpenId(id);
 			almMap.put("almList",almList);
-			
 		}
 		return almMap;
 	}
+	
+	@Override
+	public Map<String, Object> getAllimRecList(String id) throws SQLException {
+		Map<String, Object> almMap = new HashMap<String, Object>();
+		
+			List<AllimVO> almList = allimDAO.selectToRecId(id);
+			almMap.put("almList",almList);
+		
+		return almMap;
+	}
+	
+	
 	@Override
 	public void registAllim(AllimVO allim) throws SQLException {
 		allimDAO.insertAllim(allim);
 		
 	}
 	
-	@Override
-	public Map<String, Object> getAllimNmTitleList(String id) throws SQLException {
-		Map<String, Object> almNmTitleMap = new HashMap<String, Object>();
-		int count = allimDAO.selectCoTotalCount(id);
-		if(count > 0) {
-			List<AllimVO> almNmTitleList = allimDAO.selectNmTitleById(id);
-			almNmTitleMap.put("almNmTitleList", almNmTitleList);
-			System.out.println(almNmTitleList.size());
-		}
-		return almNmTitleMap;
-		
-		
-		
-	}
+	
 }

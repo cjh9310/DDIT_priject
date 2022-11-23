@@ -16,6 +16,9 @@ public interface FalseReportService {
 	// 상세보기
 	FalseReportVO getFalseReport(int falNo)throws SQLException;
 	
+	//자신이 쓴 공고글 정보 자세히 찾기
+	FalseReportVO getFalseReportById(int falNo, String id) throws SQLException;
+	
 	// 등록
 	void regist(FalseReportVO falseReport, String savePath)throws SQLException;
 	

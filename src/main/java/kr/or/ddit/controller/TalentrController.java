@@ -89,7 +89,6 @@ public class TalentrController {
 		dataMap2 = openRecService.getOpenRecListByConm(open_conm);
 		dataMap3 = recruitService.getRecruitListByConm(open_conm);
 		
-		System.out.println("asdasd"+dataMap3);
 		request.setAttribute("dataMap2", dataMap2);
 		request.setAttribute("dataMap3", dataMap3);
 		// 여기까지 500뜨
@@ -142,6 +141,7 @@ public class TalentrController {
 		advice.getIndId();
 		allim.getFromId();
 		allim.getToId();
+		System.out.println("찾아줘바"+allim.getToId());
 		System.out.println("찾아줘"+advice.getOpenSeqno());
 		System.out.println("찾아줘"+allim.getOpenSeqno());
 		adviceService.registAdvice(advice);
@@ -159,12 +159,10 @@ public class TalentrController {
 	@ResponseBody
 	public AdviceVO recruitAdviceRegist(AdviceVO advice, AllimVO allim, webSocketListener handler ) throws Exception {
 		
+		System.out.println("찾아줘");
 		advice.getIndId();
 		allim.getFromId();
 		allim.getToId();
-		System.out.println("찾아줘"+advice.getRecWantedno());
-		System.out.println("찾아줘"+allim.getRecWantedno());
-		System.out.println("찾아줘"+advice.getOpenSeqno());
 		adviceService.registAdvice(advice);
 		allimService.registAllim(allim);
 		handler.AdviceAllim(allim);

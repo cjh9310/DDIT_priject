@@ -113,7 +113,7 @@
 	 
 	 Swal.fire({
          icon: 'warning',
-			title: "가산점을 부여하시겠습니까?",
+			title: "수정하시겠습니까?",
          type: "success",
          showCancelButton: true,
          confirmButtonText: "OK"
@@ -129,7 +129,7 @@
 					//alert("수정성공");
 					Swal.fire({
 							icon: 'success',
-							title: '가산점이 부여 되었습니다.',
+							title: '수정되었습니다.',
 							showConfirmButton: false,
 							timer: 1500
 					}).then(function(){

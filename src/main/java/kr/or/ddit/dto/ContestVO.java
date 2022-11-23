@@ -1,6 +1,9 @@
 package kr.or.ddit.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class ContestVO {
 	
@@ -14,6 +17,9 @@ public class ContestVO {
 	private Date conDate; //게시물 등록일자
 	private Date conSdate;//공모전 응모시작일자
 	private Date conEdate;//공모전 응모마감일자
+	
+	private List<MultipartFile> uploadFile; //파일 업로드
+	private List<AttachVO> attachList;
 	
 	public int getConNo() {
 		return conNo;
@@ -75,12 +81,27 @@ public class ContestVO {
 	public void setConEdate(Date conEdate) {
 		this.conEdate = conEdate;
 	}
+
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
 	@Override
 	public String toString() {
 		return "ContestVO [conNo=" + conNo + ", coId=" + coId + ", conTitle=" + conTitle + ", conContent=" + conContent
 				+ ", conPicture=" + conPicture + ", conField=" + conField + ", conAward=" + conAward + ", conDate="
-				+ conDate + ", conSdate=" + conSdate + ", conEdate=" + conEdate + "]";
+				+ conDate + ", conSdate=" + conSdate + ", conEdate=" + conEdate + ", uploadFile=" + uploadFile
+				+ ", attachList=" + attachList + "]";
 	}
+	
 	
 	
 	

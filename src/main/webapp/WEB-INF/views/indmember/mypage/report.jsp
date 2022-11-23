@@ -69,12 +69,12 @@
 								<tbody>
 									<c:if test="${!empty falseReportList }">
 										<c:forEach var="falseReportList" items="${falseReportList }">
-											<tr id="falseReportDetail">
+											<tr onclick="falseReportDetail(${falseReportList.falNo })">
 												<td>${falseReportList.falNo }</td>
 												<td>${falseReportList.falOdate }</td>
 												<td>${falseReportList.falCategory }</td>
 												<td>${falseReportList.falTitle }</td>
-												<td>추가해야함</td>
+												<td>${falseReportList.repStatus }</td>
 											</tr>
 										</c:forEach>
 									</c:if>
@@ -142,40 +142,62 @@
 				</div>
 				<div class="panel-container show">
 					<div class="panel-content">
-	                    <div class="form-group row" style="margin-left: 0px; margin-right: 0px;">
-	                    	<div style="display: inline; width : 33%; padding : 0px 10px 0px 0px;">
-	                    		<label class="form-label" for="example-date">글작성일</label>
-	                        	<input class="form-control" id="sdate" type="date" name="falSdate" value="" disabled>
-	                    	</div>
-	                    	<div style="display: inline; width : 34%; padding : 0px 10px 0px 10px;">
-	                    		<label class="form-label" for="example-date">사건발생일</label>
-	                        	<input class="form-control" id="odate" type="date" name="falOdate" value="">
-	                    	</div>
-	                    	<div style="display: inline; width : 33%; padding : 0px 0px 0px 10px;">
-	                    		<label class="form-label" for="example-date">종료일</label>
-	                        	<input class="form-control" id="edate" type="date" name="falEdate" value="">
-	                    	</div>
-	                    </div>
-	                    <div class="form-group">
-	                        <label class="form-label" for="">신고제목</label>
-	                        <input type="text" id="title" name="falTitle" class="form-control" placeholder="">
-	                    </div>
-	                    <div class="form-group">
-	                        <label class="form-label" for="">기업명</label>
-	                        <input type="text" id="conm" name="coName" class="form-control" placeholder="" disabled>
-	                    </div>
-	                    <div class="form-group">
-	                        <label class="form-label" for="">신고내용</label>
-	                        <textarea type="text" id="content" name="falContent" class="form-control" style="resize: none; width: 100%;" rows="10"></textarea>
-	                    </div>
-	                    <div class="form-group">
-	                        <label class="form-label" for="">카테고리</label>
-	                        <input type="text" id="company" name="falCategory" class="form-control" placeholder="">
-	                    </div>
-	                    <div class="form-group">
-	                        <label class="form-label" for="">카테고리상세</label>
-	                        <input type="text" id="company" name="falCategorydetail" class="form-control" placeholder="">
-	                    </div>
+						<div class="form-group row"
+							style="margin-left: 0px; margin-right: 0px;">
+							<div
+								style="display: inline; width: 33%; padding: 0px 10px 0px 0px;">
+								<label class="form-label" for="example-date">글작성일</label> <input
+									class="form-control" id="sdate" type="date" name="falSdate"
+									value="" disabled>
+							</div>
+							<div
+								style="display: inline; width: 34%; padding: 0px 10px 0px 10px;">
+								<label class="form-label" for="example-date">사건발생일</label> <input
+									class="form-control" id="odate" type="date" name="falOdate"
+									value="">
+							</div>
+							<div
+								style="display: inline; width: 33%; padding: 0px 0px 0px 10px;">
+								<label class="form-label" for="example-date">종료일</label> <input
+									class="form-control" id="edate" type="date" name="falEdate"
+									value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="form-label" for="">신고제목</label> <input type="text"
+								id="title" name="falTitle" class="form-control" placeholder="">
+						</div>
+						<div class="form-group">
+							<label class="form-label" for="">기업명</label> <input type="text"
+								id="conm" name="coName" class="form-control" placeholder=""
+								disabled>
+						</div>
+						<div class="form-group">
+							<label class="form-label" for="">신고내용</label>
+							<textarea type="text" id="content" name="falContent"
+								class="form-control" style="resize: none; width: 100%;"
+								rows="10"></textarea>
+						</div>
+						<div class="form-group">
+							<label class="form-label" for="">카테고리</label> <input type="text"
+								id="company" name="falCategory" class="form-control"
+								placeholder="">
+						</div>
+						<div class="form-group">
+							<label class="form-label" for="">카테고리상세</label> <input
+								type="text" id="company" name="falCategorydetail"
+								class="form-control" placeholder="">
+						</div>
+						<div class="col-lg-12 mb-2">
+							<div class="card card-outline card-success">
+								<div class="card-header">
+									<b>첨부파일 다운로드</b>
+								</div>
+								<div class="card-footer">
+									<div class="row" id="attachList"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -186,21 +208,52 @@
 </main>
 
 <script>
-$("#falseReportDetail").addEventListener("click", function() {
-	
-});
+var cntxtPth = "${pageContext.request.contextPath}";
+
+function falseReportDetail(p_falNo) {
 	$.ajax({
 		url : 'reportDetail',
 		type : 'post',
 		data : {'falNo' : p_falNo},
 		success : function(result) {
 			console.log(result);
+			$("#title").val(result.falTitle);
+			$("#sdate").val(result.falSdate);
+			$("#edate").val(result.falEdate);
+			$("#odate").val(result.falOdate);
+			$("#content").val(result.falContent);
+			
+			var rowStr = '';
+			$('#attachList').empty();
+			if(result.attachList.length > 0){
+				$.each(result.attachList, function(key, val){
+					console.log(val)
+					console.log(val.attNo)
+					console.log(val.filename)
+					console.log(cntxtPth)
+						rowStr += '<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href=\''+ cntxtPth+ '/attach/getFile.do?attNo=' + val.attNo + '\';">'
+						rowStr += '<div class="info-box">'
+						rowStr += '<span class="info-box-icon bg-yellow">'
+						rowStr += '<i class="fa fa-copy"></i>'
+						rowStr += '</span>'
+						rowStr += '<div class="info-box-content">'
+						rowStr +=' <span class ="info-box-text"></span>'
+						rowStr +=' <span class ="info-box-number">' + val.filename + '</span>'
+						rowStr +=' </div></div></div>'
+						
+				});
+				
+			}else{
+				rowStr = '<span>저장된 첨부 파일이 없습니다.</span>'
+			}
+			
+			$('#attachList').append(rowStr);
 		},
-		error : {
+		error : function(){
 			alert("Error");
 		}
 	});
-
+};
 </script>
 
 <script>

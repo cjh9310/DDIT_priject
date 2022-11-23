@@ -3,6 +3,9 @@ package kr.or.ddit.dto;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class RecruitVO {
 
@@ -39,10 +42,32 @@ public class RecruitVO {
 	private String indId;
 	private Date subDate;
 	private int supStatus;
+	private String coId;
 
 	// 즐겨찾기 필드
 	private String recBookmark;
 	private String coBookmark;
+	
+	//파일
+	private List<MultipartFile> uploadFile;
+	
+	private List<AttachVO> attachList;
+
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
 
 	public int getSupNo() {
 		return supNo;
@@ -74,6 +99,14 @@ public class RecruitVO {
 
 	public void setSupStatus(int supStatus) {
 		this.supStatus = supStatus;
+	}
+
+	public String getCoId() {
+		return coId;
+	}
+
+	public void setCoId(String coId) {
+		this.coId = coId;
 	}
 
 	public String getRecWantedno() {
@@ -305,14 +338,19 @@ public class RecruitVO {
 
 	@Override
 	public String toString() {
-		return "RecruitVO [recWantedno=" + recWantedno + ", coName=" + coName + ", recRegdt=" + recRegdt
-				+ ", recMinsal=" + recMinsal + ", recMaxsal=" + recMaxsal + ", recMinedubg=" + recMinedubg
-				+ ", recPersonal=" + recPersonal + ", recCapitalamt=" + recCapitalamt + ", recYrsalesamt="
-				+ recYrsalesamt + ", recIndtpcdnm=" + recIndtpcdnm + ", recHomepg=" + recHomepg + ", recBusisize="
-				+ recBusisize + ", recJobsnm=" + recJobsnm + ", recWantedtitle=" + recWantedtitle + ", recJobcont="
-				+ recJobcont + ", recReceiptclosedt=" + recReceiptclosedt + ", recCollectpsncnt=" + recCollectpsncnt
-				+ ", recSaltpnm=" + recSaltpnm + ", recEntertpnm=" + recEntertpnm + ", recWorkdayworkhrcont="
-				+ recWorkdayworkhrcont + ", recFourins=" + recFourins + ", recRegion=" + recRegion + "]";
+		return "RecruitVO [recWantedno=" + recWantedno + ", recRegdt=" + recRegdt + ", recWantedtitle=" + recWantedtitle
+				+ ", recIndtpcdnm=" + recIndtpcdnm + ", coName=" + coName + ", recMinsal=" + recMinsal + ", recMaxsal="
+				+ recMaxsal + ", recEntertpnm=" + recEntertpnm + ", recMinedubg=" + recMinedubg + ", recPersonal="
+				+ recPersonal + ", recCapitalamt=" + recCapitalamt + ", recYrsalesamt=" + recYrsalesamt
+				+ ", recFourins=" + recFourins + ", recBusisize=" + recBusisize + ", recHomepg=" + recHomepg
+				+ ", recJobsnm=" + recJobsnm + ", recReceiptclosedt=" + recReceiptclosedt + ", recJobcont=" + recJobcont
+				+ ", recCollectpsncnt=" + recCollectpsncnt + ", recSaltpnm=" + recSaltpnm + ", recWorkdayworkhrcont="
+				+ recWorkdayworkhrcont + ", recRegion=" + recRegion + ", secCode=" + secCode + ", idx=" + idx
+				+ ", rownum=" + rownum + ", supNo=" + supNo + ", indId=" + indId + ", subDate=" + subDate
+				+ ", supStatus=" + supStatus + ", coId=" + coId + ", recBookmark=" + recBookmark + ", coBookmark="
+				+ coBookmark + ", uploadFile=" + uploadFile + ", attachList=" + attachList + "]";
 	}
+
+	
 
 }

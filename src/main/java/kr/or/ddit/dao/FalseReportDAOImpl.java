@@ -69,4 +69,13 @@ public class FalseReportDAOImpl implements FalseReportDAO {
 		return count;
 	}
 
+	@Override
+	public FalseReportVO selectFalseReportById(int falNo, String id) throws SQLException {
+		Map<String, Object> dataParam = new HashMap<>();
+		dataParam.put("id", id);
+		dataParam.put("falNo", falNo);
+		FalseReportVO falseReport = session.selectOne("FalseReport-Mapper.selectFalseReportById", dataParam);
+		return falseReport;
+	}
+
 }

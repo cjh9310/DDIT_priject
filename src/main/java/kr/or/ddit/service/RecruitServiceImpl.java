@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.RecruitDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.RecruitVO;
 
 public class RecruitServiceImpl implements RecruitService {
@@ -16,10 +20,26 @@ public class RecruitServiceImpl implements RecruitService {
 	public void setRecruitDAO(RecruitDAO recruitDAO) {
 		this.recruitDAO = recruitDAO;
 	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
+	}
 
 	@Override
 	public RecruitVO getRecruit(String recWantedno) throws SQLException {
 		RecruitVO recruit = recruitDAO.selectRecruitByRecWantedno(recWantedno);
+		
+		addAttachList(recruit);
+		
+		if(recruit!=null && recruit.getAttachList()!=null) {
+			for(AttachVO attach:recruit.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
+		
 		return recruit;
 	}
 	
@@ -81,11 +101,31 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public void regist(RecruitVO recruit) throws Exception {
+	public void regist(RecruitVO recruit, String savePath) throws Exception {
 		String recWantedno = recruitDAO.selectRecruitSequenceNextValue();
 		recruit.setRecWantedno(recWantedno);
-		System.out.println(recWantedno);
 		recruitDAO.insertRecruit(recruit);
+		
+		String workDiv = "recruit"; // 필수
+		
+		List<AttachVO> attachList = null;
+		
+		try {
+			attachList = MultipartFileUploadResolver.fileUpload(recruit.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		recruit.setAttachList(attachList);
+		
+		if(recruit.getAttachList() != null) {
+			for (AttachVO attach : recruit.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(recruit.getRecWantedno());
+				attach.setAttacher(recruit.getCoName());
+				attachDAO.insertAttach(attach);
+			}
+		}
 	}
 
 	@Override
@@ -111,4 +151,15 @@ public class RecruitServiceImpl implements RecruitService {
 		return dataMap;
 	}
 	
+	private void addAttachList(RecruitVO recruit) throws SQLException {
+
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(recruit.getRecWantedno());
+		attach.setWorkDiv("recruit");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		recruit.setAttachList(attachList);
+		
+	}
 }

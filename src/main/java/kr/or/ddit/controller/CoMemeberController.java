@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -171,13 +172,6 @@ public class CoMemeberController {
 		return url;
 	}
 
-	@RequestMapping(value = "/mypage/regist", produces = "application/text; charset=UTF-8", method = {
-			RequestMethod.POST })
-	@ResponseBody
-	public void insertPatient(RecruitVO re) throws Exception {
-		recruitService.regist(re);
-	}
-
 	@RequestMapping(value = "/mypage/opendetail", method = RequestMethod.POST)
 	public @ResponseBody OpenRecVO openDetail(@RequestParam("openSeqno") String param,  Model model) throws SQLException {
 		OpenRecVO detail = null;
@@ -212,20 +206,23 @@ public class CoMemeberController {
 
 		return supplyRecList;
 	}
+	
+	@PostMapping("/mypage/supplyRecruit")
+	public @ResponseBody List<SupplyRecVO> supplyRecruit(@RequestParam("recWantedNo") String recWantedNo) throws Exception {
+		List<SupplyRecVO> supplyRecList = null;
+		
+		supplyRecList = supplyRecService.getSupplyRecruit(recWantedNo);
+		
+		return supplyRecList;
+	}
 
 	@RequestMapping("/mypage/resume")
-	public String appliedPerson(String id, HttpServletRequest request) throws Exception {
+	public String appliedPerson(int supNo, HttpServletRequest request) throws Exception {
 		String url = "comember/mypage/recruit/resume";
 
-		MemberVO member = memberService.getMember(id);
-		Map<String, Object> eduMap = educationService.getEducationListById(id);
-		Map<String, Object> crrMap = careerService.getCareerListById(id);
-		Map<String, Object> cerMap = certificateService.getCertificateListById(id);
-		request.setAttribute("eduMap", eduMap);
-		request.setAttribute("crrMap", crrMap);
-		request.setAttribute("cerMap", cerMap);
-		request.setAttribute("member", member);
-
+		Map<String, Object> resumeMap = supplyRecService.getSupplyResumeAllInfo(supNo);
+		request.setAttribute("resumeMap", resumeMap);
+		
 		return url;
 	}
 
@@ -233,11 +230,10 @@ public class CoMemeberController {
 	private String fileUploadPath;
 
 	// 공개채용 입력
-	@RequestMapping(value = "/mypage/openRecRegist", method = RequestMethod.POST)
-	@ResponseBody
+	@PostMapping("/mypage/openRecRegist")
 	public String openRecRegist(OpenRecVO openRec, HttpServletRequest request, RedirectAttributes rttr)
 			throws Exception {
-		String url = "redirect:/mypage/recruit";
+		String url = "redirect:/comember/mypage/recruit";
 		
 		String savePath = this.fileUploadPath;	
 		
@@ -282,10 +278,18 @@ public class CoMemeberController {
 	// 일반채용 정보 입력
 	@RequestMapping(value = "/mypage/recruitRegist", method = RequestMethod.POST)
 	@ResponseBody
-	public String recruitRegist(RecruitVO recruit) throws SQLException, Exception {
+	public String recruitRegist(RecruitVO recruit, HttpServletRequest request, RedirectAttributes rttr) throws SQLException, Exception {
 		String url = "redirect:/mypage/recruit";
+		
+		String savePath = this.fileUploadPath;
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		
+		String coId = loginUser.getId();
+		recruit.setIndId(coId);
 
-		recruitService.regist(recruit);
+		recruitService.regist(recruit, savePath);
 
 		return url;
 	}

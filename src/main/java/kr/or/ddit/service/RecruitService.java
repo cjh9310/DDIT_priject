@@ -24,7 +24,7 @@ public interface RecruitService {
 	
 	RecruitVO getRecruitForModify(String recWantedno)throws SQLException;
 	
-	public void regist(RecruitVO recruit) throws Exception;
+	public void regist(RecruitVO recruit, String savePath) throws Exception;
 	
 	public void modify(RecruitVO recruit)throws Exception;
 	

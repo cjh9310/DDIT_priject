@@ -523,7 +523,6 @@
 
 <script>
 function openAdviceRegist(p_indId, p_openSeqno, p_coId) {
-	 
 	$.ajax({
 		url : '<%=request.getContextPath()%>/talent/openAdviceRegist',
 		type : 'POST',
@@ -555,7 +554,18 @@ function recruitAdviceRegist(p_indId, p_recWantedno, p_coId) {
 		type : 'POST',
 		data : {'indId' : p_indId, 'toId':p_indId,'recWantedno' : p_recWantedno ,'fromId' : p_coId},
 		success : function(result) {
-//			console.log(JSON.stringify(result));
+			Swal.fire({
+				target: document.getElementById('counselModal'),
+                icon: 'success',
+				title: "권유가 완료되었습니다.",
+				text: "",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+    		}).then(function(result){
+			 
+				window.location.replace(location.href);
+    		});
 		},
 		error : function(request, status, error) {
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

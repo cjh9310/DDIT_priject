@@ -15,7 +15,7 @@
 				cache : false
 			};
 	
-			$.ajax(ajaxOption).done(function(data) {
+			$.ajax(ajaxOption).done(function(data) {ㅋ
 				$('#auth_check').children().remove();
 				$('#auth_check').html(data); 
 			});

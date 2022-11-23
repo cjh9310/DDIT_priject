@@ -68,11 +68,11 @@
 						</div>
 					</td>
 					<td>
-						<h2 style="margin: 0px;">${recruit.coName}  -  ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
+						<h2 style="margin: 0px;">${recruit.coName} - ${recruit.coId } - ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
 						</h2>
 					</td>
 					<td>
-						<button type="button" onclick="rec_supply()"
+						<button type="button" onclick="rec_supply(); AllimRegist();"
 							class="btn btn-md btn-outline-info waves-effect waves-themed w-100">
 							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
 						</button>
@@ -437,6 +437,9 @@ function rec_supply() {
 	
 }
 </script>
+<script>
+
+</script>
 
 <script>
 
@@ -466,6 +469,33 @@ function rec_supply_submit() {
 }
 
 </script>
+<script>
+function AllimRegist() {
+	var recWantedno = '${recruit.recWantedno}';
+	var coId = '${result.coId}';
+	var indId = '${result.indId}';
+	var openSeqno = '${result.openSeqno}';
+	console.log(recWantedno);
+	console.log(coId);
+	console.log(indId);
+	console.log(openSeqno);
+	$.ajax({
+		url : '<%=request.getContextPath()%>/recruit/supply/openAllim',
+		type : 'POST',
+		data : {'toId':coId,'fromId' : indId, 'openSeqno' : openSeqno , 'recWantedno' : recWantedno},
+		success : function(result) {
+      },
+
+		error : function(request, status, error) {
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		   }
+    });     
+}
+</script>
+
+
+
+
 
 <script>
 	$("#resume_delete1").on("click", function() {

@@ -40,6 +40,9 @@
 	</select>
 	
 	<insert id="insertSupport" parameterType="support">
+		<selectKey resultType="int" keyProperty="supNo" order="BEFORE">
+			select support_seqNo.nextval from dual
+		</selectKey>
 		insert
 		into
 		support(sup_No, ind_Id, sup_Type, sup_Title, sup_Content, sup_Pdate ,sup_Date,counselor_Name)

@@ -29,6 +29,7 @@ import kr.or.ddit.dto.ActivityVO;
 import kr.or.ddit.dto.CareerVO;
 import kr.or.ddit.dto.CertificateVO;
 import kr.or.ddit.dto.ContestVO;
+import kr.or.ddit.dto.CorporationVO;
 import kr.or.ddit.dto.EducationVO;
 import kr.or.ddit.dto.FalseReportVO;
 import kr.or.ddit.dto.LetterVO;
@@ -44,6 +45,7 @@ import kr.or.ddit.service.BookmarkService;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.ContestService;
+import kr.or.ddit.service.CorporationService;
 import kr.or.ddit.service.EducationService;
 import kr.or.ddit.service.FalseReportService;
 import kr.or.ddit.service.LetterService;
@@ -89,6 +91,8 @@ public class IndMemberController {
 	private FalseReportService falseReportService;
 	@Autowired
 	private OpenRecService openRecService;
+	@Autowired
+	private CorporationService corporationService; 
 	
 	@GetMapping("mypage/info")
 	public String myPageInfo(HttpServletRequest request) throws Exception {
@@ -317,8 +321,11 @@ public class IndMemberController {
 		OpenRecVO openRec = openRecService.getOpenRecListByDetail(openrecParam);
 		Map<String, Object> resumeMap = supplyRecService.getSupplyResumeAllInfo(supNo);
 		
+		String openConm = openRec.getOpenConm();
+		CorporationVO corporation = corporationService.getCoInfoVo(openConm);
 		request.setAttribute("openRec", openRec);
 		request.setAttribute("resumeMap", resumeMap);
+		request.setAttribute("corporation", corporation);
 		
 		return url;
 	}
@@ -554,8 +561,13 @@ public class IndMemberController {
 	
 	@RequestMapping("mypage/reportDetail")
 	@ResponseBody
-	public FalseReportVO reportDetail(String falNo) throws SQLException, Exception {
-		FalseReportVO falseReportDetail = null;
+	public FalseReportVO reportDetail(int falNo, HttpServletRequest request) throws SQLException, Exception {
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		FalseReportVO falseReportDetail = falseReportService.getFalseReportById(falNo, id);
 		return falseReportDetail;
 	}
 }

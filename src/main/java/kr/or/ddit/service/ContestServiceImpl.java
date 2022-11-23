@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.ContestDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.ContestVO;
 import kr.or.ddit.dto.OpenRecVO;
 
@@ -16,6 +19,11 @@ public class ContestServiceImpl implements ContestService {
 	private ContestDAO contestDAO;
 	public void setContestDAO(ContestDAO contestDAO) {
 		this.contestDAO = contestDAO;
+	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
 	}
 
 	@Override
@@ -72,9 +80,37 @@ public class ContestServiceImpl implements ContestService {
 	}
 
 	@Override
-	public void regist(ContestVO contest) throws SQLException {
+	public void regist(ContestVO contest, String savePath) throws SQLException {
 		int conNo = contestDAO.selectContestSeqNext();
 		contest.setConNo(conNo);
+		
+		// 첨부파일등록
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+		String workDiv = "Contest"; // 필수
+		//file 저장 -> List<AttachVO>
+		List<AttachVO> attachList = null;
+		try {
+			// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
+			attachList = MultipartFileUploadResolver.fileUpload(contest.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 파일저장정보 목록을 FalseReportVO에 세팅
+		contest.setAttachList(attachList);	
+		
+		// 파일정보를 첨부파일 테이블에 등록
+		if (contest.getAttachList() != null) {
+			for (AttachVO attach : contest.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(Integer.toString(contest.getConNo()));
+				attach.setAttacher(contest.getCoId());
+				attachDAO.insertAttach(attach);
+			}
+		}
+		/*********** 첨부파일 등록   end**************/
+				
 		contestDAO.insertContest(contest);
 
 	}

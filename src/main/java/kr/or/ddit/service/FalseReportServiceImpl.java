@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
 import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.AttachDAO;
@@ -110,4 +111,32 @@ public class FalseReportServiceImpl implements FalseReportService {
 		
 	}
 
+	@Override
+	public FalseReportVO getFalseReportById(int falNo, String id) throws SQLException {
+		FalseReportVO falseReport = falseReportDAO.selectFalseReportById(falNo, id); 
+		
+		addAttachList(falseReport);
+		
+		if(falseReport!=null && falseReport.getAttachList()!=null) {
+			for(AttachVO attach:falseReport.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
+		
+		return falseReport;
+	}
+	
+	private void addAttachList(FalseReportVO report) throws SQLException {
+
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(report.getFalNo()));
+		attach.setWorkDiv("FalseReport");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		report.setAttachList(attachList);
+		
+	}
 }

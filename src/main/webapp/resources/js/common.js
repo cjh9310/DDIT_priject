@@ -170,6 +170,32 @@ function addFile_go(limtLen){
 	dataNum++;
 }
 
+//첨부파일(일반채용공고용도)
+var dataNum1=0;
+
+function addFile_go2(limtLen){
+	//alert("click add btn");
+	if(limtLen == undefined || !limtLen || limtLen > 1){
+		limtLen = 3; //값이 없을 경우 default setting
+	}
+
+	if($('input[name="uploadFile"]').length >= limtLen){
+		alert("파일추가는 " + limtLen + "개까지만 가능합니다.");
+		return;
+	}
+	
+	var div=$('<div>').addClass("inputRow").attr("data-no",dataNum1);
+	var input=$('<input>').attr({"type":"file","name":"uploadFile"}).css("display","inline");
+	
+	var button="<button onclick='remove_go("+dataNum1+");' style='border:0;outline:0;' class='badge bg-red' type='button'>X</button>";
+	
+	div.append(input).append(button);
+	$('.fileInput').append(div);
+	
+	
+	dataNum1++;
+}
+
 //첨부파일 삭제
 function remove_go(dataNum){
 	$('div[data-no="'+dataNum+'"]').remove();

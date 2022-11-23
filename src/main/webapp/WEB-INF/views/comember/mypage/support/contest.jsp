@@ -578,7 +578,7 @@ $(document).ready(function(){
 					                                                            <td class="text-center"><fmt:formatDate value="${mentoring.menSdate }" pattern="yyyy-MM-dd"/>
 					                                                            						~<fmt:formatDate value="${mentoring.menEdate }" pattern="yyyy-MM-dd"/>
 					                                                            </td>
-					                                                            <td class="text-center">신청자수/${mentoring.numPeople }</td>
+					                                                            <td class="text-center">${mentoring.indCount}/${mentoring.numPeople }</td>
 					                                                            <td class="text-center">
 						                                                            <c:if test="${mentoring.menEdate < now }">종료</c:if>
 						                                                            <c:if test="${mentoring.menEdate >= now and mentoring.menSdate < now }">진행중</c:if>
@@ -835,8 +835,8 @@ $(document).ready(function(){
 									                                        <p>공모전 등록 페이지</p>
 																		</div>
 																	</div>
-																	<form class="needs-validation" novalidate=""
-																		method="post" name="registForm" id="registForm">
+																	<form class="needs-validation" novalidate="" action="<%=request.getContextPath()%>/comember/mypage/contestRegist"
+																		method="post" name="registForm" id="registForm" enctype="multipart/form-data">
 																		<div class="panel-content">
 																			<!-- <input type="hidden" name="supNo" value="0"> -->
 																			<div class="form-group">
@@ -877,14 +877,19 @@ $(document).ready(function(){
 																					시상하실 내용을 입력해주세요. 
 					                                                            </div>
 					                                                        </div>
-		
-																			<!-- <div class="form-group mb-0">
-																				<label class="form-label"><b>첨부파일</b></label>
-																				<div class="custom-file">
-																					<input type="file" class="custom-file-input" id="customFile">
-																					<label class="custom-file-label" for="customFile">파일선택</label>
+																			<div class="col-12 mb-3">
+																				<label class="form-label" for="example-date">첨부파일</label>
+																				<div class="form-group">								
+																					<div class="card card-outline card-success">
+																						<div class="card-header">
+																							&nbsp;&nbsp;<button class="btn btn-xs btn-primary"
+																							onclick="addFile_go(1);" type="button" id="addFileBtn">파일 첨부</button>
+																						</div>									
+																						<div class="card-footer fileInput">
+																						</div>
+																					</div>
 																				</div>
-																			</div> -->
+																			</div>
 																		</div>
 																		<div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
 																			<div class="custom-control custom-checkbox">
@@ -952,7 +957,21 @@ $(document).ready(function(){
 			var param = $("#registForm").serialize();
 			param = param.replaceAll('-','/');
 			
-			$.ajax({
+			Swal.fire({
+				target: document.getElementById('conModal'),
+                icon: 'success',
+				title: "프로그램이 등록되었습니다",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+    		}).then(function(result){
+				$("form[name='registForm']").submit();
+			
+    		}).then(function(){
+    			window.location.replace(location.href);
+    		})
+			
+			/* $.ajax({
 				url : 'contestRegist.do',
 				type : 'POST',
 				data : param,
@@ -976,7 +995,7 @@ $(document).ready(function(){
 				error : function(request, status, error) {
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
-			});
+			}); */
 		});
 </script>
 <script>
@@ -1306,6 +1325,7 @@ function contestSupporterListB(c,t){
 		        html += "<th>No</th>";
 		        html += "<th>지원일자</th>";
 		        html += "<th>지원자명</th>";
+		        html += "<th>회원ID</th>";
 		        html += "<th>연락처</th>";
 		        html += "<th>제출파일</th>";
 		        html += "</tr>";
@@ -1329,6 +1349,7 @@ function contestSupporterListB(c,t){
     	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
           	html +=	"<th scope='row'>"+index+"</th>";
             html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.name+"</td>";
             html +=	"<td>"+obj.indId+"</td>";
             html +=	"<td>"+obj.actTel+"</td>";
             html +=	"<td>"+ +"</td>";
@@ -1377,9 +1398,9 @@ function contestSupporterList(c,t){
 		        html += "<th>No</th>";
 		        html += "<th>지원일자</th>";
 		        html += "<th>지원자명</th>";
+		        html += "<th>회원ID</th>";
 		        html += "<th>연락처</th>";
 		        html += "<th>제출파일</th>";
-		        html += "<th>시상내용</th>";
 		        html += "<th>가산점</th>";
 		        html += "<th></th>";
 		        html += "</tr>";
@@ -1403,17 +1424,10 @@ function contestSupporterList(c,t){
     	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
           	html +=	"<th scope='row'>"+index+"</th>";
             html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+            html +=	"<td>"+obj.name+"</td>";
             html +=	"<td>"+obj.indId+"</td>";
             html +=	"<td>"+obj.actTel+"</td>";
             html +=	"<td>"+ +"</td>";
-            html +=	"<td>";
-            html +=	"<select class='form-control' id='contest_score_select'>";
-            html +=	"<option>0</option>";
-            html += "<option>1</option>";
-            html += "<option>2</option>";
-            html += "<option>3</option>";
-            html +=	"</select>";
-         	html +=	"</td>";
          	html +=	"<td>";
             html +=	"<select class='form-control' id='contest_score_select'>";
             html +=	"<option>0</option>";
@@ -1435,4 +1449,40 @@ function contestSupporterList(c,t){
    }
 
 </script>
-  
+
+<!-- --------------------------파일등록------------------------------------ -->
+<script>
+	
+	window.onload=function(){
+		$('.fileInput').on('change','input[type="file"]',function(event){
+			//alert(this.files[0].size);
+			if(this.files[0].size>1024*1024*50){
+	 			alert("파일 용량이 50MB를 초과하였습니다.");
+	 			this.click();
+	 			this.value="";	 					
+	 			return false;
+	 		} 
+		});
+	}
+
+	$(function () {
+	    $(document).on('click', '.btn-add', function (e) {
+	        e.preventDefault();
+	
+	        var controlForm = $('.controls:first'),
+	            currentEntry = $(this).parents('.entry:first'),
+	            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+	
+	        newEntry.find('input').val('');
+	        controlForm.find('.entry:not(:last) .btn-add')
+	            .removeClass('btn-add').addClass('btn-remove')
+	            .removeClass('btn-success').addClass('btn-danger')
+	            .html('<span class="fa fa-trash"></span>');
+	    }).on('click', '.btn-remove', function (e) {
+	        $(this).parents('.entry:first').remove();
+	
+	        e.preventDefault();
+	        return false;
+	    });
+	});
+</script>  

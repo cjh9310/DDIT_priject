@@ -84,6 +84,9 @@ public class SupportController {
 	public String activityRegistContest(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
 		String url = "redirect:/support/contest/list";
 		
+		//파일업로드 경로 
+		String savePath = this.fileUploadPath;
+		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		
@@ -112,10 +115,8 @@ public class SupportController {
 		return url;
 	}
 	
-	@PostMapping(value="counsel/regist")
-	@ResponseBody
+	@PostMapping("counsel/regist")
 	public String CounselRegist(			
-			//@RequestBody 
 			SupportVO support,
 			@RequestParam Map<String, Object> param,
 			HttpServletRequest request, RedirectAttributes rttr) throws Exception{

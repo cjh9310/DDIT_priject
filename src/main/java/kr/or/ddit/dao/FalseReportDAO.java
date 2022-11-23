@@ -13,6 +13,8 @@ public interface FalseReportDAO {
 	
 	FalseReportVO selectFalseReportByFalNo(int falNo)throws SQLException;
 	
+	FalseReportVO selectFalseReportById(int falNo, String id) throws SQLException;
+	
 	int insertFalse(FalseReportVO falseReport)throws SQLException;
 	
 	void updateFalse(FalseReportVO falseReport)throws SQLException;

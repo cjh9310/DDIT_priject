@@ -129,4 +129,11 @@ public class SupplyRecDAOImpl implements SupplyRecDAO {
 		return letList;
 	}
 
+	@Override
+	public List<SupplyRecVO> selectSupplyRecByRNo(String recWantedNo) throws SQLException {
+		List<SupplyRecVO> supplyRecList =
+				session.selectList("SupplyRec-Mapper.selectSupplyRecByRNo", recWantedNo);
+		return supplyRecList;
+	}
+
 }

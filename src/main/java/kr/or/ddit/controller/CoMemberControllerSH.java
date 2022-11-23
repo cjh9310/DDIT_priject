@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -47,6 +48,9 @@ public class CoMemberControllerSH {
 	@Autowired
 	private ActivityService activityService;
 	
+	@Resource(name="fileUploadPath")
+	private String fileUploadPath;
+	
 	
 	@RequestMapping(value="/mypage/contestRegist", produces = "application/text; charset=UTF-8")
 	@ResponseBody
@@ -57,13 +61,17 @@ public class CoMemberControllerSH {
 		
 		//String url = "redirect:/comember/mypage/support/contest";
 		
+		//파일업로드 경로 
+		String savePath = this.fileUploadPath;
+		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		
 		String coId = loginUser.getId();
 		contest.setCoId(coId);
 		
-		contestService.regist(contest);
+		//contest프로그램등록, 파일등록 서비스 호출(경로포함)
+		contestService.regist(contest, savePath);
 		//rttr.addFlashAttribute("form", "regist");
 		
 		return "ok";

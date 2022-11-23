@@ -13,15 +13,10 @@ public class AllimDAOImpl implements AllimDAO{
 	public void setSqlSession(SqlSession session) {
 		this.session = session;
 	}
+
 	@Override
-	public List<AllimVO> selectFromIdById(String id) throws SQLException {
-		List<AllimVO> almCmemList = session.selectList("Allim-Mapper.selectFromById", id);
-		
-		return almCmemList;
-	}
-	@Override
-	public List<AllimVO> selectToById(String id) throws SQLException {
-		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToById",id);
+	public List<AllimVO> selectToOpenId(String id) throws SQLException {
+		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToOpenId",id);
 		return almList;
 	}
 	@Override
@@ -34,10 +29,11 @@ public class AllimDAOImpl implements AllimDAO{
 		int count = session.selectOne("Allim-Mapper.selectCoTotalCount",id);
 		return count;
 	}
+
 	@Override
-	public List<AllimVO> selectNmTitleById(String id) throws SQLException {
-		List<AllimVO> almNmTitleList = session.selectList("Allim-Mapper.selectNmTitleById", id);
-		System.out.println("여기"+almNmTitleList.size());
-		return almNmTitleList;
+	public List<AllimVO> selectToRecId(String id) throws SQLException {
+		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToRecId",id);
+		return almList;
 	}
+
 }

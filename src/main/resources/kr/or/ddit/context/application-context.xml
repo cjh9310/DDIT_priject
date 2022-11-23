@@ -94,7 +94,8 @@
 		p:attachDAO-ref="attachDAO" />
 	<bean id="recruitService"
 		class="kr.or.ddit.service.RecruitServiceImpl"
-		p:recruitDAO-ref="recruitDAO" />
+		p:recruitDAO-ref="recruitDAO"
+		p:attachDAO-ref="attachDAO" />
 	<bean id="salaryService"
 		class="kr.or.ddit.service.SalaryServiceImpl"
 		p:salaryDAO-ref="salaryDAO" />
@@ -125,7 +126,8 @@
 		p:newsDAO-ref="newsDAO" />
 	<bean id="contestService"
 		class="kr.or.ddit.service.ContestServiceImpl"
-		p:contestDAO-ref="contestDAO" />
+		p:contestDAO-ref="contestDAO" 
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="faqService"
 		class="kr.or.ddit.service.FaqServiceImpl"
 		p:faqDAO-ref="faqDAO" />

@@ -101,6 +101,10 @@
          and a.rec_wantedno = c.rec_wantedno (+)
          and a.rec_wantedno = #{recWantedno}
 	</select>
+	<select id="selectAllimdata" parameterType="recruit" resultType="recruit">
+		
+		
+	</select>
 
 	<update id="insertRecruit" parameterType="recruit">
 		insert into recruit

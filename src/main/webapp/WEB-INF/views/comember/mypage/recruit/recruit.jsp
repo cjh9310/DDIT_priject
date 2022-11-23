@@ -37,6 +37,18 @@ th, td {
 }
 </style>
 <script>
+window.onload=function(){
+	$('.fileInput').on('change','input[type="file"]',function(event){
+		//alert(this.files[0].size);
+		if(this.files[0].size>1024*1024*50){
+ 			alert("파일 용량이 50MB를 초과하였습니다.");
+ 			this.click();
+ 			this.value="";	 					
+ 			return false;
+ 		} 
+	});
+}
+
 $(document).ready(function(){	
 	jQuery.fn.serializeObject = function() {
 		var obj = null;
@@ -61,19 +73,11 @@ $(document).ready(function(){
 	
 	$('#recurit-content').hide();
 	
-
-	$('.fileInput').on('change','input[type="file"]',function(event){
-		if(this.files[0].size>1024*1024*50){
-			alert("파일 용량이 50MB를 초과하였습니다.");
-			this.click();
-			this.value="";	 					
-			return false;
-		} 
-	});
 });
 </script>
 <script>
 var cntxtPth = "${pageContext.request.contextPath}";
+console.log(cntxtPth);
 
 function openRecDetail(p_seqno) {
 	$.ajax({
@@ -157,6 +161,34 @@ function recruitDetail(p_recno) {
 			$("#recWorkTime").val(result.recWorkdayworkhrcont);
 			$("#recPlace").val(result.recRegion);
 			$("#recWorkContent").val(result.recJobcont);
+			
+			var rowStr = '';
+			//첨부파일영역 초기화
+			$('#attachList2').empty();
+			if(result.attachList.length > 0){
+				$.each(result.attachList, function(key, val){
+					console.log(val)
+					console.log(val.attNo)
+					console.log(val.filename)
+					console.log(cntxtPth)
+						rowStr += '<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href=\''+ cntxtPth+ '/attach/getFile.do?attNo=' + val.attNo + '\';">'
+						rowStr += '<div class="info-box">'
+						rowStr += '<span class="info-box-icon bg-yellow">'
+						rowStr += '<i class="fa fa-copy"></i>'
+						rowStr += '</span>'
+						rowStr += '<div class="info-box-content">'
+						rowStr +=' <span class ="info-box-text"></span>'
+						rowStr +=' <span class ="info-box-number">' + val.filename + '</span>'
+						rowStr +=' </div></div></div>'
+						
+				});
+				
+			}else{
+				rowStr = '<span> 저장된 첨부 파일이 없습니다.</span>'
+			}
+			
+			$('#attachList2').append(rowStr);
+
 		},
 		error : function(xhr, status) {
 			console.log(xhr, status);
@@ -172,8 +204,8 @@ function cleanDetail() {
 }
 </script>
 <script>
-function supplyOpenDetail(p_id) {
-	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?id="+p_id, 'OpenWindow', 'location=no, width=700, height=1300, status=no, toolbar=no');
+function supplyOpenDetail(supNo) {
+	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?supNo="+supNo, 'OpenWindow', 'location=no, width=700, height=1300, status=no, toolbar=no');
 }
 </script>
 <script>
@@ -189,21 +221,19 @@ function supplyOpenRec(p_openSeqno){
 						.html(
 								'<tr><td colspan="5">해당 공고 지원자가 없습니다</td></tr>');
 			} else {
+				console.log("result",result);
 				cleanDetail();
 				for ( var idx in result) {
 					var p_id = result[idx].id;
-					DynamicTable += '<tr id="supplyRecList" onclick="supplyOpenDetail('
-							+ "\'" + result[idx].id + "\'" + ')">';
+					DynamicTable += '<tr id="supplyRecList">';
 					DynamicTable += '<td style="width : 8%;" id="supplyRecId">'
 							+ (Number(idx) + 1) + '</td>';
 					DynamicTable += '<td style="width : 23%;" id ="supplyRecName">'
 							+ result[idx].name + '</td>';
-					DynamicTable += '<td style="width : 23%;" id ="supplyRecIndOpen">'
-							+ result[idx].indOpen + '</td>';
-					DynamicTable += '<td style="width : 23%;" id ="supplyRecResume">'
-							+ '버튼양식openwindow형식으로 줄 예정' + '</td>';
-					DynamicTable += '<td style="width : 23%;" id ="supplyRecActivity">'
-							+ '버튼양식openwindow형식으로 줄 예정' + '</td>';
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecResume" onclick="supplyOpenDetail('+ "\'" + result[idx].supNo + "\'" + ')">'
+							+ '지원 당시 이력서 열람하기' + '</td>';
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity">'
+							+ '공모전 및 멘토링 참여 이력 열람하기' + '</td>';
 					DynamicTable += '</tr>';
 				}
 				$("#supplyRec").append(DynamicTable);
@@ -216,6 +246,40 @@ function supplyOpenRec(p_openSeqno){
 		}
 	});
 };
+</script>
+<script>
+function supplyRecruit(p_rec_wantedNo){
+	var DynamicTable = '';
+	$.ajax({
+		url : '<%=request.getContextPath()%>/comember/mypage/supplyRecruit',
+		type : 'POST',
+		data : { 'recWantedNo' : p_rec_wantedNo },
+		success : function(result) {
+			if (result == null) {
+				$("#supplyRec").html('<tr><td colspan="5">해당 공고 지원자가 없습니다</td></tr>');
+			} else {
+				cleanDetail();
+				for ( var idx in result) {
+					var p_id = result[idx].id;
+					DynamicTable += '<tr id="supplyRecList">';
+					DynamicTable += '<td style="width : 8%;" id="supplyRecId">'
+							+ (Number(idx) + 1) + '</td>';
+					DynamicTable += '<td style="width : 23%;" id ="supplyRecName">'
+							+ result[idx].name + '</td>';
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecResume" onclick="supplyOpenDetail('+ "\'" + result[idx].supNo + "\'" + ')">'
+							+ '지원 당시 이력서 열람하기' + '</td>';
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity">'
+							+ '공모전 및 멘토링 참여 이력 열람하기' + '</td>';
+					DynamicTable += '</tr>';
+				}
+				$("#supplyRec").append(DynamicTable);
+			}
+		},
+		error : function(xhr,status) {
+			console.log(xhr,status);
+		}
+	});
+}
 </script>
 <script>
 	function findAddr() {
@@ -385,7 +449,7 @@ function supplyOpenRec(p_openSeqno){
 										<tbody>
 											<c:forEach items="${recruitList }" var="recruitList">
 												<c:set var="i" value="${i + 1}" />
-												<tr onclick="recruitDetail('${recruitList.recWantedno }');">
+												<tr onclick="recruitDetail('${recruitList.recWantedno }'); supplyRecruit('${recruitList.recWantedno }');">
 													<td><c:out value="${i }" /></td>
 													<td
 														style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; text-align: left;">${recruitList.recWantedtitle}</td>
@@ -418,10 +482,9 @@ function supplyOpenRec(p_openSeqno){
 								<thead>
 									<tr>
 										<th style="width: 8%;">No</th>
-										<th style="width: 23%;">지원자 이름</th>
-										<th style="width: 23%;">이력서 공개여부</th>
+										<th style="width: 23%;">지원자 성명</th>
 										<th style="width: 23%;">이력서 보기</th>
-										<th style="width: 23%;">대회 수상 이력</th>
+										<th style="width: 23%;">프로그램 참여 이력</th>
 									</tr>
 								</thead>
 								<!-- tbody 태그 필요 없다. -->
@@ -613,7 +676,7 @@ function supplyOpenRec(p_openSeqno){
 											name="openAcptpsn" value="">
 									</div>
 								</div>
-								<div class="col-lg-12 mb-2">
+								<div class="col-lg-12 mb-2" style="padding-left: 0px; margin-bottom: 0px; padding-right: 0px;">
 									<div class="card card-outline card-success">
 										<div class="card-header">
 											<b>첨부파일 다운로드</b>
@@ -817,6 +880,17 @@ function supplyOpenRec(p_openSeqno){
 										rows="7" required="" id="recWorkContent" name="recJobcont"></textarea>
 									<div class="invalid-feedback">담당직무의 내용을 입력해주세요.</div>
 								</div>
+								<div class="col-lg-12 mb-2" style="padding-left: 0px; margin-bottom: 0px; padding-right: 0px;">
+									<div class="card card-outline card-success">
+										<div class="card-header">
+											<b>첨부파일 다운로드</b>
+										</div>
+										<div class="card-footer">
+											<div class="row" id="attachList2">
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -853,8 +927,8 @@ function supplyOpenRec(p_openSeqno){
 						</div>
 					</div>
 					<div class="panel-container show" style="height: 100%;">
-						<form class="needs-validation" novalidate="" method="post"
-							name="recuritForm" id="recuritForm">
+						<form enctype="multipart/form-data" class="needs-validation" novalidate="" method="post"
+							name="recuritForm" id="recuritForm" action="<%=request.getContextPath()%>/comember/mypage/recruitRegist">
 							<div class="panel-content">
 								<!-- 제목 -->
 								<div class="form-group">
@@ -1037,6 +1111,17 @@ function supplyOpenRec(p_openSeqno){
 										rows="7" required="" name="recJobcont"></textarea>
 									<div class="invalid-feedback">담당직무의 내용을 입력해주세요.</div>
 								</div>
+								<div class="form-group">
+									<div class="card card-outline card-success">
+										<div class="card-header">
+											&nbsp;&nbsp;
+											<button class="btn btn-xs btn-primary"
+												onclick="addFile_go2(3);" type="button" id="addFileBtn2">파일
+												첨부</button>
+										</div>
+										<div class="card-footer fileInput"></div>
+									</div>
+								</div>
 							</div>
 							<div
 								class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
@@ -1088,9 +1173,8 @@ function supplyOpenRec(p_openSeqno){
 						</div>
 					</div>
 					<div class="panel-container show" style="height: 100%;">
-						<form class="needs-validation" role="openRecRegistForm" novalidate="" method="post"
-							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" name="openRecForm" id="openRecForm"
-							enctype="multipart/form-data">
+						<form enctype="multipart/form-data" class="needs-validation" method="post"
+							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" name="openRecForm" id="openRecForm">
 							<div class="panel-content">
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">제목</label> <input
@@ -1238,7 +1322,7 @@ function supplyOpenRec(p_openSeqno){
 										<div class="card-header">
 											&nbsp;&nbsp;
 											<button class="btn btn-xs btn-primary"
-												onclick="addFile_go(3);" type="button" id="addFileBtn">파일
+												onclick="addFile_go();" type="button" id="addFileBtn">파일
 												첨부</button>
 										</div>
 										<div class="card-footer fileInput"></div>
@@ -1284,8 +1368,10 @@ function supplyOpenRec(p_openSeqno){
 		var recuritParam = $('#recuritForm').serializeObject();
 
 		console.log(recuritParam);
+		
+		$('form[name="recuritForm"]').submit();
 
-		$.ajax({
+		/* $.ajax({
 			url : 'recruitRegist',
 			type : 'post',
 			data : recuritParam,
@@ -1296,7 +1382,7 @@ function supplyOpenRec(p_openSeqno){
 				alert("성공");
 				location.reload();
 			}
-		});
+		}); */
 	});
 </script>
 
@@ -1307,9 +1393,9 @@ function supplyOpenRec(p_openSeqno){
 
 		console.log(openRecParam);
 		
-		//$("form[role='openRecRegistForm']").submit();
+		$("form[name='openRecForm']").submit();
 		
-		$.ajax({
+		/* $.ajax({
 			url : 'openRecRegist',
 			type : 'post',
 			data : openRecParam,
@@ -1320,7 +1406,7 @@ function supplyOpenRec(p_openSeqno){
 			error : function(xhr, status) {
 				alert("등록 실패 했습니다");
 			}
-		});
+		}); */
 	});
 </script>
 
@@ -1338,6 +1424,8 @@ function supplyOpenRec(p_openSeqno){
 		var openRecModifyForm = $('#openRecModifyForm').serializeObject();
 
 		console.log(openRecModifyForm);
+		
+		
 
 		$.ajax({
 			url : 'openRecModify',

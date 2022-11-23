@@ -78,7 +78,7 @@ $(document).ready(function(){
 														<p>궁금하신 사항이 있다면 언제든 신청해주세요. 친절히 상담을 도와드리겠습니다.</p>
 													</div>
 												</div>
-												<form class="needs-validation"  method="post" name="registForm" id="registForm" enctype="multipart/form-data">
+												<form class="needs-validation" action="<%=request.getContextPath()%>/support/counsel/regist" method="post" name="registForm" id="registForm" enctype="multipart/form-data">
 													<div class="panel-content">
 														<!-- <input type="hidden" name="supNo" value="0"> -->
 														<div class="form-group">
@@ -187,8 +187,24 @@ $(document).ready(function(){
 		$("#registBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
 			
 			var param = $("#registForm").serialize();
+			console.log(param);
+		
+			Swal.fire({
+				target: document.getElementById('counselModal'),
+                icon: 'success',
+				title: "상담신청완료!",
+				text: "신청한 상담은 [마이페이지]-[프로그램관리]에서 확인할 수 있습니다.",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+    		}).then(function(result){
+				$("form[name='registForm']").submit();
 			
-			$.ajax({
+    		}).then(function(){
+    			window.location.replace(location.href);
+    		})
+			
+		/* 	$.ajax({
 				url : 'regist',
 				type : 'POST',
 				data : param,
@@ -216,7 +232,7 @@ $(document).ready(function(){
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
 			
-		});
+		}); */
 	});		
 </script>
 
