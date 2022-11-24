@@ -18,14 +18,16 @@ public interface ActivityService {
 	
 	Map<String, Object> getActivityListByMenNo(int menNo) throws SQLException;
 	
+	Map<String, Object> selectAllActivityById(String id) throws SQLException;
+	
 	//상세보기
 	ActivityVO getActivityCon(int actNo)throws SQLException;
 	ActivityVO getActivityMen(int actNo)throws SQLException;
 	
 	//등록
-	void registContest(ActivityVO activity)throws SQLException;
-	
-	void registMentoring(ActivityVO activity)throws SQLException;
+	void registContest(ActivityVO activity, String savePath)throws SQLException;
+	void registMentoring(ActivityVO activity) throws SQLException;
+
 	
 	//수정
 	void modify(ActivityVO activity)throws SQLException;
@@ -35,5 +37,9 @@ public interface ActivityService {
 	
 	//삭제
 	void remove(int actNo)throws SQLException;
+
+	
+
+	
 	
 }

@@ -26,7 +26,7 @@
 				</div>
 				<div class="panel-container show">
 					<div class="panel-content">
-						<form method="post" name="modifyForm" id="modifyForm">
+						<form method="post" name="modifyForm" id="modifyForm" action="contestModify" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-5">
 								<img
@@ -110,20 +110,33 @@
 <script>
 
  $("#modifyBtn").on("click",function() {
-	 var param = $('#modifyForm').serialize();
-		 param = param.replaceAll('-','/');
+	 /* var param = $('#modifyForm').serialize();
+		 param = param.replaceAll('-','/'); */
 	 var conNo = ${contest.conNo};
 	 
-	 Swal.fire({
+	//$('#modifyForm').submit();
+	 
+	  Swal.fire({
          icon: 'warning',
-			title: "프로그램을 수정하시겠습니까?",
+			title: "수정하시겠습니까?",
          type: "success",
          showCancelButton: true,
          confirmButtonText: "OK"
 	}).then(function(result){ 
-		if(result.value){
-	 
-		 $.ajax({
+	 		$('#modifyForm').submit();
+	 		
+	}).then(function(){
+		
+	Swal.fire({
+		icon: 'success',
+		title: '프로그램이 수정되었습니다.',
+		showConfirmButton: false,
+		timer: 1500
+	}).then(function(){
+		opener.location.replace(opener.location.href);
+	})
+	})
+		 /* $.ajax({
 				type:"POST",
 				url:"contestModify.do",
 				data:param,
@@ -146,10 +159,9 @@
 					
 					console.log("failed ajax, code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
-		});
-	}
+		}); 
+	} */
 }); 
- });
 
 </script>
 

@@ -5,12 +5,12 @@
 <mapper namespace="Contest-Mapper">
 
 	<select id="selectContestList" resultType="contest">
-		select
-		* 
-		from
-		contest
-		where CON_NO is not null
-		order by CON_SDATE desc
+		 select a.*, b.uploadpath, b.filename, b.filetype
+		from contest a
+        left join (select * from file_attach
+                     where work_div='Contest') b
+          on(a.con_no = b.work_pk)
+		order by a.CON_SDATE desc
 	</select>
 	
 	<select id="selectContestListByCoId" resultType="contest">
@@ -49,9 +49,6 @@
 	</select>
 	
 	<insert id="insertContest" parameterType="contest">
-		<selectKey resultType="int" keyProperty="conNo" order="BEFORE">
-			select CONTEST_SEQ.nextval from dual
-		</selectKey>
 			insert
 			into
 			contest(CON_NO, CO_ID, CON_CONTENT, CON_PICTURE, CON_FIELD, CON_AWARD, CON_SDATE, CON_EDATE, CON_TITLE, CON_DATE)

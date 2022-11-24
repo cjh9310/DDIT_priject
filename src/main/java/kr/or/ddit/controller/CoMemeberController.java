@@ -35,6 +35,8 @@ import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SupplyRecVO;
+import kr.or.ddit.service.ActivityService;
+import kr.or.ddit.service.AdviceService;
 import kr.or.ddit.service.AuthReqService;
 import kr.or.ddit.service.BookmarkService;
 import kr.or.ddit.service.CareerService;
@@ -79,6 +81,12 @@ public class CoMemeberController {
 	
 	@Autowired
 	private AuthReqService authReqService;
+	
+	@Autowired
+	private ActivityService activityService;
+	
+	@Autowired
+	private AdviceService adviceService;
 
 	@GetMapping("/mypage/support")
 	public String myPageSupport() throws Exception {
@@ -106,13 +114,30 @@ public class CoMemeberController {
 		return url;
 	}
 
-	@GetMapping("/mypage/info")
+	@PostMapping("/mypage/checkInfo")
+	public String myPageInfo(@RequestParam("checkPwd") String checkPwd, HttpServletRequest request) throws Exception {
+		String url;
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		if(id.equals(checkPwd)) {
+			Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListByRecno(id);
+			request.setAttribute("bookmarkMap", bookmarkMap);
+			url = "comember/mypage/info";
+		} else {
+			url="common/Unlocking_fail";
+		}
+		return url;
+	}
+	
+	@GetMapping("/mypage/nonCheckInfo")
 	public String myPageInfo(HttpServletRequest request) throws Exception {
 		String url = "comember/mypage/info";
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-		String recWantedno = loginUser.getId();
-		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListByRecno(recWantedno);
+		String id = loginUser.getId();
+		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListByRecno(id);
 		request.setAttribute("bookmarkMap", bookmarkMap);
 		return url;
 	}
@@ -225,6 +250,16 @@ public class CoMemeberController {
 		
 		return url;
 	}
+	
+	@RequestMapping("/mypage/activity")
+	public String activity(String id, HttpServletRequest request) throws Exception {
+		String url = "comember/mypage/recruit/activity";
+		
+		Map<String, Object> activityMap = activityService.selectAllActivityById(id);
+		request.setAttribute("activityMap", activityMap);
+		
+		return url;
+	}
 
 	@Resource(name = "fileUploadPath")
 	private String fileUploadPath;
@@ -243,10 +278,12 @@ public class CoMemeberController {
 		String coId = loginUser.getId();
 		openRec.setId(coId);
 		
-		openRecService.regist(openRec, savePath);
-
+		System.out.println("Controller옴");
+		
+		openRecService.regist(openRec, savePath);		
+		
 		rttr.addFlashAttribute("from", "regist");
-
+		
 		return url;
 	}
 
@@ -269,7 +306,9 @@ public class CoMemeberController {
 	@ResponseBody
 	public String openRecDelete(@RequestParam("openSeqno") int openSeqno) throws Exception {
 		String url = "redirect:/mypage/recruit";
-
+		
+		supplyRecService.remove(openSeqno);
+		adviceService.remove(openSeqno);
 		openRecService.delete(openSeqno);
 
 		return url;
@@ -288,8 +327,9 @@ public class CoMemeberController {
 		
 		String coId = loginUser.getId();
 		recruit.setIndId(coId);
-
+		
 		recruitService.regist(recruit, savePath);
+
 
 		return url;
 	}
@@ -300,11 +340,15 @@ public class CoMemeberController {
 	public void recruitDelete(@RequestParam("recno") String recWantedno) throws SQLException, Exception {
 		List<Integer> bookno = bookmarkService.getBookNoByRecNo(recWantedno);
 		if (bookno == null) {
+			supplyRecService.removeRNo(recWantedno);
+			adviceService.removeRNo(recWantedno);
 			recruitService.remove(recWantedno);
 		} else if (bookno != null) {
 			for (int i = 0; i < bookno.size(); i++) {
 				bookmarkService.removeBookmark(bookno.get(i));
 			}
+			supplyRecService.removeRNo(recWantedno);
+			adviceService.removeRNo(recWantedno);
 			recruitService.remove(recWantedno);
 		}
 	}

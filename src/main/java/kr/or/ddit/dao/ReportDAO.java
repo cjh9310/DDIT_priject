@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.CoDetailListVO;
+import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public interface ReportDAO {
@@ -18,4 +19,7 @@ public interface ReportDAO {
 	List<CoDetailListVO> selectCoDetail(String coName)throws SQLException;
 	
 	void updateReportChangeStatus(ReportListVO reportList)throws SQLException;
+	
+	void updateReturnConfirm(MemberVO member)throws SQLException;
+	
 }

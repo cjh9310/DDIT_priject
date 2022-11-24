@@ -31,6 +31,22 @@
 }
 </style>
 
+<script>
+setTimeout(function FaceUnLock() {
+	$.ajax({
+		url : '<%=request.getContextPath()%>/indmember/mypage/result',
+			type : 'get',
+			error : function(xhr, status) {
+				console.log(xhr + status);
+			},
+			success : function(data) {
+				console.log(data);
+				face_rendering(data);
+			}
+		});
+	}, 5000);
+</script>
+
 <main id="js-page-content" role="main" class="page-content">
 <div class="row">
 	<div class="col-lg-6 col-xl-3 order-lg-1 order-xl-1">

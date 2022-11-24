@@ -52,14 +52,13 @@ public class CoMemberControllerSH {
 	private String fileUploadPath;
 	
 	
-	@RequestMapping(value="/mypage/contestRegist", produces = "application/text; charset=UTF-8")
-	@ResponseBody
+	@RequestMapping(value="/mypage/contestRegist", method=RequestMethod.POST)
 	public String contestRegist(			
 			//@RequestBody 
 			ContestVO contest,
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request, RedirectAttributes rttr) throws Exception{
 		
-		//String url = "redirect:/comember/mypage/support/contest";
+		String url = "redirect:/comember/mypage/contestList";
 		
 		//파일업로드 경로 
 		String savePath = this.fileUploadPath;
@@ -72,9 +71,11 @@ public class CoMemberControllerSH {
 		
 		//contest프로그램등록, 파일등록 서비스 호출(경로포함)
 		contestService.regist(contest, savePath);
-		//rttr.addFlashAttribute("form", "regist");
 		
-		return "ok";
+		rttr.addFlashAttribute("form", "regist");
+		
+		return url;
+		
 	}
 	
 	@GetMapping("/mypage/contestList")
@@ -126,11 +127,13 @@ public class CoMemberControllerSH {
 	
 	
 	@RequestMapping(value="mypage/contestModify" , method = RequestMethod.POST)
-	@ResponseBody
-	public void contestModify( ContestVO contest )throws Exception{
+	public String contestModify(int conNo, ContestVO contest )throws Exception{
+		
+		String url = "redirect:/comember/mypage/contestModifyForm.do?conNo="+ conNo;
 		
 		contestService.modify(contest);
 		
+		return url;
 	}
 	
 	
@@ -184,14 +187,18 @@ public class CoMemberControllerSH {
 		return "가산점수정!!";
 	}
 	
-	@RequestMapping(value="/mypage/mentoringRegist", produces = "application/text; charset=UTF-8")
-	@ResponseBody
+	@RequestMapping(value="/mypage/mentoringRegist", method=RequestMethod.POST /*produces = "application/text; charset=UTF-8"*/)
+	//@ResponseBody
 	public String mentoringRegist(			
 			//@RequestBody 
 			MentoringVO mentoring,
 			HttpServletRequest request) throws Exception{
 		
-		//String url = "redirect:/comember/mypage/support/contest";
+		
+		String url = "redirect:/comember/mypage/contestList";
+		
+		//파일업로드 경로
+		String savePath = this.fileUploadPath;
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
@@ -199,9 +206,9 @@ public class CoMemberControllerSH {
 		String coId = loginUser.getId();
 		mentoring.setCoId(coId);
 		
-		mentoringService.regist(mentoring);
+		mentoringService.regist(mentoring, savePath);
 		
-		return "ok";
+		return url;
 	}
 	
 	@GetMapping("mypage/mentoringDetail")
@@ -228,11 +235,14 @@ public class CoMemberControllerSH {
 	}
 	
 	@RequestMapping(value="mypage/mentoringModify" , method = RequestMethod.POST)
-	@ResponseBody
-	public void mentoringModify( MentoringVO mentoring )throws Exception{
+	//@ResponseBody
+	public String mentoringModify(int menNo, MentoringVO mentoring )throws Exception{
+		
+		String url = "redirect:/comember/mypage/mentoringModifyForm.do?menNo="+ menNo;
 		
 		mentoringService.modify(mentoring);
-		System.out.println(mentoring);
+		
+		return url;
 	}
 	
 	

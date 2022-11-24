@@ -24,15 +24,29 @@ public class AllimDAOImpl implements AllimDAO{
 		session.update("Allim-Mapper.insertAllim", allim);
 		
 	}
-	@Override
-	public int selectCoTotalCount(String id) throws SQLException {
-		int count = session.selectOne("Allim-Mapper.selectCoTotalCount",id);
-		return count;
-	}
 
 	@Override
 	public List<AllimVO> selectToRecId(String id) throws SQLException {
 		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToRecId",id);
+		return almList;
+	}
+
+	@Override
+	public int selectOpenTotalCount(String id) throws SQLException {
+		int count = session.selectOne("Allim-Mapper.selectOpenTotalCount",id);
+		return count;
+	}
+
+	@Override
+	public int selectRecTotalCount(String id) throws SQLException {
+		int count = session.selectOne("Allim-Mapper.selectRecTotalCount",id);
+		return count;
+	}
+
+	@Override
+	public List<AllimVO> selectToRecName(String id) throws SQLException {
+		System.out.println("아이디: " + id);
+		List<AllimVO> almList = session.selectList("Allim-Mapper.selecttoRecName",id);
 		return almList;
 	}
 

@@ -4,11 +4,18 @@
     
 <mapper namespace="Allim-Mapper">
 	
-	<select id="selectCoTotalCount" parameterType="str" resultType="int">
+	<select id="selectOpenTotalCount" parameterType="str" resultType="int">
 		select COUNT(*) from allim
 		where to_id =#{to_id}
+		and open_seqno is not null
 	</select>
 	
+	<select id = "selectRecTotalCount" parameterType="str" resultType="int">
+		select COUNT(*) from allim
+		where to_id =#{to_id}
+        and rec_wantedno is not null
+	</select>
+	<!-- 기업이 개인에게  Open -->
 	<select id="selectToOpenId" parameterType="str" resultType="allim">
 		select
 		nm.open_seqno,alm.OPEN_SEQNO,alm.ALM_SEQNO, nm.co_nm,nm.open_title,
@@ -34,30 +41,39 @@
 			from member m, ind_member i, co_member c, allim a, open_rec o
 			where m.id = i.ind_id (+)
 			  and m.id = c.co_id (+)
-	          and c.co_nm = o.OPEN_TITLE (+)
+	          and c.co_nm = o.OPEN_title (+)
 			  and c.co_id = a.from_id (+)
 			  and a.to_id =#{toId})alm
 	          where nm.open_seqno=alm.OPEN_SEQNO
 	</select>
-
+	<!-- 기업이 개인에게 recruit -->
 	<select id="selectToRecId" parameterType="str" resultType="allim">
 		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.ALM_CHECK_DATE, a.ALM_CHECK_OPEN, a.alm_type
-	        ,a.OPEN_SEQNO, a.REC_WANTEDNO
+	        ,a.OPEN_SEQNO, a.REC_WANTEDNO, a.REC_WANTEDTITLE, c.co_nm
 			from member m, ind_member i, co_member c, allim a, recruit r
 			where m.id = i.ind_id (+)
 			  and m.id = c.co_id (+)
-	          and c.co_nm = r.REC_WANTEDTITLE (+)
+	          and c.co_nm = r.co_name (+)
 			  and c.co_id = a.from_id (+)
 			  and a.to_id =#{toId}
               and a.REC_WANTEDNO is not null
 	</select>
-	
-	
+	<!-- 개인이 기업에게 recruit -->
+	<select id="selecttoRecName" parameterType="str" resultType="allim">
+		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.alm_type
+    	  ,a.REC_WANTEDNO ,a.REC_WANTEDTITLE
+    	   from member m, ind_member i, co_member c, allim a, recruit r
+    	   where m.id = i.ind_id (+)
+      	   and m.name = c.co_nm(+)
+      	   and c.co_nm = r.co_name(+)
+      	   and i.ind_id = a.from_id
+      	   and a.to_id = #{toId}
+	</select>
 	
 	
 	<update id="insertAllim" parameterType="allim">
-		insert into allim (ALM_SEQNO, ALM_DATE, from_id, to_id, ALM_TYPE, open_seqno, rec_wantedno)
-		              values (allim_seq.nextval, sysdate, #{fromId}, #{toId}, #{almType}, #{openSeqno}, #{recWantedno})
+		insert into allim (ALM_SEQNO, ALM_DATE, from_id, to_id, ALM_TYPE, open_seqno, rec_wantedno, rec_wantedtitle)
+		              values (allim_seq.nextval, sysdate, #{fromId}, #{toId},'1', #{openSeqno}, #{recWantedno}, #{recWantedtitle})
 	</update>
 
 </mapper>

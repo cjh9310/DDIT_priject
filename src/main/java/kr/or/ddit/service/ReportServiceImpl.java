@@ -12,6 +12,7 @@ import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.ReportDAO;
 import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.CoDetailListVO;
+import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public class ReportServiceImpl implements ReportService {
@@ -92,6 +93,13 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public void updateReportChangeStatus(ReportListVO reportList) throws SQLException {
 		reportDAO.updateReportChangeStatus(reportList);
+		
+	}
+
+
+	@Override
+	public void updateReturnConfirm(MemberVO member) throws SQLException {
+		reportDAO.updateReturnConfirm(member);
 		
 	}
 	

@@ -94,9 +94,31 @@ public class IndMemberController {
 	@Autowired
 	private CorporationService corporationService; 
 	
-	@GetMapping("mypage/info")
+	@PostMapping("mypage/checkInfo")
+	public String myPageInfo(@RequestParam("checkPwd") String checkPwd, HttpServletRequest request) throws Exception {
+		String url;
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		if(id.equals(checkPwd)) {
+			Map<String, Object> eduMap = educationService.getEducationListById(id);
+			Map<String, Object> crrMap = careerService.getCareerListById(id);
+			Map<String, Object> cerMap = certificateService.getCertificateListById(id);
+			request.setAttribute("eduMap", eduMap);
+			request.setAttribute("crrMap", crrMap);
+			request.setAttribute("cerMap", cerMap);
+			url="indmember/mypage/info";
+		} else {
+			url="common/Unlocking_fail";
+		}
+		return url;
+	}
+	
+	@GetMapping("mypage/nonCheckInfo")
 	public String myPageInfo(HttpServletRequest request) throws Exception {
-		String url = "indmember/mypage/info";
+		String url="indmember/mypage/info";
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
@@ -108,7 +130,6 @@ public class IndMemberController {
 		request.setAttribute("eduMap", eduMap);
 		request.setAttribute("crrMap", crrMap);
 		request.setAttribute("cerMap", cerMap);
-		
 		return url;
 	}
 	
@@ -553,7 +574,7 @@ public class IndMemberController {
 	@GetMapping("mypage/result")
 	@ResponseBody
 	public String result() throws Exception {
-		String url = "http://localhost:5005/result";
+		String url = "http://192.168.141.13:5005/result";
 		
 		RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);

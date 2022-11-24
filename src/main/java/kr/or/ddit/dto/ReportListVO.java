@@ -10,6 +10,8 @@ public class ReportListVO {
 	private String falOdate; // 사건발생일
 	private String falEdate; // 종료일
 	private String falTitle; // 제목
+	private String coId; // 기업아이디
+	private String coNm; // 기업명
 	private String coName; // 기업명
 	private String coAddr; // 기업 주소1
 	private String coDeaddr; // 기업주소2
@@ -24,6 +26,23 @@ public class ReportListVO {
 	private List<AttachVO> attachList;
 	
 	private List<CoDetailListVO> coDetailList;
+
+	
+	
+	
+	/**
+	 * @return the coName
+	 */
+	public String getCoName() {
+		return coName;
+	}
+
+	/**
+	 * @param coName the coName to set
+	 */
+	public void setCoName(String coName) {
+		this.coName = coName;
+	}
 
 	/**
 	 * @return the falNo
@@ -110,17 +129,31 @@ public class ReportListVO {
 	}
 
 	/**
-	 * @return the coName
+	 * @return the coId
 	 */
-	public String getCoName() {
-		return coName;
+	public String getCoId() {
+		return coId;
 	}
 
 	/**
-	 * @param coName the coName to set
+	 * @param coId the coId to set
 	 */
-	public void setCoName(String coName) {
-		this.coName = coName;
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
+
+	/**
+	 * @return the coNm
+	 */
+	public String getCoNm() {
+		return coNm;
+	}
+
+	/**
+	 * @param coNm the coNm to set
+	 */
+	public void setCoNm(String coNm) {
+		this.coNm = coNm;
 	}
 
 	/**
@@ -277,15 +310,19 @@ public class ReportListVO {
 		this.coDetailList = coDetailList;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "ReportListVO [falNo=" + falNo + ", indId=" + indId + ", falSdate=" + falSdate + ", falOdate=" + falOdate
-				+ ", falEdate=" + falEdate + ", falTitle=" + falTitle + ", coName=" + coName + ", coAddr=" + coAddr
-				+ ", coDeaddr=" + coDeaddr + ", falContent=" + falContent + ", falCategory=" + falCategory
-				+ ", falCategorydetail=" + falCategorydetail + ", adId=" + adId + ", repStatus=" + repStatus
-				+ ", coConfirm=" + coConfirm + ", coComment=" + coComment + ", attachList=" + attachList
+				+ ", falEdate=" + falEdate + ", falTitle=" + falTitle + ", coId=" + coId + ", coNm=" + coNm
+				+ ", coAddr=" + coAddr + ", coDeaddr=" + coDeaddr + ", falContent=" + falContent + ", falCategory="
+				+ falCategory + ", falCategorydetail=" + falCategorydetail + ", adId=" + adId + ", repStatus="
+				+ repStatus + ", coConfirm=" + coConfirm + ", coComment=" + coComment + ", attachList=" + attachList
 				+ ", coDetailList=" + coDetailList + "]";
 	}
+
+
+	
 	 
 	
 }

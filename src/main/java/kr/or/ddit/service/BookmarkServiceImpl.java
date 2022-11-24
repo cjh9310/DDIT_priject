@@ -56,6 +56,4 @@ public class BookmarkServiceImpl implements BookmarkService {
 		return bookNo;
 	}
 
-	
-
 }

@@ -14,5 +14,11 @@ public interface AdviceDAO {
 	List<AdviceVO> selectAdviceOpenRecListById(String id) throws SQLException;
 	
 	void insertAdvice(AdviceVO advice) throws SQLException;
+
+	List<Integer> selectAdviceForAdvNo(int openSeqno);
+
+	void remove(int openSeqno);
+
+	void removeRNo(String recWantedno);
 	
 }

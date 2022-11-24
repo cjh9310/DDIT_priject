@@ -50,8 +50,9 @@
 								</select>
 							</div>
 							<div class="w-100">
-								<div class="text-center mt-5">
-									<input type="button" value="확인하기" class=" btn-success" id="salarySubmit" onclick="ai6_submit();changeimg();this.onclick=null; " >
+								<div class="text-center">
+									<button class="btn btn-outline-success waves-effect waves-themed w-100" 
+			        						type="button" id="salarySubmit" onclick="ai6_submit();changeimg();this.onclick=null;">AI에게 연봉 정보 받아보기</button>
 								</div>
 							</div>
 						</form>

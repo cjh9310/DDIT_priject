@@ -205,21 +205,21 @@ function cleanDetail() {
 </script>
 <script>
 function supplyOpenDetail(supNo) {
-	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?supNo="+supNo, 'OpenWindow', 'location=no, width=700, height=1300, status=no, toolbar=no');
+	window.open("<%=request.getContextPath()%>/comember/mypage/resume.do?supNo="+supNo, 'OpenWindow', 'location=no, width=800, height=1300, resizable=no, status=no, toolbar=no');
 }
 </script>
 <script>
 function supplyOpenRec(p_openSeqno){
 	var DynamicTable = '';
 	$.ajax({
-		url : '<%=request.getContextPath()%>/comember/mypage/supplyRec',
+		url : 'supplyRec',
 		type : 'POST',
 		data : { 'openSeqno' : p_openSeqno },
 		success : function(result) {
+			console.log(result);
 			if (result == null) {
 				$("#supplyRec")
-						.html(
-								'<tr><td colspan="5">해당 공고 지원자가 없습니다</td></tr>');
+						.html('<tr><td colspan="5">해당 공고 지원자가 없습니다</td></tr>');
 			} else {
 				console.log("result",result);
 				cleanDetail();
@@ -232,7 +232,7 @@ function supplyOpenRec(p_openSeqno){
 							+ result[idx].name + '</td>';
 					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecResume" onclick="supplyOpenDetail('+ "\'" + result[idx].supNo + "\'" + ')">'
 							+ '지원 당시 이력서 열람하기' + '</td>';
-					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity">'
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity" onclick="activityDetail('+ "\'"+ result[idx].id+"\'"+ ')">'
 							+ '공모전 및 멘토링 참여 이력 열람하기' + '</td>';
 					DynamicTable += '</tr>';
 				}
@@ -251,10 +251,11 @@ function supplyOpenRec(p_openSeqno){
 function supplyRecruit(p_rec_wantedNo){
 	var DynamicTable = '';
 	$.ajax({
-		url : '<%=request.getContextPath()%>/comember/mypage/supplyRecruit',
+		url : 'supplyRecruit',
 		type : 'POST',
 		data : { 'recWantedNo' : p_rec_wantedNo },
 		success : function(result) {
+			console.log("result:"+result);
 			if (result == null) {
 				$("#supplyRec").html('<tr><td colspan="5">해당 공고 지원자가 없습니다</td></tr>');
 			} else {
@@ -268,7 +269,7 @@ function supplyRecruit(p_rec_wantedNo){
 							+ result[idx].name + '</td>';
 					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecResume" onclick="supplyOpenDetail('+ "\'" + result[idx].supNo + "\'" + ')">'
 							+ '지원 당시 이력서 열람하기' + '</td>';
-					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity">'
+					DynamicTable += '<td style="width : 23%; cursor:pointer;" id ="supplyRecActivity" onclick="activityDetail('+"\'"+ result[idx].id + "\'" +')">'
 							+ '공모전 및 멘토링 참여 이력 열람하기' + '</td>';
 					DynamicTable += '</tr>';
 				}
@@ -281,6 +282,12 @@ function supplyRecruit(p_rec_wantedNo){
 	});
 }
 </script>
+<script>
+function activityDetail(id) {
+	window.open("<%=request.getContextPath()%>/comember/mypage/activity.do?id="+id, 'ActivityWindow', 'location=no, width=800, height=1300, resizable=no, status=no, toolbar=no');
+}
+</script>
+
 <script>
 	function findAddr() {
 		new daum.Postcode({
@@ -314,6 +321,7 @@ function supplyRecruit(p_rec_wantedNo){
 		recDiv.style.display = 'none';
 		openDIVBtn.style.display = 'block';
 		recDIVBtn.style.display = 'none';
+		$("#supplyRec").empty();
 	}
 
 	function changeRecBtn() {
@@ -328,6 +336,7 @@ function supplyRecruit(p_rec_wantedNo){
 		recDiv.style.display = 'block';
 		openDIVBtn.style.display = 'none';
 		recDIVBtn.style.display = 'block';
+		$("#supplyRec").empty();
 	}
 </script>
 <script>
@@ -410,8 +419,7 @@ function supplyRecruit(p_rec_wantedNo){
 										<tbody>
 											<c:forEach items="${openRecList }" var="openRecList">
 												<c:set var="i" value="${i + 1}" />
-												<tr
-													onclick="openRecDetail('${openRecList.openSeqno}'); supplyOpenRec('${openRecList.openSeqno }');">
+												<tr onclick="openRecDetail('${openRecList.openSeqno}'); supplyOpenRec('${openRecList.openSeqno }');">
 													<td><c:out value="${i }" /></td>
 													<td
 														style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; text-align: left;">${openRecList.openTitle}</td>
@@ -565,7 +573,7 @@ function supplyRecruit(p_rec_wantedNo){
 								<div class="form-group">
 									<label class="form-label" for="example-email-2"><b>회사주소</b></label>
 									<input type="text"
-										value="${loginUser.coAddr } ${loginUser.coDeaddr}"
+										value="${loginUser.coAddr }"
 										class="form-control" placeholder="" disabled> <input
 										type="text" value="${loginUser.coAddr } ${loginUser.coDeaddr}"
 										name="openRegion" style="display: none;" />
@@ -1174,7 +1182,7 @@ function supplyRecruit(p_rec_wantedNo){
 					</div>
 					<div class="panel-container show" style="height: 100%;">
 						<form enctype="multipart/form-data" class="needs-validation" method="post"
-							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" name="openRecForm" id="openRecForm">
+							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" id="openRecForm">
 							<div class="panel-content">
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">제목</label> <input
@@ -1393,9 +1401,11 @@ function supplyRecruit(p_rec_wantedNo){
 
 		console.log(openRecParam);
 		
-		$("form[name='openRecForm']").submit();
+		//$("#openRecForm").submit();
 		
-		/* $.ajax({
+		//window.location.reload();
+		
+		$.ajax({
 			url : 'openRecRegist',
 			type : 'post',
 			data : openRecParam,
@@ -1406,7 +1416,7 @@ function supplyRecruit(p_rec_wantedNo){
 			error : function(xhr, status) {
 				alert("등록 실패 했습니다");
 			}
-		}); */
+		});
 	});
 </script>
 

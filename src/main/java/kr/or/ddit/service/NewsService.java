@@ -19,7 +19,7 @@ public interface NewsService {
 		NewsVO getNewsModify(int newsNo) throws SQLException;
 		
 		// 등록
-		void regist(NewsVO News) throws SQLException;
+		void regist(NewsVO News, String savePath) throws SQLException;
 		
 		// 수정
 		void modify(NewsVO News) throws SQLException;

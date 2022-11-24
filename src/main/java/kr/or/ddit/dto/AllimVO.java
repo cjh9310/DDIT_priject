@@ -21,7 +21,7 @@ public class AllimVO {
 	private String openSeqno;
 
 // 채용
-	private String recWantedTitle;
+	private String recWantedtitle;
 	private String recWantedno;
 	
 	
@@ -66,12 +66,12 @@ public class AllimVO {
 		this.openTitle = openTitle;
 	}
 
-	public String getRecWantedTitle() {
-		return recWantedTitle;
+	public String getRecWantedtitle() {
+		return recWantedtitle;
 	}
 
-	public void setRecWantedTitle(String recWantedTitle) {
-		this.recWantedTitle = recWantedTitle;
+	public void setRecWantedtitle(String recWantedtitle) {
+		this.recWantedtitle = recWantedtitle;
 	}
 
 	public int getAlmSeqno() {
@@ -126,7 +126,7 @@ public class AllimVO {
 	public String toString() {
 		return "AllimVO [almSeqno=" + almSeqno + ", almDate=" + almDate + ", almheckDate=" + almheckDate + ", almType="
 				+ almType + ", fromId=" + fromId + ", toId=" + toId + ", coId=" + coId + ", coNm=" + coNm
-				+ ", openTitle=" + openTitle + ", openSeqno=" + openSeqno + ", recWantedTitle=" + recWantedTitle
+				+ ", openTitle=" + openTitle + ", openSeqno=" + openSeqno + ", recWantedtitle=" + recWantedtitle
 				+ ", recWantedno=" + recWantedno + "]";
 	}
 

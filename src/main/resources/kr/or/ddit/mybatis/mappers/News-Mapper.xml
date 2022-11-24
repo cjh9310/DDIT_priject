@@ -5,8 +5,11 @@
 <mapper namespace="News-Mapper">
 
 	<select id="selectNewsList" resultType="news">
-		select * from income_news
-		where news_no is not null
+		 select a.*, b.uploadpath, b.filename, b.filetype
+        from income_news a
+        left join (select * from file_attach
+                     where work_div='news') b
+          on(a.news_no = b.work_pk)
 		order by news_sdate desc
 	</select>
 	
@@ -28,6 +31,11 @@
 	</select>
 	
 	<update id="insertNews" parameterType="news">
+	
+	  <selectKey resultType="int" keyProperty="newsNo" order="BEFORE">
+         select news_SEQ.nextval-1 from dual
+      </selectKey>
+	
 		insert into 
 		income_news
 			(news_no,

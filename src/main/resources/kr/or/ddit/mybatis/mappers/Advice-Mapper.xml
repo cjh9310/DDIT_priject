@@ -48,4 +48,23 @@
 		              values (advice_seq.nextval, #{indId}, #{recWantedno}, #{openSeqno})
 	</update>
 	
+	<select id="selectAdviceForAdvNo" resultType="int" parameterType="int">
+		select adv_no from advice where open_seqno = #{openSeqno}
+	</select>
+	
+	<update id="updateAdviceByNo" parameterType="int">
+		update advice
+		   set open_seqno = null
+		 where adv_no in (select adv_no
+                            from advice
+                           where open_seqno = #{openSeqno})
+	</update>
+	
+	<update id="updateAdviceByRNo" parameterType="str">
+		update advice
+		   set REC_WANTEDNO = null
+		 where adv_no in (select adv_no
+                            from advice
+                           where REC_WANTEDNO = #{recWantedno})
+	</update>
 </mapper>

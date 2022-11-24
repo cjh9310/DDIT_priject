@@ -67,9 +67,8 @@
 								style="table-layout: fixed; padding: 0;">
 								<thead class="mytable">
 									<tr>
-										<th style="width: 5%; text-align: center;"><b>NO</b></th>
-										<th style="width: 15%; text-align: center;"><b>사진</b></th>
-										<th style="width: 30%; text-align: center;"><b>제목</b></th>
+										<th style="width: 10%; text-align: center;"><b>NO</b></th>
+										<th style="width: 40%; text-align: center;"><b>제목</b></th>
 										<th style="width: 30%; text-align: center;"><b>한줄제목</b></th>
 										<th style="width: 12%; text-align: center;"><b>등록일</b></th>
 										<th style="width: 10%; text-align: center;"><b>삭제</b></th>
@@ -86,8 +85,9 @@
 										<c:set var="i" value="${i + 1}" />
 										<tr onclick="openList('${news.newsNo}');">
 											<td style="text-align: center;"><c:out value="${i }" /></td>
-											<td style="text-align: center;">${news.newsPicture }</td>
-											<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${news.newsTitle }</td>
+											
+											<td
+												style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${news.newsTitle }</td>
 											<td style="text-align: center;">${news.newsOneContent }</td>
 											<td style="text-align: center;">${news.newsSdate }</td>
 											<td style="text-align: center;"><button type="button"
@@ -97,7 +97,7 @@
 									</c:forEach>
 								</tbody>
 
-<%-- 								<%@ include file="../include/pagination.jsp"%> --%>
+								<%-- 								<%@ include file="../include/pagination.jsp"%> --%>
 							</table>
 						</div>
 					</div>
@@ -111,51 +111,49 @@
 						action="/ddit/admember/mypage/newsModify" name="newsModifyForm">
 						<table id="userTable"
 							class="table table-striped table-bordered table-hover">
-							<thead>
+							<tbody>
 								<tr>
-									<th style="width: 10%;">NO</th>
-									<th style="width: 5%;"><input type="text"
-										style="border: 0px; width: 50px;" id="newsNo" name="newsNo"
-										readonly></th>
-									<th style="width: 10%;">한줄제목</th>
-									<th style="width: 30%;" id="" colspan="2"><input
-										type="text" style="border: 0px; width:420px;" id="newsOneContent" name="newsOneContent"></th>
-									<th style="width: 10%;">등록일</th>
-									<th style="width: 25%;"><input type="text"
-										style="border: 0px;" id="newsSdate" name="newsSdate" ></th>
-									<th
-										style="width: 20%; text-align: center; padding-top: 0px; padding-bottom: 5px; padding-right: 0px; padding-left: 0px;">
+									<td style="width: 10%; text-align: center;"><b>NO</b></td>
+									<td style="width: 10%;">
+										<input type="text" style="border: 0px; width: 50px;" id="newsNo" name="newsNo" readonly></td>
+									<td style="width: 15%; text-align: center;"><b>한줄제목</b></td>
+									<td style="width: 20%;" id=""><input type="text" style="border: 0px; width: 350px;"
+										id="newsOneContent" name="newsOneContent"></td>
+									<td style="width: 10%; text-align: center;"><b>등록일</b></td>
+									<td style="width: 20%;"><input type="text" disabled required name="newsSdate" style="border: 0px;" id="newsSdate" name="newsSdate"></td>
+									<td style="width: 15%; padding-top: 5px;padding-bottom: 0px;padding-right: 0px;padding-left: 23px;">
 										<button type="button" class="btn-sm btn-warning waves-themed"
-											id="modify" onclick="Modify()">수정</button>
-									</th>
+											id="modify" style="width: 100px;" onclick="Modify()"><b>수정</b></button>
+									</td>
+								
+								</tr>
+								
+								<tr>
+									<td style="width: 10%; text-align: center;"><b>제목</b></td>
+									<td style="width: 25%;" colspan="2" >
+										<input type="text" style="border: 0px; width: 400px;" id="newsTitle" name="newsTitle">
+									</td>
+									<td style="width: 25%; text-align: center;">
+										<b>첨부파일 다운로드</b>
+									</td>
+									<td style="width: 40%;" colspan="3">
+										<div class="row" id="attachList" style="margin-left: 10px;"></div>
+									</td>
 								</tr>
 								<tr>
-									<th style="width: 10%;">제목</th>
-									<th style="width: 40;" id="" colspan="3">
-									<input type="text" style="border: 0px; width:450px;" id="newsTitle"
-											name="newsTitle"></th>
-									<th style="width: 13%;">사진첨부파일</th>
-									<th style="width: 30;" id="" colspan="3">
-									<input type="text" style="border: 0px;" id="newsPicture"
-											name=""></th>
-								</tr>
-								<tr>
-									<td style="width: 10%; padding-bottom: 150px;">내용</td>
-									<td class="p-0" colspan="7">
+									<td style="width: 10%; padding-bottom: 150px; text-align: center;"><b>내용</b></td>
+									<td class="p-0" colspan="6">
 										<div id="summerForUpdate">
-											<textarea class="textarea" style="border: 0px; height: 200px;"
-												id="textarea-view" >
-												
+											<textarea class="textarea"
+												style="border: 0px; height: 200px;" id="textarea-view">
 											</textarea>
-											
-											
 										</div>
 									</td>
 								</tr>
-							</thead>
+							</tbody>
 						</table>
 						<textarea class="textarea" style="display: none;"
-							id="textarea-hidden" name="newsContent" >
+							id="textarea-hidden" name="newsContent">
 							
 						</textarea>
 					</form>
@@ -170,9 +168,7 @@
 	role="dialog" aria-hidden="true" id="my_modal">
 	<div class="modal-dialog modal-dialog-right modal-sm">
 		<div class="modal-content">
-		
-		
-		
+
 			<div class="modal-header">
 				<div class="row">
 					<div class="col-xl-12">
@@ -197,7 +193,8 @@
 							<div class="panel-container show">
 								<div class="panel-content p-0">
 									<form class="needs-validation" novalidate method="post"
-										name="registForm" id="myForm">
+										action="<%=request.getContextPath()%>/admember/mypage/newsRegist"
+										name="registForm" id="myForm" enctype="multipart/form-data">
 										<div class="panel-content">
 											<div class="form-row">
 												<div class="col-lg-12 mb-3">
@@ -209,43 +206,52 @@
 													<div class="valid-feedback">Looks good!</div>
 												</div>
 												<div class="col-lg-12 mb-3">
-													<label class="form-label" for="validationCustom02">제
-														목 <span class="text-danger">*</span>
-													</label> <input type="text" class="form-control" id="modalNewsTitle"
-														name="newsTitle" placeholder="제목을 입력하세요" value="" required>
+													<label class="form-label" for="validationCustom02">제목
+														<span class="text-danger">*</span>
+													</label> <input type="text" class="form-control"
+														id="modalNewsTitle" name="newsTitle"
+														placeholder="제목을 입력하세요" value="" required>
 													<div class="valid-feedback">Looks good!</div>
 												</div>
 												<div class="col-lg-8 mb-3">
-													<label class="form-label"><b>사진파일</b></label>
-													<div class="custom-file">
-														<input type="file" class="custom-file-input"
-															id="modalNewsPicture" name="newsPicture"> <label class="custom-file-label"
-															for="customFile">사진선택</label>
+													<label class="form-label" for="example-date">첨부파일</label>
+													<div class="form-group">
+														<div class="card card-outline card-success">
+															<div class="card-header">
+																&nbsp;&nbsp;
+																<button class="btn btn-xs btn-primary"
+																	onclick="addFile_go(3);" type="button" id="addFileBtn">사진
+																	첨부</button>
+															</div>
+															<div class="card-footer fileInput"></div>
+														</div>
 													</div>
 												</div>
-												<div class="col-lg-12 mb-3" >
+												<div class="col-lg-12 mb-3">
 													<label class="form-label" for="validationTextarea2"><b>내용</b>
 														<span class="text-danger">*</span></label>
 													<textarea class="form-control" id="textarea-view-insert"
 														name="newsContent" placeholder="내용을 입력해주세요." rows="7"
-														required ></textarea>
+														required></textarea>
 													<div class="valid-feedback">Looks good!</div>
 												</div>
 												<div class="col-lg-6 mb-3">
 													<label class="form-label" for="example-date">등록일 <span
 														class="text-danger">*</span></label> <input class="form-control"
-														id="modalNewsSdate" type="date" value="" placeholder="" disabled
-														required name="newsSdate"> <input type="hidden" />
+														id="modalNewsSdate" type="date" value="" placeholder=""
+														disabled required name="newsSdate"> <input
+														type="hidden" />
 													<div class="valid-feedback">Looks good!</div>
 												</div>
 												<div class="col-lg-12 mb-3">
 													<label class="form-label" for="validationCustom02">한줄등록
 														<span class="text-danger">*</span>
-													</label> <input type="text" class="form-control" id="modalNewsOneContent"
-														name="newsOneContent" value="" required>
+													</label> <input type="text" class="form-control"
+														id="modalNewsOneContent" name="newsOneContent" value=""
+														required>
 													<div class="valid-feedback">Looks good!</div>
 												</div>
-												
+
 												<div class="col-lg-4 mt-4">
 													<div>
 														<button class="btn btn-primary ml-auto" id="registBtn"
@@ -276,61 +282,71 @@
 
 <script>
 
- 	$('#registBtn').click(function() {
- 		
-		
-		var data = $("#myForm").serializeObject();
-		$.ajax({
-			url : 'newsRegist',
-			type : 'POST',
-			data : data,			
-			success : function(data) {
-				Swal.fire({
-					target: document.getElementById('my_modal'),
-	                icon: 'success',
-					title: "뉴스가 등록되었습니다.",
-					text: "",
-	                type: "success",
-	                showCancelButton: false,
-	                confirmButtonText: "OK"
-	    		}).then(function(result){
+	$("#registBtn").on("click", function() { 
+			
+			Swal.fire({
+				target: document.getElementById('my_modal'),
+                icon: 'success',
+				title: "등록이 완료되었습니다!",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "OK"
+    		}).then(function(){
+    			$("#myForm").submit();
+    		})
+	});
+//		var data = $("#myForm").serializeObject();
+// 		$.ajax({
+// 			url : 'newsRegist',
+// 			type : 'POST',
+// 			data : data,			
+// 			success : function(data) {
+// 				Swal.fire({
+// 					target: document.getElementById('my_modal'),
+// 	                icon: 'success',
+// 					title: "뉴스가 등록되었습니다.",
+// 					text: "",
+// 	                type: "success",
+// 	                showCancelButton: false,
+// 	                confirmButtonText: "OK"
+// 	    		}).then(function(result){
 				 
-					window.location.replace(location.href);
-	    		});
-	    	},
-			error : function(request, status, error) {
-				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-			}
-		});
- 	});
+// 					window.location.replace(location.href);
+// 	    		});
+// 	    	},
+// 			error : function(request, status, error) {
+// 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+// 			}
+// 		});
+// 	});
 
 
 </script>
 <script>
-	$(document).ready(function() {
-				jQuery.fn.serializeObject = function() {
-					var obj = null;
-					try {
-						if (this[0].tagName
-								&& this[0].tagName.toUpperCase() == "FORM") {
-							var arr = this.serializeArray();
-							if (arr) 
-							{
-								obj = {};
-								jQuery.each(arr, function() 
-								{
-									obj[this.name] = this.value;
-								});
-							}
-						}
-					} catch (e) {
-						alert(e.message);
-					} finally {
-					}
+// 	$(document).ready(function() {
+// 				jQuery.fn.serializeObject = function() {
+// 					var obj = null;
+// 					try {
+// 						if (this[0].tagName
+// 								&& this[0].tagName.toUpperCase() == "FORM") {
+// 							var arr = this.serializeArray();
+// 							if (arr) 
+// 							{
+// 								obj = {};
+// 								jQuery.each(arr, function() 
+// 								{
+// 									obj[this.name] = this.value;
+// 								});
+// 							}
+// 						}
+// 					} catch (e) {
+// 						alert(e.message);
+// 					} finally {
+// 					}
 
-					return obj;
-				};
-			});
+// 					return obj;
+// 				};
+// 			});
 	
 </script>
 
@@ -384,14 +400,20 @@
 }
 
 </script>
+
 <script>
 
+var cntxtPth = "${pageContext.request.contextPath}";
+
 function openList(newsNo) {
+	
+	
 	$.ajax({
 		url : 'newsDetail',
 		method : 'POST',
 		data : {'newsNo' : newsNo},
 		success : function(newList) {
+			console.log(newList)
 			$('input[id=newsNo]').val(newList.newsNo);
 			$('input[id=newsPicture]').val(newList.newsPicture);
 			$('input[id=newsTitle]').val(newList.newsTitle);
@@ -399,16 +421,39 @@ function openList(newsNo) {
 			$('input[id=newsContent]').val(newList.newsContent);
 			$('input[id=newsSdate]').val(newList.newsSdate);
 			
-			console.log(newList.newsContent)
 			$('#summerForUpdate .note-editor .note-editing-area div[role=textbox]').html(newList.newsContent);	
 			document.querySelector('#textarea-hidden').innerText=newList.newsContent
 
-		},
-		error : function(request, status, error) {
-			 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-		}		
+			var rowStr = '';
+			//첨부파일영역 초기화
+			$('#attachList').empty();
+			if(newList.attachList.length > 0){
+				$.each(newList.attachList, function(key, val){
+					console.log(val)
+					console.log(val.attNo)
+					console.log(val.filename)
+					console.log(cntxtPth)
+						rowStr += '<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href=\''+ cntxtPth+ '/attach/getFile.do?attNo=' + val.attNo + '\';">'
+						rowStr += '<div class="info-box row">'
+						rowStr += '<span class="info-box-icon bg-yellow">'
+						rowStr += '<i class="fa fa-copy"></i>'
+						rowStr += '</span>'
+						rowStr += '<div class="info-box-content">'
+						rowStr +=' <span class ="info-box-text"></span>'
+						rowStr +=' <span class ="info-box-number">&nbsp;&nbsp; ' + val.filename + '</span>'
+						rowStr +=' </div></div></div>'
+				});
+				
+			}else{
+				rowStr = '<span> 저장된 첨부 파일이 없습니다.</span>'
+			}
+			
+			$('#attachList').append(rowStr);
+		
+		}
 	});
 };
+
 </script>
 <script>
 
@@ -441,5 +486,5 @@ function Modify(){
 });
 }
 </script>
-    	
-    	
+
+

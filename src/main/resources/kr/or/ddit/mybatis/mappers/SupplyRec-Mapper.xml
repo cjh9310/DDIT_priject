@@ -209,4 +209,19 @@
  		 order by suplet_no asc
 	</select>
 	
+	<update id="updateSupplyRecByONo" parameterType="int">
+		update supply_rec
+		   set open_seqno = null
+         where sup_no in ( select sup_no
+          		             from supply_rec
+                            where open_seqno = #{openSeqno})
+	</update>
+	
+	<update id="updateSupplyRecByRNo" parameterType="str">
+		update supply_rec
+		   set REC_WANTEDNO = null
+		 where sup_no in ( select sup_no
+          		             from supply_rec
+                            where REC_WANTEDNO = #{recWantedno})
+	</update>
 </mapper>

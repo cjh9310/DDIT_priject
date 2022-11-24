@@ -136,4 +136,15 @@ public class SupplyRecDAOImpl implements SupplyRecDAO {
 		return supplyRecList;
 	}
 
+	@Override
+	public void remove(int openSeqno) {
+		session.update("SupplyRec-Mapper.updateSupplyRecByONo",openSeqno);	
+	}
+
+	@Override
+	public void removeRno(String recWantedno) {
+		// TODO Auto-generated method stub
+		session.update("SupplyRec-Mapper.updateSupplyRecByRNo",recWantedno);
+	}
+
 }

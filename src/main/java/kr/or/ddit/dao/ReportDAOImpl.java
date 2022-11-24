@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.CoDetailListVO;
+import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public class ReportDAOImpl implements ReportDAO {
@@ -57,5 +58,11 @@ public class ReportDAOImpl implements ReportDAO {
 	public void updateReportChangeStatus(ReportListVO reportList) throws SQLException {
 		session.update("ReportList-Mapper.updateReportChangeStatus", reportList);
 	}
+
+	@Override
+	public void updateReturnConfirm(MemberVO member) throws SQLException {
+		session.update("ReportList-Mapper.updateReturnConfirm", member);
+	}
+	
 	
 }

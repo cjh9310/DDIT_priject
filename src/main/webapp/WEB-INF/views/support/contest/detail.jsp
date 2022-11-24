@@ -38,7 +38,7 @@
 		                                           	<h3 class="m-0" style="text-align:center;">
 		                                         		공모전 응모
 		                                    	    </h3>
-		                                    	    <form id="registForm">
+		                                    	    <form id="registForm" name="registForm" method="post" action="activityRegist" enctype="multipart/form-data">
 		                                    	    	<input type="hidden" name="conNo" value="" >
 			                                    	    <div style="margin-top:50px;">
 				                                    	    <div class="form-group">
@@ -53,12 +53,18 @@
 		                                                    	<label class="form-label" for="actEmail">이메일 주소</label>
 		                                                    	<input type="text" id="actEmail" name="actEmail" class="form-control">
 		                                                	</div>
-		                                                	<div class="form-group mb-0">
-		                                                    	<label class="form-label">첨부파일</label>
-		                                                    	<div class="custom-file">
-		                                                        	<input type="file" class="custom-file-input" id="customFile">
-		                                                        	<label class="custom-file-label" for="customFile">제출 하실 공모전자료를 업로드해주세요</label>
-		                                                    	</div>
+		                                                	<div>
+		                                                		<label class="form-label" for="example-date">첨부파일</label>
+																<div class="form-group">								
+																	<div class="card card-outline card-success">
+																		<div class="card-header">
+																			&nbsp;&nbsp;<button class="btn btn-xs btn-primary"
+																			onclick="addFile_go(1);" type="button" id="addFileBtn">파일 첨부</button>
+																		</div>									
+																		<div class="card-footer fileInput">
+																		</div>
+																	</div>
+																</div>
 		                                                	</div>
 	                                                	</div>
                                                 	</form>
@@ -81,31 +87,42 @@
        	<script src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
         <script src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
 <script>
-/* $(document).ready(function(){
 
-    $("#contestReg").on("click", function()
-    {
-        Swal.fire(
-        {
-            title: "가산점을 부여하시겠습니까?",
-            type: "success",
-            showCancelButton: true,
-            confirmButtonText: "OK"
-        }).then(function(result){
-            if (result){
-            	
-                Swal.fire("가산점이 부여되었습니다.", "", "success");
-            }
-        });
-    }else {
-    	Swal.fire()
-    }
-    }); 
-}); */
 $("#contestReg").on("click", function(){
 	
-	var param = $("#registForm").serialize();
+
+	Swal.fire({
+        icon: 'warning',
+		title: "응모하시겠습니까?",
+        type: "success",
+        showCancelButton: true,
+        confirmButtonText: "OK"
+	}).then(function(){
+		
+		$("form[name='registForm']").submit();
+		
+	})/* .then(function(){
+		Swal.fire({
+            icon: 'success',
+			title: "신청되었습니다.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonText: "OK"
+		
+		})
+			
+	}).then(function(){
+		window.close();
+	})  */
+		
+	});	
+
+
+	//var param = $("#registForm").serialize();
 	//alert(param);
+	/* 
+	let formData = new FormData($("form[name=registForm]")[0]);
+	formData.append("uploadFile",$('input[name=uploadFile]')[0].files[0]);
 	
 	Swal.fire({
         icon: 'warning',
@@ -113,37 +130,53 @@ $("#contestReg").on("click", function(){
         type: "success",
         showCancelButton: true,
         confirmButtonText: "OK"
-}).then(function(result){
-	if(result.value){
+	}).then(function(data){
 		$.ajax({
-			url : 'activityRegist.do',
+			url : '/ddit/support/contest/activityRegist',
 			type : 'POST',
-			data : param,
-			cache : false,
-			async : true,
+			data : formData,
+			cache: false,
+            contentType:false,  //formData 쓸때만 필요!
+			processData:false, //formData 쓸때만 필요!
 			success : function(data){
-				
-				Swal.fire({
+				if(data == "ok"){
+					Swal.fire({
 						icon: 'success',
 						title: '신청되었습니다!',
 						text: '신청하신 공모전은 [마이페이지]-[프로그램관리]에서 확인가능합니다.',
 						showConfirmButton: true,
 						confirmButtonText: "OK"
-				}).then(function(){
-					window.close();
-		    		window.opener.location.reload();
+					}).then(function(){
+						window.close();
+		    			//window.opener.location.reload();
 		    		
-				})
+					})
+				}
 			},
 			error:(request,status,error)=>{
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			
 			}
-		});
-	}
-});
-});
+		});	
+}); */
+
 </script>
+
+
+<c:if test="${from eq 'regist'}" >
+<script>
+	Swal.fire({
+	    icon: 'success',
+		title: "신청되었습니다.",
+	    type: "success",
+	    showCancelButton: false,
+	    confirmButtonText: "OK"
+		
+	}).then(function(){
+		window.close();
+	});
+</script>
+</c:if>
+
 
 <script>
  const url = new URL(window.location.href);
@@ -153,6 +186,42 @@ $("#contestReg").on("click", function(){
  
 </script>
    
-     
+<!-- --------------------------파일등록------------------------------------ -->
+<script>
+	
+	window.onload=function(){
+		$('.fileInput').on('change','input[type="file"]',function(event){
+			//alert(this.files[0].size);
+			if(this.files[0].size>1024*1024*50){
+	 			alert("파일 용량이 50MB를 초과하였습니다.");
+	 			this.click();
+	 			this.value="";	 					
+	 			return false;
+	 		} 
+		});
+	}
+
+	$(function () {
+	    $(document).on('click', '.btn-add', function (e) {
+	        e.preventDefault();
+	
+	        var controlForm = $('.controls:first'),
+	            currentEntry = $(this).parents('.entry:first'),
+	            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+	
+	        newEntry.find('input').val('');
+	        controlForm.find('.entry:not(:last) .btn-add')
+	            .removeClass('btn-add').addClass('btn-remove')
+	            .removeClass('btn-success').addClass('btn-danger')
+	            .html('<span class="fa fa-trash"></span>');
+	    }).on('click', '.btn-remove', function (e) {
+	        $(this).parents('.entry:first').remove();
+	
+	        e.preventDefault();
+	        return false;
+	    });
+	});
+</script>  
+ 
      
      

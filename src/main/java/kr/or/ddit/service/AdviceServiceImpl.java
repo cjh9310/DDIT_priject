@@ -45,4 +45,15 @@ public class AdviceServiceImpl implements AdviceService {
 		adviceDAO.insertAdvice(advice);
 		
 	}
+
+	@Override
+	public void remove(int openSeqno) throws SQLException {
+		adviceDAO.remove(openSeqno);
+	}
+
+
+	@Override
+	public void removeRNo(String recWantedno) {
+		adviceDAO.removeRNo(recWantedno);
+	}
 }

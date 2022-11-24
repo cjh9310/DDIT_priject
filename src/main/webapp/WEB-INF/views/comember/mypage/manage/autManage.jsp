@@ -183,30 +183,4 @@ $(document).ready(function(){
 	};
 });
 </script>
-<script>
 
-
-</script>
-
-<!-- Swal.fire({ -->
-<!-- 		  title: '요청하겠습니까?', -->
-<!-- 		  icon: 'warning', -->
-<!-- 		  showCancelButton: true, -->
-<!-- 		  confirmButtonColor: '#3085d6', -->
-<!-- 		  cancelButtonColor: '#d33', -->
-<!-- 		 cancelButtonText: '아니요', -->
-<!-- 		  confirmButtonText: '네' -->
-<!-- 	}).then(function (result){ -->
-<!-- 		if(result.value){ -->
-
-
-
-
-<!-- 	Swal.fire({ -->
-<!-- 			icon:'success', -->
-<!-- 			title:'요청했습니다.', -->
-<!-- 			showConfirmButton:false, -->
-<!-- 			timer:1500 -->
-<!-- 		}) -->
-<!-- }	 -->
-<!-- }); -->

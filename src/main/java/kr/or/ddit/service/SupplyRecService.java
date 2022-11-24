@@ -27,4 +27,8 @@ public interface SupplyRecService {
 	
 	Map<String, Object> getSupplyResumeAllInfo(int supNo) throws SQLException;
 
+	void remove(int openSeqno);
+
+	void removeRNo(String recWantedno);
+
 }

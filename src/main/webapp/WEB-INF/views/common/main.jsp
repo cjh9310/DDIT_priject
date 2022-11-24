@@ -81,7 +81,11 @@ div {
 										<div class="carousel-inner" id="openrecSlide_MainSection">
 											<div class="carousel-item active" data-interval="2000">
 												<div class="card border m-auto m-lg-0">
-													<div class="card-body">공채 카드</div>
+													<div class="card-body" style="padding:10px 0px 0px 10px;  background-size: cover;">
+														<img src="<%=request.getContextPath()%>/resources/template/img/openrec_slide.png"
+															 alt="공채 슬라이드"
+															 style="margin:0px; display: block; height: 100%; width: auto;" />
+													</div>
 												</div>
 											</div>
 										</div>
@@ -108,7 +112,11 @@ div {
 										<div class="carousel-inner" id="recruitSlide_MainSection">
 											<div class="carousel-item active" data-interval="2000">
 												<div class="card border m-auto m-lg-0">
-													<div class="card-body">채용공고 카드</div>
+													<div class="card-body" style="padding:10px 0px 0px 10px;  background-size: cover;">
+														<img src="<%=request.getContextPath()%>/resources/template/img/recruit_slide.png"
+															 alt="채용공고 슬라이드"
+															 style="margin:0px; display: block; height: 100%; width: auto;" />
+													</div>
 												</div>
 											</div>
 										</div>
@@ -264,6 +272,36 @@ div {
 							<div class="panel-content">
 								<div class="frame-wrap">
 									<div style="text-align: center;">
+										<img onclick="location.href='<%=request.getContextPath()%>/support/counsel/main.do'"
+											src="<%=request.getContextPath()%>/resources/template/img/support/취업상담메인수정.png"
+											style="width: 100%; cursor: pointer;" />
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</sec:authorize>
+			<sec:authorize access="hasAnyRole('ROLE_COUSER')">
+				<div class="col-xl-3">
+					<div id="panel-1" class="panel">
+						<div class="panel-hdr">
+							<h2>
+								인재정보 <span class="fw-300"></span>
+							</h2>
+							<div class="panel-toolbar">
+								<button
+									onclick="location.href='<%=request.getContextPath()%>/talent/list.do'"
+									class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+									<i class="fal fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="panel-container show">
+							<div class="panel-content">
+								<div class="frame-wrap">
+									<div style="text-align: center;">
 										<img
 											src="<%=request.getContextPath()%>/resources/template/img/support/취업상담메인수정.png"
 											style="width: 100%" />
@@ -286,7 +324,7 @@ div {
 								role="tablist">
 								<li class="nav-item"><a class="nav-link active"
 									data-toggle="tab" href="#tab_ai1" role="tab"
-									aria-selected="true">Part1&nbsp;&nbsp;&nbsp;
+									aria-selected="true">명함&nbsp;&nbsp;&nbsp;
 										<button
 											onclick="location.href='<%=request.getContextPath()%>/futurelab/ai1/main.do'"
 											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
@@ -295,7 +333,7 @@ div {
 								</a></li>
 								<li class="nav-item"><a class="nav-link" data-toggle="tab"
 									href="#tab_ai2" role="tab" aria-selected="false">
-										Part2&nbsp;&nbsp;&nbsp;
+										증명사진&nbsp;&nbsp;&nbsp;
 										<button
 											onclick="location.href='<%=request.getContextPath()%>/futurelab/ai2/main.do'"
 											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
@@ -304,7 +342,7 @@ div {
 								</a></li>
 								<li class="nav-item"><a class="nav-link" data-toggle="tab"
 									href="#tab_ai3" role="tab" aria-selected="false">
-										Part3&nbsp;&nbsp;&nbsp;
+										추천&nbsp;&nbsp;&nbsp;
 										<button
 											onclick="location.href='<%=request.getContextPath()%>/futurelab/ai3/main.do'"
 											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
@@ -319,7 +357,26 @@ div {
 							role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div>미래연구소 Part 1</div>
+									<div class="row row-grid no-gutters"
+										onclick="location.href='<%=request.getContextPath()%>/futurelab/ai1/main.do'"
+										style="cursor:pointer;">
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard4.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard2.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard3.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard1.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                    </div>
 								</div>
 							</div>
 						</div>
@@ -387,75 +444,93 @@ div {
 						</h2>
 						<div class="panel-toolbar">
 							<button
-								onclick="location.href='<%=request.getContextPath()%>/community/faq/list.do'"
+								onclick="location.href='<%=request.getContextPath()%>/senior/list.do'"
 								class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
 								<i class="fal fa-plus"></i>
 							</button>
 						</div>
 					</div>
-					<div class="col-xl-3" style="padding: 0px;">
+					<div class="panel-container show">
 						<div id="carouselExampleInterval" style="padding: 0px;"
 							class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner" id="seniorSlide_MainSection">
+							<div class="carousel-inner" onclick="location.href='<%=request.getContextPath()%>/senior/list.do'">
 								<div class="carousel-item active" data-interval="2000">
-									<div class="card-deck">
-										<div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-											<div class="card shadow-1 shadow-hover-5 mb-g">
-												<div class="card-header p-3">
-													<div class="row">
-														<div class="col-md-5"></div>
-														<div class="col-md-7">
-															<div class="title" id="tooltitle"
-																style="width: 300px; height: 60px;">
-																<h3>
-																	<b>시니어 채용공고 제목</b>
-																</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="card-body">
-													<div class="row">
-														<div class="col-6" style="height: 60px;">
-															<h5>
-																<b>사업체명 : </b> 사업체명
-															</h5>
-														</div>
-														<div class="col-6" style="height: 50px;">
-															<h5>
-																<b>구인인원 명수 : </b> &nbsp 3명
-															</h5>
-														</div>
-														<div class="col-6" style="height: 60px;">
-															<h5>
-																<b>연락처 : </b> 연락처
-															</h5>
-														</div>
-														<div class="col-6" style="height: 50px;">
-															<h5>
-																<b>근무지역 : </b>
-
-															</h5>
-															<br>
-														</div>
-													</div>
-													<div style="height: 50px;">
-														<h4>
-															<b>${senior.snrContent }</b>
-														</h4>
-													</div>
-												</div>
-												<div class="card-footer"
-													style="padding-top: 10px; padding-bottom: 4px; margin: 0;">
-													<div class="row" style="margin-right: 10px; float: right;">
-														<div style="margin-right: 10px;">
-															<h4>
-																<b>모집기간 : 기간</b>
-															</h4>
-														</div>
-														<div></div>
-													</div>
-												</div>
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior1.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+			
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior4.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior5.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior6.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior7.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior8.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior9.JPG"
+													 style="width: 100%; cursor: pointer;" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-item" data-interval="2000">
+									<div class="panel-content">
+										<div class="frame-wrap">
+											<div style="text-align: center;">
+												<img src="<%=request.getContextPath()%>/resources/template/img/senior/senior10.JPG"
+													 style="width: 100%; cursor: pointer;" />
 											</div>
 										</div>
 									</div>
@@ -511,7 +586,13 @@ div {
 						<div class="tab-pane fade" id="tab_news" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div id="salaryNews_MainSection"></div>
+									<div style="margin: 0px 40px 0px 40px;">
+										<table class="table table-sm table-hover table-striped w-100">
+											<tbody id="salaryNews_MainSection">
+
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -534,10 +615,21 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
     }
 });
 </script>
+<script>
+Handlebars.registerHelper("nullCheckMain", function(element, options) {
+    if(element != null) { 
+    	return options.fn(this);
+    } else if(element == null) {
+    	return options.inverse(this);
+    }
+});
+
+
+</script>
 
 <script type="text/x-handlebars-template" id="main-recruit-list">
 {{#each recruitList}}
-<tr>
+<tr style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno={{recWantedno}}'">
 	<td>{{coName}}</td>
 	<td>{{recWantedtitle}}</td>
 </tr>
@@ -546,7 +638,7 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 
 <script type="text/x-handlebars-template" id="main-openrec-list">
 {{#each openRecList}}
-<tr>
+<tr style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno={{openSeqno}}&openConm={{openConm}}'">
 	<td>{{openConm}}</td>
 	<td>{{openTitle}}</td>
 </tr>
@@ -556,15 +648,15 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 <script type="text/x-handlebars-template" id="main-recruit-slide">
 {{#each recruitList}}
 	<div class="carousel-item" data-interval="2000">
-	<div class="card border m-auto m-lg-0">
+	<div class="card border m-auto m-lg-0"
+	style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno={{recWantedno}}'">
+		<img src="<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png" class="card-img-top" alt="...">
 		<div class="card-body">
 			<h5 class="card-title fw-700">{{coName}}</h5>
 			<p class="card-text">
 			</p>
 			<p class="card-text">{{recRegion}}</p>
 			<p class="card-text">{{recWantedtitle}}</p>
-			<a href="" class="card-link fw-700">{{coName}}
-			지원하러가기</a>
 		</div>
 	</div>
 </div>
@@ -574,15 +666,17 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 <script type="text/x-handlebars-template" id="main-openrec-slide">
 {{#each openRecList}}
 	<div class="carousel-item" data-interval="2000">
-	<div class="card border m-auto m-lg-0">
+	<div class="card border m-auto m-lg-0"
+	style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno={{openSeqno}}&openConm={{openConm}}'">
+		<img src="{{openLogo}}" class="card-img-top" alt="공채기업 로고">
 		<div class="card-body">
 			<h5 class="card-title fw-700">{{openConm}}</h5>
 			<p class="card-text">
 			</p>
-			<p class="card-text">{{openConm}}</p>
-			<p class="card-text">{{openConm}}</p>
-			<a href="" class="card-link fw-700">{{openConm}}
-			지원하러가기</a>
+			<p class="card-text">{{openTitle}}</p>
+			<p class="card-text">{{openRegion}},  {{openCarnm}},  {{openEdunm}}</p>
+			<i class="badge border border-info text-info">{{openSdate}}부터</i>
+			<i class="badge border border-success text-success">{{openEdate}}까지</i>
 		</div>
 	</div>
 </div>
@@ -592,9 +686,12 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 <script type="text/x-handlebars-template" id="main-contest-list">
 {{#each contestList}}
 <div class="panel-content col-3">
-	<div class="card-deck">
+	<div class="card-deck" style="height:210px; cursor:pointer;">
 		<div class="card">
-			<img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" class="card-img-top" alt="...">
+			<img id="image" class="card-img-top" onclick="location.href='<%=request.getContextPath()%>/support/contest/list.do'"
+				src="http://localhost/ddit/getPicture.do?path={{uploadpath}}&filename={{filename}}"
+				onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
+				alt="대체 이미지가 로드되지 않았습니다." />
 		</div>
 	</div>
 </div>
@@ -606,7 +703,10 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 <div class="panel-content col-3">
 	<div class="card-deck">
 		<div class="card">
-			<img src="<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg" class="card-img-top" alt="...">
+			<img id="image" class="card-img-top"
+			     src="http://localhost/ddit/getPicture.do?path={{uploadpath}}&filename={{filename}}"
+			     onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg';"
+			     alt="대체 이미지가 로드되지 않았습니다." />
 			<div class="card-body demo"style="height: 155.87px;">
 				<h4 class="card-title" data-toggle="tooltip"
 					data-placement="top" title=""
@@ -620,7 +720,8 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 
 <script type="text/x-handlebars-template" id="main-publicwork-list">
 {{#each publicWorkList}}
-	<tr>
+	<tr style="cursor:pointer;"
+		onclick="window.open('<%=request.getContextPath()%>/community/publicwork/detail.do?from=list&pubNo='+{{pubNo}} ,'OpenWindow', 'width=1000, height=800')">
 		<td>{{pubTitle}}</td>
 		<td>{{pubHost}}</td>
 	</tr>
@@ -629,12 +730,25 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 
 <script type="text/x-handlebars-template" id="main-seniorList">
 {{#each seniorList}}
-{{/each}}
+	<div class="carousel-item" data-interval="2000">
+	<div class="card border m-auto m-lg-0"
+	style="cursor:pointer;" >
+		<div class="card-body">
+			<h5 class="card-title fw-700">테스트</h5>
+			<p class="card-text">
+			</p>
+			<p class="card-text">{{snrTitle}}</p>
+			<p class="card-text">테스트,  테스트,  테스트</p>
+			<i class="badge border border-info text-info">부터</i>
+			<i class="badge border border-success text-success">테스트까지</i>
+		</div>
+	</div>
+</div>
 </script>
 
 <script type="text/x-handlebars-template" id="main-salary-typeSalList">
 {{#each typeSalList}}
-	<tr>
+	<tr style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/salary/list.do'">
 		<td id="word" data-toggle="tooltip" data-placement="top" title=""
 					data-original-title="{{coName}}">{{recIndtpcdnm}}</td>
 		<td style="text-align: right">{{coSal}}원</td>
@@ -644,24 +758,10 @@ Handlebars.registerHelper("indexCheck", function(element, options) {
 
 <script type="text/x-handlebars-template" id="main-salaryNews">
 {{#each newsList}}
-<div class="row" onclick="location.href='detail.do?newsNo={{newsNo}}&from=list'" style="cursor:pointer;">
-	<div class="col-12 ">
-		<div class="mt-3">
-			<h3>
-				<b>{{newsTitle}}</b> 
-			</h3>
-		</div> 
-		<div class="mt-4" style="font-size: 16px;">{{newsOneContent }}</div>  
-		<div class="row mt-4">
-			 <div class="ml-3 " style="font-size: 14px; color:rgb(8,197,167)" id="newsSdate"><b>Log4Job</b> </div> 
-				<div class="ml-3">{{newsSdate }}</div>
-		</div>
-			<span class=""
-				style="position: relative; left: 80%; font-size: 14px;">
-				조회수  {{newsCnt}}</span>
-	</div>
-</div>
-<hr width="90%" style="border-bottom: solid 1px #c7c6c6;"/>
+<tr style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/salary/detail.do?newsNo={{newsNo}}&from=list'">
+	<td id="word" data-toggle="tooltip" data-placement="top" title="" >{{newsTitle}}</td>
+	<td style="text-align: right">{{newsSdate}}</td>
+</tr>
 {{/each}}
 </script>
 
@@ -753,7 +853,7 @@ var ajaxOption = {
 	
 $.ajax(ajaxOption).done(function(data) {
 	console.log("seniorList data : ",data);
-	/* printDataByMain(data, $('#seniorSlide_MainSection'), $('#main-seniorList')); */
+	printDataByMain(data, $('#seniorSlide_MainSection'), $('#main-seniorList')); 
 });
 </script>
 
@@ -774,8 +874,7 @@ $.ajax(ajaxOption).done(function(data) {
 
 <script>
 var ajaxOption = {
-		url : '<%=request.getContextPath()%>
-	/salary/salaryNewsForMain.do',
+		url : '<%=request.getContextPath()%>/salary/salaryNewsForMain.do',
 		async : true,
 		type : "GET",
 		dataType : "json",
@@ -785,8 +884,7 @@ var ajaxOption = {
 	$.ajax(ajaxOption).done(
 			function(data) {
 				console.log("salaryNews data : ", data);
-				printDataByMain(data, $('#salaryNews_MainSection'),
-						$('#main-salaryNews'));
+				printDataByMain(data, $('#salaryNews_MainSection'), $('#main-salaryNews'));
 			});
 </script>
 

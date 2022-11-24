@@ -159,10 +159,11 @@ public class TalentrController {
 	@ResponseBody
 	public AdviceVO recruitAdviceRegist(AdviceVO advice, AllimVO allim, webSocketListener handler ) throws Exception {
 		
-		System.out.println("찾아줘");
 		advice.getIndId();
 		allim.getFromId();
 		allim.getToId();
+		allim.getRecWantedtitle();
+		System.out.println("찾아줘" + allim.getRecWantedtitle());
 		adviceService.registAdvice(advice);
 		allimService.registAllim(allim);
 		handler.AdviceAllim(allim);

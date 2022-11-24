@@ -51,4 +51,8 @@ public interface SupplyRecDAO {
 	List<CertificateVO> selectSupResCerList(int supNo) throws SQLException;
 	
 	List<LetterVO> selectSupResLetList(int supNo) throws SQLException;
+
+	void remove(int openSeqno);
+
+	void removeRno(String recWantedno);
 }

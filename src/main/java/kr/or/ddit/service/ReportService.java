@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
 import kr.or.ddit.dto.CoDetailListVO;
+import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.ReportListVO;
 
 public interface ReportService {
@@ -22,6 +23,8 @@ public interface ReportService {
 	// 처리상태 바꾸기
 	void updateReportChangeStatus(ReportListVO reportList) throws SQLException;
 	
+	// 권한회수하기
+	void updateReturnConfirm(MemberVO member)throws SQLException;
 
 
 }

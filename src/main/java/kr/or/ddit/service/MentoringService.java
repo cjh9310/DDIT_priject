@@ -21,7 +21,7 @@ public interface MentoringService {
 	//등록
 	void registAll(MentoringVO mentoring)throws SQLException;
 	
-	void regist(MentoringVO mentoring)throws SQLException;
+	void regist(MentoringVO mentoring, String savePath)throws SQLException;
 	
 	//수정
 	void modify(MentoringVO mentoring)throws SQLException;
@@ -31,4 +31,5 @@ public interface MentoringService {
 	
 	//삭제
 	void remove(int menNo)throws SQLException;
+
 }

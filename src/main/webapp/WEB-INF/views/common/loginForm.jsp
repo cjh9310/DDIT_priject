@@ -96,72 +96,15 @@
 			localStorage.setItem("themeSettings", "");
 		}
 	</script>
-
-
-	<%-- <div id="panel-10" class="panel" style="width: 40%;">
-		<div class="panel-container show">
-			<div class="panel-content">
-				<div class="tab-content py-3">
-					<div class="tab-pane fade show active"
-						id="js_change_pill_justified-1" role="tabpanel">
-						<div
-							class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-							<form action="login.do" method="post">
-								<input name="retUrl" value="${retUrl }" type="hidden" />
-								<div class="form-group">
-									<label class="form-label" for="username">ID</label> <input
-										type="text" class="form-control" name="id"
-										placeholder="아이디를 입력하세요." value="${pastID }"> <span
-										class="help-block"> Your ID </span>
-								</div>
-								<div class="form-group">
-									<label class="form-label" for="password">Password</label> <input
-										type="password" id="password" class="form-control"
-										placeholder="password" name="pwd" placeholder="패스워드를 입력하세요."
-										value=""> <span class="help-block"> Your
-										Password </span>
-								</div>
-								<div class="form-group text-left">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input"
-											id="rememberme"> <label class="custom-control-label"
-											for="rememberme">아이디/패스워드 저장</label>
-									</div>
-								</div>
-								<button type="submit" class="btn btn-default float-right">로그인</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="blankpage-footer text-center">
-				<a href="#"><strong>회원가입</strong></a> | <a href="#"><strong>아이디
-						/ 비밀번호 찾기</strong></a>
-			</div>
-		</div>
-	</div> --%>
-	<%-- <div class="border" style="width: 40%;">
-		<div class="panel-container show">
-			<div class="panel-content" style="height: 400px;">
-				<div class="logo row">
-					<a href="#" style="width:100px;" class="page-logo-link press-scale-down d-flex align-items-center position-relative"
-					   data-toggle="modal" data-target="#modal-shortcut"> 
-						<img src="<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png" alt="Log4Job" aria-roledescription="logo">
-					</a>
-				</div>
-			</div>
-		</div>
-	</div> --%>
-
-
 	    <div class="blankpage-form-field">
-            <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
+            <%-- <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
                 <a href="#" style="width:100px;" class="page-logo-link press-scale-down d-flex align-items-center position-relative"
 					   data-toggle="modal" data-target="#modal-shortcut"> 
 						<img src="<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png" alt="Log4Job" aria-roledescription="logo">
 					</a>
-            </div>
+            </div> --%>
             <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
+            	<img style="margin-bottom:24px;" src="<%=request.getContextPath()%>/resources/template/img/Log4Job_daejeon_logo.png" alt="Log4Job" class="card-img-top" alt="...">
                 <form action="login.do"	method="post">
                 	<input name="retUrl" value="${retUrl }" type="hidden" />
                     <div class="form-group">
@@ -178,17 +121,18 @@
                             Your Password
                         </span>
                     </div>
-                    <div class="form-group text-left">
-                        <div class="custom-control custom-checkbox">
+                    <div class="btn-group btn-group-sm w-100">
+                    	<button type="button" class="btn btn-outline-success waves-effect waves-themed">
                             <input type="checkbox" class="custom-control-input" id="rememberme">
-                            <label class="custom-control-label" for="rememberme">아이디/패스워드 저장</label>
-                        </div>
+                            <label class="custom-control-label" for="rememberme" style="margin-left: 5px;">아이디/패스워드 저장</label>
+                        </button>
+	                    <button type="submit" class="btn btn-success waves-effect waves-themed">로그인</button>
                     </div>
-                    <button type="submit" class="btn btn-default float-right">로그인</button>
+                    <div class="btn-group btn-group-xs w-100" style="margin-top:15px;">
+	                    <button type="button" class="btn btn-outline-primary waves-effect waves-themed" style="width:170px;">회원가입</button>
+	                    <button type="button" class="btn btn-primary waves-effect waves-themed">ID/PW찾기</button>
+                    </div>
                 </form>
-            </div>
-            <div class="blankpage-footer text-center">
-                <a href="#"><strong>비밀번호 찾기</strong></a> | <a href="#"><strong>회원가입</strong></a>
             </div>
         </div>
 

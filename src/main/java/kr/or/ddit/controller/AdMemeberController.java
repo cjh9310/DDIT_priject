@@ -3,12 +3,14 @@ package kr.or.ddit.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,9 +71,34 @@ public class AdMemeberController {
 	@Autowired
 	private AuthReqService authReqService;
 
-	@GetMapping("/mypage/info")
-	public String myPageInfo() throws Exception {
-		String url = "admember/mypage/lockedinfo";
+	@PostMapping("mypage/checkInfo")
+	public String myPageInfo(@RequestParam("checkPwd") String checkPwd, HttpServletRequest request) throws Exception {
+		String url;
+		
+		HttpSession session = request.getSession();
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String id = loginUser.getId();
+		
+		if(id.equals(checkPwd)) {
+			url="indmember/mypage/info";
+		} else {
+			url="common/Unlocking_fail";
+		}
+		return url;
+	}
+	
+	@Resource(name = "fileUploadPath")
+	private String fileUploadPath;
+	
+	@GetMapping("mypage/nonCheckInfo")
+	public String myPageInfo(HttpServletRequest request) throws Exception {
+		String url="indmember/mypage/info";
+		return url;
+	}
+	
+	@GetMapping("mypage/lockedinfo")
+	public String myPageLockedInfo(HttpServletRequest request) throws Exception {
+		String url = "indmember/mypage/lockedinfo";
 		return url;
 	}
 
@@ -118,17 +145,32 @@ public class AdMemeberController {
 		String url = "admember/mypage/report";
 
 		Map<String, Object> dataMap = reportService.getAllReportList(cri);
-
+		
 		request.setAttribute("dataMap", dataMap);
+		request.setAttribute("pageType", "normal");
 
 		return url;
 	}
 
+	@GetMapping("/mypage/reportUpdateAndRefresh")
+	public String reportUpdateAndRefresh(Criteria cri, int falNo, String coNm, HttpServletRequest request) throws Exception {
+		String url = "admember/mypage/report";
+
+		Map<String, Object> dataMap = reportService.getAllReportList(cri);
+
+		request.setAttribute("dataMap", dataMap);
+		request.setAttribute("falNo", falNo);
+		request.setAttribute("coNm", coNm);
+		request.setAttribute("pageType", "statusUpdate");
+
+		return url;
+	}	
+	
 	@RequestMapping(value = "/mypage/reportDetail", method = RequestMethod.POST)
-	public @ResponseBody ReportListVO reportDetail(@RequestParam("falNo") int falNo, String coName, Model model) throws Exception {
-		System.out.println("falNo : " + falNo + coName );
+	public @ResponseBody ReportListVO reportDetail(@RequestParam("falNo") int falNo, String coNm, Model model) throws Exception {
+		System.out.println("falNo : " + falNo + coNm );
 		ReportListVO reportListVO = reportService.getReport(falNo);
-		List<CoDetailListVO> coDetailList = reportService.getCoDetail(coName);
+		List<CoDetailListVO> coDetailList = reportService.getCoDetail(coNm);
 		
 		reportListVO.setCoDetailList(coDetailList);
 		model.addAttribute("openReportDetail", reportListVO);
@@ -136,6 +178,19 @@ public class AdMemeberController {
 		return reportListVO;
 
 	}
+	
+	@RequestMapping(value = "/mypage/returnConfirm", method = RequestMethod.POST)
+	public @ResponseBody String returnConfirm(String coId, String coConfirm, Model model) throws Exception {
+		MemberVO memberVO = new MemberVO();
+		
+		memberVO.setId(coId);
+		memberVO.setCoConfirm(coConfirm);
+		
+		reportService.updateReturnConfirm(memberVO);
+
+		return "succ";
+
+	}	
 	
 	@ResponseBody
 	@PostMapping("/mypage/reportChangeStatus")
@@ -330,19 +385,19 @@ public class AdMemeberController {
 	@RequestMapping(value = "/mypage/newsDetail", method = RequestMethod.POST)
 	public @ResponseBody NewsVO detailNews(@RequestParam("newsNo") int newsNo, Model model) throws Exception {
 
-		NewsVO newsVO = newsService.getNews(newsNo);
+		NewsVO news = newsService.getNews(newsNo);
 
-		model.addAttribute("newsDetail", newsVO);
+		model.addAttribute("newsDetail", news);
 
-		return newsVO;
+		return news;
 	}
 
 	@PostMapping("/mypage/newsRegist")
-	@ResponseBody
 	public String registNews(NewsVO news, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
-
 		String url = "redirect:/admember/mypage/news";
-
+		
+		String savePath = this.fileUploadPath;
+		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 
@@ -351,12 +406,11 @@ public class AdMemeberController {
 		news.setAdId(adId);
 
 		System.out.println("news :" + news);
-		newsService.regist(news);
+		newsService.regist(news,savePath);
 
 		rttr.addFlashAttribute("from", "regist");
-
+		
 		return url;
-
 	}
 
 	@RequestMapping(value = "/mypage/newsModify", method = RequestMethod.POST)
@@ -397,5 +451,4 @@ public class AdMemeberController {
 		return url;
 
 	}
-
 }

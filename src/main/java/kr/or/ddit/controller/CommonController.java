@@ -1,5 +1,9 @@
 package kr.or.ddit.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -130,6 +138,27 @@ public class CommonController {
 		return url;
 	}
 	
+	@GetMapping("getPicture")
+	public ResponseEntity<Resource> getPicture(@Param("path") String path, @Param("filename") String filename) {
+		System.out.println(path+filename);
+		
+		Resource resource = new FileSystemResource(path + "/" + filename);
+		
+		if(!resource.exists()) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		HttpHeaders header = new HttpHeaders();
+		Path filePath = null;
+		
+		try {
+			filePath = Paths.get(path + "/" + filename);
+			header.add("Content-Type", Files.probeContentType(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
 	
 }
 

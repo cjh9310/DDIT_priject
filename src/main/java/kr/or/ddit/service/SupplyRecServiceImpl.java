@@ -140,5 +140,15 @@ public class SupplyRecServiceImpl implements SupplyRecService {
 		
 		return supplyRecList;
 	}
+
+	@Override
+	public void remove(int openSeqno) {
+		supplyRecDAO.remove(openSeqno);
+	}
+
+	@Override
+	public void removeRNo(String recWantedno) {
+		supplyRecDAO.removeRno(recWantedno);
+	}
 	
 }

@@ -8,8 +8,11 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.MentoringDAO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.MentoringVO;
 @Service
 public class MentoringServiceImpl implements MentoringService {
@@ -18,6 +21,12 @@ public class MentoringServiceImpl implements MentoringService {
 	public void setMentoringDAO(MentoringDAO mentoringDAO) {
 		this.mentoringDAO = mentoringDAO;
 	}
+	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
+	}
+	
 	
 	@Override
 	public Map<String, Object> getMentoringList() throws SQLException {
@@ -78,9 +87,37 @@ public class MentoringServiceImpl implements MentoringService {
 	}
 
 	@Override
-	public void regist(MentoringVO mentoring) throws SQLException {
+	public void regist(MentoringVO mentoring, String savePath) throws SQLException {
 		int menNo = mentoringDAO.selectMentoringSeqNext();
 		mentoring.setMenNo(menNo);
+		
+		// 첨부파일등록
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+		String workDiv = "Mentoring"; // 필수
+		//file 저장 -> List<AttachVO>
+		List<AttachVO> attachList = null;
+		try {
+			// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
+			attachList = MultipartFileUploadResolver.fileUpload(mentoring.getUploadFile(), savePath + "/" + workDiv);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// 파일저장정보 목록을 FalseReportVO에 세팅
+		mentoring.setAttachList(attachList);	
+		
+		// 파일정보를 첨부파일 테이블에 등록
+		if (mentoring.getAttachList() != null) {
+			for (AttachVO attach : mentoring.getAttachList()) {
+				attach.setWorkDiv(workDiv);
+				attach.setWorkPk(Integer.toString(mentoring.getMenNo()));
+				attach.setAttacher(mentoring.getCoId());
+				attachDAO.insertAttach(attach);
+			}
+		}
+		/*********** 첨부파일 등록   end**************/
+		
 		mentoringDAO.insertMentoring(mentoring);
 		
 	}

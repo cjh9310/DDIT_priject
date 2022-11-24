@@ -17,4 +17,8 @@ public interface AdviceService {
 	
 	void registAdvice(AdviceVO advice) throws SQLException;
 
+	void remove(int openSeqno) throws SQLException;
+
+	void removeRNo(String recWantedno);
+
 }

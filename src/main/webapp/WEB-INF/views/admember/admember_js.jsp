@@ -4,31 +4,27 @@
 <script>
 	function rendering() {
 		
-		var user_password = "${loginUser.pwd}";
-		var check_password = $('#password').val();
+		var checkPwd = $('#password').val();
 		
-		if(check_password == user_password) {
-			var ajaxOption = {
-				url : '<%=request.getContextPath()%>/indmember/mypage/info.do',
-				async : true,
-				type : "GET",
-				dataType : "html",
-				cache : false
-			};
-	
-			$.ajax(ajaxOption).done(function(data) {
-				$('#auth_check').children().remove();
-				$('#auth_check').html(data); 
-			});
-		} else {
-			alert('비밀번호가 일치하지않습니다.');	
-		}
+		var ajaxOption = {
+			url : '<%=request.getContextPath()%>/admember/mypage/checkInfo.do',
+			async : true,
+			type : "POST",
+			data : {'checkPwd' : checkPwd},
+			dataType : "html",
+			cache : false
+		};
+		
+		$.ajax(ajaxOption).done(function(data) {
+			$('#auth_check').children().remove();
+			$('#auth_check').html(data); 
+		});
 	}
 </script>
 <script>
 	function nonCheck_reload() {
 		var ajaxOption = {
-			url : '<%=request.getContextPath()%>/indmember/mypage/info.do',
+			url : '<%=request.getContextPath()%>/admember/mypage/nonCheckInfo.do',
 			async : true,
 			type : "GET",
 			dataType : "html",

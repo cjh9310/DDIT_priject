@@ -51,7 +51,7 @@ public class SupportController {
 	@Resource(name="fileUploadPath")
 	private String fileUploadPath;
 	
-	@GetMapping("contest/list")
+	@GetMapping("/contest/list")
 	public String contestList(Criteria cri, Model model) throws Exception {
 		String url = "support/contest/list";
 		
@@ -80,9 +80,11 @@ public class SupportController {
 		return dataMap;
 	}
 	
-	@RequestMapping("contest/activityRegist")
-	public String activityRegistContest(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
-		String url = "redirect:/support/contest/list";
+	@PostMapping(value="/contest/activityRegist")
+	//@ResponseBody
+	public String activityRegistContest(int conNo, ActivityVO activity, RedirectAttributes rttr, HttpServletRequest request)throws Exception{
+		System.out.println("두번"+activity);
+		String url = "redirect:/support/contest/detail?conNo="+conNo;
 		
 		//파일업로드 경로 
 		String savePath = this.fileUploadPath;
@@ -93,12 +95,15 @@ public class SupportController {
 		String indId = loginUser.getId();
 		activity.setIndId(indId);
 		
-		activityService.registContest(activity);
+		activityService.registContest(activity, savePath);
+		
+		rttr.addFlashAttribute("from","regist");
 		
 		return url;
+		
 	}
 	
-	@GetMapping("contest/detail")
+	@GetMapping("/contest/detail")
 	public String contestDetail(Model model, int conNo) throws Exception {
 		String url = "support/contest/detail";
 		Map<String, Object> contestMap = new HashMap<String, Object>();
@@ -109,13 +114,13 @@ public class SupportController {
 		return url;
 	}
 //취업상담----------------------------------------------------------------------------------
-	@GetMapping("counsel/main")
+	@GetMapping("/counsel/main")
 	public String counselMain() throws Exception {
 		String url = "support/counsel/main";
 		return url;
 	}
 	
-	@PostMapping("counsel/regist")
+	@PostMapping("/counsel/regist")
 	public String CounselRegist(			
 			SupportVO support,
 			@RequestParam Map<String, Object> param,
@@ -140,7 +145,7 @@ public class SupportController {
 		return url;
 	}
 	
-	@GetMapping("mentoring/list")
+	@GetMapping("/mentoring/list")
 	public String mentoringList(Criteria cri, Model model) throws Exception {
 		String url = "support/mentoring/list";
 		
@@ -153,7 +158,7 @@ public class SupportController {
 		return url;
 	}
 	
-	@GetMapping("mentoring/detail")
+	@GetMapping("/mentoring/detail")
 	public ModelAndView mentroringDetail(int menNo, ModelAndView mnv)throws Exception {
 		String url = "support/mentoring/detail";
 		
@@ -164,7 +169,7 @@ public class SupportController {
 		return mnv;
 	}
 	
-	@RequestMapping("mentoring/activityRegist")
+	@RequestMapping("/mentoring/activityRegist")
 	public String activityRegistMentoring(ActivityVO activity, Model model, HttpServletRequest request)throws Exception{
 		String url = "redirect:/support/mentoring/list";
 		

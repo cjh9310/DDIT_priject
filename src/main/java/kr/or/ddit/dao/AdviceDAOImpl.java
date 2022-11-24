@@ -35,4 +35,18 @@ public class AdviceDAOImpl implements AdviceDAO{
 	public void insertAdvice(AdviceVO advice) throws SQLException {
 		session.update("Advice-Mapper.insertAdvice", advice);
 	}
+	@Override
+	public List<Integer> selectAdviceForAdvNo(int openSeqno) {
+		List<Integer> advNoList = session.selectList("Advice-Mapper.selectAdviceForAdvNo", openSeqno);
+		return null;
+	}
+	
+	@Override
+	public void remove(int openSeqno) {
+		session.update("Advice-Mapper.updateAdviceByNo",openSeqno);
+	}
+	@Override
+	public void removeRNo(String recWantedno) {
+		session.update("Advice-Mapper.updateAdviceByRNo",recWantedno);	
+	}
 }

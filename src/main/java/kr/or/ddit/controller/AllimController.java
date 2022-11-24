@@ -31,24 +31,26 @@ public class AllimController {
 	@GetMapping("list")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> list(HttpServletRequest request) throws Exception {
-		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
 //      두가지의 맵을 담기 위해 hashMap을 생성하고 담아줌..  상위호환?		
 		Map<String, Object> alertForOpenList = allimService.getAllimOpenList(id);
 		Map<String, Object> alertForRecList = allimService.getAllimRecList(id);
-		
+		String name = "아이센스";
+		Map<String, Object> alertForRecNameList = allimService.getAllimRecNameList(name);
+		System.out.println("알람컨트롤러 진입@@@@@@@@@@@@@@@@@@@@@");
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("alertForOpenList", alertForOpenList);
 		dataMap.put("alertForRecList", alertForRecList);
 		
+		dataMap.put("alertForRecNameList", alertForRecNameList);
 		ResponseEntity<Map<String, Object>> entity = new ResponseEntity<Map<String, Object>>(dataMap,HttpStatus.OK);
 		
 		
 		return entity;
 	}
-
+	
 
 
 

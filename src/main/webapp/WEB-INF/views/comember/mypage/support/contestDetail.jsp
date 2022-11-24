@@ -115,7 +115,7 @@
 <script>
 $('#deleteBtn').on('click',()=>{
 	var conNo = ${contest.conNo};
-	alert(conNo);
+	//alert(conNo);
 	
 	 Swal.fire({
          icon: 'warning',

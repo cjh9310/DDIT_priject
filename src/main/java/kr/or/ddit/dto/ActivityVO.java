@@ -1,6 +1,9 @@
 package kr.or.ddit.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class ActivityVO {
 	
@@ -17,6 +20,7 @@ public class ActivityVO {
 	private Date actUdate; //수정되는 날짜
 	
 	//공모전
+	private String coId;
 	private Date conSdate; //시작일자
 	private Date conEdate;//마감일자
 	private String conTitle;//제목
@@ -30,6 +34,18 @@ public class ActivityVO {
 	
 	//회원명
 	private String name;
+	
+	private List<MultipartFile> uploadFile; //파일 업로드
+	private List<AttachVO> attachList;
+	
+
+	public String getCoId() {
+		return coId;
+	}
+
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
 
 	public int getActNo() {
 		return actNo;
@@ -191,16 +207,34 @@ public class ActivityVO {
 		this.name = name;
 	}
 
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
+
 	@Override
 	public String toString() {
 		return "ActivityVO [actNo=" + actNo + ", indId=" + indId + ", conNo=" + conNo + ", menNo=" + menNo
 				+ ", actStatus=" + actStatus + ", actPrize=" + actPrize + ", actScore=" + actScore + ", actTel="
-				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", actUdate=" + actUdate + ", conSdate="
-				+ conSdate + ", conEdate=" + conEdate + ", conTitle=" + conTitle + ", conField=" + conField
-				+ ", menSdate=" + menSdate + ", menEdate=" + menEdate + ", menTitle=" + menTitle + ", menProgress="
-				+ menProgress + ", name=" + name + "]";
+				+ actTel + ", actEmail=" + actEmail + ", actDate=" + actDate + ", actUdate=" + actUdate + ", coId="
+				+ coId + ", conSdate=" + conSdate + ", conEdate=" + conEdate + ", conTitle=" + conTitle + ", conField="
+				+ conField + ", menSdate=" + menSdate + ", menEdate=" + menEdate + ", menTitle=" + menTitle
+				+ ", menProgress=" + menProgress + ", name=" + name + ", uploadFile=" + uploadFile + ", attachList="
+				+ attachList + "]";
 	}
 
+	
 		
 	
 }

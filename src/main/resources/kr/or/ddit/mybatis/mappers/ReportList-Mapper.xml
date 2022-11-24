@@ -6,57 +6,75 @@
 
 	<sql id="search">
 		<if test="searchType == 'mem'.toString()">
-			and ind_id like '%'||#{keyword}||'%'
+			AND IND_ID LIKE '%'||#{keyword}||'%'
 		</if>
 		<if test="searchType == 'co'.toString()">
-			and co_name like '%'||#{keyword}||'%'
+			AND CO_NAME LIKE '%'||#{keyword}||'%'
 		</if>		
 	</sql>
 
 	<select id="selectAllReportList" resultType="reportList">
 		/*selectAllReportList*/
-		select *
-	  	  from (      
-			 select rownum as rnum,SearchAllReport.*
-		   	   from (
-				   	 select *
-				   	   from false_report F
-				    natural join report_list R
-				      where fal_no is not null
+		SELECT *
+	  	  FROM (      
+			 SELECT ROWNUM AS RNUM,SEARCHALLREPORT.*
+		   	   FROM (
+				   	 SELECT *
+				   	   FROM FALSE_REPORT F
+				    NATURAL JOIN REPORT_LIST R
+				      WHERE FAL_NO IS NOT NULL
 				     <include refid="search" />
-				      order by fal_no desc
-				    ) SearchAllReport
+				      ORDER BY FAL_NO DESC
+				    ) SEARCHALLREPORT
 		     <![CDATA[
-		    where rownum <= #{endRow}
+		    WHERE ROWNUM <= #{endRow}
 		    ]]>
 		  )
 		  <![CDATA[
-	 	 where rnum >= #{startRow}		
+	 	 WHERE RNUM >= #{startRow}		
 		 ]]>
 	</select>
 	
 	
 	<select id="selectSearchReportListCount" resultType="int">
 		/*selectSearchReportListCount*/
-		select count(*)
-		  from 
-		       (select *
-				  from false_report F
-			   natural join report_list R)
-		 where fal_no is not null
+		SELECT COUNT(*)
+		  FROM 
+		       (SELECT *
+				  FROM FALSE_REPORT F
+			   NATURAL JOIN REPORT_LIST R)
+		 WHERE FAL_NO IS NOT NULL
 		 <include refid="search" />
-		 order by fal_no desc   
+		 ORDER BY FAL_NO DESC   
 	</select>
 	
 	
 	<select id="selectReportListByFalNo" parameterType="int" resultType="reportList">
-		/*selectReportListByFalNo*/
-		select *
-		  from 
-		       (select *
-				  from false_report F
-			   natural join report_list R)
-	   	 where fal_no=#{falNo}		  
+		/*SELECTREPORTLISTBYFALNO*/
+          SELECT F.FAL_NO
+                ,F.IND_ID
+                ,F.FAL_TITLE
+                ,F.FAL_CONTENT
+                ,F.FAL_SDATE
+                ,F.FAL_ODATE
+                ,F.FAL_EDATE
+                ,F.FAL_CATEGORY
+                ,F.FAL_CATEGORYDETAIL
+                ,R.AD_ID
+                ,R.REP_STATUS
+                ,C.CO_ID
+                ,C.CO_NM
+                ,C.CO_ADDR
+                ,C.CO_DEADDR
+                ,C.CO_CONFIRM
+                ,C.CO_COMMENT
+                
+			FROM FALSE_REPORT F
+                ,REPORT_LIST R 
+                ,CO_MEMBER C
+           WHERE F.FAL_NO=R.FAL_NO
+             AND F.CO_ID=C.CO_ID
+             AND F.FAL_NO=#{falNo}		  
 	</select>
 	
 	<select id="selectCoDetail" parameterType="str" resultType="coDetailList">
@@ -93,6 +111,13 @@
 		UPDATE REPORT_LIST
 		   SET REP_STATUS = #{repStatus}
 		 WHERE FAL_NO = #{falNo}  
+	</update>
+	
+	<update id="updateReturnConfirm" parameterType="member">
+		/*ReportList-Mapper.updateReportConfirm*/
+		UPDATE CO_MEMBER
+		   SET CO_CONFIRM = #{coConfirm}
+		 WHERE CO_ID = #{id}
 	</update>
 	
 </mapper>

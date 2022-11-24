@@ -68,7 +68,7 @@
 						</div>
 					</td>
 					<td>
-						<h2 style="margin: 0px;">${recruit.coName} - ${recruit.coId } - ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
+						<h2 style="margin: 0px;">${recruit.coName} - ${recruit.recWantedtitle}  -  채용공고 지원중</h2>
 						</h2>
 					</td>
 					<td>
@@ -415,7 +415,6 @@ function rec_supply() {
 	}
 	
 	var recWantedno = '${recruit.recWantedno}';
-	console.log(recWantedno);
 	
 	$.ajax({
 		type : "POST",
@@ -457,8 +456,9 @@ function rec_supply_submit() {
 		success : function(data) {
 			if(data == 'recruitSupplySuccess') {
 				alert(coName + '에 대한 채용 지원이 완료되었습니다.');
+				opener.parent.goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');
+				console.log("goPage() : ",opener.parent.goPage);
 				window.close();
-				
 			}
 		},
 		error : function(request, status, error) {
@@ -469,20 +469,18 @@ function rec_supply_submit() {
 }
 
 </script>
+
 <script>
 function AllimRegist() {
 	var recWantedno = '${recruit.recWantedno}';
-	var coId = '${result.coId}';
-	var indId = '${result.indId}';
-	var openSeqno = '${result.openSeqno}';
-	console.log(recWantedno);
-	console.log(coId);
-	console.log(indId);
-	console.log(openSeqno);
+	var coName = '${recruit.coName}';
+	var indId = '${loginUser.id}';
+	var recWantedtitle = '${recruit.recWantedtitle}';
+
 	$.ajax({
-		url : '<%=request.getContextPath()%>/recruit/supply/openAllim',
+		url : '<%=request.getContextPath()%>/recruit/recAllim',
 		type : 'POST',
-		data : {'toId':coId,'fromId' : indId, 'openSeqno' : openSeqno , 'recWantedno' : recWantedno},
+		data : {'toId':coName,'fromId' : indId, 'recWantedno' : recWantedno, 'recWantedtitle':recWantedtitle},
 		success : function(result) {
       },
 

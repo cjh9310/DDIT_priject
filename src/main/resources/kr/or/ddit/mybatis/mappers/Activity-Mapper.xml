@@ -66,6 +66,15 @@
     	   and a.act_no = #{actNo}
 	</select>
 	
+	<select id="selectAllActivityById" resultType="activity">
+	/* Activity-Mapper.selectAllActivityById */
+		select a.*, c.*, m.*
+		  from mentoring m, contest c, activity a
+		 where a.con_no = c.con_no
+           and a.men_no = m.men_no 
+           and ind_id = #{id}
+	</select>
+	
 	<insert id="insertActivityContest" parameterType="activity">
 		insert
 		into

@@ -123,7 +123,8 @@
 		p:corporationDAO-ref="corporationDAO"/>
 	<bean id="newsService"
 		class="kr.or.ddit.service.NewsServiceImpl"
-		p:newsDAO-ref="newsDAO" />
+		p:newsDAO-ref="newsDAO"
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="contestService"
 		class="kr.or.ddit.service.ContestServiceImpl"
 		p:contestDAO-ref="contestDAO" 
@@ -139,7 +140,8 @@
 		p:appliedPersonDAO-ref="appliedPersonDAO"/>
 	<bean id="mentoringService"
 		class="kr.or.ddit.service.MentoringServiceImpl"
-		p:mentoringDAO-ref="mentoringDAO" />
+		p:mentoringDAO-ref="mentoringDAO" 
+	    p:attachDAO-ref="attachDAO"/>
 	<bean id="falseReportService"
 		class="kr.or.ddit.service.FalseReportServiceImpl"
 		p:falseReportDAO-ref="falseReportDAO" 
@@ -159,7 +161,9 @@
 		p:adviceDAO-ref="adviceDAO"/>
 	<bean id="ActivityService"
 		class="kr.or.ddit.service.ActivityServiceImpl"
-		p:activityDAO-ref="activityDAO"/>
+		p:activityDAO-ref="activityDAO"
+		p:memberDAO-ref="memberDAO"
+		p:attachDAO-ref="attachDAO"/>
 	<bean id="seniorService"
 		class="kr.or.ddit.service.SeniorServiceImpl"
 		p:seniorDAO-ref="seniorDAO"/>

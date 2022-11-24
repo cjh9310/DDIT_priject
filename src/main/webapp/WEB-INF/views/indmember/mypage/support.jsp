@@ -8,6 +8,7 @@
 <c:set var="activityConMap" value="${activityConMap.activityListCon }" />
 <c:set var="activityMenMap" value="${activityMenMap.activityListMen }" />
 <c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="today"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
 <c:set var="cri" value="${pageMaker.cri }" />
 
@@ -124,8 +125,10 @@
 										~ <fmt:formatDate value="${contest.conEdate }"
 												pattern="yyyy-MM-dd" /></td>
 										<td>
+										<c:set var="conSdate"><fmt:formatDate value="${contest.conSdate }" pattern="yyyyMMdd"/> </c:set>
+										<c:set var="conEdate"><fmt:formatDate value="${contest.conEdate }" pattern="yyyyMMdd"/> </c:set>
 											<c:choose>
-											<c:when test="${contest.conEdate >= now }">심사중 </c:when> 
+											<c:when test="${conEdate >= today }">심사중 </c:when> 
 											<c:when test="${contest.actStatus eq 0 }">접수완료</c:when>
 											<c:when test="${contest.actStatus eq 1  }">심사완료 </c:when> 
 											</c:choose>

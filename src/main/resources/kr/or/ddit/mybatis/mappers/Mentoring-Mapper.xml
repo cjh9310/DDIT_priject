@@ -5,14 +5,14 @@
 <mapper namespace="Mentoring-Mapper">
 	<select id="selectMentoringList" resultType="mentoring">
 	/* Mentoring-Mapper.selectMentoringList */
-	 	select    
-           a.*
+	 	select  a.*, b.uploadpath, b.filename, b.filetype
          , (select count(1) from activity b where a.men_no = b.men_no) as IND_COUNT
 		  from 
 		  	mentoring a
-          where 
-            men_no is not null
-         order by men_sdate desc
+          left join (select * from file_attach
+                     where work_div='Mentoring') b
+          on(a.men_no = b.work_pk)
+         order by a.men_sdate desc
 	</select> 
 	
 	<select id="selectMentoringListCount" resultType="int">
@@ -80,27 +80,27 @@
 	</insert>
 	
 	<insert id="insertMentoring" parameterType="mentoring">
-	/* Mentoring-Mapper.insertMentoring */
-		insert
-		into
-		mentoring
-			(MEN_NO
-			, CO_ID
-			, MEN_TITLE
-			, MEN_CONTENT
-			, MEN_SDATE
-			, MEN_EDATE
-			, NUM_PEOPLE
-			, MEN_DATE)
-		values
-			(#{menNo}
-			, #{coId}
-			, #{menTitle}
-			, #{menContent}
-			, #{menSdate}
-			, #{menEdate}
-			, #{numPeople}
-			, sysdate)
+		/* Mentoring-Mapper.insertMentoring */
+			insert
+			into
+			mentoring
+				(MEN_NO
+				, CO_ID
+				, MEN_TITLE
+				, MEN_CONTENT
+				, MEN_SDATE
+				, MEN_EDATE
+				, NUM_PEOPLE
+				, MEN_DATE)
+			values
+				(#{menNo}
+				, #{coId}
+				, #{menTitle}
+				, #{menContent}
+				, #{menSdate}
+				, #{menEdate}
+				, #{numPeople}
+				, sysdate)
 	</insert>
 	
 	<update id="updateMentoring"  parameterType="mentoring">

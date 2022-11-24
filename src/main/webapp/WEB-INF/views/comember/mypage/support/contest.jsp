@@ -64,7 +64,7 @@ $(document).ready(function(){
                                                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#contestListAll">전체</a></li>
                                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contestListWait">대기</a></li>
                                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contestListIng">진행중</a></li>
-                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contestListDone">완료</a></li>
+                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#contestListDone">종료</a></li>
                                             </ul>
                                             <div class="tab-content py-4">
                                                 <div class="tab-pane fade show active" id="contestListAll" role="tabpanel" >
@@ -737,8 +737,8 @@ $(document).ready(function(){
 									                                        <p>멘토링 등록 페이지</p>
 																		</div>
 																	</div>
-																	<form class="needs-validation" novalidate=""
-																		method="post" name="mentoringRegistForm" id="mentoringRegistForm">
+																	<form class="needs-validation" novalidate=""action="<%=request.getContextPath()%>/comember/mypage/mentoringRegist"
+																		method="post" name="mentoringRegistForm" id="mentoringRegistForm" enctype="multipart/form-data">
 																		<div class="panel-content">
 																			<!-- <input type="hidden" name="supNo" value="0"> -->
 																			<div class="form-group">
@@ -774,13 +774,19 @@ $(document).ready(function(){
 							                                                </div>
 					                                                        
 		
-																			<!-- <div class="form-group mb-0">
-																				<label class="form-label"><b>첨부파일</b></label>
-																				<div class="custom-file">
-																					<input type="file" class="custom-file-input" id="customFile">
-																					<label class="custom-file-label" for="customFile">파일선택</label>
+																			<div>
+																				 <label class="form-label" for="example-date">이미지 첨부</label>
+																				<div class="form-group">								
+																					<div class="card card-outline card-success">
+																						<div class="card-header">
+																							&nbsp;&nbsp;<button class="btn btn-xs btn-primary"
+																							onclick="addFile_go(1);" type="button" id="addFileBtn">파일 첨부</button>
+																						</div>									
+																						<div class="card-footer fileInput">
+																						</div>
+																					</div>
 																				</div>
-																			</div> -->
+																			</div>
 																		</div>
 																		<div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
 																			<div class="custom-control custom-checkbox">
@@ -836,7 +842,7 @@ $(document).ready(function(){
 																		</div>
 																	</div>
 																	<form class="needs-validation" novalidate="" action="<%=request.getContextPath()%>/comember/mypage/contestRegist"
-																		method="post" name="registForm" id="registForm" enctype="multipart/form-data">
+																		method="post" name="conRegistForm" id="conRegistForm" enctype="multipart/form-data">
 																		<div class="panel-content">
 																			<!-- <input type="hidden" name="supNo" value="0"> -->
 																			<div class="form-group">
@@ -902,7 +908,7 @@ $(document).ready(function(){
 																				<div class="invalid-feedback">You must agree
 																					before submitting.</div>
 																			</div>
-																				<button class="btn btn-success btn-pills ml-auto waves-effect waves-themed" type="button" id="registBtn">등록하기</button>
+																				<button class="btn btn-success btn-pills ml-auto waves-effect waves-themed" type="button" id="conRegistBtn">등록하기</button>
 																		</div>
 																	</form>
 																</div>
@@ -951,26 +957,27 @@ $(document).ready(function(){
 	})();
 </script>
 <script>
-		$("#registBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
+		$("#conRegistBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
 			
 			
-			var param = $("#registForm").serialize();
-			param = param.replaceAll('-','/');
+			/* var param = $("#conRegistForm").serialize();
+			param = param.replaceAll('-','/'); */
 			
-			Swal.fire({
+			
+			//$("form[name='conRegistForm']").submit(); 
+			
+			 Swal.fire({
 				target: document.getElementById('conModal'),
                 icon: 'success',
-				title: "프로그램이 등록되었습니다",
+				title: "프로그램이 등록되었습니다.",
                 type: "success",
                 showCancelButton: false,
                 confirmButtonText: "OK"
     		}).then(function(result){
-				$("form[name='registForm']").submit();
-			
-    		}).then(function(){
-    			window.location.replace(location.href);
+    			$("form[name='conRegistForm']").submit();
+    			
     		})
-			
+			 
 			/* $.ajax({
 				url : 'contestRegist.do',
 				type : 'POST',
@@ -995,45 +1002,62 @@ $(document).ready(function(){
 				error : function(request, status, error) {
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
-			}); */
+			});  */
 		});
 </script>
 <script>
 		$("#mentoringRegistBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
 			
+			 Swal.fire({
+					target: document.getElementById('menModal'),
+	                icon: 'success',
+					title: "등록되었습니다.",
+	                type: "success",
+	                showCancelButton: false,
+	                confirmButtonText: "OK"
+	    		}).then(function(result){
+	    			$("form[name='mentoringRegistForm']").submit();
+	    			
+	    		}) 
 			
-			var param = $("#mentoringRegistForm").serialize();
-			param = param.replaceAll('-','/');
-			//alert(param);
+			 //var param = $("#mentoringRegistForm").serialize();
+			//param = param.replaceAll('-','/');
+			
+		  	/* //ajax로 파일보낼때 무조건 formData가 필요하다!!!!!!!
+			
+			let formData = new FormData($("form[name='mentoringRegistForm")[0]);
+			formData.append("uploadFile",$('input[name="uploadFile"]')[0].files[0]);
+
 			
 			$.ajax({
-				url : 'mentoringRegist.do',
+				url : '/ddit/comember/mypage/mentoringRegist',
 				type : 'POST',
-				data : param,
+				data : formData,
 				cache: false,
-	            async: true,
+                contentType:false,  //formData 쓸때만 필요!
+				processData:false, //formData 쓸때만 필요!
 				success : function(data) {
-					Swal.fire({
-						target: document.getElementById('menModal'),
-		                icon: 'success',
-						title: "프로그램이 등록되었습니다.",
-		                type: "success",
-		                showCancelButton: false,
-		                confirmButtonText: "OK"
-		    		}).then(function(result){
-					 
-						window.location.replace(location.href);
-					
-		    		});
-					
+					if(data == "ok"){
+						Swal.fire({
+							target: document.getElementById('menModal'),
+							icon: 'success',
+							title: "프로그램이 등록되었습니다.",
+							type: "success",
+							showCancelButton: false,
+							confirmButtonText: "OK"
+		    			}).then(function(result){
+							location.replace(location.href);
+		    			});
+					}
 				},
 				error : function(request, status, error) {
 					 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 				}
 			
-		});
+		});  */
 	});		
 </script>
+
 
 <script>
 	$('.contestAdBtn').on('click', function(){

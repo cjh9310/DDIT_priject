@@ -392,8 +392,9 @@ function openrec_supply_submit() {
 		success : function(data) {
 			if(data == 'openrecSupplySuccess') {
 				alert(coName + '에 대한 채용 지원이 완료되었습니다.');
+				opener.parent.goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');
+				console.log("goPage() : ",opener.parent.goPage);
 				window.close();
-				
 			}
 		},
 		error : function(request, status, error) {

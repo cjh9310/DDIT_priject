@@ -405,6 +405,7 @@
             ],
             eventDisplay : 'block',
             eventClick : function(info) {
+            	console.log(info);
             	$('#exampleModalCenter').modal('show');
             }
 		});

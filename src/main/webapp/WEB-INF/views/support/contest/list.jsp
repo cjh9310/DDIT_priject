@@ -8,6 +8,9 @@
 <c:set var="count" value="${dataMap.totalCnt }" />
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
+
+
+
 <%-- <c:set var="sDate"><fmt:formatDate value="${contestList.conSdate}" pattern="yyyy-MM-dd" /></c:set>
 <c:set var="eDate"><fmt:formatDate value="${contestList.conEdate}" pattern="yyyy-MM-dd" /></c:set> --%>
 
@@ -55,25 +58,28 @@
 							<div class="panel-content col-3">
 								<div class="card-deck">
 									<div class="card">
-										<img
-											src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" class="card-img-top" alt="...">
-										<%-- <img src="${contestList[i].imgURL }" class="card-img-top" alt="..."> --%>
-
+										<img id="image" class="card-img-top"
+											src="http://localhost/ddit/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
+											alt="대체 이미지가 로드되지 않았습니다." />
 										<div class="card-body demo" style="height: 155.87px;">
 											<h4 class="card-title" data-toggle="tooltip"
 												data-placement="top" title=""
 												data-original-title="${contest.conTitle }">${contest.conTitle }</h4>
 											<div>
 												<span class="card-text"> 
-												공모기간 : <fmt:formatDate value="${contest.conSdate }" pattern="yyyy-MM-dd" /> 
-														~ <fmt:formatDate value="${contest.conEdate }" pattern="yyyy-MM-dd" />
+												공모기간 : <fmt:formatDate value="${contest.conSdate}" pattern="yyyy-MM-dd" />
+														~ <fmt:formatDate value="${contest.conEdate}" pattern="yyyy-MM-dd" />
 												</span>
 												<c:choose>
+													<c:when test="${eDate < today  }">
+														<span class="badge badge-secondary badge-pill">마감</span>
+													</c:when>
 													<c:when test="${sDate <= today and eDate >= today }">
 														<span class="badge badge-info badge-pill">진행중</span>
 													</c:when>
-													<c:when test="${eDate < today  }">
-														<span class="badge badge-secondary badge-pill">마감</span>
+													<c:when test="${sDate > today }">
+														<span class="badge badge-info badge-pill">시작 전</span>
 													</c:when>
 												</c:choose>
 											</div>
@@ -87,6 +93,7 @@
 											<div>
 												<fmt:parseNumber value="${now.time /(1000*60*60*24) }" integerOnly="true" var="sysDate" />
 												<fmt:parseNumber value="${contest.conEdate.time /(1000*60*60*24)+1 }" integerOnly="true" var="conED" />
+												${conED } ${sysDate }
 												<c:choose>
 													<c:when test="${conED-sysDate < 0 }">
 														<span class="badge badge-secondary badge-pill">

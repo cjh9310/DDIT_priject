@@ -29,7 +29,7 @@
 					<div class="panel-content">
 						<div class="row">
 							<div class="col-xl-12">
-							<form id="modifyForm">
+							<form id="modifyForm" method="post" action="/ddit/comember/mypage/mentoringModify">
 								<div class="form-group">
 									<input type="hidden" name="menNo" id="menNo" value=${mentoring.menNo }>
 									<input type="hidden" name="coId" id="coId" value=${mentoring.coId }>
@@ -107,9 +107,25 @@
 <script>
 
  $("#modifyBtn").on("click",function() {
-	 var param = $('#modifyForm').serialize();
-		 param = param.replaceAll('-','/');
+	 
 	 var menNo = ${mentoring.menNo};
+	 
+	 //$('#modifyForm').submit();
+	 
+	  Swal.fire({
+         icon: 'warning',
+			title: "수정하시겠습니까?",
+         type: "success",
+         showCancelButton: true,
+         confirmButtonText: "OK"
+	}).then(function(result){ 
+	 		$('#modifyForm').submit();
+	 		opener.location.replace(opener.location.href);
+	}) 
+	 
+	 /* var param = $('#modifyForm').serialize();
+		 param = param.replaceAll('-','/');
+	 
 	 
 	 Swal.fire({
          icon: 'warning',
@@ -146,6 +162,6 @@
 				}
 		});
 		}
-	});
+	}); */
 });
 </script>

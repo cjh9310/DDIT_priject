@@ -19,6 +19,7 @@ public interface BookmarkService {
 	void removeBookmark(int bookNo) throws SQLException;
 	
 	List<Integer> getBookNoByRecNo(String recWantedNo) throws SQLException;
+
 }
 
 

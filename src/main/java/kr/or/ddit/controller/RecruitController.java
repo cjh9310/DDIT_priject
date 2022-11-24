@@ -194,14 +194,16 @@ public class RecruitController {
       return url;
    }
    
-   @PostMapping("/openAdviceRegist")
+    @PostMapping("/recAllim")
 	@ResponseBody
-	public AllimVO openAdviceRegist(AllimVO allim, webSocketListener handler ) throws Exception {
+	public AllimVO recAllim(AllimVO allim, webSocketListener handler ) throws Exception {
 		
-		allim.getFromId();
-		allim.getToId();
+		allim.getFromId();     // 개인 아이디
+		allim.getToId();       // 기업 이름
+		allim.getRecWantedno();// 구인번호
+		System.out.println("찾아줘바"+allim.getFromId());
 		System.out.println("찾아줘바"+allim.getToId());
-		System.out.println("찾아줘"+allim.getOpenSeqno());
+		System.out.println("찾아줘"+allim.getRecWantedno());
 		allimService.registAllim(allim);
 		handler.AdviceAllim(allim);
 		

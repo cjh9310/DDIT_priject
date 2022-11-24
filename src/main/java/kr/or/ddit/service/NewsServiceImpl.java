@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
+import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
+import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.NewsDAO;
-import kr.or.ddit.dto.FaqVO;
+import kr.or.ddit.dto.AttachVO;
 import kr.or.ddit.dto.NewsVO;
 
 public class NewsServiceImpl implements NewsService {
@@ -18,6 +23,10 @@ public class NewsServiceImpl implements NewsService {
 		this.newsDAO = newsDAO;
 	}
 	
+	private AttachDAO attachDAO;
+	public void setAttachDAO(AttachDAO attachDAO) {
+		this.attachDAO = attachDAO;
+	}
 
 	
 	@Override 
@@ -27,6 +36,8 @@ public class NewsServiceImpl implements NewsService {
 
 		// 현재 page 번호에 맞는 리스트를 perPageNum 개수 만큼 가져오기.
 		List<NewsVO> newsList = newsDAO.selectNewsList(cri);
+		
+		
 		
 		// 전체 board 개수
 		int totalCount = newsDAO.selectNewsListCount(cri);
@@ -45,18 +56,64 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public NewsVO getNews(int newsNo) throws SQLException {
 		NewsVO news = newsDAO.selectNewsByNewsNo(newsNo);
+		addAttachList(news);
 		newsDAO.increaseNewsCnt(newsNo);
+		
+		if(news!=null && news.getAttachList()!=null) {
+			for(AttachVO attach:news.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
+		
+		
 		return news;
 	}
 
 
+	private void addAttachList(NewsVO news) throws SQLException {
+		
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(news.getNewsNo()));
+		attach.setWorkDiv("news");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		news.setAttachList(attachList);
+	}
+
+
 	@Override
-	public void regist(NewsVO news) throws SQLException {
+	public void regist(NewsVO news,String savePath) throws SQLException {
 		int newsNo = newsDAO.selectNewsSeqNext();
 		news.setNewsNo(newsNo);
-		//System.out.println("dashkdsdgksjayhdkjsa"+ news);
-		newsDAO.insertNews(news);
 		
+		// fileUploadPath = D:/team1/src/uploadFile + /업무명(workDiv)
+				String workDiv = "news"; // 필수
+				//file 저장 -> List<AttachVO>
+				List<AttachVO> attachList = null;
+				try {
+					// 파일을 실제 물리 저장소에 저장하고, 저장 목록을 리턴.
+					attachList = MultipartFileUploadResolver.fileUpload(news.getUploadFile(), savePath + "/" + workDiv);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// 파일저장정보 목록을 FalseReportVO에 세팅
+				news.setAttachList(attachList);	
+				
+				// 파일정보를 첨부파일 테이블에 등록
+				if (news.getAttachList() != null) {
+					for (AttachVO attach : news.getAttachList()) {
+						attach.setWorkDiv(workDiv);
+						attach.setWorkPk(Integer.toString(news.getNewsNo()));
+						attach.setAttacher(news.getAdId());
+						attachDAO.insertAttach(attach);
+					}
+				}
+				newsDAO.insertNews(news);
 	}
 
 	@Override
