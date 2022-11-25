@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.or.ddit.dto.AllimVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.service.AllimService;
 
@@ -24,6 +23,7 @@ import kr.or.ddit.service.AllimService;
 @Controller
 @RequestMapping("/allim")
 public class AllimController {
+	
 
 	@Autowired
 	private AllimService allimService;
@@ -37,14 +37,20 @@ public class AllimController {
 //      두가지의 맵을 담기 위해 hashMap을 생성하고 담아줌..  상위호환?		
 		Map<String, Object> alertForOpenList = allimService.getAllimOpenList(id);
 		Map<String, Object> alertForRecList = allimService.getAllimRecList(id);
-		String name = "아이센스";
+		
+		String name = loginUser.getName();
+		System.out.println("이름 출력" +name);
+		
+		System.out.println("");
+		
 		Map<String, Object> alertForRecNameList = allimService.getAllimRecNameList(name);
-		System.out.println("알람컨트롤러 진입@@@@@@@@@@@@@@@@@@@@@");
+		Map<String, Object> alertForOpenNameList = allimService.getAllimOpenNameList(name);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("alertForOpenList", alertForOpenList);
 		dataMap.put("alertForRecList", alertForRecList);
 		
 		dataMap.put("alertForRecNameList", alertForRecNameList);
+		dataMap.put("alertForOpenNameList", alertForOpenNameList);
 		ResponseEntity<Map<String, Object>> entity = new ResponseEntity<Map<String, Object>>(dataMap,HttpStatus.OK);
 		
 		

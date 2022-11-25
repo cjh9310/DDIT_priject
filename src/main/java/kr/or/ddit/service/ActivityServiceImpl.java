@@ -61,9 +61,13 @@ public class ActivityServiceImpl implements ActivityService {
 		
 		MemberVO memberInfo = memberDAO.selectMemberById(id);
 		List<ActivityVO> activityList = activityDAO.selectAllActivityById(id);
+		List<ActivityVO> contestList = activityDAO.selectActivityListCon(id);
+		List<ActivityVO> mentoringList = activityDAO.selectActivityListMem(id);
 		
-		activityMap.put("activityList", activityList);
 		activityMap.put("memberInfo", memberInfo);
+		activityMap.put("activityList", activityList);
+		activityMap.put("contestList", contestList);
+		activityMap.put("mentoringList", mentoringList);
 		return activityMap;
 	}
 	

@@ -58,11 +58,58 @@
 </div>
 <div class="card mb-g p-2">
 	<div class="card-body">
-		<h2 class="fw-700 m-0">
-			Log4job의 AI Service 소개 <a href="javascript:void(0);"></a> <small>Introduction
-				to Service in Log4Job</small>
-		</h2>
-		<div class="introduction-content"></div>
+		<div class="col-xl-12 panel" style="padding: 0px;">
+									<div class="row row-grid no-gutters" style="cursor:pointer;">
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard5.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard6.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3 style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard7.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard8.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard1.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard4.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3 style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard3.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard2.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard9.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard10.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3 style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard11.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-3" style="height:239px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard12.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                    </div>
+							</div>
 	</div>
 </div>
 <div class="alert alert-primary">
@@ -77,23 +124,10 @@
 		</div>
 		<div class="d-flex flex-fill">
 			<div class="flex-fill">
-				<span class="h5">About</span>
+				<span class="h5">나만의 명함을 만들어보세요.</span>
 				<p>
-					Cropperjs is a slick and lightweight responsive cropping tool for
-					images. It supports <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#options"
-						target="_blank">39 options</a>, <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#methods"
-						target="_blank">27 methods</a> and 6 events. You can select an
-					specific area of an image, and then upload the coordinates data to
-					server-side to crop the image, or crop the image on browser-side
-					directly. The plugin is regularly updated and has tons of
-					potential! Making it a great fit for SmartAdmin WebApp.
-				</p>
-				<p class="m-0">
-					Find in-depth, guidelines, tutorials and more on Cropper's <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md"
-						target="_blank">Official Documentation</a>
+					Log4Job은 약 6000여개의 국내 대기업 정보를 제공해드립니다.
+					이를 바탕으로 AI가 직접 만들어주는 나만의 명함을 제작해보세요.
 				</p>
 			</div>
 		</div>

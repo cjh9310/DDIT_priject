@@ -58,7 +58,7 @@
 	
 <div class="panel-content">
     <div class="border px-3 pt-3 pb-0 rounded">
-        <ul class="nav nav-pills" role="tablist">
+        <ul class="nav nav-pills nav-justified" role="tablist">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_pill_border_icon-1"><i class="fal fa-user mr-1"></i><font>개인회원</font></a></li>
             <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#js_pill_border_icon-2"><i class="fal fa-home mr-1"></i><font>기업회원</font></a></li>
             <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#js_pill_border_icon-3"><i class="fal fa-phone mr-1"></i><font>기타문의</font></a></li>
@@ -68,12 +68,12 @@
 <!-- ------------------------- AdMember Tap ----------------------- -->        
             <div class="tab-pane fade active show" id="js_pill_border_icon-1" role="tabpanel">
 <!-- ---------------------- AdMember Accordian-------------------- -->
-                <div class="accordion accordion-hover" id="js_demo_accordion-5">
+                <div class="accordion accordion-outline" id="js_demo_accordion-5">
 	                <c:forEach items="${indMemberList}" var="indMemberList">
 	                	<c:set var="i" value="${i + 1}" />
 		                    <div class="card">
 		                        <div class="card-header">
-		                            <a href="javascript:void(0);" class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5_${i }" aria-expanded="true">
+		                            <a class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5_${i }" aria-expanded="true">
 		                                <i class="fal fa-cog width-2 fs-xl"></i>
 		                               		${indMemberList.faqTitle }
 		                                <span class="ml-auto">
@@ -98,15 +98,15 @@
                     
 
 <!-- ------------------------- CoMeber Tap ------------------------------ -->            
-            <div class="tab-pane fade" id="js_pill_border_icon-2" role="tabpanel"> 
+            <div class="tab-pane fade " id="js_pill_border_icon-2" role="tabpanel"> 
 <!-- ------------------------- CoMeber Accordian ------------------------ -->            
 
-                <div class="accordion accordion-hover" id="js_demo_accordion-5">
+                <div class="accordion accordion-outline" id="js_demo_accordion-5">
 	                <c:forEach items="${coMemberList}" var="coMemberList">
 	                	<c:set var="j" value="${j + 1}" />
 		                    <div class="card">
 		                        <div class="card-header">
-		                            <a href="javascript:void(0);" class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5a_${j }" aria-expanded="true">
+		                            <a href="javascript:void(0);" class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5a_${j }" aria-expanded="false">
 		                                <i class="fal fa-cog width-2 fs-xl"></i>
 		                               		${coMemberList.faqTitle }
 		                                <span class="ml-auto">
@@ -133,12 +133,12 @@
             <div class="tab-pane fade" id="js_pill_border_icon-3" role="tabpanel"> 
 <!-- ------------------------ Etc Accodian -------------------------- -->    
       
-                <div class="accordion accordion-hover" id="js_demo_accordion-5">
+                <div class="accordion accordion-outline" id="js_demo_accordion-5">
 	                <c:forEach items="${etcList}" var="etcList">
 	                	<c:set var="k" value="${k + 1}" />
 		                    <div class="card">
 		                        <div class="card-header">
-		                            <a href="javascript:void(0);" class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5b_${k }" aria-expanded="true">
+		                            <a href="javascript:void(0);" class="card-title" data-toggle="collapse" data-target="#js_demo_accordion-5b_${k }" aria-expanded="false">
 		                                <i class="fal fa-cog width-2 fs-xl"></i>
 		                               		${etcList.faqTitle }
 		                                <span class="ml-auto">

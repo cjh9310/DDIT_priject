@@ -127,11 +127,13 @@ public class CoMemberControllerSH {
 	
 	
 	@RequestMapping(value="mypage/contestModify" , method = RequestMethod.POST)
-	public String contestModify(int conNo, ContestVO contest )throws Exception{
+	public String contestModify(int conNo, ContestVO contest, RedirectAttributes rttr )throws Exception{
 		
-		String url = "redirect:/comember/mypage/contestModifyForm.do?conNo="+ conNo;
+		String url = "redirect:/comember/mypage/contestDetail.do?conNo="+ conNo;
 		
 		contestService.modify(contest);
+		
+		rttr.addFlashAttribute("from", "modify");
 		
 		return url;
 	}
@@ -236,12 +238,13 @@ public class CoMemberControllerSH {
 	
 	@RequestMapping(value="mypage/mentoringModify" , method = RequestMethod.POST)
 	//@ResponseBody
-	public String mentoringModify(int menNo, MentoringVO mentoring )throws Exception{
+	public String mentoringModify(int menNo, MentoringVO mentoring, RedirectAttributes rttr )throws Exception{
 		
-		String url = "redirect:/comember/mypage/mentoringModifyForm.do?menNo="+ menNo;
+		String url = "redirect:/comember/mypage/mentoringDetail.do?menNo="+ menNo;
 		
 		mentoringService.modify(mentoring);
 		
+		rttr.addFlashAttribute("from", "modify");
 		return url;
 	}
 	

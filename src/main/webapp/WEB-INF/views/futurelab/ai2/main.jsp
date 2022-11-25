@@ -57,12 +57,8 @@
 	</div>
 </div>
 <div class="card mb-g p-2">
-	<div class="card-body">
-		<h2 class="fw-700 m-0">
-			Log4job의 AI Service 소개 <a href="javascript:void(0);"></a> <small>Introduction
-				to Service in Log4Job</small>
-		</h2>
-		<div class="introduction-content"></div>
+	<div class="card-body" style="padding: 150px;">
+		<img alt="배경" src='<%=request.getContextPath()%>/resources/template/img/ai/idenPicture.png' style="width:100%; height:auto;">
 	</div>
 </div>
 <div class="alert alert-primary">
@@ -77,23 +73,9 @@
 		</div>
 		<div class="d-flex flex-fill">
 			<div class="flex-fill">
-				<span class="h5">About</span>
+				<span class="h5">정장 복장의 증명사진이 없으신가요?</span>
 				<p>
-					Cropperjs is a slick and lightweight responsive cropping tool for
-					images. It supports <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#options"
-						target="_blank">39 options</a>, <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md#methods"
-						target="_blank">27 methods</a> and 6 events. You can select an
-					specific area of an image, and then upload the coordinates data to
-					server-side to crop the image, or crop the image on browser-side
-					directly. The plugin is regularly updated and has tons of
-					potential! Making it a great fit for SmartAdmin WebApp.
-				</p>
-				<p class="m-0">
-					Find in-depth, guidelines, tutorials and more on Cropper's <a
-						href="https://github.com/fengyuanchen/cropperjs/blob/master/README.md"
-						target="_blank">Official Documentation</a>
+					Log4Job의 증명사진 복장 변환 서비스를 통해 새로운 증명사진을 준비해보세요.
 				</p>
 			</div>
 		</div>

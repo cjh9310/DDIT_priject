@@ -51,7 +51,7 @@
 						</h2>
 					</td>
 					<td>
-						<button type="button" onclick="openrec_supply()"
+						<button type="button" onclick="openrec_supply(); AllimRegist();"
 							class="btn btn-md btn-outline-info waves-effect waves-themed w-100">
 							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
 						</button>
@@ -405,6 +405,30 @@ function openrec_supply_submit() {
 }
 
 </script>
+
+
+<script>
+function AllimRegist() {
+	var openConm = '${openrec.openConm}';
+	var indId = '${loginUser.id}';
+	var openTitle = '${openrec.openTitle}';
+	var openSeqno = '${openrec.openSeqno}';
+
+	$.ajax({
+		url : '<%=request.getContextPath()%>/openrec/openAllim',
+		type : 'POST',
+		data : {'toId':openConm,'fromId' : indId, 'coNm' : openConm,'openSeqno' : openSeqno, 'openTitle':openTitle},
+		success : function(result) {
+      },
+
+		error : function(request, status, error) {
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		   }
+    });     
+}
+</script>
+
+
 
 <script>
 	$("#resume_delete1").on("click", function() {

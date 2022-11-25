@@ -41,10 +41,11 @@
 	</select>
 	
 	<select id="selectContestByConNo" resultType="contest">
-		select
-		*
-		from
-		contest
+		select a.*, b.uploadpath, b.filename, b.filetype
+		from contest a
+         left join (select * from file_attach
+                     where work_div='Contest') b
+          on(a.con_no = b.work_pk)
 		where CON_NO = #{conNo}
 	</select>
 	

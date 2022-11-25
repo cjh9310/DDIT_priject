@@ -9,8 +9,9 @@
 </c:set>
 
 <c:set var="activityMap" value="${activityMap }"/>
-<c:set var="activityList" value="${activityMap.activityList }"/>
 <c:set var="memberInfo" value="${activityMap.memberInfo }"/>
+<c:set var="contestList" value="${activityMap.contestList }"/>
+<c:set var="mentoringList" value="${activityMap.mentoringList }"/>
 
 <style>
 .recruit-content {
@@ -87,7 +88,7 @@
 											<td class="border p-0" rowspan="5"
 												style="width: 126px; height: 176px;"><img
 												style="display: block; width: 100%; height: auto;"
-												src="<%=request.getContextPath()%>/member/getPicture.do?id=${activityList[0].indId}"
+												src="<%=request.getContextPath()%>/member/getPicture.do?id=${memberInfo.id}"
 												onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
 												alt="증명사진" /></td>
 										</tr>
@@ -100,9 +101,9 @@
 												class="thead-themed text-center border fw-700">E-mail</th>
 										</tr>
 										<tr>
-											<td colspan="3" class="border">${supInfo.supresName}</td>
-											<td colspan="3" class="border">${supInfo.supresBir}</td>
-											<td colspan="3" class="border">${supInfo.supresEmail}</td>
+											<td colspan="3" class="border">${memberInfo.name}</td>
+											<td colspan="3" class="border">${memberInfo.indBir}</td>
+											<td colspan="3" class="border">${memberInfo.email}</td>
 										</tr>
 										<tr>
 											<th colspan="3" width="50"
@@ -111,54 +112,55 @@
 												class="thead-themed text-center border fw-700">주소</td>
 										</tr>
 										<tr>
-											<th class="border">${supInfo.supresTel}</th>
-											<td class="border" colspan="8">${supInfo.supresAddr}</td>
+											<th class="border">${memberInfo.tel}</th>
+											<td class="border" colspan="8">${memberInfo.indAddr}</td>
 										</tr>
 									</table>
 									<div
 										class="card-header py-2 d-flex align-items-center flex-wrap">
-										<div class="card-title">학력</div>
+										<div class="card-title">공모전</div>
 									</div>
 									<table class="table">
 										<thead>
 											<tr>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">학과계열</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 제목</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">학교명</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 카테고리</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">학과명</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 진행상황</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">학점</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 시상</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">상태</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 점수</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${empty eduList}">
+											<c:if test="${empty contestList}">
 												<tr>
 													<td class="text-center fw-700" colspan="5">등록된 학력 정보가
 														없습니다.<br /> <br />회원정보 관리에서 학력을 동록하세요.
 													</td>
 												</tr>
 											</c:if>
-											<c:forEach items="${eduList}" var="edu">
+											<c:forEach items="${contestList}" var="con">
 												<tr>
-													<td class="text-center">${edu.supeduDep}</td>
-													<td class="text-center">${edu.supeduName}</td>
-													<td class="text-center">${edu.supeduMajor}</td>
-													<td class="text-center">${edu.supeduScore}</td>
+													<td class="text-center">${con.conTitle}</td>
+													<td class="text-center">${con.conField}</td>
 													<td class="text-center">
-														<c:if test="${edu.eduStatus == 0}">
-															<span class="badge badge-primary">${edu.strStatus}</span>
-														</c:if> 
-														<c:if test="${edu.eduStatus == 1}">
-															<span class="badge badge-info">${edu.strStatus}</span>
-														</c:if> 
-														<c:if test="${edu.eduStatus == 2}">
-															<span class="badge badge-success">${edu.strStatus}</span>
+														<c:if test="${con.actStatus == 0 }">
+															<span class="badge badge-primary">진행중</span>
+														</c:if>
+														<c:if test="${con.actStatus == 3 }">
+															<span class="badge badge-primary">중도포기</span>
 														</c:if>
 													</td>
+													<td class="text-center">
+														<c:if test="${empty con.actPrize}">
+															<span class="badge badge-primary">심사중</span>
+														</c:if>
+													</td>
+													<td class="text-center">${con.actScore }</td>
 												</tr>
 											</c:forEach>
 										</tbody>

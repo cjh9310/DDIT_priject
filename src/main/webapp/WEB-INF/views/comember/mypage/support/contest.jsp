@@ -313,7 +313,7 @@ $(document).ready(function(){
                                     <div class="panel-container show">
                                     	<div style="margin-bottom:30px;"></div>
                                        	<div class="panel-content" style="height: 300px;">
-		                                      <div class="frame-wrap" style="overflow: auto; height: 230px;"id="ajaxConList">
+		                                      <div class="frame-wrap" style="overflow: auto; height: 230px;" id="ajaxConList">    
 		                                          <div class="text-center">
 		                                          	<h5>공모전 지원자 목록을 보시려면 좌측 공모전을 선택하세요.</h5>
 		                                          </div>
@@ -360,6 +360,7 @@ $(document).ready(function(){
 		                                              	
 		                                          </table> -->
 		                                         
+		                                  
 		                                      </div>
 		                                      
                                   			</div>
@@ -1119,6 +1120,7 @@ function mentoringSupporterListB(m,t){
 		        html += "<th>지원자명</th>";
 		        html += "<th>회원ID</th>";
 		        html += "<th>연락처</th>";
+		        html += "<th>이메일</th>";
 		        html += "<th></th>";
 		        html += "</tr>";
 		        html += "</thead>";
@@ -1144,6 +1146,7 @@ function mentoringSupporterListB(m,t){
             html +=	"<td>"+obj.name+"</td>";
             html +=	"<td>"+obj.indId+"</td>";
             html +=	"<td>"+obj.actTel+"</td>";
+            html +=	"<td>"+obj.actEmail+"</td>";
             
             if(obj.actStatus == 3){
             	html += "<td>중도포기</td>";
@@ -1201,7 +1204,6 @@ function mentoringSupporterList(m,t){
 		        html += "<th>지원자명</th>";
 		        html += "<th>회원ID</th>";
 		        html += "<th>연락처</th>";
-		        html += "<th>진행상황</th>";
 		        html += "<th>가산점</th>";
 		        html += "<th></th>";
 		        html += "</tr>";
@@ -1228,7 +1230,6 @@ function mentoringSupporterList(m,t){
             html +=	"<td>"+obj.name+"</td>";
             html +=	"<td>"+obj.indId+"</td>";
             html +=	"<td>"+obj.actTel+"</td>";
-            html +=	"<td>"+ +"</td> ";
          	html +=	"<td>";
             html +=	"<select class='form-control' id='"+obj.actNo+"'>";
             
@@ -1342,7 +1343,7 @@ function contestSupporterListB(c,t){
 	   }else {
 			console.log(data)
 			
-			var html = "<div class='frame-wrap' id='ajaxConList'>";
+			var html = "<div class='frame-wrap' id=''>";
                	html += "<table class='table table-sm table-hover m-0'>";
                	html += "<thead class='text-center'>";
 		        html += "<tr>";
@@ -1376,7 +1377,7 @@ function contestSupporterListB(c,t){
             html +=	"<td>"+obj.name+"</td>";
             html +=	"<td>"+obj.indId+"</td>";
             html +=	"<td>"+obj.actTel+"</td>";
-            html +=	"<td>"+ +"</td>";
+            html +=	"<td><button type='button'><i class='ni ni-paper-clip'></i></button></td>";
 			html += "</tr>";
       })
       html+="</tbody>";
@@ -1390,88 +1391,187 @@ function contestSupporterListB(c,t){
 
 <!-- 가산점 수정하는 폼 있는 함수 -->
 <script>
-
 function contestSupporterList(c,t){  
-   console.log(event.target);
-   $.ajax({
-      url:"contestSupporterList",
-      type:"get",
-      data: {conNo: c},
-      dataType:"json",
-      success: function(data){
-    	  ajaxHtmlContest(data,t)
-      },
-      error:function(){alert("error");
-      console.log(data)}
-   });
-}
 
-   function ajaxHtmlContest(data,t){
-	   if(data.activityList.length == 0){
-		  var html = "<div class = text-center>";
-			 html += "<h5>'"+ t +"'</br>"+"공모전에 지원한 인원이 없습니다.</h5>";
-			 html += "</div>";
-			 
-	   }else {
-			console.log(data)
-			
-			var html = "<div class='frame-wrap' id='ajaxConList'>";
-               	html += "<table class='table table-sm table-hover m-0'>";
-               	html += "<thead class='text-center'>";
-		        html += "<tr>";
-		        html += "<th>No</th>";
-		        html += "<th>지원일자</th>";
-		        html += "<th>지원자명</th>";
-		        html += "<th>회원ID</th>";
-		        html += "<th>연락처</th>";
-		        html += "<th>제출파일</th>";
-		        html += "<th>가산점</th>";
-		        html += "<th></th>";
-		        html += "</tr>";
-		        html += "</thead>";
-		        html += "<tbody>";
-			
-		      /* var html="<table class='table table-bordered' id='userListTable'>";
-		      html+="<tr>";
-		      html+="<th>진료일자</th>";
-		      html+="<th>진료의사</th>";
-		      html+="<th>진료내역</th>";
-		      html+="<th>이름</th>";
-		      html+="<th>연령|성별</th>";
-		          
-		      html+="</tr>"; */
+	   $.ajax({
+	      url:"contestSupporterList",
+	      type:"get",
+	      data: {conNo: c},
+	      dataType:"json",
+	      success: function(data) {
+	    	  ajaxHtmlCon(data,t);
+		},
+	      error:function(){alert("error");
+	      console.log(data)}
+	   });
+	}
+
+	   function ajaxHtmlCon(data,t){
+		   console.log(t);
+		   if(data.activityList.length == 0){
+			  var html = "<div class = text-center>";
+				  html += "<h5>'"+ t +"'</br>"+"공모전에 지원한 인원이 없습니다.</h5>";
+				  html += "</div>";
+				 
+		   }else {
+				console.log(data)
+				
+				var html = "<div class='frame-wrap' id=''>";
+	               	html += "<table class='table table-sm table-hover m-0'>";
+	               	html += "<thead class='text-center'>";
+			        html += "<tr>";
+			        html += "<th>No</th>";
+			        html += "<th>지원일자</th>";
+			        html += "<th>지원자명</th>";
+			        html += "<th>회원ID</th>";
+			        html += "<th>연락처</th>";
+			        html += "<th>제출파일</th>";
+			        html += "<th>시상내용</th>";
+			        html += "<th>가산점</th>";
+			        html += "<th></th>";
+			        html += "</tr>";
+			        html += "</thead>";
+			        html += "<tbody>";
+				
+			      /* var html="<table class='table table-bordered' id='userListTable'>";
+			      html+="<tr>";
+			      html+="<th>진료일자</th>";
+			      html+="<th>진료의사</th>";
+			      html+="<th>진료내역</th>";
+			      html+="<th>이름</th>";
+			      html+="<th>연령|성별</th>";
+			          
+			      html+="</tr>"; */
+		   }
+	      
+	      
+	      $.each(data.activityList, (index, obj)=>{
+	    	  
+	    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
+	          	html +=	"<th scope='row'>"+index+"</th>";
+	            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
+	            html +=	"<td>"+obj.name+"</td>";
+	            html +=	"<td>"+obj.indId+"</td>";
+	            html +=	"<td>"+obj.actTel+"</td>";
+	            html +=	"<td><button type='button'><i class='ni ni-paper-clip'></i></button></td>";
+	         	html +=	"<td>";
+	            html +=	"<select class='form-control'>";
+	            
+	            if(obj.actScore == 0){
+	                html +=	"<option value=0 selected>없음</option>";
+	            }else {
+	                html +=	"<option value=0>없음</option>";            	
+	            }
+
+	            if(obj.actScore == 1){
+	                html +=	"<option value=1 selected>우수상</option>";
+	            }else {
+	                html +=	"<option value=1>우수상</option>";            	
+	            }
+
+	            if(obj.actScore == 2){
+	                html +=	"<option value=2 selected>최우수상</option>";
+	            }else {
+	                html +=	"<option value=2>최우수상</option>";            	
+	            }
+
+	            if(obj.actScore == 3){
+	                html +=	"<option value=3 selected>대상</option>";
+	            }else {
+	                html +=	"<option value=3>대상</option>";            	
+	            }
+
+	            /* html +=	"<option value=1>1점</option>";
+	            html +=	"<option value=2>2점</option>";
+	            html +=	"<option value=3>3점</option>"; */
+	            html +=	"</select>";
+	         	html +=	"</td>";
+	         	html +=	"<td>";
+	            html +=	"<select class='form-control' id='"+obj.actNo+"'>";
+	            
+	            if(obj.actScore == 0){
+	                html +=	"<option value=0 selected>없음</option>";
+	            }else {
+	                html +=	"<option value=0>없음</option>";            	
+	            }
+
+	            if(obj.actScore == 1){
+	                html +=	"<option value=1 selected>1점</option>";
+	            }else {
+	                html +=	"<option value=1>1점</option>";            	
+	            }
+
+	            if(obj.actScore == 2){
+	                html +=	"<option value=2 selected>2점</option>";
+	            }else {
+	                html +=	"<option value=2>2점</option>";            	
+	            }
+
+	            if(obj.actScore == 3){
+	                html +=	"<option value=3 selected>3점</option>";
+	            }else {
+	                html +=	"<option value=3>3점</option>";            	
+	            }
+
+	            /* html +=	"<option value=1>1점</option>";
+	            html +=	"<option value=2>2점</option>";
+	            html +=	"<option value=3>3점</option>"; */
+	            html +=	"</select>";
+	         	html +=	"</td>";
+	     		html +=	"<td>";
+	     		html +=	"<button class='btn btn-sm btn-success shadow-0' onclick='scoreModifyBtn("+obj.actNo+")'>수정</button>";
+	     		html += "</td>";
+				html += "</tr>";
+	      })
+	      html+="</tbody>";
+	      html+="</table>";
+	      html+="</div>";
+	      
+	      console.log(html);
+	      $("#ajaxConList").html(html);
+	      
+	      //$("#mentoringScoreSelect").val(obj.actScore);
 	   }
-      
-      
-      $.each(data.activityList, (index, obj)=>{
-    	  
-    	  	html +=	"<tr class='text-center' style='cursor:pointer'>";
-          	html +=	"<th scope='row'>"+index+"</th>";
-            html +=	"<td>"+moment(obj.actDate).format("YYYY-MM-DD")+"</td>";
-            html +=	"<td>"+obj.name+"</td>";
-            html +=	"<td>"+obj.indId+"</td>";
-            html +=	"<td>"+obj.actTel+"</td>";
-            html +=	"<td>"+ +"</td>";
-         	html +=	"<td>";
-            html +=	"<select class='form-control' id='contest_score_select'>";
-            html +=	"<option>0</option>";
-            html +=	"<option>1</option>";
-            html +=	"<option>2</option>";
-            html +=	"<option>3</option>";
-            html +=	"</select>";
-         	html +=	"</td>";
-     		html +=	"<td>";
-     		html +=	"<a href='javascript:void(0);' class='btn btn-sm btn-success shadow-0' id='js-sweetalert2-example-7'>수정</a>";
-     		html += "</td>";
-			html += "</tr>";
-      })
-      html+="</tbody>";
-      html+="</table>";
-      html+="</div>";
-      
-      $("#ajaxConList").html(html);
-   }
 
+
+</script>
+
+<script> //가산점 부여
+function scoreModifyBtn(a){
+	Swal.fire({
+                icon: 'warning',
+				title: "가산점을 부여하시겠습니까?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonText: "OK"
+    }).then(function(result){
+    		if(result.value){
+    			$.ajax({
+    				type:"put",
+    				url:"/ddit/comember/mypage/mentoringScoreModify",
+    				contentType:"application/json; charset=UTF-8",
+    				data: JSON.stringify({
+    					actNo:a,
+    					actScore:$('#'+a).val()
+    					
+    				}),
+    				success:function(p_rslt){
+						console.log(p_rslt)
+    					
+    					Swal.fire({
+  							icon: 'success',
+  							title: '가산점이 부여 되었습니다.',
+  							showConfirmButton: false,
+  							timer: 1500
+						})
+    				},
+    				error:(request,status,error)=>{
+    					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    				}
+    			})
+    		}
+    });	
+}
 </script>
 
 <!-- --------------------------파일등록------------------------------------ -->

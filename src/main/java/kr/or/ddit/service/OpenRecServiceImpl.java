@@ -99,6 +99,8 @@ public class OpenRecServiceImpl implements OpenRecService {
 	public int regist(OpenRecVO openRec, String savePath) throws SQLException {
 
 		openRecDAO.insertOpenRec(openRec);
+		
+		System.out.println("공채 입력 서비스 옴");
 
 		String workDiv = "openRec"; // 필수
 		

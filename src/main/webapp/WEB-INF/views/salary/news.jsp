@@ -41,8 +41,8 @@
 				</div>
 				<c:forEach items="${newsList}" var="news">
 				<div class="row" onclick="location.href='detail.do?newsNo=${news.newsNo}&from=list'" style="cursor:pointer;">
-					<div class="col-md-3 pt-3 pl-5 pb-3" style="width:200px; height:200px;">
-						<img id="image" style="display: block; width: auto; height: 100%; margin-left: 60px;"
+					<div class="col-md-3 pt-3 pl-5 pb-3" style="width:150px; height:150px;">
+						<img id="image" style="display: block; width: auto; height: 100%; "
 								src="http://localhost/ddit/getPicture.do?path=${news.uploadpath}&filename=${news.filename}"
 								onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/images/희망연봉(썸).png';"
 								alt="대체 이미지가 로드되지 않았습니다." />

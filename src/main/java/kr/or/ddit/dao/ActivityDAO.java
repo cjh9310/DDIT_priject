@@ -24,6 +24,11 @@ public interface ActivityDAO {
 	
 	List<ActivityVO> selectAllActivityById(String id) throws SQLException;
 	
+	//공모전 전체 이력 가져오기
+	List<ActivityVO> selectAllContestById(String id) throws SQLException;
+	
+	//멘토링 전체 이력 가져오기
+	
 	int selectActivityCriteriaTotalCount(Criteria cri) throws SQLException;
 	
 	ActivityVO selectActivityConByActNo(int actNo) throws SQLException;

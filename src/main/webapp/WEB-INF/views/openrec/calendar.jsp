@@ -383,6 +383,11 @@
 }
 </style>
 
+<script>
+	function Corporation_detail(seqno, conm) {
+		location.href = "<%=request.getContextPath()%>/openrec/detail.do?openSeqno=" + seqno + "&openConm=" + conm;
+	}
+</script>
 <script>	
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
@@ -399,14 +404,20 @@
 				<c:forEach items="${openRecList}" var="openRec">
 					{
 						title: '${openRec.openTitle}',
-	                    start: '${openRec.openSdate}'
+	                    start: '${openRec.openSdate}',
+	                    extendedProps : {
+	                    	seqno : '${openRec.openSeqno}',
+	                    	conm : '${openRec.openConm}'
+	                    }
 					},
 				</c:forEach>
             ],
             eventDisplay : 'block',
             eventClick : function(info) {
-            	console.log(info);
-            	$('#exampleModalCenter').modal('show');
+            	var openSeqno = info.event.extendedProps.seqno;
+            	var openConm = info.event.extendedProps.conm;
+            	location.href = '<%=request.getContextPath()%>/openrec/detail.do?openSeqno=' + openSeqno + '&openConm=' + openConm;
+            	//$('#exampleModalCenter').modal('show');
             }
 		});
 		calendar.render();

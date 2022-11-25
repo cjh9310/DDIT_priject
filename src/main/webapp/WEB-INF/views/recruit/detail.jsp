@@ -103,7 +103,7 @@ td { height: 80px; }
 					</button>
 				</c:when>
 			</c:choose> --%>
-				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/supply.do?recWantedno=${recruit.recWantedno}','OpenWindow','fullscreen')"
+				<button type="button" onclick="window.open('<%=request.getContextPath()%>/recruit/supply.do?recWantedno=${recruit.recWantedno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 						class="btn btn-lg btn-outline-info waves-effect waves-themed">
 						즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
 					</button>

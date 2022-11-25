@@ -165,7 +165,7 @@ public class CoMemeberController {
 		Map<String, Object> dataMap2 = null;
 		Map<String, Object> dataMap3 = null;
 
-		open_conm = loginUser.getCoNm();
+		open_conm = loginUser.getName();
 
 		dataMap = openRecService.getOpenRecListByConm(open_conm);
 		dataMap2 = recruitService.getRecruitListByConm(open_conm);
@@ -265,25 +265,22 @@ public class CoMemeberController {
 	private String fileUploadPath;
 
 	// 공개채용 입력
-	@PostMapping("/mypage/openRecRegist")
-	public String openRecRegist(OpenRecVO openRec, HttpServletRequest request, RedirectAttributes rttr)
+	@RequestMapping(value="/mypage/openRecRegist",method=RequestMethod.POST)
+	public String openRecRegist(OpenRecVO openRec, HttpServletRequest request)
 			throws Exception {
-		String url = "redirect:/comember/mypage/recruit";
+		String url = "redirect:recruit";
 		
 		String savePath = this.fileUploadPath;	
+
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		
 		String coId = loginUser.getId();
 		openRec.setId(coId);
-		
-		System.out.println("Controller옴");
-		
+				
 		openRecService.regist(openRec, savePath);		
-		
-		rttr.addFlashAttribute("from", "regist");
-		
+
 		return url;
 	}
 
@@ -305,7 +302,7 @@ public class CoMemeberController {
 	@RequestMapping(value = "/mypage/openRecDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public String openRecDelete(@RequestParam("openSeqno") int openSeqno) throws Exception {
-		String url = "redirect:/mypage/recruit";
+		String url = "redirect:/comember/mypage/recruit";
 		
 		supplyRecService.remove(openSeqno);
 		adviceService.remove(openSeqno);
@@ -316,9 +313,8 @@ public class CoMemeberController {
 
 	// 일반채용 정보 입력
 	@RequestMapping(value = "/mypage/recruitRegist", method = RequestMethod.POST)
-	@ResponseBody
 	public String recruitRegist(RecruitVO recruit, HttpServletRequest request, RedirectAttributes rttr) throws SQLException, Exception {
-		String url = "redirect:/mypage/recruit";
+		String url = "redirect:recruit";
 		
 		String savePath = this.fileUploadPath;
 		
@@ -330,6 +326,18 @@ public class CoMemeberController {
 		
 		recruitService.regist(recruit, savePath);
 
+		return url;
+	}
+	
+	@PostMapping("/mypage/recuritModify")
+	@ResponseBody
+	public String openRecModify(RecruitVO recruit, HttpServletRequest request, RedirectAttributes rttr)
+			throws Exception {
+		String url = "redirect:recruit";
+
+		recruitService.modify(recruit);
+
+		rttr.addFlashAttribute("from", "regist");
 
 		return url;
 	}

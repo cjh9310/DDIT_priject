@@ -32,11 +32,11 @@
 	}
 	
 	#tootitle {
-		  overflow: hidden;
-		  text-overflow: ellipsis;
-		  display: -webkit-box;
-		  -webkit-line-clamp: 2;
-		  -webkit-box-orient: vertical;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 2;
+	    -webkit-box-orient: vertical;
 	}
 	
 	
@@ -45,7 +45,7 @@
 <main id="js-page-content" role="main" class="page-content">
 
 <!-- ------------------Breadcrumbs--------------------- -->
-	<div class="row">
+	<div class="row" >
 		<div class="col-xl-12">
 			<!--Backgrounds-->
 			<div id="panel-6" class="panel">
@@ -64,7 +64,7 @@
 
 <!-- --------------------------- Card -------------------------------- -->
 
-<%-- 	<div class="row">
+ 	<div class="row" >
 	    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
 	        <div class="card shadow-1 shadow-hover-5 mb-g">
 	            <div class="card-body p-3">
@@ -121,7 +121,7 @@
 	            <div class="card-body p-3">
 	            <div class="row">
 	                <div class="col-md-4">
-	                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon4_2.png">
+	                	<img src="<%=request.getContextPath()%>/resources/template/img/senior/icon4_5.png" >
 	                </div>
 	                <div class="col-md-8 mt-3">
 	                	<h5><b>참여연령</b><br> 만 60세이상 </h5><br>
@@ -132,11 +132,11 @@
 	            </div>
 	        </div>
 	    </div>    
-	</div>  --%>
+	</div>  
 	
 	
 <!-- ------------------------------------------------------------------------------------------ -->		
-
+<!-- 
 	<div class="demo">
 	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">대덕구</button>
 	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">동구</button>
@@ -144,7 +144,7 @@
 	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">유성구</button>
 	    <button type="button" class="btn btn-lg btn-primary waves-effect waves-themed">중구</button>	   
 	</div>
-
+ -->
 <!-- ------------------------------------------------------------------------------------------ -->	
 	
 	

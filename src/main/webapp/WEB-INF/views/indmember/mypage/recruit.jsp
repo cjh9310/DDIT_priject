@@ -99,7 +99,7 @@ div {
 												</c:choose>
 												<c:if test="${recReceiptclosedt == '채용시까지' or recReceiptclosedt >= today}">
 													<tr role="row" class="odd"
-													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
+													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')">
 														<td class="dtr-control sorting_1 text-center" tabindex="0">
 															지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
 														</td>
@@ -145,7 +145,7 @@ div {
 												</c:choose>
 												<c:if test="${recReceiptclosedt != '채용시까지' and recReceiptclosedt < today}">
 													<tr role="row" class="odd"
-													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','fullscreen')">
+													onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyRecResume.do?supNo=${supRec.supNo}&recWantedno=${supRec.recWantedno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')">
 														<td class="dtr-control sorting_1 text-center" tabindex="0">
 															지원일자 -<fmt:formatDate value="${supRec.supDate}" pattern="yyyy-MM-dd" />
 														</td>
@@ -205,7 +205,7 @@ div {
 												<fmt:formatDate var="openEdate" value="${strOpenEdate}" pattern="yyyy-MM-dd" />
 												<c:if test="${today <= openEdate}" >
 												<tr role="row" class="odd" 
-												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','fullscreen')">
+												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														지원일자 -<fmt:formatDate value="${open.supDate}" pattern="yyyy-MM-dd" />
 													</td>
@@ -244,7 +244,7 @@ div {
 												<fmt:formatDate var="openEdate" value="${strOpenEdate}" pattern="yyyy-MM-dd" />
 												<c:if test="${today > openEdate}" >
 												<tr role="row" class="odd" 
-												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','fullscreen')">
+												onclick="window.open('<%=request.getContextPath()%>/indmember/mypage/recruit/supplyOpenRecResume.do?supNo=${open.supNo}&openSeqno=${open.openSeqno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														지원일자 -<fmt:formatDate value="${open.supDate}" pattern="yyyy-MM-dd" />
 													</td>

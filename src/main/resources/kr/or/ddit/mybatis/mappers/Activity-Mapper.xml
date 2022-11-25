@@ -6,10 +6,10 @@
 
 	<select id="selectActivityListCon" resultType="activity">
 	/*Activity-Mapper.selectActivityListCon*/
-		select a.*, b.*
-         from activity a, contest b
-        where a.con_no=b.con_no
-          and ind_id=#{indId}
+	   select distinct a.con_no as con_no, a.ind_id as ind_id, a.act_status as act_status, a.act_prize as act_prize, a.act_score as act_score, c.con_title as con_title, c.con_field as con_field
+         from activity a, contest c
+        where a.con_no=c.con_no
+          and a.ind_id= #{indId}
           and a.con_no is not null
 	</select>
 	
@@ -73,6 +73,13 @@
 		 where a.con_no = c.con_no
            and a.men_no = m.men_no 
            and ind_id = #{id}
+	</select>
+	<select id="selectAllContestById" resultType="activity">
+	/*Activity-Mapper.selectAllContestById*/
+		select *
+		  from activity a, contest c
+         where a.con_no = c.con_no
+           and a.ind_id = #{id} and a.men_no is null and a.con_no is not null
 	</select>
 	
 	<insert id="insertActivityContest" parameterType="activity">

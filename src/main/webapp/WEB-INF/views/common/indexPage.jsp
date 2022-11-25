@@ -311,7 +311,7 @@ h3 { margin:0px; }
 						</div>
 						<div class="tab-pane" id="tab-messages" role="tabpanel">
 							<div class="custom-scroll h-100">
-								<ul class="notification">
+								<ul class="allimList">
 									
 								</ul>
 							</div>
@@ -1256,7 +1256,7 @@ h3 { margin:0px; }
 <script>
 
 document.addEventListener('DOMContentLoaded', () => {
-	var webSocket = new WebSocket("ws:192.168.141.21/<%=request.getContextPath()%>/readit");
+	var webSocket = new WebSocket("ws:192.168.141.25/<%=request.getContextPath()%>/readit");
 	
 	webSocket.onopen = function(e){
 		console.log("접속됨");
@@ -1274,6 +1274,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		type : 'GET',
 		dataType:"json",
 		success : function(result) {
+			console.log('${loginUser.name}');
+	        // 로그인 유저가 개인회원 
 			if('${loginUser.typeName}' == '개인회원'){
 			console.log('${loginUser.typeName}');
 			console.log("ajax1",result);
@@ -1282,9 +1284,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			var count = openCount + recCount;
 			var open = result.alertForOpenList;
 			var rec = result.alertForRecList;
-// ------------------------------------------------------------------------
-			if(openCount == 0){
-				if(recCount == 0){
+			var recName = rec.almList[0].coNm;
+			var flag = true;
+			if(openCount == 0 & recCount == 0){
 				var v_list = 
 				`<li class="">
 					<a href="#" class="d-flex align-items-center pageUrl" >
@@ -1297,11 +1299,12 @@ document.addEventListener('DOMContentLoaded', () => {
 						</span>
 					</a>
 				</li>`;
-				$('.notification').append(v_list);}
+				$('.allimList').append(v_list);
 			}else{
 				$('#allimIcon').css("display", "block");
 				$('#allimIcon').html(count);
-				for(var i=0; i<=recCount; i++){
+				for(var i=0; i<recCount; i++){
+					console.log("rec 됨");
 					var unreadList = 
 					`<li class="unread">
 						<a href="#" class="d-flex align-items-center">
@@ -1314,10 +1317,10 @@ document.addEventListener('DOMContentLoaded', () => {
 							</span>
 						</a>
 					</li>`;
-				$('.notification').append(unreadList);
-				
+				$('.allimList').append(unreadList);
 				}
-				for(var i=0; i<=openCount; i++){
+				for(var i=0; i<openCount; i++){
+					console.log("open 됨");
 					var unreadList = 
 					`<li class="unread">
 						<a href="#" class="d-flex align-items-center">
@@ -1330,22 +1333,22 @@ document.addEventListener('DOMContentLoaded', () => {
 							</span>
 						</a>
 					</li>`;
-				$('.notification').append(unreadList);
+				$('.allimList').append(unreadList);
 				
 				}
-				
 			}
-		}	//첫번째 아작스 끝
-		    //두번째 아작스 시작
+		}	
+		    //로그인 유저가 기업회원 기준
 			if('${loginUser.typeName}' == '기업회원'){
 				console.log('${loginUser.typeName}');
 				console.log("ajax2",result);
 				var recCount = result.alertForRecNameList.count;
+				var openCount = result.alertForOpenNameList.count;
+				var count = recCount + openCount;
 				var rec = result.alertForRecNameList;
+				var open = result.alertForOpenNameList;
 	// ------------------------------------------------------------------------
-				if(recCount == 0){
-					alert("recC = 0");
-					if(recCount == 0){
+				if(openCount == 0 & recCount == 0){
 					var v_list = 
 						`<li class="">
 							<a href="#" class="d-flex align-items-center pageUrl" >
@@ -1358,33 +1361,50 @@ document.addEventListener('DOMContentLoaded', () => {
 								</span>
 							</a>
 						</li>`;
-						$('.notification').append(v_list);
-					}
+						$('.allimList').append(v_list);
 				}else{
-					
 					$('#allimIcon').css("display", "block");
-					$('#allimIcon').html(recCount);
-					for(var i=0; i<=recCount; i++){
+					$('#allimIcon').html(count);
+					// 채용
+					console.log("rec됨");
+					for(var i=0; i<recCount; i++){
 						var unreadList = 
 						`<li class="unread">
 							<a href="#" class="d-flex align-items-center">
 								<span class="status mr-2"> <span
 										class="profile-image rounded-circle d-inline-block" style=""></span>
 								</span> <span class="d-flex flex-column flex-1 ml-1">
-										<span class="name">`+rec.almList[i].coNm+`</span>
-										<a class="name">`+rec.almList[i].recWantedtitle+`</a>에서 입사 권유가 도착했습니다.
+										<span class="name">`+rec.almList[i].toId+`</span>회사에서의
+										<a class="name">`+rec.almList[i].recWantedtitle+`</a>에서의 지원요청이 도착했습니다.
 										<span class="fs-nano text-muted mt-1">`+rec.almList[i].almDate+`</span>
 								</span>
 							</a>
 						</li>`;
-					$('.notification').append(unreadList);
-				
+					$('.allimList').append(unreadList);
+					}
+					// 공채
+					for(var i=0; i<openCount; i++){
+						console.log("open 됨");
+						var unreadList = 
+						`<li class="unread">
+							<a href="#" class="d-flex align-items-center">
+								<span class="status mr-2"> <span
+										class="profile-image rounded-circle d-inline-block" style=""></span>
+								</span> <span class="d-flex flex-column flex-1 ml-1">
+										<span class="name">`+open.almList[i].toId+`</span>
+										<a class="name">`+open.almList[i].openTitle+`</a>에서 입사 권유가 도착했습니다.
+										<span class="fs-nano text-muted mt-1">`+open.almList[i].almDate+`</span>
+								</span>
+							</a>
+						</li>`;
+					$('.allimList').append(unreadList);
+					
 					}
 				}
 			}
 		
 		
-		},// success 끝
+		},
 		error : function(request, status, error) {
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}

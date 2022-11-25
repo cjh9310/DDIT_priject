@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.dto.AllimVO;
 import kr.or.ddit.dto.CorporationVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.OpenRecVO;
 import kr.or.ddit.dto.RecruitVO;
 import kr.or.ddit.dto.SupplyRecVO;
+import kr.or.ddit.handler.webSocketListener;
+import kr.or.ddit.service.AllimService;
 import kr.or.ddit.service.CareerService;
 import kr.or.ddit.service.CertificateService;
 import kr.or.ddit.service.CorporationService;
@@ -55,6 +58,8 @@ public class OpenrecController {
 	private LetterService letterService;
 	@Autowired
 	private SupplyRecService supplyRecService;
+	@Autowired
+	private AllimService allimService;
 	
 	@GetMapping("list")
 	public String openrecList(Criteria cri, HttpServletRequest request) throws Exception {
@@ -183,5 +188,29 @@ public class OpenrecController {
 		
 		return url;
 	}
+	
+	@PostMapping("openAllim")
+	@ResponseBody
+	public AllimVO recAllim(AllimVO allim, webSocketListener handler ) throws Exception {
+		
+		allim.getFromId();     // 개인 아이디
+		allim.getToId();       // 기업 이름
+		allim.getOpenSeqno(); // 공채구인번호
+		allim.getOpenTitle(); // 공채 제목
+		allim.getCoNm(); // 공채 회사 이름
+		System.out.println("찾아줘바"+allim.getFromId());
+		System.out.println("찾아줘바"+allim.getToId());
+		System.out.println("찾아줘"+allim.getOpenSeqno());
+		System.out.println(allim.getOpenTitle());
+		allimService.registAllim(allim);
+		handler.AdviceAllim(allim);
+		
+		
+//		String detail = adviceSerivce.registAdvice(indId);
+		
+		
+		return allim;
+	}
+	
 	
 }

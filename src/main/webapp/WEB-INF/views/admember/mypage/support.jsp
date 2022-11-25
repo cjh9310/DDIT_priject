@@ -104,10 +104,11 @@
 												
 												<td style="text-align: center;"><select
 													class="form-control" id="counselorName${i }" name="counselorName" style="height: 32px;">
-														<option value="0" ${support.counselorName == 0 ? 'selected':''}>박혜인 상담사</option>
-														<option value="1" ${support.counselorName == 1 ? 'selected':''}>이수진 상담사</option>
-														<option value="2" ${support.counselorName == 2 ? 'selected':''}>김민지 상담사</option>
-														<option value="3" ${support.counselorName == 3 ? 'selected':''}>김채원 상담사</option>
+														<option value="0" ${support.counselorName == 0 ? 'selected':''}> 상담사 선택</option>
+														<option value="1" ${support.counselorName == 1 ? 'selected':''}>박혜인 상담사</option>
+														<option value="2" ${support.counselorName == 2 ? 'selected':''}>이수진 상담사</option>
+														<option value="3" ${support.counselorName == 3 ? 'selected':''}>김민지 상담사</option>
+														<option value="4" ${support.counselorName == 4 ? 'selected':''}>김채원 상담사</option>
 												</select>
 												</td>
 												<th
@@ -247,10 +248,12 @@ function openList(supNo) {
 			
 			var v_counselorName= "";
 			if (supportList.counselorName == 0){
-				v_counselorName="박혜인 상담사";
+				v_counselorName="상담사 선택";
 			}else if(supportList.counselorName == 1) {
+				v_counselorName="박혜인 상담사";
+			}else if(supportList.counselorName == 2) {
 				v_counselorName="이수진 상담사";
-			}else if(supportList.counselorName == 2){
+			}else if(supportList.counselorName == 3){
 				v_counselorName="김민지 상담사";
 			}else{
 				v_counselorName="김채원 상담사";

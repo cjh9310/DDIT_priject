@@ -31,7 +31,7 @@
 }
 </style>
 
-<script>
+<%-- <script>
 setTimeout(function FaceUnLock() {
 	$.ajax({
 		url : '<%=request.getContextPath()%>/indmember/mypage/result',
@@ -46,7 +46,7 @@ setTimeout(function FaceUnLock() {
 		});
 	}, 5000);
 </script>
-
+ --%>
 <main id="js-page-content" role="main" class="page-content">
 <div class="row">
 	<div class="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
@@ -232,7 +232,7 @@ setTimeout(function FaceUnLock() {
 					<h2>관심 기업</h2>
 					<div class="panel-toolbar ml-2">
 						<button type="button"
-							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/company/recommand.do','OpenWindow','fullscreen')"
+							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/company/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
 							AI에게 더 많은 기업 추천받기</button>
 					</div>
@@ -247,7 +247,7 @@ setTimeout(function FaceUnLock() {
 										<span class="profile-image w-100">
 											<img id="image" style="display:block; width:100%; height:auto;"
 												src="${bookmark.coLogo}"
-												onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png';"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/strength_log4job.png';"
 												alt="일반채용기업" />
 										</span>
 										<span class="d-block text-truncate text-muted fs-xs mt-1">${bookmark.coName}</span>
@@ -284,7 +284,7 @@ setTimeout(function FaceUnLock() {
 					<h2>관심 채용공고</h2>
 					<div class="panel-toolbar ml-2">
 						<button type="button"
-							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/recruit/recommand.do','OpenWindow','fullscreen')"
+							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/recruit/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
 							AI에게 더 많은 채용공고 추천받기</button>
 					</div>

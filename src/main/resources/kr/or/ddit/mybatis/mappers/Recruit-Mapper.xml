@@ -112,21 +112,20 @@
 		REC_JOBSNM,REC_WORKDAYWORKHRCONT,REC_FOURINS,REC_ENTERTPNM,REC_REGION,REC_RECEIPTCLOSEDT,REC_JOBCONT, REC_MAXSAL, REC_PERSONAL,
 		REC_CAPITALAMT, REC_YRSALESAMT, REC_BUSISIZE, REC_HOMEPG, REC_COLLECTPSNCNT,REC_SALTPNM)
 		values (
-		#{recWantedtitle},#{recWantedno},sysdate,#{coName},#{recMinsal},#{recMinedubg},#{recIndtpcdnm},#{recJobsnm},
+		#{recWantedtitle},#{recWantedno},sysdate,#{coName},#{recMinsal}*10000,#{recMinedubg}*10000,#{recIndtpcdnm},#{recJobsnm},
 		#{recWorkdayworkhrcont},#{recFourins},#{recEntertpnm},#{recRegion},#{recReceiptclosedt},#{recJobcont},#{recMaxsal}, #{recPersonal}, 
-		#{recCapitalamt}, #{recYrsalesamt}, #{recBusisize}, #{recHomepg}, #{recCollectpsncnt}, #{recSaltpnm} )
+		#{recCapitalamt}*10000, #{recYrsalesamt}, #{recBusisize}, #{recHomepg}, #{recCollectpsncnt}, #{recSaltpnm} )
 	</update>
 	
 	<update id="updateRecruit" parameterType="recruit">
-		update into recruit
-		recruit
+		update recruit
 		set
-		REC_REGDT=sysdate,CO_NAME=#{CO_NAME},REC_MINSAL=#{REC_MINSAL},REC_MAXSAL=#{REC_MAXSAL},REC_MINEDUBG=#{REC_MINEDUBG}
-		,REC_PERSONAL=#{REC_PERSONAL},REC_CAPITALAMT=#{REC_CAPITALAMT},REC_YRSALESAMT=#{REC_YRSALESAMT},REC_INDTPCDNM=#{REC_INDTPCDNM},REC_HOMEPG=#{REC_HOMEPG}
-		,REC_BUSISIZE=#{REC_BUSISIZE},REC_JOBSNM=#{REC_JOBSNM},REC_WANTEDTITLE=#{REC_WANTEDTITLE},REC_JOBCONT=#{REC_JOBCONT},REC_FOURINS=#{REC_FOURINS}
-		,REC_REGION=#{REC_REGION},SEC_CODE=#{SEC_CODE}
+		REC_REGDT=sysdate,CO_NAME=#{coName},REC_MINSAL=#{recMinsal},REC_MAXSAL=#{recMaxsal},REC_MINEDUBG=#{recMinedubg}
+		,REC_PERSONAL=#{recPersonal},REC_CAPITALAMT=#{recCapitalamt},REC_YRSALESAMT=#{recYrsalesamt},REC_INDTPCDNM=#{recIndtpcdnm},REC_HOMEPG=#{recHomepg}
+		,REC_BUSISIZE=#{recBusisize},REC_JOBSNM=#{recJobsnm},REC_WANTEDTITLE=#{recWantedtitle},REC_JOBCONT=#{recJobcont},REC_FOURINS=#{recFourins}
+		,REC_REGION=#{recRegion},SEC_CODE=#{secCode}
 		where
-		REC_WANTEDNO=#{REC_WANTEDNO}
+		REC_WANTEDNO=#{recWantedno}
 	</update>
 
 	<update id="deleteRecruit" parameterType="str">

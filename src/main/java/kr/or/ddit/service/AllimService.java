@@ -15,5 +15,7 @@ public interface AllimService {
 	
 	Map<String,Object> getAllimRecNameList(String id)throws SQLException;
 	
+	Map<String,Object> getAllimOpenNameList(String id)throws SQLException;
+	
 	void registAllim(AllimVO allim) throws SQLException;
 }

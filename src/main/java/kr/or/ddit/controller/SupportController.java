@@ -83,7 +83,7 @@ public class SupportController {
 	@PostMapping(value="/contest/activityRegist")
 	//@ResponseBody
 	public String activityRegistContest(int conNo, ActivityVO activity, RedirectAttributes rttr, HttpServletRequest request)throws Exception{
-		System.out.println("두번"+activity);
+		
 		String url = "redirect:/support/contest/detail?conNo="+conNo;
 		
 		//파일업로드 경로 
@@ -104,14 +104,14 @@ public class SupportController {
 	}
 	
 	@GetMapping("/contest/detail")
-	public String contestDetail(Model model, int conNo) throws Exception {
+	public ModelAndView contestDetail(ModelAndView mnv, int conNo) throws Exception {
 		String url = "support/contest/detail";
-		Map<String, Object> contestMap = new HashMap<String, Object>();
+		ContestVO contest = contestService.getContest(conNo);
 		
-		contestMap = contestService.getContestList();
+		mnv.addObject("contest", contest);
+		mnv.setViewName(url);
+		return mnv;
 		
-		model.addAttribute("contestMap",contestMap);
-		return url;
 	}
 //취업상담----------------------------------------------------------------------------------
 	@GetMapping("/counsel/main")
@@ -123,10 +123,9 @@ public class SupportController {
 	@PostMapping("/counsel/regist")
 	public String CounselRegist(			
 			SupportVO support,
-			@RequestParam Map<String, Object> param,
-			HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+			HttpServletRequest request) throws Exception{
 		
-		String url = "redirect:/support/counsel/main";
+		String url = "redirect:main";
 		
 		//파일업로드 경로 
 		String savePath = this.fileUploadPath;
@@ -139,8 +138,6 @@ public class SupportController {
 		
 		//상담신청내용 등록, 파일등록 서비스 호출(경로포함)
 		supportService.regist(support, savePath);
-		
-		rttr.addFlashAttribute("form", "regist");
 		
 		return url;
 	}

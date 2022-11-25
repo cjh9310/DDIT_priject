@@ -135,6 +135,7 @@ img {
 $('.detailBtn').on('click',function() {
 	var menNo = $(this).val();
 	//alert(menNo);
-	window.open('detail.do?menNo='+menNo, 'OpenWindow', 990,920);
+	const windowReatures = "width=552, height=1112"
+	window.open('detail.do?menNo='+menNo, 'OpenWindow', windowReatures);
 });
 </script>

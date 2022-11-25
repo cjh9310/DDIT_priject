@@ -102,7 +102,6 @@
 									<th>지원일자</th>
 									<th>공모전명</th>
 									<th>공고기간</th>
-									<th>공모전 진행상황</th>
 									<th>수상내역</th>
 									<th>가산점</th>
 								</tr>
@@ -124,20 +123,15 @@
 												pattern="yyyy-MM-dd" />
 										~ <fmt:formatDate value="${contest.conEdate }"
 												pattern="yyyy-MM-dd" /></td>
-										<td>
+										<%-- <td>
 										<c:set var="conSdate"><fmt:formatDate value="${contest.conSdate }" pattern="yyyyMMdd"/> </c:set>
 										<c:set var="conEdate"><fmt:formatDate value="${contest.conEdate }" pattern="yyyyMMdd"/> </c:set>
-											<c:choose>
-											<c:when test="${conEdate >= today }">심사중 </c:when> 
-											<c:when test="${contest.actStatus eq 0 }">접수완료</c:when>
-											<c:when test="${contest.actStatus eq 1  }">심사완료 </c:when> 
-											</c:choose>
-										</td>
+										</td> --%>
 										<td>
 											<c:if test="${contest.actScore eq 0 }"> 없음 </c:if>
-											<c:if test="${contest.actScore eq 1 }">장려상 </c:if> 
-											<c:if test="${contest.actScore eq 2 }">최우수상 </c:if> 
-											<c:if test="${contest.actScore eq 3 }">대상 </c:if> 
+											<c:if test="${contest.actScore eq 1 }"> 우수상 </c:if> 
+											<c:if test="${contest.actScore eq 2 }"> 최우수상 </c:if> 
+											<c:if test="${contest.actScore eq 3 }"> 대상 </c:if> 
 										</td>
 										<td>
 											<c:if test="${contest.actScore eq 0 }"> 없음 </c:if>
@@ -203,12 +197,13 @@
 													value="${support.supEdate }" pattern="yyyy-MM-dd" />
 											</c:if> <c:if test="${support.supProcess eq 3 }">상담반려<span class="text-danger">(사유: 신청내용 부적절)</span> </c:if></td>
 										<td>
-										<c:if test="${support.counselorName eq 0 }">박혜인 상담사 </c:if>
-										<c:if test="${support.counselorName eq 1 }">이수진 상담사 </c:if>
-										<c:if test="${support.counselorName eq 2 }">김민지 상담사 </c:if>
-										<c:if test="${support.counselorName eq 3 }">김채원 상담사 </c:if>
+										<c:if test="${support.counselorName eq 0 }"> - </c:if>
+										<c:if test="${support.counselorName eq 1 }">박혜인 상담사 </c:if>
+										<c:if test="${support.counselorName eq 2 }">이수진 상담사 </c:if>
+										<c:if test="${support.counselorName eq 3 }">김민지 상담사 </c:if>
+										<c:if test="${support.counselorName eq 4 }">김채원 상담사 </c:if>
 										</td>
-										<td>첨부파일와야대...</td>
+										<td><button type="button"><i class='ni ni-paper-clip'></i></button></td>
 									</tr>
 								</c:forEach>
 						</table>

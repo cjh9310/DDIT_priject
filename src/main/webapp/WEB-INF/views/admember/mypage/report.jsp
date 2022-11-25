@@ -85,6 +85,7 @@ function openList(falNo,coNm) {
 			$('#coAddr').val(result.coAddr+' '+result.coDeaddr);
 			$('#coNm1').val(result.coNm);
 			$('#coAddr1').val(result.coAddr+' '+result.coDeaddr);
+			$('#coConfirm').val(result.coConfirm);
 			
 			// 버튼숨기기 초기화
 			$('#workingOn').hide();
@@ -180,7 +181,8 @@ function reportChangeStatus(str){
 					icon: 'success',
 					title: '변경되었습니다.',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1000
+					
 			}).then(function(){	
 				window.location.replace(url);
 			});
@@ -214,7 +216,7 @@ window.onload=function(){
 function returnConfirm(){
 	
 	 Swal.fire({
-		  title: '권한회수하겠습니까?',
+		  title: '권한을 회수하시겠습니까?',
 		  icon: 'warning',
 		  showCancelButton: true,
 		  confirmButtonColor: '#3085d6',
@@ -223,6 +225,8 @@ function returnConfirm(){
 		  confirmButtonText: '네'
 	}).then(function (result){
 		if(result.value){
+			
+			
 	$.ajax({
 		url : 'returnConfirm', 
 		method : 'POST',
@@ -345,27 +349,26 @@ function returnConfirm(){
 	                    <div class="panel-content" style="height: 545px;">
 	                        <div class="frame-wrap" style="margin-bottom: 20px;">
 	                        	<div class="row">
-	                        		<div class="col-5" style="margin-bottom: 18px;">
+	                        		<div class="col-10" style="margin-bottom: 18px;">
 	                        			<ul class="nav nav-pills" role="tablist">
 											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 기업 상세 </a></li>
 										</ul>
 	                        		</div>
+	                        		<div class="col-2" style="margin-bottom: 18px;">
+	                        			<button type="button" class="btn btn-danger waves-effect waves-themed" style="float: right;"  onclick="returnConfirm();">권한 회수</button>
+	                        		</div>	                        		
 								</div>
 	                        	
 	                        	<div style="margin-bottom: 50px;">
 		                        	<table class="table table-bordered m-0">
 		                        		<thead>
 		                        			<tr>
-		                        				<th style="width: 10%;">기업명</th>
+		                        				<th style="width: 15%;">기업명</th>
 		                        				<th style="width: 20%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 150px;" id="coNm1" readonly></th>
 		                        				<th style="width: 10%;">주소</th>
-		                        				<th style="width: 35%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 270px;" id="coAddr1" readonly></th>
-		                        				<th style="width: 13%;">권한</th>
-		                        				<th style="width: 12%; padding: 3px;">
-		                        					<div class="statusBtn">
-		                        						<button type="button" class="btn btn-danger waves-effect waves-themed" onclick="returnConfirm();">권한 회수</button>
-		                        					</div>
-		                        				</th>
+		                        				<th style="width: 40%;"><input type="text" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; border: 0px; width: 270px;" id="coAddr1" readonly></th>
+		                        				<th style="width: 10%;">권한</th>
+		                        				<th style="width: 5%;"><input type="text" id="coConfirm" style="border: 0px; width: 100px;" readonly></th>
 		                        			</tr>		
 		                        		</thead>
 		                        	</table>
@@ -404,11 +407,11 @@ function returnConfirm(){
 											<li class="nav-item"><a class="nav-link active" data-toggle="pill"> 상세 신고 내역</a></li>
 										</ul>
 	                        		</div>
-	                        		<div class="col-2" style="margin-bottom: 18px; float: right !important;">
+	                        		<div class="col-2" style="margin-bottom: 18px;">
 	                        			<button type="button" class="btn btn-warning waves-effect waves-themed" 
-	                        				id="workingOn" style="display: none;" onclick="reportChangeStatus('신고처리중');">신고처리중 </button>
+	                        				id="workingOn" style="display: none; float: right;" onclick="reportChangeStatus('신고처리중');">신고처리중 </button>
 	                        			<button type="button" class="btn btn-info waves-effect waves-themed" 
-	                        				id="complete"  style="display: none;" onclick="reportChangeStatus('처리완료');">처리완료 </button>
+	                        				id="complete"  style="display: none; float: right;" onclick="reportChangeStatus('처리완료');">처리완료 </button>
 	                        		</div>
 								</div>
 							<div id="faqpanel-2" class="panel">

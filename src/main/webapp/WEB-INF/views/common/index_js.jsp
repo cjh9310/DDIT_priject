@@ -123,7 +123,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 						style="width: 45px; padding-right: 16px;">
 						<div class='icon-stack display-3 flex-shrink-0'>
 						{{#nullCheck recBookmark}}
-							<button id="{{recWantedno}}" class="bookMark_btn_handlebars"
+							<button id="{{recWantedno}}" class="bookMark_btn"
 															style="background-color: transparent; border: 0px;"
 															type="button" value="{{recBookmark}}">
 															<i name="recremove"
@@ -131,7 +131,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 														</button>
 						{{else}}									
 							<button name="recregist" id="{{recWantedno}}"
-															class="bookMark_btn_handlebars"
+															class="bookMark_btn"
 															style="background-color: transparent; border: 0px;"
 															type="button" value="{{recBookmark}}">
 															<i name="recregist"
@@ -168,7 +168,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 							<h4 style="margin: 0px;">{{coName}}</h4>
 							{{#nullCheck coBookmark}}
 												
-																<button class="bookMark_btn_handlebars" id="{{coName}}"
+																<button class="bookMark_btn" id="{{coName}}"
 																	value="{{coBookmark}}" type="button"
 																	style="background-color: transparent; border: 0px;">
 																	<i name="comremove"
@@ -176,7 +176,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 																		관심 기업 </i>
 																</button>
 					{{else}}	
-																<button class="bookMark_btn_handlebars" id="{{coName}}"
+																<button class="bookMark_btn" id="{{coName}}"
 																	value="{{coBookmark}}" type="button"
 																	style="background-color: transparent; border: 0px;">
 																	<i name="comregist"
@@ -223,7 +223,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 			</div>
 			<div class="card-body">
 					{{#nullCheck coBookmark}}
-						<button class="bookMark_btn_handlebars" id="{{openConm}}"
+						<button class="bookMark_btn" id="{{openConm}}"
 							value="{{coBookmark}}" type="button"
 							style="background-color: transparent; border: 0px;">
 							<i name="comremove"
@@ -231,7 +231,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 								기업 </i>
 						</button>
 					{{else}}
-						<button class="bookMark_btn_handlebars" id="{{openConm}}"
+						<button class="bookMark_btn" id="{{openConm}}"
 							value="{{coBookmark}}" type="button"
 							style="background-color: transparent; border: 0px;">
 							<i name="comregist"
@@ -280,7 +280,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 					</div>
 					<div class='icon-stack display-3 flex-shrink-0 panel-toolbar ml-2'>
 							{{#nullCheck talBookmark}}
-									<button id="{{id}}" class="bookMark_btn_handlebars"
+									<button id="{{id}}" class="bookMark_btn"
 										style="background-color: transparent; border: 0px;"
 											type="button" value="{{talBookmark}}">
 											<i name="talremove"
@@ -288,7 +288,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 									</button>
 								{{else}}
 									<button name="talregist" id="{{id}}"
-										class="bookMark_btn_handlebars"
+										class="bookMark_btn"
 										style="background-color: transparent; border: 0px;"
 										type="button" value="{{talBookmark}}">
 											<i name="talregist"
@@ -557,89 +557,6 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 				$.ajax(ajaxOption).done(function(data) {
 					console.log("json data : ",data);
 					printDataByScroll(data, $('#accordion-' + parameter), $('#scroll-' + parameter + "-" + viewType));
-					$('.bookMark_btn_handlebars').off("click");
-					$('.bookMark_btn_handlebars').click(function() {
-						
-						var button = $(this);
-						var depth = button.children('i').attr('name');
-						var uri = depth.substr(3,7);
-						var id = '${loginUser.id}';
-						
-						var flag;
-						var url;
-						
-						var value = button.val();
-						var pkey = button.attr('id');
-						
-						if(uri == 'regist') {
-							flag = true;
-						} else if(uri == 'remove') {
-							flag = false;
-						}
-						
-						if(flag) {
-							url = '<%=request.getContextPath()%>/bookmark/' + uri;
-						} else {
-							url = '<%=request.getContextPath()%>/bookmark/' + uri;
-						}
-						
-						var recWantedno;
-						var bookType;
-						var coName;
-						var talId;
-						
-						if(depth.substr(0,3) == "rec") {
-							recWantedno = pkey;
-							bookType = 0;
-						} else if(depth.substr(0,3) == "com") {
-							coName = pkey;
-							bookType = 1;
-						} else if(depth.substr(0,3) == "tal") {
-							talId = pkey;
-							bookType = 2;
-						}
-						
-						data = {id : id,
-								recWantedno : recWantedno,
-								bookType : bookType,
-								coName : coName,
-								talId : talId};
-						
-						var ajaxOption = {
-								url : url,
-								async : true,
-								type : "POST",
-								data : data,
-								dataType : "text",
-								cache : false
-							};
-					
-							$.ajax(ajaxOption).done(function(data) {
-								
-								console.log('최초 18개에 대한 이벤트---------------------------------');
-								
-								if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "rec") {
-									button.children('i').remove();
-									button.prepend('<i name="recremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "tal") {
-									button.children('i').remove();
-									button.prepend('<i name="talremove" class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='BookmarkRegistSuccess' && depth.substr(0,3) == "com") {
-									button.children('i').remove();
-									button.prepend('<i name="comremove" class="badge border border-danger text-danger">나의 관심 기업</i>');
-								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "rec") {
-									button.children('i').remove();
-									button.prepend('<i name="recregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "tal") {
-									button.children('i').remove();
-									button.prepend('<i name="talregist" class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>');
-								} else if(data=='BookmarkRemoveSuccess' && depth.substr(0,3) == "com") {
-									button.children('i').remove();
-									button.prepend('<i name="comregist" class="badge border border-info text-info">관심 기업 등록하기</i>');
-								}
-							});
-							
-					});
 				});			
 			}
         });
@@ -696,8 +613,7 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 
 <script>
 $(document).ready(function() {
-	
-	$('.bookMark_btn').click(function() {
+	$(document).on("click",".bookMark_btn",function(){
 		
 		var button = $(this);
 		var depth = button.children('i').attr('name');

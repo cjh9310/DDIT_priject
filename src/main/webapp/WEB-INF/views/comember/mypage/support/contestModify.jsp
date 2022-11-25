@@ -114,8 +114,6 @@
 		 param = param.replaceAll('-','/'); */
 	 var conNo = ${contest.conNo};
 	 
-	//$('#modifyForm').submit();
-	 
 	  Swal.fire({
          icon: 'warning',
 			title: "수정하시겠습니까?",
@@ -125,7 +123,7 @@
 	}).then(function(result){ 
 	 		$('#modifyForm').submit();
 	 		
-	}).then(function(){
+	})/* .then(function(){
 		
 	Swal.fire({
 		icon: 'success',
@@ -135,7 +133,7 @@
 	}).then(function(){
 		opener.location.replace(opener.location.href);
 	})
-	})
+	}) */
 		 /* $.ajax({
 				type:"POST",
 				url:"contestModify.do",
@@ -164,4 +162,5 @@
 }); 
 
 </script>
+
 

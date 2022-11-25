@@ -52,17 +52,23 @@ public class AllimServiceImpl implements AllimService{
 	public Map<String, Object> getAllimRecNameList(String id) throws SQLException {
 		Map<String, Object> almMap = new HashMap<String, Object>();
 		int count = allimDAO.selectRecTotalCount(id);
-		System.out.println("다오아이디: "+id);
 		almMap.put("count", count);
-		System.out.println("ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ" + count);
 		if(count > 0) {
 			List<AllimVO> almList = allimDAO.selectToRecName(id);
 			almMap.put("almList",almList);
 		}
-			
-		
 		return almMap;
 	}
 	
-	
+	@Override
+	public Map<String, Object> getAllimOpenNameList(String id) throws SQLException {
+		Map<String, Object> almMap = new HashMap<String, Object>();
+		int count = allimDAO.selectRecTotalCount(id);
+		almMap.put("count", count);
+		if(count > 0) {
+			List<AllimVO> almList = allimDAO.selectToOpenName(id);
+			almMap.put("almList",almList);
+		}
+		return almMap;
+	}
 }

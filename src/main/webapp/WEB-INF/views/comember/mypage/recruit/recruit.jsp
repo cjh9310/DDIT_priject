@@ -565,9 +565,9 @@ function activityDetail(id) {
 								</div>
 								<div class="form-group">
 									<label class="form-label" for="example-email-2"><b>회사명</b></label>
-									<input type="text" value="${loginUser.coNm }"
+									<input type="text" value="${loginUser.name }"
 										class="form-control" placeholder="" disabled> <input
-										type="text" value="${loginUser.coNm }" name="openConm"
+										type="text" value="${loginUser.name }" name="openConm"
 										style="display: none;" />
 								</div>
 								<div class="form-group">
@@ -738,9 +738,9 @@ function activityDetail(id) {
 								<div class="form-group">
 									<label class="form-label" for="example-palaceholder-disabled"><b>기업명</b></label>
 									<input type="text" id="example-palaceholder-disabled"
-										class="form-control" value="${loginUser.coNm }" disabled=""
+										class="form-control" value="${loginUser.name }" disabled=""
 										name="coName" readonly="readonly"> <input type="text"
-										name="coName" value="${loginUser.coNm }"
+										name="coName" value="${loginUser.name }"
 										style="display: none;" />
 								</div>
 								<!-- 최대 최소 금액 -->
@@ -968,9 +968,9 @@ function activityDetail(id) {
 								<div class="form-group">
 									<label class="form-label" for="example-palaceholder-disabled"><b>기업명</b></label>
 									<input type="text" id="example-palaceholder-disabled"
-										class="form-control" value="${loginUser.coNm }" disabled=""
+										class="form-control" value="${loginUser.name }" disabled=""
 										name="coName" readonly="readonly"> <input type="text"
-										name="coName" value="${loginUser.coNm }"
+										name="coName" value="${loginUser.name }"
 										style="display: none;" />
 								</div>
 								<!-- 최대 최소 금액 -->
@@ -1181,8 +1181,8 @@ function activityDetail(id) {
 						</div>
 					</div>
 					<div class="panel-container show" style="height: 100%;">
-						<form enctype="multipart/form-data" class="needs-validation" method="post"
-							action="<%=request.getContextPath()%>/comember/mypage/openRecRegist" id="openRecForm">
+						<form enctype="multipart/form-data" class="needs-validation" method="post" role="openRecForm"
+							action="openRecRegist" id="openRecForm">
 							<div class="panel-content">
 								<div class="form-group">
 									<label class="form-label" for="simpleinput">제목</label> <input
@@ -1206,9 +1206,9 @@ function activityDetail(id) {
 								</div>
 								<div class="form-group">
 									<label class="form-label" for="example-email-2">회사명</label> <input
-										type="text" value="${loginUser.coNm }" class="form-control"
+										type="text" value="${loginUser.name }" class="form-control"
 										placeholder="" disabled> <input type="text"
-										value="${loginUser.coNm }" name="openConm"
+										value="${loginUser.name }" name="openConm"
 										style="display: none;" />
 								</div>
 								<div class="form-group">
@@ -1373,9 +1373,9 @@ function activityDetail(id) {
 <script>
 	/* 일반채용 Insert */
 	$('#recuritBtn').on('click', function() {
-		var recuritParam = $('#recuritForm').serializeObject();
+	/* 	var recuritParam = $('#recuritForm').serializeObject();
 
-		console.log(recuritParam);
+		console.log(recuritParam); */
 		
 		$('form[name="recuritForm"]').submit();
 
@@ -1401,11 +1401,10 @@ function activityDetail(id) {
 
 		console.log(openRecParam);
 		
-		//$("#openRecForm").submit();
+		$("form[role='openRecForm']").submit();
 		
-		//window.location.reload();
 		
-		$.ajax({
+		/* $.ajax({
 			url : 'openRecRegist',
 			type : 'post',
 			data : openRecParam,
@@ -1416,15 +1415,24 @@ function activityDetail(id) {
 			error : function(xhr, status) {
 				alert("등록 실패 했습니다");
 			}
-		});
+		}); */
 	});
 </script>
-
 <script>
 	$('#RecModifyBtn').on('click', function() {
 		var recuritModifyForm = $("#recuritModifyForm").serializeObject();
-
-		console.log(recuritModifyForm);
+		
+		$.ajax({
+			url : 'recuritModify',
+			type : 'post',
+			data : recuritModifyForm,
+			success : function(data) {
+				
+			},
+			error : function(xhr, status) {
+				
+			}
+		});
 	});
 </script>
 

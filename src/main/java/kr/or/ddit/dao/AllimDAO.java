@@ -13,6 +13,8 @@ public interface AllimDAO {
 	List<AllimVO> selectToRecId(String id) throws SQLException;
 	
 	List<AllimVO> selectToRecName(String id) throws SQLException;
+	
+	List<AllimVO> selectToOpenName(String id) throws SQLException;
 
 	void insertAllim (AllimVO allim)throws SQLException;
 	

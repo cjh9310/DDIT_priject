@@ -113,4 +113,12 @@ public class ActivityDAOImpl implements ActivityDAO {
 		return seq_num;
 	}
 
+	@Override
+	public List<ActivityVO> selectAllContestById(String id) throws SQLException {
+		List<ActivityVO> contestList = session.selectList("Activity-Mapper.selectAllContestById", id);
+		return contestList;
+	}
+
+	
+	
 }

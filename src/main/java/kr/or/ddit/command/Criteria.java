@@ -6,6 +6,7 @@ public class Criteria {
 
 	private int page = 1;
 	private int perPageNum = 10;
+	private String url;
 	private String searchType;
 	private String searchAll;
 	private String keyword = null;
@@ -14,6 +15,22 @@ public class Criteria {
 	private String searchBtn3;
 	private String searchBtn4;
 	private String searchBtn5;
+
+	
+	
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getId() {
 		return id;

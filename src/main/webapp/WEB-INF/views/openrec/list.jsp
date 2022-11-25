@@ -189,7 +189,10 @@
 						<div class="panel-content card-wrapper col-2" style="margin: 0px;">
 							<div class="card-deck">
 								<div class="card shadow-0 mb-g shadow-sm-hover">
-									<img src="${openRec.openLogo}" class="card-img-top" alt="...">
+									<img id="image" style="display:block; width:100%; height:auto;"
+												src="${openRec.openLogo}"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/strength_log4job.png';"
+												alt="공채 로고" />
 									<div class="card-body" style="cursor: pointer;"
 										 onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno=${openRec.openSeqno}&openConm=${openRec.openConm}'">
 										<h5 class="card-title" data-toggle="tooltip"

@@ -186,9 +186,10 @@ $(document).ready(function(){
 <script>
 		$("#registBtn").on("click", function() { //신청하기 버튼을 클릭하였을 때
 			
-			var param = $("#registForm").serialize();
-			console.log(param);
+			/* var param = $("#registForm").serialize();
+			console.log(param); */
 		
+
 			Swal.fire({
 				target: document.getElementById('counselModal'),
                 icon: 'success',
@@ -197,11 +198,8 @@ $(document).ready(function(){
                 type: "success",
                 showCancelButton: false,
                 confirmButtonText: "OK"
-    		}).then(function(result){
-				$("form[name='registForm']").submit();
-			
     		}).then(function(){
-    			window.location.replace(location.href);
+				$("form[name='registForm']").submit();
     		})
 			
 		/* 	$.ajax({

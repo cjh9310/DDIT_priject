@@ -154,3 +154,17 @@ $('#deleteBtn').on('click',()=>{
 		</c:if>
 	});
 </script>
+
+<c:if test="${'from' eq 'modify'}" >
+<script>
+	
+	Swal.fire({
+	    icon: 'success',
+		title: "수정되었습니다.",
+	    type: "success",
+	    showCancelButton: false,
+	    confirmButtonText: "OK"
+		
+	});
+</script>
+</c:if>

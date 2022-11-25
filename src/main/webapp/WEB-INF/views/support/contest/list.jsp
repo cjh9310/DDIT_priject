@@ -93,7 +93,6 @@
 											<div>
 												<fmt:parseNumber value="${now.time /(1000*60*60*24) }" integerOnly="true" var="sysDate" />
 												<fmt:parseNumber value="${contest.conEdate.time /(1000*60*60*24)+1 }" integerOnly="true" var="conED" />
-												${conED } ${sysDate }
 												<c:choose>
 													<c:when test="${conED-sysDate < 0 }">
 														<span class="badge badge-secondary badge-pill">
@@ -153,7 +152,8 @@
 $('.detailBtn').on('click',function() {
 	
 	var conNo = $(this).val();
+	const windowReatures = "width=1000, height=700"
 	//alert(conNo);
-	window.open('detail.do?conNo='+conNo, 'OpenWindow', 990,920);
+	window.open('detail.do?conNo='+conNo, 'OpenWindow', windowReatures);
 });
 </script>

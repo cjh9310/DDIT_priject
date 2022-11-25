@@ -45,8 +45,13 @@ public class AllimDAOImpl implements AllimDAO{
 
 	@Override
 	public List<AllimVO> selectToRecName(String id) throws SQLException {
-		System.out.println("아이디: " + id);
-		List<AllimVO> almList = session.selectList("Allim-Mapper.selecttoRecName",id);
+		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToRecName",id);
+		return almList;
+	}
+	
+	@Override
+	public List<AllimVO> selectToOpenName(String id) throws SQLException {
+		List<AllimVO> almList = session.selectList("Allim-Mapper.selectToOpenName",id);
 		return almList;
 	}
 

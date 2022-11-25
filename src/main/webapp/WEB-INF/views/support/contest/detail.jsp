@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<c:set var="contest" value="${contest }"></c:set>
     
 <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
@@ -27,10 +28,12 @@
 			                            <div class="row mx-md-n5">
 			                                <div class="col px-md-5">
 			                                    <div class="p-3">
+			                                      	<img id="image" class="card-img-top"
+														src="http://localhost/ddit/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+														onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/멘토링.png';"
+														alt="공모전이미지" onclick="window.open(this.src,'OpenWindow','width='+this.naturalWidth+' height='+this.naturalHeight+' menubar=no status=no toolbar=no location=no'); return false;" style="cursor:pointer;"/>
 			                                      	<%-- <img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" 
-			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" style="cursor:pointer" > --%>
-			                                      	<img src="<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png" 
-			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" onclick="window.open(this.src,'OpenWindow','width='+this.naturalWidth+' height='+this.naturalHeight+' menubar=no status=no toolbar=no location=no'); return false;" style="cursor:pointer;"/>
+			                                      		 class="card-img-top" id="clickImg" alt="공모전이미지" onclick="window.open(this.src,'OpenWindow','width='+this.naturalWidth+' height='+this.naturalHeight+' menubar=no status=no toolbar=no location=no'); return false;" style="cursor:pointer;"/> --%>
 			                                    </div>
 			                                </div>
 		                                    <div class="col px-md-5">

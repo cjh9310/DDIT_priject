@@ -52,7 +52,7 @@ td { height: 80px; }
 				</tr>
 			</table>
 			<div class="panel-toolbar ml-2">
-				<button type="button" onclick="window.open('<%=request.getContextPath()%>/openrec/supply.do?openSeqno=${openRec.openSeqno}','OpenWindow','fullscreen')"
+				<button type="button" onclick="window.open('<%=request.getContextPath()%>/openrec/supply.do?openSeqno=${openRec.openSeqno}','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 					class="btn btn-lg btn-outline-info waves-effect waves-themed">
 					즉시 입사 지원하기<span class="fas fa-arrow-alt-right ml-1"></span>
 				</button>

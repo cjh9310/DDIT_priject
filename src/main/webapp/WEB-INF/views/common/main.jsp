@@ -360,13 +360,13 @@ div {
 									<div class="row row-grid no-gutters"
 										onclick="location.href='<%=request.getContextPath()%>/futurelab/ai1/main.do'"
 										style="cursor:pointer;">
-                                        <div class="col-6" style="height:150px;">
+										<div class="col-6" style="height:150px;">
                                             <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
-                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard4.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard1.png');background-size: contain;background-repeat:no-repeat;"></span>
                                         </div>
                                         <div class="col-6" style="height:150px;">
                                             <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
-                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard2.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard4.png');background-size: contain;background-repeat:no-repeat;"></span>
                                         </div>
                                         <div class="col-6" style="height:150px;">
                                             <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
@@ -374,7 +374,39 @@ div {
                                         </div>
                                         <div class="col-6" style="height:150px;">
                                             <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
-                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard1.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard2.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+										<div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard5.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard6.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard7.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard8.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard9.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard10.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard11.png');background-size: contain;background-repeat:no-repeat;"></span>
+                                        </div>
+                                        <div class="col-6" style="height:150px;">
+                                            <span class="position-absolute pos-top pos-left pos-right pos-bottom" 
+                                            style="background-image: url('<%=request.getContextPath()%>/resources/template/img/namecard/namecard12.png');background-size: contain;background-repeat:no-repeat;"></span>
                                         </div>
                                     </div>
 								</div>
@@ -383,14 +415,18 @@ div {
 						<div class="tab-pane fade" id="tab_ai2" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div>미래연구소 Part 2</div>
+									<div style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/futurelab/ai2/main.do'">
+										<img alt="배경" src='<%=request.getContextPath()%>/resources/template/img/ai/idenPicture.png' style="width:100%; height:auto;">
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="tab_ai3" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div>미래연구소 Part 3</div>
+									<div style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/futurelab/ai3/main.do'">
+										<img alt="배경" src='<%=request.getContextPath()%>/resources/template/img/ai3_background.JPG' style="width:100%; height:auto;">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -650,13 +686,15 @@ Handlebars.registerHelper("nullCheckMain", function(element, options) {
 	<div class="carousel-item" data-interval="2000">
 	<div class="card border m-auto m-lg-0"
 	style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno={{recWantedno}}'">
-		<img src="<%=request.getContextPath()%>/resources/template/img/Log4Job_mainLogo.png" class="card-img-top" alt="...">
+		<img src="<%=request.getContextPath()%>/resources/template/img/strength_log4job.png" class="card-img-top" alt="...">
 		<div class="card-body">
 			<h5 class="card-title fw-700">{{coName}}</h5>
 			<p class="card-text">
 			</p>
 			<p class="card-text">{{recRegion}}</p>
 			<p class="card-text">{{recWantedtitle}}</p>
+			<i class="badge border border-info text-info">{{recEntertpnm}}</i>
+			<i class="badge border border-success text-success">{{recMinedubg}}</i>
 		</div>
 	</div>
 </div>
@@ -702,12 +740,12 @@ Handlebars.registerHelper("nullCheckMain", function(element, options) {
 {{#each mentoringList}}
 <div class="panel-content col-3">
 	<div class="card-deck">
-		<div class="card">
+		<div class="card" style="height:230px; cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/support/mentoring/list.do'">
 			<img id="image" class="card-img-top"
 			     src="http://localhost/ddit/getPicture.do?path={{uploadpath}}&filename={{filename}}"
 			     onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg';"
 			     alt="대체 이미지가 로드되지 않았습니다." />
-			<div class="card-body demo"style="height: 155.87px;">
+			<div class="card-body demo">
 				<h4 class="card-title" data-toggle="tooltip"
 					data-placement="top" title=""
 					data-original-title="{{menTitle }}">{{menTitle }}</h4>

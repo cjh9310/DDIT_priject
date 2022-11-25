@@ -58,8 +58,8 @@
 			  and a.to_id =#{toId}
               and a.REC_WANTEDNO is not null
 	</select>
-	<!-- 개인이 기업에게 recruit -->
-	<select id="selecttoRecName" parameterType="str" resultType="allim">
+	<!-- 개인이 기업에게 Rec recruit -->
+	<select id="selectToRecName" parameterType="str" resultType="allim">
 		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.alm_type
     	  ,a.REC_WANTEDNO ,a.REC_WANTEDTITLE
     	   from member m, ind_member i, co_member c, allim a, recruit r
@@ -68,12 +68,24 @@
       	   and c.co_nm = r.co_name(+)
       	   and i.ind_id = a.from_id
       	   and a.to_id = #{toId}
+           and a.REC_WANTEDNO is not null
+	</select>
+	<!-- 개인이 기업에게 Open recruit -->
+	<select id="selectToOpenName" parameterType="str" resultType="allim">
+		select a.ALM_SEQNO, a.FROM_ID, a.TO_ID, a.ALM_DATE, a.alm_type
+    	  ,a.OPEN_SEQNO ,a.OPEN_TITLE
+    	   from member m, ind_member i, co_member c, allim a, open_rec o
+    	   where m.id = i.ind_id (+)
+      	   and m.name = c.co_nm(+)
+      	   and c.co_nm = o.OPEN_CONM(+)
+      	   and i.ind_id = a.from_id
+      	   and a.to_id = #{toId}
+           and a.open_seqNo is not null
 	</select>
 	
-	
 	<update id="insertAllim" parameterType="allim">
-		insert into allim (ALM_SEQNO, ALM_DATE, from_id, to_id, ALM_TYPE, open_seqno, rec_wantedno, rec_wantedtitle)
-		              values (allim_seq.nextval, sysdate, #{fromId}, #{toId},'1', #{openSeqno}, #{recWantedno}, #{recWantedtitle})
+		insert into allim (ALM_SEQNO, ALM_DATE, from_id, to_id, ALM_TYPE, open_seqno, rec_wantedno, rec_wantedtitle, OPEN_TITLE)
+		              values (allim_seq.nextval, sysdate, #{fromId}, #{toId},'1', #{openSeqno}, #{recWantedno}, #{recWantedtitle}, #{openTitle})
 	</update>
 
 </mapper>

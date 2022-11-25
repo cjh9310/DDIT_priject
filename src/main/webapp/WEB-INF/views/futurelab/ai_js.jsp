@@ -1,28 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
 <script type="text/x-handlebars-template" id="ai1-result-template">
-	{{#each .}}
-		<div class="col-sm-3 col-md-3 col-xl-3">
-			<div id="panel-1" style="height:410px;">
-				<div style="text-align:center; margin-top: 15px; margin-bottom: 20px;" >
-					<h3> <b>{{field}} 분야 </b></h3>
-				</div>
-           			<div style="height:300px;" class=" p-3 bg-primary-300 rounded overflow-hidden position-relative text-white">
-					<div class="mh-100">
-						<p style="text-align:center;">
-							<code>공모전 이미지 예정</code>
-						</p>
-            	    	</div>
-        			</div>  
-  				<div style="text-align:center; margin-top: 15px;" >
-            		{{title}}
-            	</div>
+{{#each .}}
+	<div class="panel-content col-3">
+		<div class="card-deck">
+			<div class="card">
+				<img id="image" class="card-img-top" style="height:440px;"
+					src="http://localhost/ddit/getPicture.do?path={{UPLOADPATH}}&filename={{FILENAME}}"
+					onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
+					alt="대체 이미지가 로드되지 않았습니다." />
 			</div>
-    	</div>
-	{{/each}}
+		</div>
+	</div>
+{{/each}}
 </script>
 <script type="text/x-handlebars-template" id="ai2-result-template">
 		<div class="mr-2 hidden-md-down">
@@ -90,42 +83,126 @@
 </script>
 <script type="text/x-handlebars-template" id="ai3-result-template">
 	{{#each .}}
-			<div class="col-sm-4 col-md-4 col-xl-3">
-                <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
-                    <div class="">
-						<p>
-							<code>AI Pick Company!</code>
-						</p>
-                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                            <small class="m-0 l-h-n">기업명 : {{CO_NAME}}</small>
-                        </h3>
-                    </div>
-                    <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
-                </div>
-            </div>
+	<div class="card-deck col-3 w-100">
+		<div class="card shadow-0 mb-g shadow-sm-hover">
+			<img src="<%=request.getContextPath()%>/resources/template/img/strength_log4job.png" class="card-img-top" alt="Log4Job-강소기업">
+			<div class="card-body" style="cursor: pointer;"
+				onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno={{openSeqno}}&openConm={{openConm}}'">
+				<h5 class="card-title" data-toggle="tooltip"
+					data-placement="top" title=""
+					data-filter-tags="{{CO_NAME}} {{CO_NAME}}"
+					data-original-title="{{CO_NAME}}">{{CO_NAME}}</h5>
+				<p class="card-text" data-toggle="tooltip"
+					data-placement="top" title=""
+					data-original-title="{{REC_INDTPCDNM}}">{{REC_INDTPCDNM}}</p>
+				<p class="card-text" data-toggle="tooltip"
+					data-placement="top" title=""
+					data-original-title="{{REC_REGION}}">{{REC_REGION}}</p>
+			</div>
+			<div class="card-body">
+					{{#nullCheck CO_BOOKMARK}}
+						<button class="bookMark_btn" id="{{CO_NAME}}"
+							value="{{CO_BOOKMARK}}" type="button"
+							style="background-color: transparent; border: 0px;">
+							<i name="comremove"
+								class="badge border border-danger text-danger"> 나의
+								관심 기업 </i>
+						</button>
+					{{else}}	
+						<button class="bookMark_btn" id="{{CO_NAME}}"
+							value="{{CO_BOOKMARK}}" type="button"
+							style="background-color: transparent; border: 0px;">
+							<i name="comregist"
+								class="badge border border-info text-info"> 관심 기업
+								등록하기 </i>
+						</button>
+					{{/nullCheck}}
+			</div>
+		</div>
+	</div>
 	{{/each}}
 </script>
 <script type="text/x-handlebars-template" id="ai4-result-template">
 	{{#each .}}
-		<div class="col-sm-4 col-md-4 col-xl-3">
-                <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
-                    <div class="">
-						<p>
-							<code>AI Pick! ID-{{id}}</code>
-						</p>
-                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                            <small class="m-0 l-h-n">회사명 : {{CO_NAME}}</small>
-                            <small class="m-0 l-h-n">공고명 : {{REC_WANTEDTITLE}}</small>
-                        </h3>
-                    </div>
-                    <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
-                </div>
-            </div>
+		<div class="card border-top-left-radius-0 border-top-right-radius-0">
+	<div class="card-header">
+		<a href="javascript:void(0);" class="card-title collapsed"
+			aria-expanded="false">
+			<table>
+				<tr>
+					<td colspan="1" rowspan="3"
+						style="width: 45px; padding-right: 16px;">
+						<div class='icon-stack display-3 flex-shrink-0'>
+						{{#nullCheck REC_BOOKMARK}}
+							<button id="{{REC_WANTEDNO}}" class="bookMark_btn"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="{{REC_BOOKMARK}}">
+															<i name="recremove"
+																class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+						{{else}}									
+							<button name="recregist" id="{{REC_WANTEDNO}}"
+															class="bookMark_btn"
+															style="background-color: transparent; border: 0px;"
+															type="button" value="{{REC_BOOKMARK}}">
+															<i name="recregist"
+																class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+														</button>
+						{{/nullCheck}}
+						</div>
+					</td>
+				</tr>
+				<tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno={{REC_WANTEDNO}}'">
+												<td colspan="8" style="width: 1400px;">
+													<h2>{{REC_WANTEDTITLE}}</h2>
+												</td>
+												<td rowspan="2" style="width: 140px;">
+													<i class="badge text-primary"><h4>
+														{{REC_REGION}}
+														</h4></i>
+												</td>
+												<td rowspan="2" style="width: 320px;">
+													<i class="badge text-primary"><h4>
+														경력사항
+														&nbsp;:&nbsp;&nbsp;{{REC_ENTERTPNM}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														</h4></i>
+												</td>
+											</tr>
+				<tr>
+					<td colspan="4" style="width: 900px;">
+						<div class="panel-toolbar ml-2">
+							<h4 style="margin: 0px;">{{CO_NAME}}</h4>
+							{{#nullCheck CO_BOOKMARK}}
+												
+																<button class="bookMark_btn" id="{{CO_NAME}}"
+																	value="{{CO_BOOKMARK}}" type="button"
+																	style="background-color: transparent; border: 0px;">
+																	<i name="comremove"
+																		class="badge border border-danger text-danger"> 나의
+																		관심 기업 </i>
+																</button>
+					{{else}}	
+																<button class="bookMark_btn" id="{{CO_NAME}}"
+																	value="{{CO_BOOKMARK}}" type="button"
+																	style="background-color: transparent; border: 0px;">
+																	<i name="comregist"
+																		class="badge border border-info text-info"> 관심 기업
+																		등록하기 </i>
+																</button>
+									{{/nullCheck}}
+						</div>
+					</td>
+					<td colspan="4" style="width: 300px;"></td>
+				</tr>
+			</table> 
+		</a>
+	</div>
+</div>
 	{{/each}}
 </script>
 <script type="text/x-handlebars-template" id="ai5-result-template">
 	{{#each .}}
-<div class="panel-content card-wrapper col-3" style="margin: 0px;">
+<div class="panel-content card-wrapper col-3" style="height:286px; margin: 0px;">
 	<div class="card-deck">
 		<div class="card talent_card border shadow-0 mb-g shadow-sm-hover"
 			data-filter-tags="sesha gray">
@@ -145,17 +222,22 @@
 						</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" 
-							   onclick="talentDetail('{{id}}')"
-							   data-toggle="modal"
-							   data-target="#default-example-modal-lg-center-{{id}}" >인재 상세보기</a> 
-							<a class="dropdown-item" href="#">채용 지원 권유하기</a>
+							   onclick="talentDetail('{id}}')">인재 상세보기</a> 
+							<div class="dropdown-multilevel">
+                             <div class="dropdown-item">채용 권유하기
+							</div>
+							
+							</div>
 						</div>
-						<span class="text-truncate text-truncate-xl">Project
-							Manager</span>
 					</div>
 					<div class='icon-stack display-3 flex-shrink-0 panel-toolbar ml-2'>
-						<i class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
-					</div>
+									<button
+										style="background-color: transparent; border: 0px;"
+										type="button" >
+											<i name="talregist"
+												class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+											</button>
+						</div>
 					<button
 						class="js-expand-btn btn btn-sm btn-default d-none waves-effect waves-themed"
 						data-toggle="collapse"
@@ -168,18 +250,16 @@
 			</div>
 			<div class="card-body p-0 collapse show">
 				<div class="p-3">
-					<a href="tel:+13174562564"
+					<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+						class="fas fa-user-graduate text-muted mr-2"></i>최종학력 : {{indFedu}}
+					</a> 
+					<a class="mt-1 d-block fs-sm fw-400 text-dark"> <i
+						class="fas fa-birthday-cake text-muted mr-2"></i>생년월일 : {{indBir}}
+					</a> 
+					<a href="mailto:{{email}}"
 						class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-						class="fas fa-mobile-alt text-muted mr-2"></i>나  이 : {{age}}
-					</a> <a href="mailto:oliver.kopyov@smartadminwebapp.com"
-						class="mt-1 d-block fs-sm fw-400 text-dark"> <i
-						class="fas fa-mouse-pointer text-muted mr-2"></i>
-                            	학  력 : {{indFedu}}
-                                                                        학  교 : {{eduName}}
+						class="fas fa-mail-bulk text-muted mr-2"></i>이메일 :{{email}}
 					</a>
-					<address class="fs-sm fw-400 mt-4 text-muted">
-						<i class="fas fa-map-pin mr-2"></i>전  공 : {{eduDep}}
-					</address>
 					<div class="d-flex flex-row">
 						<a href="javascript:void(0);" class="mr-2 fs-xxl"
 							style="color: #3b5998"> <i
@@ -196,223 +276,6 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade"
-							id="default-example-modal-lg-center-{{id}}" tabindex="-1"
-							role="dialog" aria-hidden="true">
-							<span aria-hidden="true"><i class="fal fa-times"></i></span>
-							<!-- x -->
-							<div class="modal-dialog modal-lg modal-dialog-centered"
-								role="document">
-
-								<div class="modal-content">
-									<div class="card-body">
-
-										<div id="panel-2" class="panel">
-											<div class="panel-hdr">
-												<h2>
-													<b>인재정보</b> <span class="fw-300"></span>
-												</h2>
-												<div class="panel-toolbar">
-													<button class="btn btn-panel" data-action="panel-collapse"
-														data-toggle="" data-offset="0,10"
-														data-original-title="Collapse"></button>
-													<button class="btn btn-panel"
-														data-action="panel-fullscreen" data-toggle=""
-														data-offset="0,10" data-original-title="Fullscreen"></button>
-													<button class="btn btn-panel" data-action="panel-close"
-														data-toggle="" data-offset="0,10"
-														data-original-title="Close"></button>
-												</div>
-											</div>
-
-											<!-- 모달 내부 -->
-											<div class="p-3">
-												<table class="table text-center" width="800">
-													<tr>
-														<td class="border p-0" rowspan="5"
-															style="width: 126px; height: 176px;"><img
-															style="display: block; width: 100%; height: auto;"
-															src="<%=request.getContextPath()%>/member/getPicture.do?id=${loginUser.id}"
-															onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
-															alt="증명사진" /></td>
-													</tr>
-													<tr>
-														<th colspan="3"
-															class="thead-themed text-center border fw-700">성 명</th>
-														<th colspan="3"
-															class="thead-themed text-center border fw-700">생 년 월
-															일</th>
-														<th colspan="3" width="80"
-															class="thead-themed text-center border fw-700">E-mail</th>
-													</tr>
-													<tr>
-														<td colspan="3" class="border"></td>
-														<td colspan="3" class="border"></td>
-														<td colspan="3" class="border"></td>
-													</tr>
-													<tr>
-														<th colspan="3" width="50"
-															class="thead-themed text-center border fw-700">연 락 처</th>
-														<td colspan="6"
-															class="thead-themed text-center border fw-700">주소</td>
-													</tr>
-													<tr>
-														<th class="border"></th>
-														<td class="border" colspan="8"></td>
-													</tr>
-												</table>
-												<div
-													class="card-header py-2 d-flex align-items-center flex-wrap">
-													<div class="card-title">학력</div>
-												</div>
-												<table class="table" id="{{id}}-edu-section">
-													<thead>
-														<tr>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">학과계열</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">학교명</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">학과명</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">학점</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">상태</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:if test="${empty eduList}">
-															<tr>
-																<td class="text-center fw-700" colspan="5">
-																등록된 학력 정보가 없습니다.
-																</td>
-															</tr>
-														</c:if>
-													</tbody>
-												</table>
-												<div
-													class="card-header py-2 d-flex align-items-center flex-wrap">
-													<div class="card-title">경력</div>
-												</div>
-												<table class="table">
-													<thead>
-														<tr>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">업종</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">회사명</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">직무</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">직책</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">입사일</th>
-															<th
-																class="text-center border-top-0 table-scale-border-bottom fw-700">퇴사일</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:if test="${empty crrList}">
-															<tr>
-																<td class="text-center fw-700" colspan="6">등록된 경력
-																	정보가 없습니다.<br />
-																<br />회원정보 관리에서 경력을 동록하세요.
-																</td>
-															</tr>
-														</c:if>
-														<c:forEach items="${crrList}" var="crr">
-															<tr>
-																<td class="text-center">${crr.crrSector}</td>
-																<td class="text-center">${crr.crrCorname}</td>
-																<td class="text-center">${crr.crrJob}</td>
-																<td class="text-center">${crr.crrPosition}</td>
-																<td class="text-center"><fmt:formatDate
-																		value="${crr.crrSdate }" pattern="yyyy-MM-dd" /></td>
-																<td class="text-center"><fmt:formatDate
-																		value="${crr.crrEdate }" pattern="yyyy-MM-dd" /></td>
-															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
-												<c:if test="${not empty cerList}">
-													<div
-														class="card-header py-2 d-flex align-items-center flex-wrap">
-														<div class="card-title">자격증</div>
-													</div>
-													<table class="table">
-														<thead>
-															<tr>
-																<th
-																	class="text-center border-top-0 table-scale-border-bottom fw-700">주최기관</th>
-																<th
-																	class="text-center border-top-0 table-scale-border-bottom fw-700">자격증명</th>
-																<th
-																	class="text-center border-top-0 table-scale-border-bottom fw-700">발급일</th>
-																<th
-																	class="text-center border-top-0 table-scale-border-bottom fw-700">갱신일</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${cerList}" var="cer">
-																<tr>
-																	<td class="text-center">${cer.cerHost}</td>
-																	<td class="text-center">${cer.cerName}</td>
-																	<td class="text-center"><fmt:formatDate
-																			value="${cer.cerSdate }" pattern="yyyy-MM-dd" /></td>
-																	<td class="text-center"><c:if
-																			test="${cer.cerEdate == null}">
-																			<span class="badge badge-info">유효기간없음</span>
-																		</c:if> <c:if test="${cer.cerEdate < today}">
-																			<span class="badge badge-danger"> 갱신기간만료</span>
-																		</c:if> <c:if test="${cer.cerEdate > today}">
-																			<fmt:formatDate value="${cer.cerEdate }"
-																				pattern="yyyy-MM-dd" />
-																		</c:if></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</c:if>
-												<div
-													class="card-header py-2 d-flex align-items-center flex-wrap">
-													<div class="card-title">자기소개서</div>
-												</div>
-												<table class="table">
-													<c:if test="${empty letterList || (countOpenLetter == 0)}">
-														<tr>
-															<th colspan="6"
-																class="text-center border-top-0 table-scale-border-bottom fw-700">제목</th>
-														</tr>
-														<tr>
-															<td class="text-center fw-700" colspan="6">등록된
-																자기소개서가 없습니다.<br />
-															<br />나를 표현 해줄 수 있는 자기소개서를 동록하세요.
-															</td>
-														</tr>
-													</c:if>
-													<c:forEach items="${letterList}" var="let">
-														<c:if test="${let.letIsnav == 1}">
-															<thead>
-																<tr>
-																	<th colspan="6"
-																		class="text-center border-top-0 table-scale-border-bottom fw-700">${let.letTitle}</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td class="text-left">${let.letContent}</td>
-																</tr>
-															</tbody>
-														</c:if>
-													</c:forEach>
-												</table>
-											</div>
-											<!-- 모달 내부 종료 -->
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 {{/each}}
 </script>
 <script type="text/x-handlebars-template" id="ai6-result-template">
@@ -438,6 +301,7 @@
 			data : contestForm,
 			dataType : 'json',
 			success : function(data) {
+				console.log('contest data : ', data);
 				printDataByAI(data, $('#ai1panel'), $('#ai1-result-template'));
 			},
 			error : function(request, status, error) {
@@ -472,6 +336,7 @@
 			data : companyForm,
 			dataType : 'json',
 			success : function(data) {
+				console.log(data);
 				printDataByAI(data, $('#ai3panel'), $('#ai3-result-template'));
 			},
 			error : function(request, status, error) {

@@ -29,9 +29,13 @@
 					<div class="panel-content">
 						<div class="row">
 							<div class="col-5">
-								<img
+								<!-- <img
 									src="/ddit/resources/template/img/support/contest/공모전11.png"
-									alt="공모전이미지" style="width: 300px;">
+									alt="공모전이미지" style="width: 350px;" > -->
+								<img id="image" class="card-img-top"
+											src="http://localhost/ddit/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
+											alt="공모전이미지" style="width: 350px;"/>
 							</div>
 							<div class="col-7">
 								<div class="form-group">
@@ -186,3 +190,17 @@ $('#deleteBtn').on('click',()=>{
 		</c:if>
 	});
 </script>
+
+<c:if test="${from eq 'modify'}" >
+<script>
+	
+	Swal.fire({
+	    icon: 'success',
+		title: "수정되었습니다.",
+	    type: "success",
+	    showCancelButton: false,
+	    confirmButtonText: "OK"
+		
+	});
+</script>
+</c:if>

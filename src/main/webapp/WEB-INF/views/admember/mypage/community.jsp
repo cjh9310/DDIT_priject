@@ -108,6 +108,7 @@ function faqRemove(faqNo){
 			},
 			error : function(request, status, error) {
 				 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+			}		
 		});
 	}
 }
@@ -209,7 +210,7 @@ function faqModify(){
 										</div>
 									</div>
 								</div>
-								<div class="tab-content"  style="border-bottom: 2px solid rgb(233,233,233); border-right: 2px solid rgb(233,233,233);">
+								<div class="tab-content"  style="border-bottom: 2px solid rgb(233,233,233); border-right: 2px solid rgb(233,233,233); height: 315px;">
 									<div class="tab-pane fade show active" id="nav_pills_default-1"
 										role="tabpanel">
 										<table id="dt-basic-example"
@@ -278,7 +279,7 @@ function faqModify(){
 											</tr>
 											<tr>
 												<th style="width: 10%; text-align: center;"><b>제목</b></th>
-												<th style="width: 40;" id="myTitle" colspan="3"><input type="text" style="border: 0px;" id="openTitle" name="pubTitle"></th>
+												<th style="width: 40;" id="myTitle" colspan="3"><input type="text" style="border: 0px; width: 350px;" id="openTitle" name="pubTitle"></th>
 												<th style="width: 15; text-align: center;" ><b>제공처</b></th>
 												<th style="width: 35%;" id="myHost" colspan="2"><input type="text" style="border: 0px;" id="openHost" name="pubHost"></th>
 											</tr>		
@@ -393,11 +394,11 @@ function faqModify(){
 											</tr>
 											<tr>
 												<th style="width: 10; text-align: center;"><b>제목</b></th>
-												<th style="width: 90%;" id="myTitle" colspan="6"><input type="text" style="border: 0px;" id="faqTitle" name="faqTitle"></th>
+												<th style="width: 90%;" id="myTitle" colspan="6"><input type="text" style="border: 0px; width: 700px;" id="faqTitle" name="faqTitle"></th>
 											</tr>		
 											<tr>
 												<th style="width: 10%; padding-bottom: 150px; text-align: center;"><b>내용</b></th>
-												<th style="width: 90%; height: 350px;" id="myContent"  colspan="6"><textarea style="border: 0px; height: 347px;" id="faqContent" name="faqContent"></textarea> </th>
+												<th style="width: 90%; height: 350px;" id="myContent"  colspan="6"><textarea style="border: 0px; height: 347px; width: 720px;" id="faqContent" name="faqContent"></textarea> </th>
 											</tr>																			
 										</thead>
 									</table>
@@ -741,6 +742,7 @@ function faqModify(){
 	window.onload=function(){
 		summernote_go($('textarea[name="modalPubContent"]'),'<%=request.getContextPath()%>');	
 		summernote_go($('textarea[name="pubContent"]'),'<%=request.getContextPath()%>');	
+		summernote_go($('textarea[name="faqContent"]'),'<%=request.getContextPath()%>');	
 	}
 	
 </script>

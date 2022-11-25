@@ -7,12 +7,6 @@
 <c:set var="mentoring" value="${mentoring }" />
 
 <main id="js-page-content" role="main" class="page-content">
-            <ol class="breadcrumb page-breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0);">취업지원</a></li>
-                <li class="breadcrumb-item">멘토링</li>
-                <li class="breadcrumb-item active">멘토링 상세보기</li>
-            </ol>
-            
             <div class="row">
                 <div class="col-xl-12">
                     <!-- Kitchen sink example -->
@@ -22,6 +16,7 @@
 								멘토링 상세보기  
                              </h2>
                          </div>
+                         
                          <div class="panel-container show">
                              <div class="panel-content">
                                  <div style="max-width: 100%;">
@@ -29,15 +24,18 @@
                                     <div>
 			                            <div>
 			                                <div class="col px-md-5">
-			                                    <div class="p-3">
-			                                    	<img src="<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg" class="card-img-top" alt="...">
-			                                      	<h4><c:out value="${mentoring.menTitle }"/></h4>
-			                                      	<label>멘토링기간 : <fmt:formatDate value="${mentoring.menSdate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${mentoring.menEdate}" pattern="yyyy-MM-dd" /></label>
+			                                    <div class="p-4">
+			                                    	<img id="image" class="card-img-top"
+														src="http://localhost/ddit/getPicture.do?path=${mentoring.uploadpath}&filename=${mentoring.filename}"
+														onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/멘토링.png';"
+														alt="대체 이미지가 로드되지 않았습니다." />
+			                                    	<%-- <img src="<%=request.getContextPath()%>/resources/template/img/support/멘토링.png" class="card-img-top" alt="..."> --%>
+			                                      	<h3><c:out value="${mentoring.menTitle }"/></h3><br/>
+			                                      	<h5>멘토링기간 : <fmt:formatDate value="${mentoring.menSdate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${mentoring.menEdate}" pattern="yyyy-MM-dd" /></h5><br/>
 			                                      	<label><c:out value="${mentoring.menContent }"/></label>
-			                                      	<label><c:out value="${mentoring.menTitle }"/></label>
 			                                    </div>
 			                                </div>
-		                                    <div>
+		                                    <%-- <div>
 		                                        <div class="p-3">
 		                                           	<h3 class="m-0" style="text-align:center;">
 		                                         		멘토링 신청 
@@ -60,13 +58,41 @@
 	                                                	</div>
 	                                                </form>
 		                                        </div>
-		                                    </div>
+		                                    </div> --%>
 			                             </div>
 			                         </div>
 		                     	</div>
 		                     </div>
 		                 </div>
+		                 
                  
+             </div>
+             <div class="panel">
+                 <div>
+                          <div class="p-4">
+                             	<h3 class="m-0" style="text-align:center;">
+                           		멘토링 신청 
+                      	    </h3><br/>
+                      	    <h5 style="text-align:center;"><span class="text-danger">${mentoring.numPeople - mentoring.indCount}</span>자리 남았습니다.</h5>
+                      	    <form id="registForm">
+                      	    	<input type="hidden" name="menNo" value="" >
+                       	    <div style="margin-top:50px;">
+                        	    <div class="form-group">
+                                      	<label class="form-label text-muted" for="indId">이름</label>
+                                      	<input type="text" id="indId" name="indId" value="${loginUser.name }" class="form-control" readonly>
+                                  	</div>
+                        	    <div class="form-group">
+                                      	<label class="form-label" for="actTel">연락처</label>
+                                      	<input type="text" id="actTel" name="actTel" class="form-control">
+                                  	</div>
+                        	    <div class="form-group">
+                                      	<label class="form-label" for="actEmail">이메일 주소</label>
+                                      	<input type="text" id="actEmail" name="actEmail" class="form-control">
+                                  	</div>
+                                 	</div>
+                                 </form>
+                          </div>
+                  </div>
              </div>
             <div style="text-align:center; margin:30px; ">
             	<c:choose>
@@ -74,7 +100,7 @@
             			<a href="javascript:void(0);" class="btn btn-danger btn-pills waves-effect waves-themed" id="">모집마감 완료</a>
             		</c:when>
             		<c:otherwise>
-            			<h4>${mentoring.numPeople - mentoring.indCount}자리 남았습니다.</h4>
+            			
             			<a href="javascript:void(0);" class="btn btn-success btn-pills waves-effect waves-themed" id="mentoringReg">신청하기</a>
             		</c:otherwise>
             	</c:choose>
