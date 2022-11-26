@@ -26,7 +26,7 @@ public class AdviceServiceImpl implements AdviceService {
 	@Override
 	public Map<String, Object> getAdviceRecruitList(String id) throws SQLException {
 		Map<String, Object> advRecMap = new HashMap<String, Object>();
-		List<AdviceVO> advRecList = adviceDAO.selectAdivceRecListById(id);
+		List<AdviceVO> advRecList = adviceDAO.selectAdviceRecruitListById(id);
 		advRecMap.put("advRecList", advRecList);
 		return advRecMap;
 	}

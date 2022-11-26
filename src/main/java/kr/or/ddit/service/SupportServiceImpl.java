@@ -7,11 +7,13 @@ import java.util.Map;
 
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
 import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.SupportDAO;
 import kr.or.ddit.dto.AttachVO;
+import kr.or.ddit.dto.ContestVO;
 import kr.or.ddit.dto.SupportVO;
 
 public class SupportServiceImpl implements SupportService {
@@ -62,9 +64,31 @@ public class SupportServiceImpl implements SupportService {
 	@Override
 	public SupportVO getSupport(int supNo) throws SQLException {
 		SupportVO support = supportDAO.selectSupportBySupNo(supNo);
+		
+		addAttachList(support);
+		
+		if(support!=null && support.getAttachList()!=null) {
+			for(AttachVO attach:support.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
 		return support;
 	}
+	
+	private void addAttachList(SupportVO support) throws SQLException {
 
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(support.getSupNo()));
+		attach.setWorkDiv("Contest");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		support.setAttachList(attachList);
+		
+	}
+	
 
 	@Override
 	public void regist(SupportVO support, String savePath) throws SQLException {

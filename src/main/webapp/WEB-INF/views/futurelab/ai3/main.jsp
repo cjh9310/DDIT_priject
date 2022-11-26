@@ -91,7 +91,7 @@
 							src="<%=request.getContextPath()%>/resources/template/img/demo/laravel.png"
 							class="mr-3">
 						<h1 class="fw-300 m-0 l-h-n">
-							<span class="text-contrast">스크랩 정보틀 통한 인재 추천</span> <small
+							<span class="text-contrast">스크랩 정보를 통한 인재 추천</span> <small
 								class="fw-300 m-0 l-h-n">Recommendation of talent through scrap information
 							</small>
 						</h1>

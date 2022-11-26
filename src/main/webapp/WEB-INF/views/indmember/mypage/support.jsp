@@ -4,9 +4,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<c:set var="supportMap" value="${supportMap.supportList }" />
-<c:set var="activityConMap" value="${activityConMap.activityListCon }" />
-<c:set var="activityMenMap" value="${activityMenMap.activityListMen }" />
+<c:set var="supportMap" value="${supportMap }" />
+<c:set var="supportList" value="${supportMap.supportList }" />
+
+<c:set var="activityConMap" value="${activityConMap }" />
+<c:set var="activityListCon" value="${activityConMap.activityListCon }" />
+
+<c:set var="activityMenMap" value="${activityMenMap }" />
+<c:set var="activityListMen" value="${activityMenMap.activityListMen }" />
+
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 <c:set var="pageMaker" value="${dataMap.pageMaker }" />
@@ -47,11 +53,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty activityMenMap }">
+								<c:if test="${empty activityListMen }">
 									<tr>
 										<td colspan="7"><strong>참여하신 멘토링내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${activityMenMap }" var="mentoring">
+								<c:forEach items="${activityListMen }" var="mentoring">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 									<tr style="cursor: pointer;" onclick="OpenWindow('menDetail.do?actNo=${mentoring.actNo }','멘토링 신청상세보기', 800,700);">
 										<c:set var="count" value="${count + 1}" />
@@ -107,11 +113,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty activityConMap }">
+								<c:if test="${empty activityListCon }">
 									<tr>
 										<td colspan="7"><strong>참여하신 공모전내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${activityConMap }" var="contest">
+								<c:forEach items="${activityListCon }" var="contest">
 									
 									<tr style="cursor: pointer;" onclick="OpenWindow('conDetail.do?actNo=${contest.actNo}','공모전 지원내용 상세보기', 650,730);">
 										<c:set var="count1" value="${count1 + 1}" />
@@ -171,11 +177,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${empty supportMap }">
+								<c:if test="${empty supportList }">
 									<tr>
 										<td colspan="7"><strong>신청하신 상담내역이 없습니다.</strong></td>
 								</c:if>
-								<c:forEach items="${supportMap }" var="support"
+								<c:forEach items="${supportList }" var="support"
 									varStatus="idxrow">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 
@@ -203,7 +209,12 @@
 										<c:if test="${support.counselorName eq 3 }">김민지 상담사 </c:if>
 										<c:if test="${support.counselorName eq 4 }">김채원 상담사 </c:if>
 										</td>
-										<td><button type="button"><i class='ni ni-paper-clip'></i></button></td>
+										<c:if test="${empty support.attachList }">
+											<td></td>
+										</c:if>
+										<c:if test="${not empty support.attachList }">
+											<td><i class='ni ni-paper-clip'></i></td>
+										</c:if>
 									</tr>
 								</c:forEach>
 						</table>

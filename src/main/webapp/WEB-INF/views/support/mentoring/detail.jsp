@@ -26,7 +26,7 @@
 			                                <div class="col px-md-5">
 			                                    <div class="p-4">
 			                                    	<img id="image" class="card-img-top"
-														src="http://localhost/ddit/getPicture.do?path=${mentoring.uploadpath}&filename=${mentoring.filename}"
+														src="<%=request.getContextPath()%>/getPicture.do?path=${mentoring.uploadpath}&filename=${mentoring.filename}"
 														onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/멘토링.png';"
 														alt="대체 이미지가 로드되지 않았습니다." />
 			                                    	<%-- <img src="<%=request.getContextPath()%>/resources/template/img/support/멘토링.png" class="card-img-top" alt="..."> --%>

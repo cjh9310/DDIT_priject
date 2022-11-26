@@ -152,8 +152,11 @@
 									<div
 										class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
 										<div class="d-flex flex-row align-items-center">
-											<span class="rounded-circle profile-image d-block"> <img
-												src="<%=request.getContextPath()%>/resources/template/img/member_default.png"
+											<span class="rounded-circle profile-image d-block"> 
+											<img
+												src="<%=request.getContextPath() %>/member/getPicture.do?id=${talent.id}"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
+												alt="회원사진"
 												class="profile-image rounded-circle" alt="회원사진" />
 											</span>
 											<div class="info-card-text flex-1" style="margin-left: 15px;">
@@ -290,8 +293,11 @@
 									<div
 										class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
 										<div class="d-flex flex-row align-items-center">
-											<span class="rounded-circle profile-image d-block"> <img
-												src="<%=request.getContextPath()%>/resources/template/img/member_default.png"
+											<span class="rounded-circle profile-image d-block"> 
+											<img
+												src="<%=request.getContextPath() %>/member/getPicture.do?id=${talent.id}"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
+												alt="회원사진"
 												class="profile-image rounded-circle" alt="회원사진" />
 											</span>
 											<div class="info-card-text flex-1" style="margin-left: 15px;">

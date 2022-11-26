@@ -21,7 +21,7 @@ public class AdviceDAOImpl implements AdviceDAO{
 		return adviceList;
 	}
 	@Override
-	public List<AdviceVO>selectAdivceRecListById(String id) throws SQLException{
+	public List<AdviceVO>selectAdviceRecruitListById(String id) throws SQLException{
 		List<AdviceVO> advRecList = session.selectList("Advice-Mapper.selectAdviceRecruitListById", id);
 		return advRecList;
 	}

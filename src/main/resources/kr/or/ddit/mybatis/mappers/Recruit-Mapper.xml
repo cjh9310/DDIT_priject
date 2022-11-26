@@ -112,9 +112,9 @@
 		REC_JOBSNM,REC_WORKDAYWORKHRCONT,REC_FOURINS,REC_ENTERTPNM,REC_REGION,REC_RECEIPTCLOSEDT,REC_JOBCONT, REC_MAXSAL, REC_PERSONAL,
 		REC_CAPITALAMT, REC_YRSALESAMT, REC_BUSISIZE, REC_HOMEPG, REC_COLLECTPSNCNT,REC_SALTPNM)
 		values (
-		#{recWantedtitle},#{recWantedno},sysdate,#{coName},#{recMinsal}*10000,#{recMinedubg}*10000,#{recIndtpcdnm},#{recJobsnm},
+		#{recWantedtitle},#{recWantedno},sysdate,#{coName},#{recMinsal},#{recMinedubg},#{recIndtpcdnm},#{recJobsnm},
 		#{recWorkdayworkhrcont},#{recFourins},#{recEntertpnm},#{recRegion},#{recReceiptclosedt},#{recJobcont},#{recMaxsal}, #{recPersonal}, 
-		#{recCapitalamt}*10000, #{recYrsalesamt}, #{recBusisize}, #{recHomepg}, #{recCollectpsncnt}, #{recSaltpnm} )
+		#{recCapitalamt}, #{recYrsalesamt}, #{recBusisize}, #{recHomepg}, #{recCollectpsncnt}, #{recSaltpnm} )
 	</update>
 	
 	<update id="updateRecruit" parameterType="recruit">

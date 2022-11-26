@@ -9,7 +9,7 @@ public interface AdviceDAO {
 
 	List<AdviceVO> selectAdviceByNo(String open_seqno) throws SQLException;
 	
-	List<AdviceVO> selectAdivceRecListById(String id) throws SQLException;
+	List<AdviceVO> selectAdviceRecruitListById(String id) throws SQLException;
 
 	List<AdviceVO> selectAdviceOpenRecListById(String id) throws SQLException;
 	

@@ -119,6 +119,10 @@ public class ActivityDAOImpl implements ActivityDAO {
 		return contestList;
 	}
 
-	
-	
+	@Override
+	public List<ActivityVO> selectActivityMentoringList(String id) throws SQLException {
+		List<ActivityVO> mentoringList = session.selectList("Activity-Mapper.selectActivityMentoringList", id);
+		return mentoringList;
+	}
+
 }

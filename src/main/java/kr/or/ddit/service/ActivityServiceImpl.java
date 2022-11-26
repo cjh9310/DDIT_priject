@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
 import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.ActivityDAO;
@@ -13,6 +14,7 @@ import kr.or.ddit.dao.AttachDAO;
 import kr.or.ddit.dao.MemberDAO;
 import kr.or.ddit.dto.ActivityVO;
 import kr.or.ddit.dto.AttachVO;
+import kr.or.ddit.dto.ContestVO;
 import kr.or.ddit.dto.MemberVO;
 import kr.or.ddit.dto.MentoringVO;
 
@@ -62,7 +64,7 @@ public class ActivityServiceImpl implements ActivityService {
 		MemberVO memberInfo = memberDAO.selectMemberById(id);
 		List<ActivityVO> activityList = activityDAO.selectAllActivityById(id);
 		List<ActivityVO> contestList = activityDAO.selectActivityListCon(id);
-		List<ActivityVO> mentoringList = activityDAO.selectActivityListMem(id);
+		List<ActivityVO> mentoringList = activityDAO.selectActivityMentoringList(id);
 		
 		activityMap.put("memberInfo", memberInfo);
 		activityMap.put("activityList", activityList);
@@ -116,14 +118,39 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public ActivityVO getActivityCon(int actNo) throws SQLException {
 		ActivityVO activity = activityDAO.selectActivityConByActNo(actNo);
+		
+		addAttachList(activity);
+		
+		if(activity!=null && activity.getAttachList()!=null) {
+			for(AttachVO attach:activity.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
 		return activity;
 	}
+	
+	private void addAttachList(ActivityVO activity) throws SQLException {
+
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(activity.getActNo()));
+		attach.setWorkDiv("Contest");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		activity.setAttachList(attachList);
+		
+	}
+		
 
 	@Override
 	public ActivityVO getActivityMen(int actNo) throws SQLException {
 		ActivityVO activity = activityDAO.selectActivityMenByActNo(actNo);
+		
 		return activity;
 	}
+	
 
 
 	@Override

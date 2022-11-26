@@ -5,7 +5,7 @@
 <mapper namespace="Contest-Mapper">
 
 	<select id="selectContestList" resultType="contest">
-		 select a.*, b.uploadpath, b.filename, b.filetype
+		 select a.*, b.uploadpath, b.filename, b.filetype, b.att_No
 		from contest a
         left join (select * from file_attach
                      where work_div='Contest') b
@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="selectContestByConNo" resultType="contest">
-		select a.*, b.uploadpath, b.filename, b.filetype
+		select a.*, b.uploadpath, b.filename, b.filetype, b.att_no
 		from contest a
          left join (select * from file_attach
                      where work_div='Contest') b

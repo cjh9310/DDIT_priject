@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.command.Criteria;
+import kr.or.ddit.command.MakeFileName;
 import kr.or.ddit.command.MultipartFileUploadResolver;
 import kr.or.ddit.command.PageMaker;
 import kr.or.ddit.dao.AttachDAO;
@@ -76,7 +77,29 @@ public class ContestServiceImpl implements ContestService {
 	@Override
 	public ContestVO getContest(int conNo) throws SQLException {
 		ContestVO contest = contestDAO.selectContestByconNo(conNo);
+		
+		addAttachList(contest);
+		
+		if(contest!=null && contest.getAttachList()!=null) {
+			for(AttachVO attach:contest.getAttachList()) {
+				String originalFileName 
+					= MakeFileName.parseFileNameFromUUID(attach.getFilename(), "\\$\\$");
+				attach.setFilename(originalFileName);					
+			}
+		}
 		return contest;
+	}
+	
+	private void addAttachList(ContestVO contest) throws SQLException {
+
+		AttachVO attach = new AttachVO();
+		attach.setWorkPk(Integer.toString(contest.getConNo()));
+		attach.setWorkDiv("Contest");
+		
+		List<AttachVO> attachList = attachDAO.selectAttachesByWorkInfo(attach);
+		
+		contest.setAttachList(attachList);
+		
 	}
 
 	@Override

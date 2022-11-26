@@ -56,6 +56,12 @@
 .detailForm_load {
 	cursor: pointer;
 }
+
+.word {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 </style>
 
 <main id="js-page-content" role="main" class="page-content">
@@ -120,19 +126,20 @@
 										class="card-header py-2 d-flex align-items-center flex-wrap">
 										<div class="card-title">공모전</div>
 									</div>
+									<!-- 공모전 테이블 -->
 									<table class="table">
 										<thead>
 											<tr>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 제목</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700" style="width: 340px;">공모전 제목</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 카테고리</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700" style="width: 145px;">공모전 카테고리</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 진행상황</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700" style="width: 145px;">공모전 진행상황</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 시상</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700" style="width: 110px;">공모전 시상</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">공모전 점수</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700" style="width: 110px;">공모전 점수</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -145,127 +152,70 @@
 											</c:if>
 											<c:forEach items="${contestList}" var="con">
 												<tr>
-													<td class="text-center">${con.conTitle}</td>
-													<td class="text-center">${con.conField}</td>
+													<td class="text-center"><div style="width: 340px;" class="word">${con.conTitle}</div></td>
+													<td class="text-center"><div style="width: 145px;" class="word">${con.conField}</div></td>
 													<td class="text-center">
 														<c:if test="${con.actStatus == 0 }">
 															<span class="badge badge-primary">진행중</span>
 														</c:if>
-														<c:if test="${con.actStatus == 3 }">
+														<c:if test="${con.actStatus == 1 }">
 															<span class="badge badge-primary">중도포기</span>
 														</c:if>
 													</td>
-													<td class="text-center">
+													<td class="text-center word" style="width: 110px;">
 														<c:if test="${empty con.actPrize}">
 															<span class="badge badge-primary">심사중</span>
 														</c:if>
+														<c:if test="${!empty con.actPrize}">
+															<span class="badge badge-primary">심사완료</span>
+														</c:if>
 													</td>
-													<td class="text-center">${con.actScore }</td>
+													<td class="text-center word" style="width: 110px;">${con.actScore }점</td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
 									<div
 										class="card-header py-2 d-flex align-items-center flex-wrap">
-										<div class="card-title">경력</div>
+										<div class="card-title">멘토링</div>
 									</div>
+									<!-- 멘토링 테이블 -->
 									<table class="table">
 										<thead>
 											<tr>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">업종</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">멘토링 제목</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">회사명</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">멘토링 주최</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">직무</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">진행률</th>
 												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">직책</th>
-												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">입사일</th>
-												<th
-													class="text-center border-top-0 table-scale-border-bottom fw-700">퇴사일</th>
+													class="text-center border-top-0 table-scale-border-bottom fw-700">기간</th>
+												
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${empty crrList}">
+											<c:if test="${empty mentoringList}">
 												<tr>
 													<td class="text-center fw-700" colspan="6">등록된 경력 정보가
 														없습니다.<br /> <br />회원정보 관리에서 경력을 동록하세요.
 													</td>
 												</tr>
 											</c:if>
-											<c:forEach items="${crrList}" var="crr">
-												<tr>
-													<td class="text-center">${crr.supcrrSec}</td>
-													<td class="text-center">${crr.supcrrCor}</td>
-													<td class="text-center">${crr.supcrrJob}</td>
-													<td class="text-center">${crr.supcrrPos}</td>
-													<td class="text-center"><fmt:formatDate
-															value="${crr.supcrrSdate }" pattern="yyyy-MM-dd" /></td>
-													<td class="text-center"><fmt:formatDate
-															value="${crr.supcrrEdate }" pattern="yyyy-MM-dd" /></td>
+											<c:forEach items="${mentoringList}" var="men">
+												<tr style="cursor:pointer;" onclick="ContestDetail(${men.menNo});">
+													<td class="text-center" style="width: 44%">${men.menTitle}</td>
+													<td class="text-center" style="width: 16%">${men.coNm}</td>
+													<td class="text-center" style="width: 11%">${men.menProgress}</td>
+													<td class="text-center" style="width: 29%"><fmt:formatDate
+															value="${men.menSdate }" pattern="yyyy-MM-dd" /> ~
+															<fmt:formatDate
+															value="${men.menEdate }" pattern="yyyy-MM-dd" /></td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
-									<c:if test="${not empty cerList}">
-										<div
-											class="card-header py-2 d-flex align-items-center flex-wrap">
-											<div class="card-title">자격증</div>
-										</div>
-										<table class="table">
-											<thead>
-												<tr>
-													<th
-														class="text-center border-top-0 table-scale-border-bottom fw-700">주최기관</th>
-													<th
-														class="text-center border-top-0 table-scale-border-bottom fw-700">자격증명</th>
-													<th
-														class="text-center border-top-0 table-scale-border-bottom fw-700">발급일</th>
-													<th
-														class="text-center border-top-0 table-scale-border-bottom fw-700">갱신일</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach items="${cerList}" var="cer">
-													<tr>
-														<td class="text-center">${cer.supcerHost}</td>
-														<td class="text-center">${cer.supcerName}</td>
-														<td class="text-center"><fmt:formatDate
-																value="${cer.supcerSdate }" pattern="yyyy-MM-dd" /></td>
-														<td class="text-center"><c:if
-																test="${cer.supcerEdate == null}">
-																<span class="badge badge-info">유효기간없음</span>
-															</c:if> <c:if test="${cer.supcerEdate < today}">
-																<span class="badge badge-danger"> 갱신기간만료</span>
-															</c:if> <c:if test="${cer.supcerEdate > today}">
-																<fmt:formatDate value="${cer.supcerEdate }"
-																	pattern="yyyy-MM-dd" />
-															</c:if></td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</c:if>
-									<div
-										class="card-header py-2 d-flex align-items-center flex-wrap">
-										<div class="card-title">자기소개서</div>
-									</div>
-									<table class="table">
-										<c:forEach items="${letList}" var="let">
-											<thead>
-												<tr>
-													<th colspan="6"
-														class="text-center border-top-0 table-scale-border-bottom fw-700">${let.supletTitle}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td class="text-left">${let.supletContent}</td>
-												</tr>
-											</tbody>
-										</c:forEach>
-									</table>
+									
 								</div>
 							</div>
 						</div>
@@ -280,6 +230,13 @@
 	src="<%=request.getContextPath()%>/resources/template/js/vendors.bundle.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/template/js/app.bundle.js"></script>
+
+<script>
+function ContestDetail(menNo) {
+	const windowReatures = "width=700, height=1300";
+	window.open('<%=request.getContextPath()%>/support/mentoring/detail.do?menNo='+menNo, 'ContestDetail', windowReatures);
+}
+</script>
 
 <script>
 	$("#resume_delete1").on("click", function() {

@@ -18,6 +18,7 @@ public class ActivityVO {
 	private String actEmail; //신청자가 공모응모페이지에서 직접 입력한 이메일주소
 	private Date actDate; //신청자가 공모전신청하고 멘토링신청한 날짜
 	private Date actUdate; //수정되는 날짜
+	private String coNm;   //주치측
 	
 	//공모전
 	private String coId;
@@ -38,6 +39,15 @@ public class ActivityVO {
 	private List<MultipartFile> uploadFile; //파일 업로드
 	private List<AttachVO> attachList;
 	
+	
+
+	public String getCoNm() {
+		return coNm;
+	}
+
+	public void setCoNm(String coNm) {
+		this.coNm = coNm;
+	}
 
 	public String getCoId() {
 		return coId;

@@ -58,7 +58,7 @@ img {
 								<div class="card-deck">
 									<div class="card">
 										<img id="image" class="card-img-top"
-											src="http://localhost/ddit/getPicture.do?path=${mentoring.uploadpath}&filename=${mentoring.filename}"
+											src="<%=request.getContextPath()%>/getPicture.do?path=${mentoring.uploadpath}&filename=${mentoring.filename}"
 											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/mentoring/회계.jpg';"
 											alt="대체 이미지가 로드되지 않았습니다." />
 										<div class="card-body demo"style="height: 170px;">

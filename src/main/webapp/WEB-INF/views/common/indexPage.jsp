@@ -613,22 +613,23 @@ h3 { margin:0px; }
 							</a>
 						</div>
 					</div>
-					<div class="info-card">
-						<img
+					<div class="row" style="margin:15px;">
+						<img style="height: auto; width:100px;"
 							src="<%=request.getContextPath() %>/member/getPicture.do?id=${loginUser.id }"
 							onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
-							class="profile-image" alt="회원사진">
-						<div class="info-card-text">
-							<a href="#" class="d-flex align-items-center text-white"> <span
-								class="text-truncate text-truncate-sm d-inline-block">
-									<div class="row">
-										<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;${loginUser.name }&nbsp;회원님</a>
-										<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;${loginUser.email }</a>
-										<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;회원유형 : ${loginUser.typeName }</a>
-									</div>
+							class="" alt="회원사진">
+						<div style="width:140px; padding:35px 0px 35px 20px;">
+							<a href="#" class="d-flex align-items-center text-white"> 
+							<span class="text-truncate text-truncate-sm d-inline-block">
+								<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;${loginUser.name }&nbsp;</a>
+								<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;${loginUser.id }&nbsp;</a>
+								<a style="margin-bottom:5px;" class="d-block">&nbsp;&nbsp;${loginUser.typeName }</a>
+								<a href="common/logout.do"
+									class="btn btn-xs btn-info waves-effect waves-themed">
+									로그아웃</a>
 							</span>
+							</a>
 						</div>
-						</a>
 					</div>
 					<ul id="js-nav-menu" class="nav-menu">
 						<li class="nav-title">${loginUser.typeName}마이페이지</li>

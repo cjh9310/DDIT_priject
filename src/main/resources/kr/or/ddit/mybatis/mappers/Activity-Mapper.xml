@@ -6,9 +6,21 @@
 
 	<select id="selectActivityListCon" resultType="activity">
 	/*Activity-Mapper.selectActivityListCon*/
-	   select distinct a.con_no as con_no, a.ind_id as ind_id, a.act_status as act_status, a.act_prize as act_prize, a.act_score as act_score, c.con_title as con_title, c.con_field as con_field
-         from activity a, contest c
+       select distinct a.con_no as con_no, 
+              a.ind_id as ind_id, 
+              a.act_status as act_status, 
+              a.act_prize as act_prize, 
+              a.act_no as act_no,
+              a.act_date as act_date,
+              c.con_sdate as con_sdate,
+              c.con_edate as con_edate,
+              a.act_score as act_score, 
+              c.con_title as con_title, 
+              c.con_field as con_field,
+              t.co_nm as co_nm
+         from activity a, contest c, co_member t
         where a.con_no=c.con_no
+          and c.co_id = t.co_id
           and a.ind_id= #{indId}
           and a.con_no is not null
 	</select>
@@ -19,6 +31,27 @@
          from activity a, mentoring b
         where a.men_no=b.men_no
           and ind_id=#{indId}
+          and a.men_no is not null
+	</select>
+	
+	<select id="selectActivityMentoringList" resultType="activity">
+	/*Activity-Mapper.selectActivityMentoringList*/
+	   select distinct a.men_no as men_no, 
+              a.ind_id as ind_id, 
+              a.act_status as act_status, 
+              a.act_prize as act_prize, 
+              a.act_no as act_no,
+              a.act_date as act_date,
+              m.men_sdate as men_sdate,
+              m.men_edate as men_edate,
+              a.act_score as act_score, 
+              m.men_title as men_title,
+              m.MEN_PROGRESS as men_progress,
+              c.co_nm as co_nm
+         from activity a, mentoring m, co_member c
+        where a.men_no=m.men_no
+          and m.co_id = c.co_id
+          and a.ind_id= #{indId}
           and a.men_no is not null
 	</select>
 	

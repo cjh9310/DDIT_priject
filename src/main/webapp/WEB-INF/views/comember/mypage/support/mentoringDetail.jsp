@@ -63,20 +63,11 @@
 											<label for="menEdate"><b>멘토링 종료일자</b> </label> <input type="date"
 												id="menEdate" name="menEdate"
 												value="<fmt:formatDate value="${mentoring.menEdate}" pattern="yyyy-MM-dd" />"
-												class="form-control" readonly>
+												class="form-control" readonly style="margin-bottom: 20px;">
 										</div>
 									</div>
 								</div>
-								<div class="form-group mb-0">
-									<label class="form-label text-muted">첨부파일명</label>
-									<div class="custom-file">
-										<input type="file" class="custom-file-input" id="customFile-2"
-											disabled=""> <label class="custom-file-label"
-											for="customFile-2">
-											<!-- 첨부파일자리 -->
-										</label>
-									</div>
-								</div>
+								
 							</div>
 
 						</div>

@@ -59,7 +59,7 @@
 								<div class="card-deck">
 									<div class="card">
 										<img id="image" class="card-img-top"
-											src="http://localhost/ddit/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+											src="<%=request.getContextPath()%>/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
 											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
 											alt="대체 이미지가 로드되지 않았습니다." />
 										<div class="card-body demo" style="height: 155.87px;">

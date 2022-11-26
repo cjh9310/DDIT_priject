@@ -286,7 +286,7 @@ div {
 								<div>
 									<table class="table table-hover table-striped w-100">
 										<tbody>
-											<c:if test="${empty advOpenList}">
+											<c:if test="${empty advRecList}">
 												<div class="col-12">
 													<a href="javascript:void(0);"
 														class="text-center p-3 d-flex flex-column hover-highlight">
@@ -295,17 +295,17 @@ div {
 													</a>
 												</div>
 											</c:if>
-											<c:forEach items="${advOpenList}" var="adv" varStatus="vs">
+											<c:forEach items="${advRecList}" var="adv" varStatus="vs">
 												<tr role="row" class="odd" data-toggle="modal"
 													data-target="#default-example-modal-lg-center${vs.index}">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														<fmt:formatDate value="${adv.supDate}" pattern="yyyy-MM-dd" />
 													</td>
-													<td>${adv.openConm}</td>
-													<td>${adv.openTitle}</td>
-													<td>${adv.openRegion}</td>
-													<td>${adv.openEdate}</td>
-													<td><fmt:formatDate value="${open.openSdate}"
+													<td>${adv.coName}</td>
+													<td>${adv.recWantedtitle}</td>
+													<td>${adv.recRegion}</td>
+													<td>${adv.recRegdt}</td>
+													<td><fmt:formatDate value="${adv.recRegdt}"
 															pattern="yyyy-MM-dd" /></td>
 												</tr>
 												<!--  모달창 시작 -->

@@ -57,13 +57,34 @@
 	                                <label class="form-label" for="actEmail">이메일</label>
 	                                <input type="text" id="actEmail" name="actEmail" value="${activity.actEmail}"class="form-control" readonly>
 	                  			</div>
-				                <div class="form-group mb-0">
-                                    <label class="form-label text-muted">첨부파일명</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile-2" disabled="">
-                                        <label class="custom-file-label" for="customFile-2">첨부파일명</label>
-                                    </div>
-                                </div>
+				                <div>
+									<div class="card card-outline card-success" style="margin-bottom: 20px;">
+										<div class="card-header">
+											<b>첨부파일 다운로드</b>
+										</div>
+										<div class="card-footer">
+											<div class="row" id="attachList">
+												<!-- 첨부파일 썸네일 -->
+												<c:forEach items="${activity.attachList }" var="attach">
+													<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;"
+													 onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?attNo=${attach.attNo }';">
+														<div class="info-box">	
+															<span class="info-box-icon bg-yellow">
+																<i class="fa fa-copy"></i>
+															</span>
+															<div class="info-box-content">
+																<span class ="info-box-text">
+																</span>
+																<span class ="info-box-number">${attach.filename }</span>
+															</div>
+														</div>
+													</div>			
+												</c:forEach>
+											</div>
+										</div>
+									</div>
+
+								</div>
 				            </form>
 				         </div>
 				            

@@ -168,7 +168,6 @@ public class TalentrController {
 		allimService.registAllim(allim);
 		handler.AdviceAllim(allim);
 		
-		
 //		String detail = adviceSerivce.registAdvice(indId);
 		
 		

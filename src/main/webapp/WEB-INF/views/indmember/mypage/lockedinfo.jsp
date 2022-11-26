@@ -234,7 +234,7 @@ setTimeout(function FaceUnLock() {
 						<button type="button"
 							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/company/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
-							AI에게 더 많은 기업 추천받기</button>
+							AI에게 기업 추천받기</button>
 					</div>
 				</div>
 				<div class="custom-scroll coBookmarkPanel w-100">
@@ -286,7 +286,7 @@ setTimeout(function FaceUnLock() {
 						<button type="button"
 							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/recruit/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
-							AI에게 더 많은 채용공고 추천받기</button>
+							AI에게 채용공고 추천받기</button>
 					</div>
 				</div>
 				<div class="w-100">

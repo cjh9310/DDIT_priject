@@ -8,11 +8,7 @@
 <c:set var="now" value="<%=new java.util.Date()%>" />
 
 <main id="js-page-content" role="main" class="page-content">
-	<ol class="breadcrumb page-breadcrumb" style="padding-top: 10px;">
-		<li class="breadcrumb-item"><a href="javascript:void(0);">마이페이지</a></li>
-		<li class="breadcrumb-item">프로그램</li>
-		<li class="breadcrumb-item active">공모전 상세보기</li>
-	</ol>
+	
 
 	<div></div>
 	<div class="row">
@@ -33,7 +29,7 @@
 									src="/ddit/resources/template/img/support/contest/공모전11.png"
 									alt="공모전이미지" style="width: 350px;" > -->
 								<img id="image" class="card-img-top"
-											src="http://localhost/ddit/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+											src="<%=request.getContextPath()%>/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
 											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
 											alt="공모전이미지" style="width: 350px;"/>
 							</div>
@@ -82,15 +78,33 @@
 										id="conAward" name="conAward" value="${contest.conAward}"
 										class="form-control" readonly>
 								</div>
-								<div class="form-group mb-0">
-									<label class="form-label text-muted">첨부파일명</label>
-									<div class="custom-file">
-										<input type="file" class="custom-file-input" id="customFile-2"
-											disabled=""> <label class="custom-file-label"
-											for="customFile-2">
-											<!-- 첨부파일자리 -->
-										</label>
+								<div>
+									<div class="card card-outline card-success" style="margin-bottom: 20px;">
+										<div class="card-header">
+											<b>첨부파일 다운로드</b>
+										</div>
+										<div class="card-footer">
+											<div class="row" id="attachList">
+												<!-- 첨부파일 썸네일 -->
+												<c:forEach items="${contest.attachList }" var="attach">
+													<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;"
+													 onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?attNo=${attach.attNo }';">
+														<div class="info-box">	
+															<span class="info-box-icon bg-yellow">
+																<i class="fa fa-copy"></i>
+															</span>
+															<div class="info-box-content">
+																<span class ="info-box-text">
+																</span>
+																<span class ="info-box-number">${attach.filename }</span>
+															</div>
+														</div>
+													</div>			
+												</c:forEach>
+											</div>
+										</div>
 									</div>
+
 								</div>
 							</div>
 

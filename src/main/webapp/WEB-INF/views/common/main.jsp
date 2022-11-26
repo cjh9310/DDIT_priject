@@ -583,15 +583,6 @@ div {
 						<div class="panel-toolbar pr-3 align-self-end">
 							<ul id="demo_panel-tabs" class="nav nav-tabs border-bottom-0"
 								role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									data-toggle="tab" href="#tab_salary" role="tab"
-									aria-selected="true">업종별 평균 연봉&nbsp;&nbsp;&nbsp;
-										<button
-											onclick="location.href='<%=request.getContextPath()%>/salary/list.do'"
-											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
-											<i class="fal fa-plus"></i>
-										</button>
-								</a></li>
 								<li class="nav-item"><a class="nav-link" data-toggle="tab"
 									href="#tab_news" role="tab" aria-selected="false">
 										뉴스&nbsp;&nbsp;&nbsp;
@@ -601,17 +592,25 @@ div {
 											<i class="fal fa-plus"></i>
 										</button>
 								</a></li>
+								<li class="nav-item"><a class="nav-link active"
+									data-toggle="tab" href="#tab_salary" role="tab"
+									aria-selected="true">업종별 평균 연봉&nbsp;&nbsp;&nbsp;
+										<button
+											onclick="location.href='<%=request.getContextPath()%>/salary/list.do'"
+											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+											<i class="fal fa-plus"></i>
+										</button>
+								</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="panel-content tab-content p-3">
-						<div class="tab-pane fade show active" id="tab_salary"
-							role="tabpanel">
+						<div class="tab-pane fade show active" id="tab_news" role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
-									<div style="margin: 0px 40px 0px 40px;">
+									<div style="margin-right: 30px;">
 										<table class="table table-sm table-hover table-striped w-100">
-											<tbody id="typeSalList_MainSection">
+											<tbody id="salaryNews_MainSection">
 
 											</tbody>
 										</table>
@@ -619,12 +618,13 @@ div {
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="tab_news" role="tabpanel">
+						<div class="tab-pane fade" id="tab_salary"
+							role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
 									<div style="margin: 0px 40px 0px 40px;">
 										<table class="table table-sm table-hover table-striped w-100">
-											<tbody id="salaryNews_MainSection">
+											<tbody id="typeSalList_MainSection">
 
 											</tbody>
 										</table>
