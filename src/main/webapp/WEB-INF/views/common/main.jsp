@@ -144,7 +144,7 @@ div {
 					<div class="panel-container show">
 						<div class="panel-content">
 							<div class="row cardMargin">
-								<div class="col-xl-5 p-0">
+								<div class="col-xl-4 p-0">
 									<div class="area_wrap">
 										<div class="main_area_map">
 											<svg xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,15 @@ div {
 										</div>
 									</div>
 								</div>
-								<div class="col-xl-7"></div>
+								<div class="col-xl-8">
+									<div class="custom-scroll">
+										<div>
+											<table id="trend_MainSection" class="table table-sm table-hover table-striped w-100">
+
+											</table>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -766,6 +774,29 @@ Handlebars.registerHelper("nullCheckMain", function(element, options) {
 {{/each}}
 </script>
 
+<script type="text/x-handlebars-template" id="main-trend-list">
+<thead>
+	<tr>
+		<th class="text-center">기간</th>
+		<th class="text-center">지역구</th>
+		<th class="text-center">연령대</th>
+		<th class="text-center">신규취업자수 (천명)</th>
+		<th class="text-center">고용률</th>
+	</tr>
+</thead>
+{{#each trendList}}
+<tbody>
+		<tr>
+			<td>{{trendPeriod}}</td>
+			<td>{{disCode}}</td>
+			<td class="text-right">{{ageCode}}</td>
+			<td class="text-right">{{trendCnt}}명</td>
+			<td class="text-right">{{trendRatio}}%</td>
+		</tr>
+</tbody>
+{{/each}}
+</script>
+
 <script type="text/x-handlebars-template" id="main-seniorList">
 {{#each seniorList}}
 	<div class="carousel-item" data-interval="2000">
@@ -892,6 +923,21 @@ var ajaxOption = {
 $.ajax(ajaxOption).done(function(data) {
 	console.log("seniorList data : ",data);
 	printDataByMain(data, $('#seniorSlide_MainSection'), $('#main-seniorList')); 
+});
+</script>
+
+<script>
+var ajaxOption = {
+		url : '<%=request.getContextPath()%>/recruit/trendForMain.do',
+		async : true,
+		type : "GET",
+		dataType : "json",
+		cache : false
+	};
+	
+$.ajax(ajaxOption).done(function(data) {
+	console.log("trendList data : ",data);
+	printDataByMain(data, $('#trend_MainSection'), $('#main-trend-list')); 
 });
 </script>
 

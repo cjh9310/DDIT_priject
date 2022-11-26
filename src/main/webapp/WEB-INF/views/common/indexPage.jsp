@@ -281,281 +281,21 @@ h3 { margin:0px; }
 				<div class="dropdown-menu dropdown-menu-animated dropdown-xl">
 					<div
 						class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center rounded-top mb-2">
-						<h4 class="m-0 text-center color-white">
-							New <small class="mb-0 opacity-80">User Notifications</small>
-						</h4>
+						<h4 class="m-0 text-center color-white">알림</h4>
 					</div>
 					<ul class="nav nav-tabs nav-tabs-clean" role="tablist">
 						<li class="nav-item"><a
 							class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab"
-							href="#tab-messages" data-i18n="drpdwn.messages">Messages</a></li>
-						<li class="nav-item"><a
-							class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab"
-							href="#tab-feeds" data-i18n="drpdwn.feeds">Feeds</a></li>
-						<li class="nav-item"><a
-							class="nav-link px-4 fs-md js-waves-on fw-500" data-toggle="tab"
-							href="#tab-events" data-i18n="drpdwn.events">Events</a></li>
+							href="#tab-messages" data-i18n="drpdwn.messages"></a></li>
 					</ul>
 					<div class="tab-content tab-notification">
-						<div class="tab-pane active p-3 text-center">
-							<h5 class="mt-4 pt-4 fw-500">
-								<span class="d-block fa-3x pb-4 text-muted"> <i
-									class="ni ni-arrow-up text-gradient opacity-70"></i>
-								</span> Select a tab above to activate <small
-									class="mt-3 fs-b fw-400 text-muted"> This blank page
-									message helps protect your privacy, or you can show the first
-									message here automatically through <a href="#">settings
-										page</a>
-								</small>
-							</h5>
-						</div>
-						<div class="tab-pane" id="tab-messages" role="tabpanel">
+						
+						<div class="tab-pane nav-item" id="tab-messages" role="tabpanel">
 							<div class="custom-scroll h-100">
-								<ul class="allimList">
-									
+								<ul class="allimList" style="padding-left:0px;">
 								</ul>
 							</div>
 						</div>
-						<div class="tab-pane" id="tab-feeds" role="tabpanel">
-							<div class="custom-scroll h-100">
-								<ul class="notification">
-									<li class="unread">
-										<div class="d-flex align-items-center show-child-on-hover">
-											<span class="d-flex flex-column flex-1"> <span
-												class="name d-flex align-items-center">Administrator
-													<span class="badge badge-success fw-n ml-1">UPDATE</span>
-											</span> <span class="msg-a fs-sm"> System updated to version
-													<strong>4.5.1</strong> <a href="docs_buildnotes.html">(patch
-														notes)</a>
-											</span> <span class="fs-nano text-muted mt-1">5 mins ago</span>
-											</span>
-											<div
-												class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-												<a href="#" class="text-muted" title="delete"><i
-													class="fal fa-trash-alt"></i></a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="d-flex align-items-center show-child-on-hover">
-											<div class="d-flex flex-column flex-1">
-												<span class="name"> Adison Lee <span
-													class="fw-300 d-inline">replied to your video <a
-														href="#" class="fw-400"> Cancer Drug</a>
-												</span>
-												</span> <span class="msg-a fs-sm mt-2">Bring to the table
-													win-win survival strategies to ensure proactive domination.
-													At the end of the day...</span> <span
-													class="fs-nano text-muted mt-1">10 minutes ago</span>
-											</div>
-											<div
-												class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-												<a href="#" class="text-muted" title="delete"><i
-													class="fal fa-trash-alt"></i></a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="d-flex align-items-center show-child-on-hover">
-											<!--<img src="img/demo/avatars/avatar-m.png" data-src="img/demo/avatars/avatar-k.png" class="profile-image rounded-circle" alt="k" />-->
-											<div class="d-flex flex-column flex-1">
-												<span class="name"> Troy Norman'<span class="fw-300">s
-														new connections</span>
-												</span>
-												<div class="fs-sm d-flex align-items-center mt-2">
-													<span
-														class="profile-image-md mr-1 rounded-circle d-inline-block"
-														style=""></span>
-													<div data-hasmore="+3"
-														class="rounded-circle profile-image-md mr-1">
-														<span
-															class="profile-image-md mr-1 rounded-circle d-inline-block"
-															style=""></span>
-													</div>
-												</div>
-												<span class="fs-nano text-muted mt-1">55 minutes ago</span>
-											</div>
-											<div
-												class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-												<a href="#" class="text-muted" title="delete"><i
-													class="fal fa-trash-alt"></i></a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="d-flex align-items-center show-child-on-hover">
-											<!--<img src="img/demo/avatars/avatar-m.png" data-src="img/demo/avatars/avatar-e.png" class="profile-image-sm rounded-circle align-self-start mt-1" alt="k" />-->
-											<div class="d-flex flex-column flex-1">
-												<span class="name">Dr John Cook <span class="fw-300">sent
-														a <span class="text-danger">new signal</span>
-												</span></span> <span class="msg-a fs-sm mt-2">Nanotechnology
-													immersion along the information highway will close the loop
-													on focusing solely on the bottom line.</span> <span
-													class="fs-nano text-muted mt-1">10 minutes ago</span>
-											</div>
-											<div
-												class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-												<a href="#" class="text-muted" title="delete"><i
-													class="fal fa-trash-alt"></i></a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="d-flex align-items-center show-child-on-hover">
-											<div class="d-flex flex-column flex-1">
-												<span class="name">Lab Images <span class="fw-300">were
-														updated!</span></span>
-												<div class="fs-sm d-flex align-items-center mt-1">
-													<a href="#" class="mr-1 mt-1" title="Cell A-0012"> <span
-														class="d-block img-share" style=""></span>
-													</a>
-												</div>
-												<span class="fs-nano text-muted mt-1">55 minutes ago</span>
-											</div>
-											<div
-												class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-												<a href="#" class="text-muted" title="delete"><i
-													class="fal fa-trash-alt"></i></a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="d-flex align-items-center show-child-on-hover">
-											<!--<img src="img/demo/avatars/avatar-m.png" data-src="img/demo/avatars/avatar-h.png" class="profile-image rounded-circle align-self-start mt-1" alt="k" />-->
-											<div class="d-flex flex-column flex-1">
-												<div class="name mb-2">
-													Lisa Lamar<span class="fw-300"> updated project</span>
-												</div>
-												<div class="row fs-b fw-300">
-													<div class="col text-left">Progress</div>
-													<div class="col text-right fw-500">45%</div>
-												</div>
-												<div class="progress progress-sm d-flex mt-1">
-													<span
-														class="progress-bar bg-primary-500 progress-bar-striped"
-														role="progressbar" style="width: 45%" aria-valuenow="45"
-														aria-valuemin="0" aria-valuemax="100"></span>
-												</div>
-												<span class="fs-nano text-muted mt-1">2 hrs ago</span>
-												<div
-													class="show-on-hover-parent position-absolute pos-right pos-bottom p-3">
-													<a href="#" class="text-muted" title="delete"><i
-														class="fal fa-trash-alt"></i></a>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="tab-pane" id="tab-events" role="tabpanel">
-							<div class="d-flex flex-column h-100">
-								<div class="h-auto">
-									<table
-										class="table table-bordered table-calendar m-0 w-100 h-100 border-0">
-										<tr>
-											<th colspan="7" class="pt-3 pb-2 pl-3 pr-3 text-center">
-												<div class="js-get-date h5 mb-2">[your date here]</div>
-											</th>
-										</tr>
-										<tr class="text-center">
-											<th>Sun</th>
-											<th>Mon</th>
-											<th>Tue</th>
-											<th>Wed</th>
-											<th>Thu</th>
-											<th>Fri</th>
-											<th>Sat</th>
-										</tr>
-										<tr>
-											<td class="text-muted bg-faded">30</td>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-											<td><i
-												class="fal fa-birthday-cake mt-1 ml-1 position-absolute pos-left pos-top text-primary"></i>
-												6</td>
-										</tr>
-										<tr>
-											<td>7</td>
-											<td>8</td>
-											<td>9</td>
-											<td class="bg-primary-300 pattern-0">10</td>
-											<td>11</td>
-											<td>12</td>
-											<td>13</td>
-										</tr>
-										<tr>
-											<td>14</td>
-											<td>15</td>
-											<td>16</td>
-											<td>17</td>
-											<td>18</td>
-											<td>19</td>
-											<td>20</td>
-										</tr>
-										<tr>
-											<td>21</td>
-											<td>22</td>
-											<td>23</td>
-											<td>24</td>
-											<td>25</td>
-											<td>26</td>
-											<td>27</td>
-										</tr>
-										<tr>
-											<td>28</td>
-											<td>29</td>
-											<td>30</td>
-											<td>31</td>
-											<td class="text-muted bg-faded">1</td>
-											<td class="text-muted bg-faded">2</td>
-											<td class="text-muted bg-faded">3</td>
-										</tr>
-									</table>
-								</div>
-								<div class="flex-1 custom-scroll">
-									<div class="p-2">
-										<div class="d-flex align-items-center text-left mb-3">
-											<div
-												class="width-5 fw-300 text-primary l-h-n mr-1 align-self-start fs-xxl">
-												15</div>
-											<div class="flex-1">
-												<div class="d-flex flex-column">
-													<span class="l-h-n fs-md fw-500 opacity-70"> October
-														2020 </span> <span class="l-h-n fs-nano fw-400 text-secondary">
-														Friday </span>
-												</div>
-												<div class="mt-3">
-													<p>
-														<strong>2:30PM</strong> - Doctor's appointment
-													</p>
-													<p>
-														<strong>3:30PM</strong> - Report overview
-													</p>
-													<p>
-														<strong>4:30PM</strong> - Meeting with Donnah V.
-													</p>
-													<p>
-														<strong>5:30PM</strong> - Late Lunch
-													</p>
-													<p>
-														<strong>6:30PM</strong> - Report Compression
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div
-						class="py-2 px-3 bg-faded d-block rounded-bottom text-right border-faded border-bottom-0 border-right-0 border-left-0">
-						<a href="#" class="fs-xs fw-500 ml-auto">view all
-							notifications</a>
 					</div>
 				</div>
 			</div>
@@ -712,14 +452,13 @@ h3 { margin:0px; }
 					</div>
 					<div>
 						<ul class="list-table m-0">
-							<li><a href="intel_introduction.html"
+							<li><a 
 								class="text-secondary fw-700">고객센터</a></li>
-							<li class="pl-3"><a href="info_app_licensing.html"
+							<li class="pl-3"><a
 								class="text-secondary fw-700">개인정보취급방침</a></li>
-							<li class="pl-3"><a href="info_app_docs.html"
+							<li class="pl-3"><a
 								class="text-secondary fw-700">데이터 출처</a></li>
 							<li class="pl-3 fs-xl"><a
-								href="https://wrapbootstrap.com/user/MyOrange"
 								class="text-secondary" target="_blank"><i
 									class="fal fa-question-circle" aria-hidden="true"></i></a></li>
 						</ul>
@@ -1268,14 +1007,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		var allim = '${allim.toId}';
 		console.log("asd"+allim);
 	}
-	
-	
 	$.ajax({
 		url : '<%=request.getContextPath()%>/allim/list',
 		type : 'GET',
 		dataType:"json",
 		success : function(result) {
-			console.log('${loginUser.name}');
 	        // 로그인 유저가 개인회원 
 			if('${loginUser.typeName}' == '개인회원'){
 			console.log('${loginUser.typeName}');
@@ -1283,9 +1019,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			var openCount = result.alertForOpenList.count;
 			var recCount = result.alertForRecList.count;
 			var count = openCount + recCount;
+			console.log(count);
 			var open = result.alertForOpenList;
 			var rec = result.alertForRecList;
-			var recName = rec.almList[0].coNm;
 			var flag = true;
 			if(openCount == 0 & recCount == 0){
 				var v_list = 
@@ -1307,33 +1043,22 @@ document.addEventListener('DOMContentLoaded', () => {
 				for(var i=0; i<recCount; i++){
 					console.log("rec 됨");
 					var unreadList = 
-					`<li class="unread">
-						<a href="#" class="d-flex align-items-center">
-							<span class="status mr-2"> <span
-									class="profile-image rounded-circle d-inline-block" style=""></span>
-							</span> <span class="d-flex flex-column flex-1 ml-1">
-									<span class="name">`+rec.almList[i].coNm+`</span>
-									<a class="name">`+rec.almList[i].recWantedtitle+`</a>에서 입사 권유가 도착했습니다.
-									<span class="fs-nano text-muted mt-1">`+rec.almList[i].almDate+`</span>
-							</span>
-						</a>
-					</li>`;
+						`<div class="alert alert-success alert-dismissible fade show" role="alert">
+		                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+		                </button>
+		                <strong>`+rec.almList[i].coNm+`에서 </strong>`+rec.almList[i].recWantedtitle+`</a>에서 입사 권유가 도착했습니다.
+		            </div>`;
 				$('.allimList').append(unreadList);
 				}
 				for(var i=0; i<openCount; i++){
-					console.log("open 됨");
 					var unreadList = 
-					`<li class="unread">
-						<a href="#" class="d-flex align-items-center">
-							<span class="status mr-2"> <span
-									class="profile-image rounded-circle d-inline-block" style=""></span>
-							</span> <span class="d-flex flex-column flex-1 ml-1">
-									<span class="name">`+open.almList[i].coNm+`</span>
-									<a class="name">`+open.almList[i].openTitle+`</a>에서 입사 권유가 도착했습니다.
-									<span class="fs-nano text-muted mt-1">`+open.almList[i].almDate+`</span>
-							</span>
-						</a>
-					</li>`;
+					`<div class="alert alert-success alert-dismissible fade show" role="alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+	                </button>
+	                <strong>`+open.almList[i].coNm+`에서 </strong>`+open.almList[i].openTitle+`</a>에서 입사 권유가 도착했습니다.
+	            </div>`;
 				$('.allimList').append(unreadList);
 				
 				}
@@ -1370,34 +1095,26 @@ document.addEventListener('DOMContentLoaded', () => {
 					console.log("rec됨");
 					for(var i=0; i<recCount; i++){
 						var unreadList = 
-						`<li class="unread">
-							<a href="#" class="d-flex align-items-center">
-								<span class="status mr-2"> <span
-										class="profile-image rounded-circle d-inline-block" style=""></span>
-								</span> <span class="d-flex flex-column flex-1 ml-1">
-										<span class="name">`+rec.almList[i].toId+`</span>회사에서의
-										<a class="name">`+rec.almList[i].recWantedtitle+`</a>에서의 지원요청이 도착했습니다.
-										<span class="fs-nano text-muted mt-1">`+rec.almList[i].almDate+`</span>
-								</span>
-							</a>
-						</li>`;
+							`<div class="alert alert-success alert-dismissible fade show" role="alert">
+			                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+			                </button>
+			                `+rec.almList[i].recWantedtitle+`</a>에 입사 지원요청이 도착했습니다.
+			            </div>`;
+						
 					$('.allimList').append(unreadList);
 					}
 					// 공채
 					for(var i=0; i<openCount; i++){
 						console.log("open 됨");
 						var unreadList = 
-						`<li class="unread">
-							<a href="#" class="d-flex align-items-center">
-								<span class="status mr-2"> <span
-										class="profile-image rounded-circle d-inline-block" style=""></span>
-								</span> <span class="d-flex flex-column flex-1 ml-1">
-										<span class="name">`+open.almList[i].toId+`</span>
-										<a class="name">`+open.almList[i].openTitle+`</a>에서 입사 권유가 도착했습니다.
-										<span class="fs-nano text-muted mt-1">`+open.almList[i].almDate+`</span>
-								</span>
-							</a>
-						</li>`;
+							`<div class="alert alert-success alert-dismissible fade show" role="alert">
+			                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+			                </button>
+			                `+open.almList[i].openTitle+`</a>에 입사 지원요청이 도착했습니다.
+			            </div>`;
+						
 					$('.allimList').append(unreadList);
 					
 					}

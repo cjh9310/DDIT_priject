@@ -16,9 +16,15 @@ public class EmpstatsDAOImpl implements EmpstatsDAO {
 	}
 
 	@Override
+	public List<EmpstatsVO> selectTrend() throws SQLException {
+		List<EmpstatsVO> trendList = session.selectList("Empstats-Mapper.selectTrend");
+		return trendList;
+	}
+	
+	@Override
 	public List<EmpstatsVO> selectEmpStats() throws SQLException {
-		List<EmpstatsVO> empstatsList = session.selectList("Empstats-Mapper.selectEmpStats");
-		return empstatsList;
+		List<EmpstatsVO> empList = session.selectList("Empstats-Mapper.selectEmpStats");
+		return empList;
 	}
 
 }

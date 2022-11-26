@@ -10,13 +10,24 @@
 	<fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" />
 </c:set>
 
-<c:set var="bookmarkMap" value="${bookmarkMap}" />
-<c:set var="bookmarkList" value="${bookmarkMap.bookmarkList }" />
+<c:set var="talentMap" value="${talentMap}" />
+<c:set var="talentList" value="${talentMap.talentList }" />
 
 <style>
 .panel-content {
 	width: 100%;
-	height: 100%;
+	height: 990px;
+	overflow: hidden;
+}
+
+.coBookmarkPanel {
+	height: 310px;
+	overflow: auto;
+}
+
+.recBookmarkPanel {
+	height: 555px;
+	overflow: auto;
 }
 </style>
 
@@ -29,9 +40,9 @@
 				<div class="col-12">
 					<div
 						class="d-flex flex-column align-items-center justify-content-center p-4">
-						<img
-							src="<%=request.getContextPath()%>/member/getPicture.do?id=${loginUser.id}"
-							class=" shadow-2 img-thumbnail" alt="" />
+						<img src="<%=request.getContextPath()%>/member/getPicture.do?id=${loginUser.id}"
+							onerror="this.onerror=null; this.src='<%=request.getContextPath() %>/resources/template/img/member_default.png';"
+							class=" shadow-2 img-thumbnail" alt="회원사진" />
 						<h5 class="mb-0 fw-700 text-center mt-3">
 							${loginUser.name}<small class="text-muted mb-0">${loginUser.email}</small>
 						</h5>
@@ -84,71 +95,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- contacts -->
-		<div class="card mb-2">
-			<div class="card-body">
-				<a href="javascript:void(0);"
-					class="d-flex flex-row align-items-center">
-					<div class='icon-stack display-3 flex-shrink-0'>
-						<i
-							class="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
-						<i class="fas fa-user icon-stack-1x opacity-100 color-primary-500"></i>
-					</div>
-					<div class="ml-3">
-						<strong>나의 개인정보 관리하기</strong> <br> Modifying my personal
-						information
-					</div>
-				</a>
-			</div>
-		</div>
-		<div class="card mb-2">
-			<div class="card-body">
-				<a href="javascript:void(0);"
-					class="d-flex flex-row align-items-center">
-					<div class='icon-stack display-3 flex-shrink-0'>
-						<i
-							class="fal fa-circle icon-stack-3x opacity-100 color-success-400"></i>
-						<i
-							class="fas fa-user-graduate icon-stack-1x opacity-100 color-success-500"></i>
-					</div>
-					<div class="ml-3">
-						<strong>나의 학력 관리하기</strong> <br> Managing my educational
-						background
-					</div>
-				</a>
-			</div>
-		</div>
-		<div class="card mb-2">
-			<div class="card-body">
-				<a href="javascript:void(0);"
-					class="d-flex flex-row align-items-center">
-					<div class='icon-stack display-3 flex-shrink-0'>
-						<i class="fal fa-circle icon-stack-3x opacity-100 color-info-400"></i>
-						<i
-							class="fas fa-handshake icon-stack-1x opacity-100 color-info-500"></i>
-					</div>
-					<div class="ml-3">
-						<strong>나의 경력 관리하기</strong> <br> Managing my career
-					</div>
-				</a>
-			</div>
-		</div>
-		<div class="card mb-g">
-			<div class="card-body">
-				<a href="javascript:void(0);"
-					class="d-flex flex-row align-items-center">
-					<div class='icon-stack display-3 flex-shrink-0'>
-						<i
-							class="fal fa-circle icon-stack-3x opacity-100 color-warning-400"></i>
-						<i
-							class="fas fa-file-certificate icon-stack-1x opacity-100 color-warning-500"></i>
-					</div>
-					<div class="ml-3">
-						<strong>나의 자격증 관리하기</strong> <br> Managing my certificate
-					</div>
-				</a>
-			</div>
-		</div>
 	</div>
 	<div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
 		<div>
@@ -193,86 +139,37 @@
 		</div>
 	</div>
 	<div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
-		<!-- add : -->
 		<div class="card mb-g">
 			<div class="row row-grid no-gutters">
 				<div class="panel-hdr" style="width: 100%;">
 					<h2>관심 인재</h2>
 					<div class="panel-toolbar ml-2">
 						<button type="button"
+							onclick="window.open('<%=request.getContextPath()%>/futurelab/ai3/talent/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 							class="btn btn-xs btn-info waves-effect waves-themed">
-							AI에게 더 많은 인재 추천받기</button>
+							AI에게 인재 추천받기</button>
 					</div>
 				</div>
-				<c:if test="${empty bookmarkList}">
-					<div class="col-12">
-						<a href="javascript:void(0);"
-							class="text-center p-3 d-flex flex-column hover-highlight"> <span
-							class="d-block text-truncate text-muted fs-xs mt-1">관심 등록된
-								기업이 없습니다.</span>
-						</a>
-					</div>
-				</c:if>
-				<c:forEach items="${bookmarkList}" var="bookmark">
-					<c:if test="${bookmark.bookType == 1}">
-						<div class="col-4">
-							<a href="javascript:void(0);"
-								class="text-center p-3 d-flex flex-column hover-highlight">
-								<span class="profile-image"
-								style="width:100%; background-size:contain; background-repeat:no-repeat;
-								       background-position:center center; background-image: url('${bookmark.coLogo}');"></span>
-								<span class="d-block text-truncate text-muted fs-xs mt-1">${bookmark.coName}</span>
-							</a>
+				<div class="w-100">
+					<div class="custom-scroll recBookmarkPanel w-100">
+						<div class="p-2">
+							<table
+								class="table table-bordered table-hover table-striped w-100 dataTable no-footer dtr-inline"
+								role="grid" aria-describedby="dt-basic-example_info"
+								style="width: 1544px;">
+								<tbody>
+									<c:forEach items="${talentList}" var="talent">
+											<tr id="1" role="row" class="odd" style="cursor:pointer;">
+												<td class="dtr-control"><span
+													class="badge badge-success badge-pill">구직활동중</span>
+													<a data-toggle="dropdown"> - ${talent.name} / ${talent.indFedu} / ${talent.eduDep}
+													</a>
+												</td>
+											</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</div>
-					</c:if>
-				</c:forEach>
-				<div class="col-12">
-					<div class="p-3 text-center">
-						<a href="javascript:void(0);" class="btn-link font-weight-bold">더
-							보기</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card mb-g">
-			<div class="row row-grid no-gutters">
-				<div class="panel-hdr" style="width: 100%;">
-					<h2>관심 채용공고</h2>
-					<div class="panel-toolbar ml-2">
-						<button type="button"
-							class="btn btn-xs btn-info waves-effect waves-themed">
-							AI에게 더 많은 채용공고 추천받기</button>
-					</div>
-				</div>
-				<table
-					class="table table-bordered table-hover table-striped w-100 dataTable no-footer dtr-inline"
-					role="grid" aria-describedby="dt-basic-example_info"
-					style="width: 1544px;">
-					<tbody>
-						<c:if test="${empty bookmarkList}">
-							<div class="col-12">
-								<a href="javascript:void(0);"
-									class="text-center p-3 d-flex flex-column hover-highlight">
-									<span class="d-block text-truncate text-muted fs-xs mt-1">관심
-										등록된 채용공고가 없습니다.</span>
-								</a>
-							</div>
-						</c:if>
-						<c:forEach items="${bookmarkList}" var="bookmark">
-							<c:if test="${bookmark.bookType == 0}">
-								<tr id="1" role="row" class="odd">
-									<td class="dtr-control"><span
-										class="badge badge-success badge-pill">채용중</span>
-										${bookmark.recCoName} - ${bookmark.recWantedtitle}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</tbody>
-				</table>
-				<div class="col-12">
-					<div class="p-3 text-center">
-						<a href="javascript:void(0);" class="btn-link font-weight-bold">더
-							보기</a>
 					</div>
 				</div>
 			</div>

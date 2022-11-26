@@ -108,8 +108,8 @@ public class CoMemeberController {
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
 		String id = loginUser.getId();
 
-		Map<String, Object> bookmarkMap = bookmarkService.getBookmarkListById(id);
-		request.setAttribute("bookmarkMap", bookmarkMap);
+		Map<String, Object> talentMap = bookmarkService.getBookmarkForCoUser(id);
+		request.setAttribute("talentMap", talentMap);
 
 		return url;
 	}

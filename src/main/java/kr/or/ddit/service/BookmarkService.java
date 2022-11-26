@@ -11,6 +11,8 @@ public interface BookmarkService {
 	Map<String, Object> getBookmarkListByRecno(String recWantedno) throws SQLException;
 	
 	Map<String, Object> getBookmarkListById(String id) throws SQLException;
+
+	Map<String, Object> getBookmarkForCoUser(String id) throws SQLException;
 	
 	void registRecBookmark(BookmarkVO bookmark) throws SQLException;
 	

@@ -18,31 +18,19 @@
 {{/each}}
 </script>
 <script type="text/x-handlebars-template" id="ai2-result-template">
-		<div class="mr-2 hidden-md-down">
-			<span class="icon-stack icon-stack-lg"> <i
-				class="base base-6 icon-stack-3x opacity-100 color-primary-500"></i>
-				<i
-				class="base base-10 icon-stack-2x opacity-100 color-primary-300 fa-flip-vertical"></i>
-				<i class="ni ni-blog-read icon-stack-1x opacity-100 color-white"></i>
-			</span>
-		</div>
 		<div class="d-flex flex-fill">
-			<div class="flex-fill">
-				<span class="h5">고용동향 예측</span>
-				<p>
-					Easy Pie Charts
-					<code>경제활동참가율</code>
-					<code>고용률</code>
-					<code>실업률</code>
-				</p>
-				<a href="javascript:ai2_submit();" class="btn btn-sm btn-outline-primary" >
-								AI의 고용동향 예측 결과 -></a>
+			<div class="flex-fill" style="margin-top:10px;">
+				<img src="<%=request.getContextPath()%>/resources/template/img/empstats_logo4.png"
+				     style="display:block; height:100%; width:auto;"></img>			
 			</div>
+			<button type="button" class="btn btn-outline-success waves-effect waves-themed" style="margin-right:20px;">
+				AI의 고용동향 예측 결과 ->
+			</button>
 		</div>
 	{{#each .}}
 		<div class="subheader-block d-none d-sm-flex align-items-center">
 			<div class="d-inline-flex flex-column justify-content-center mr-3">
-				<span class="fw-300 fs-xs d-block opacity-50"> <small>EXPENSES</small>
+				<span class="fw-300 fs-xs d-block opacity-50"> <small>경제활동참가율</small>
 				</span> <span class="fw-500 fs-xl d-block color-info-500">{{response1}}%</span>
 			</div>
 			<span
@@ -54,9 +42,8 @@
 		<div
 			class="subheader-block d-none d-sm-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
 			<div class="d-inline-flex flex-column justify-content-center mr-3">
-				<span class="fw-300 fs-xs d-block opacity-50"> <small>MY
-						PROFITS</small>
-				</span> <span class="fw-500 fs-xl d-block color-danger-500">{{response2}}%
+				<span class="fw-300 fs-xs d-block opacity-50"> <small>고용률</small>
+				</span> <span class="fw-500 fs-xl d-block color-success-500">{{response2}}%
 				</span>
 			</div>
 			<span
@@ -68,8 +55,7 @@
 		<div
 			class="subheader-block d-none d-sm-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
 			<div class="d-inline-flex flex-column justify-content-center mr-3">
-				<span class="fw-300 fs-xs d-block opacity-50"> <small>MY
-						PROFITS</small>
+				<span class="fw-300 fs-xs d-block opacity-50"> <small>실업률</small>
 				</span> <span class="fw-500 fs-xl d-block color-danger-500">{{response3}}%
 				</span>
 			</div>

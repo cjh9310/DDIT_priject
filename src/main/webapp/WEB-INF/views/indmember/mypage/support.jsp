@@ -163,10 +163,10 @@
 			<div class="panel-container show">
 				<div class="panel-content">
 					<!-- <h5 class="frame-heading">상담신청내역테이블</h5> -->
-					<div class="frame-wrap" style="text-align: center;">
+					<div class="frame-wrap">
 						<table class="table table-hover m-0">
 							<thead class="bg-primary-700">
-								<tr>
+								<tr style="text-align: center;">
 									<th>No</th>
 									<th>작성일</th>
 									<th>상담유형</th>
@@ -185,24 +185,24 @@
 									varStatus="idxrow">
 									<!--  <tr style="cursor:pointer;" onclick="openWindow('supportDetail.do?from=list&supNo=${support.supNo }','상담신청 상세보기', 800,700);">-->
 
-									<tr style="cursor: pointer;"
+									<tr style="cursor: pointer; "
 										onclick="OpenWindow('supportDetail.do?from=support&supNo=${support.supNo}','상담신청 상세보기', 650,730);">
 										<%-- <th scope="row">${support.supNo }</th> --%>
 										<c:set var="count2" value="${count2 + 1}" />
-										<th scope="row">${count2 }</th>
-										<td><fmt:formatDate value="${support.supDate }"
-												pattern="yyyy-MM-dd" /></td>
-										<td>${youme.index }<c:if test="${support.supType eq 0 }">진로상담 </c:if>
-											<c:if test="${support.supType eq 1 }">취업상담 </c:if> <c:if
-												test="${support.supType eq 2 }">프로그램상담 </c:if>
+										<th scope="row" style="text-align: center;">${count2 }</th>
+										<td  style="text-align: center;"><fmt:formatDate value="${support.supDate }" pattern="yyyy-MM-dd" /></td>
+										<td  style="text-align: center;">
+											<c:if test="${support.supType eq 0 }">진로상담 </c:if>
+											<c:if test="${support.supType eq 1 }">취업상담 </c:if> 
+											<c:if test="${support.supType eq 2 }">프로그램상담 </c:if>
 										</td>
 										<td>${support.supTitle }</td>
-										<td><c:if test="${support.supProcess eq 0 }">상담접수중 </c:if>
+										<td  style="text-align: center;"><c:if test="${support.supProcess eq 0 }">상담접수중 </c:if>
 											<c:if test="${support.supProcess eq 1 }">상담중 </c:if> <c:if
 												test="${support.supProcess eq 2 }">상담완료 <fmt:formatDate
 													value="${support.supEdate }" pattern="yyyy-MM-dd" />
 											</c:if> <c:if test="${support.supProcess eq 3 }">상담반려<span class="text-danger">(사유: 신청내용 부적절)</span> </c:if></td>
-										<td>
+										<td  style="text-align: center;">
 										<c:if test="${support.counselorName eq 0 }"> - </c:if>
 										<c:if test="${support.counselorName eq 1 }">박혜인 상담사 </c:if>
 										<c:if test="${support.counselorName eq 2 }">이수진 상담사 </c:if>

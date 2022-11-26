@@ -188,11 +188,20 @@ public class RecruitController {
    public String empstats(Model model) throws Exception {
       String url = "recruit/empstats";
 
-      Map<String, Object> empstatsMap = empstatsService.getEmpStatsList();
-      model.addAttribute("empstatsMap", empstatsMap);
+      Map<String, Object> trendMap = empstatsService.getTrendList();
+      Map<String, Object> empMap = empstatsService.getEmpList();
+      model.addAttribute("trendMap", trendMap);
+      model.addAttribute("empMap", empMap);
       
       return url;
    }
+   
+    @RequestMapping(value = "/trendForMain", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> trendForMain() throws Exception {
+		Map<String, Object> trendMap = empstatsService.getTrendList();
+		return trendMap;
+	}
    
     @PostMapping("/recAllim")
 	@ResponseBody

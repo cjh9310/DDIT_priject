@@ -75,7 +75,7 @@
 							<li>고용 관련 지표에 대한 향후 예측치를 제공해드립니다.</li>
 						</ul>
 						<br> <a
-							href="javascript:window.open('trend/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');"
+							href="<%=request.getContextPath()%>/recruit/empstats.do"
 							class="btn btn-sm btn-outline-primary"> AI의 고용동향 예측 이용하기</a>
 					</div>
 				</div>

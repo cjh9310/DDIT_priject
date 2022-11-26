@@ -304,9 +304,9 @@ div {
 													<td>${adv.coName}</td>
 													<td>${adv.recWantedtitle}</td>
 													<td>${adv.recRegion}</td>
-													<td>${adv.recRegdt}</td>
-													<td><fmt:formatDate value="${adv.recRegdt}"
-															pattern="yyyy-MM-dd" /></td>
+													<td>${today}</td>
+													<%-- <td><fmt:formatDate value="${adv.recRegdt}"
+															pattern="yyyy-MM-dd" /></td> --%>
 												</tr>
 												<!--  모달창 시작 -->
 												<div class="modal fade"
@@ -360,9 +360,9 @@ div {
 													<td>${adv.openConm}</td>
 													<td>${adv.openTitle}</td>
 													<td>${adv.openRegion}</td>
-													<td>${adv.openEdate}</td>
-													<td><fmt:formatDate value="${open.openSdate}"
-															pattern="yyyy-MM-dd" /></td>
+													<td>${today}</td>
+													<%-- <td><fmt:formatDate value="${open.openSdate}"
+															pattern="yyyy-MM-dd" /></td> --%>
 												</tr>
 												<!--  모달창 시작 -->
 												<div class="modal fade"

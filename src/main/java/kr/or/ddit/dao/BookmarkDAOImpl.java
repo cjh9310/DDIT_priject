@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.dto.BookmarkVO;
+import kr.or.ddit.dto.MemberVO;
 
 public class BookmarkDAOImpl implements BookmarkDAO {
 	
@@ -25,6 +26,12 @@ public class BookmarkDAOImpl implements BookmarkDAO {
 	public List<BookmarkVO> selectBookmarkById(String id) throws SQLException {
 		List<BookmarkVO> bookmarkList = session.selectList("Bookmark-Mapper.selectBookmarkById", id);
 		return bookmarkList;
+	}
+	
+	@Override
+	public List<MemberVO> selectBookmarkForCoUser(String id) throws SQLException {
+		List<MemberVO> talentList = session.selectList("Bookmark-Mapper.selectBookmarkForCoUser", id);
+		return talentList;
 	}
 	
 	@Override

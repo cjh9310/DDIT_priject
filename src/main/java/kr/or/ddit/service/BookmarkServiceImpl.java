@@ -7,6 +7,7 @@ import java.util.Map;
 
 import kr.or.ddit.dao.BookmarkDAO;
 import kr.or.ddit.dto.BookmarkVO;
+import kr.or.ddit.dto.MemberVO;
 
 public class BookmarkServiceImpl implements BookmarkService {
 	
@@ -29,6 +30,14 @@ public class BookmarkServiceImpl implements BookmarkService {
 		List<BookmarkVO> bookmarkList = bookmarkDAO.selectBookmarkById(id);
 		bookmarkMap.put("bookmarkList", bookmarkList);
 		return bookmarkMap;
+	}
+	
+	@Override
+	public Map<String, Object> getBookmarkForCoUser(String id) throws SQLException {
+		Map<String, Object> talentMap = new HashMap<String, Object>();
+		List<MemberVO> talentList = bookmarkDAO.selectBookmarkForCoUser(id);
+		talentMap.put("talentList", talentList);
+		return talentMap;
 	}
 	
 	@Override

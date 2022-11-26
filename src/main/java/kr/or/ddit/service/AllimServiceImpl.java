@@ -63,7 +63,7 @@ public class AllimServiceImpl implements AllimService{
 	@Override
 	public Map<String, Object> getAllimOpenNameList(String id) throws SQLException {
 		Map<String, Object> almMap = new HashMap<String, Object>();
-		int count = allimDAO.selectRecTotalCount(id);
+		int count = allimDAO.selectOpenTotalCount(id);
 		almMap.put("count", count);
 		if(count > 0) {
 			List<AllimVO> almList = allimDAO.selectToOpenName(id);

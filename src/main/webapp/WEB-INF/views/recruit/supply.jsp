@@ -72,7 +72,7 @@
 						</h2>
 					</td>
 					<td>
-						<button type="button" onclick="rec_supply(); AllimRegist();"
+						<button type="button" onclick="rec_supply();"
 							class="btn btn-md btn-outline-info waves-effect waves-themed w-100">
 							제출하기<span class="fas fa-arrow-alt-right mr-1"></span>
 						</button>
@@ -454,7 +454,9 @@ function rec_supply_submit() {
 		data : form,
 		dataType : 'text',
 		success : function(data) {
+			
 			if(data == 'recruitSupplySuccess') {
+				AllimRegist();
 				alert(coName + '에 대한 채용 지원이 완료되었습니다.');
 				opener.parent.goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');
 				console.log("goPage() : ",opener.parent.goPage);

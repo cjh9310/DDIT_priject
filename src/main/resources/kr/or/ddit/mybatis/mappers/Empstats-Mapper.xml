@@ -4,7 +4,7 @@
 
 <mapper namespace="Empstats-Mapper">
 
-	<select id="selectEmpStats" resultType="empstats">
+	<select id="selectTrend" resultType="empstats">
 		select a.trend_period as "trendPeriod"
      		, (select b.dis_name
           		 from districts b
@@ -15,6 +15,13 @@
      		, a.trend_cnt as "trendCnt"
      		, a.trend_ratio as "trendRatio"
   		from trend a
+  		order by to_number(substr(a.trend_period,0,4)) desc, a.dis_code desc
+	</select>
+		
+	<select id="selectEmpStats" resultType="empstats">
+		select *
+          from emp_stats
+         order by emp_date desc
 	</select>
 	
 </mapper>

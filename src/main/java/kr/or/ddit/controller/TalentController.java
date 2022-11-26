@@ -42,7 +42,7 @@ import kr.or.ddit.handler.webSocketListener;
 
 @Controller
 @RequestMapping("/talent")
-public class TalentrController {
+public class TalentController {
 
 	@Autowired
 	private OpenRecService openRecService;

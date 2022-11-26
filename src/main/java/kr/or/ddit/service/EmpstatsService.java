@@ -8,7 +8,9 @@ import kr.or.ddit.dto.EmpstatsVO;
 
 public interface EmpstatsService {
 	
-	Map<String, Object> getEmpStatsList()throws SQLException;
+	Map<String, Object> getTrendList()throws SQLException;
+
+	Map<String, Object> getEmpList()throws SQLException;
 	
 }
 

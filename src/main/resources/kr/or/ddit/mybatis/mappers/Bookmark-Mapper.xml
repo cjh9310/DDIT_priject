@@ -46,6 +46,18 @@
     		and a.id = #{id}
 	</select>
 	
+	<select id="selectBookmarkForCoUser" parameterType="str" resultType="member">
+		select bookmark.*,
+                   ind.*
+              from (select *
+                      from bookmark
+                     where book_type=2
+                       and id=#{id}) bookmark, (select a.name, b.*, c.edu_dep
+                                                     from member a, ind_member b, education c
+                                                    where a.id = b.ind_id and a.id = c.ind_id) ind                                              
+              where bookmark.tal_id = ind.ind_id
+	</select>
+	
 	<select id="selectBookNoForRemove" parameterType="bookmark" resultType="int">
 		select book_no
   		  from bookmark

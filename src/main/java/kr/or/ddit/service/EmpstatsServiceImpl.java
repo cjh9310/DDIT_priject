@@ -16,11 +16,19 @@ public class EmpstatsServiceImpl implements EmpstatsService {
 	}
 	
 	@Override
-	public Map<String, Object> getEmpStatsList() throws SQLException {
-		Map<String, Object> empstatsMap = new HashMap<String, Object>();
-		List<EmpstatsVO> empstatsList = empstatsDAO.selectEmpStats();
-		empstatsMap.put("empstatsList", empstatsList);
-		return empstatsMap;
+	public Map<String, Object> getTrendList() throws SQLException {
+		Map<String, Object> trendMap = new HashMap<String, Object>();
+		List<EmpstatsVO> trendList = empstatsDAO.selectTrend();
+		trendMap.put("trendList", trendList);
+		return trendMap;
+	}
+	
+	@Override
+	public Map<String, Object> getEmpList() throws SQLException {
+		Map<String, Object> empMap = new HashMap<String, Object>();
+		List<EmpstatsVO> empList = empstatsDAO.selectEmpStats();
+		empMap.put("empList", empList);
+		return empMap;
 	}
 
 }

@@ -27,6 +27,7 @@ public class MemberVO {
 	private String indWishsec;
 	private String indWishsal;
 	private Date indOpendate;
+	private String eduDep;
 
 	// 기업회원 필드
 	private String coRegNo;
@@ -224,6 +225,14 @@ public class MemberVO {
 
 	public void setCoLink(String coLink) {
 		this.coLink = coLink;
+	}
+
+	public String getEduDep() {
+		return eduDep;
+	}
+
+	public void setEduDep(String eduDep) {
+		this.eduDep = eduDep;
 	}
 
 	public int getCoStatus() {
