@@ -174,6 +174,7 @@
 			<button class="btn btn-outline-default waves-effect waves-themed"
 				type="button" id="inputGroupFileAddon04">검색</button>
 			<button class="btn btn-outline-default waves-effect waves-themed"
+				onclick="window.open('<%=request.getContextPath() %>/futurelab/ai3/company/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
 				type="button" id="inputGroupFileAddon04">AI에게 기업 추천받기</button>
 		</div>
 	</div>

@@ -25,23 +25,22 @@
 	
 	<select id = "selectOpenRecList" resultType="openRec">
 		select a.*,
-               b.co_name as co_bookmark
-          from open_rec a, 
-                          (select co_name
-                             from bookmark
-                            where id=#{id}) b
-         where a.open_conm = b.co_name (+)
-         <include refid="search"/>
+               (select DISTINCT b.co_name
+                  from bookmark b
+                 where id=#{id}
+                   and a.open_conm = b.co_name) as co_bookmark
+          from open_rec a
+        <include refid="search"/>
 	</select>
 	
 	<select id = "selectSearchOpenRecList" resultType="openRec">
 		select a.*,
-               b.co_name as co_bookmark
-          from open_rec a, 
-                          (select co_name
-                             from bookmark
-                            where id=#{id}) b
-         where a.open_conm = b.co_name (+)
+               (select distinct b.co_name
+                  from bookmark b
+                 where id=#{id}
+                   and a.open_conm=b.co_name) as co_bookmark
+          from open_rec a
+         where a.open_seqno is not null
 		 order by to_date(a.open_edate) desc
 	</select>
 	
@@ -71,12 +70,12 @@
 	
 	<select id="selectOpenRecListbyDetail" parameterType="openRec" resultType="openRec">
 		select a.*,
-             b.co_name as co_bookmark
-		from open_rec a, (select co_name
-                            from bookmark
-                           where id=#{id}) b
-       where a.open_conm = b.co_name (+)
-         and a.open_seqno = #{openSeqno}
+             (select distinct b.co_name
+                from bookmark b
+               where id=#{id}
+                 and a.open_conm = b.co_name) as co_bookmark
+		from open_rec a
+       where a.open_seqno = #{openSeqno}
 	</select>
 	
 	<select id="selectOpenApplicants" parameterType="int" resultType="str">

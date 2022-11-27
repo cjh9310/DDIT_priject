@@ -100,9 +100,10 @@ public class IndMemberController {
 		
 		HttpSession session = request.getSession();
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		String pwd = loginUser.getPwd();
 		String id = loginUser.getId();
 		
-		if(id.equals(checkPwd)) {
+		if(pwd.equals(checkPwd)) {
 			Map<String, Object> eduMap = educationService.getEducationListById(id);
 			Map<String, Object> crrMap = careerService.getCareerListById(id);
 			Map<String, Object> cerMap = certificateService.getCertificateListById(id);

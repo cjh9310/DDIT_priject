@@ -393,7 +393,7 @@ $(document).ready(function(){
                                         <div class="panel-content" style="height: 300px;">
                                             <ul class="nav nav-pills nav-justified" role="tablist">
                                                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#mentoringListAll">전체</a></li>
-                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#mentoringListWait">대기</a></li>
+                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#mentoringListWait">모집중</a></li>
                                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#mentoringIng">진행중</a></li>
                                                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#mentoringDone">종료</a></li>
                                             </ul>
@@ -434,7 +434,7 @@ $(document).ready(function(){
 			                                                            <td class="text-center">
 			                                                            <c:if test="${mentoring.menEdate < now }">종료</c:if>
 			                                                            <c:if test="${ mentoring.menSdate <= now and mentoring.menEdate >= now }">진행중</c:if>
-			                                                            <c:if test="${mentoring.menSdate > now }">대기</c:if>
+			                                                            <c:if test="${mentoring.menSdate > now }">모집중</c:if>
 																		</td>
 																		<td>
 																			<button class="btn btn-sm btn-success waves-effect waves-themed mentoringAdBtn" value="${mentoring.menNo }" type="button" >관 리</button>
@@ -477,7 +477,7 @@ $(document).ready(function(){
 			                                                            <td class="text-center">
 			                                                            <c:if test="${mentoring.menEdate < now }">종료</c:if>
 			                                                            <c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now }">진행중</c:if>
-			                                                            <c:if test="${mentoring.menSdate > now }">대기</c:if>
+			                                                            <c:if test="${mentoring.menSdate > now }">모집중</c:if>
 																		</td>
 																		<td>
 																			<button class="btn btn-sm btn-success waves-effect waves-themed mentoringAdBtn" value="${mentoring.menNo }" type="button" >관 리</button>
@@ -530,7 +530,7 @@ $(document).ready(function(){
 			                                                            <td class="text-center">
 			                                                            <c:if test="${mentoring.menEdate < now }">종료</c:if>
 			                                                            <c:if test="${mentoring.menSdate <= now and mentoring.menEdate >= now  }">진행중</c:if>
-			                                                            <c:if test="${mentoring.menSdate > now }">대기</c:if>
+			                                                            <c:if test="${mentoring.menSdate > now }">모집중</c:if>
 																		</td>
 																		<td>
 																			<button class="btn btn-sm btn-success waves-effect waves-themed mentoringAdBtn" value="${mentoring.menNo }" type="button" >관 리</button>

@@ -296,7 +296,8 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${advRecList}" var="adv" varStatus="vs">
-												<tr role="row" class="odd" data-toggle="modal"
+												<tr  
+													role="row" class="odd" data-toggle="modal"
 													data-target="#default-example-modal-lg-center${vs.index}">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														<fmt:formatDate value="${adv.supDate}" pattern="yyyy-MM-dd" />
@@ -352,8 +353,8 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${advOpenList}" var="adv" varStatus="vs">
-												<tr role="row" class="odd" data-toggle="modal"
-													data-target="#default-example-modal-lg-center${vs.index}">
+												<tr onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno=${adv.openSeqno}&openConm=${adv.openConm}'"
+												    role="row" class="odd" >
 													<td class="dtr-control sorting_1 text-center" tabindex="0">
 														<fmt:formatDate value="${adv.supDate}" pattern="yyyy-MM-dd" />
 													</td>

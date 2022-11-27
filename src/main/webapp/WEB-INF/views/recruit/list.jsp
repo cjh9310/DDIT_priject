@@ -398,7 +398,6 @@
 
 <!-- <script>
 	function list(page,url) {
-		alert("검색");
 		if (!url)
 			url = "list.do";
 

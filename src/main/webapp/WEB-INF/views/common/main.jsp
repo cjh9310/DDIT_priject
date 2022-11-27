@@ -221,16 +221,7 @@ div {
 						<div class="panel-toolbar pr-3 align-self-end">
 							<ul id="demo_panel-tabs" class="nav nav-tabs border-bottom-0"
 								role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									data-toggle="tab" href="#tab_mentoring" role="tab"
-									aria-selected="true">멘토링&nbsp;&nbsp;&nbsp;
-										<button
-											onclick="location.href='<%=request.getContextPath()%>/support/mentoring/list.do'"
-											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
-											<i class="fal fa-plus"></i>
-										</button>
-								</a></li>
-								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+								<li class="nav-item"><a class="nav-link active" data-toggle="tab"
 									href="#tab_contest" role="tab" aria-selected="false">
 										공모전&nbsp;&nbsp;&nbsp;
 										<button
@@ -239,22 +230,31 @@ div {
 											<i class="fal fa-plus"></i>
 										</button>
 								</a></li>
+								<li class="nav-item"><a class="nav-link"
+									data-toggle="tab" href="#tab_mentoring" role="tab"
+									aria-selected="true">멘토링&nbsp;&nbsp;&nbsp;
+										<button
+											onclick="location.href='<%=request.getContextPath()%>/support/mentoring/list.do'"
+											class="btn btn-xs btn-info ml-auto waves-effect waves-themed">
+											<i class="fal fa-plus"></i>
+										</button>
+								</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="panel-content tab-content p-3">
-						<div class="tab-pane fade show active" id="tab_mentoring"
+						<div class="tab-pane fade show active" id="tab_contest" role="tabpanel">
+							<div class="col-xl-12 panel" style="padding: 0px;">
+								<div class="custom-scroll">
+									<div class="row" id="contestList_MainSection"></div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="tab_mentoring"
 							role="tabpanel">
 							<div class="col-xl-12 panel" style="padding: 0px;">
 								<div class="custom-scroll">
 									<div class="row" id="mentoringList_MainSection"></div>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="tab_contest" role="tabpanel">
-							<div class="col-xl-12 panel" style="padding: 0px;">
-								<div class="custom-scroll">
-									<div class="row" id="contestList_MainSection"></div>
 								</div>
 							</div>
 						</div>

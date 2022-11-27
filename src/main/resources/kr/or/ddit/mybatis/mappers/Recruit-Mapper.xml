@@ -51,16 +51,16 @@
 
 	<select id="selectRecruitList" resultType="recruit">
 		select a.*,
-               b.rec_wantedno as rec_bookmark,
-               c.co_name as co_bookmark
-          from recruit a, (select rec_wantedno
-                             from bookmark
-                            where id=#{id}) b,
-                          (select co_name
-                             from bookmark
-                            where id=#{id}) c
-         where a.rec_wantedno = b.rec_wantedno (+)
-           and a.co_name = c.co_name (+)
+               (select distinct b.rec_wantedno
+                  from bookmark b
+                 where id=#{id}
+                   and a.rec_wantedno = b.rec_wantedno) as rec_bookmark,
+               (select distinct c.co_name
+                  from bookmark c
+                 where id=#{id}
+                   and a.co_name = c.co_name) as co_bookmark
+          from recruit a  
+         where a.rec_wantedno is not null           
            <include refid="search" />
          order by a.rec_regdt desc
 	</select>
@@ -88,18 +88,17 @@
 	</select>
 	
 	<select id="selectRecruitByDetail" parameterType="recruit" resultType="recruit">
-		select a.*,
-             b.co_name as co_bookmark,
-             c.rec_wantedno as rec_bookmark
-		from recruit a, (select co_name
-                            from bookmark
-                           where id=#{indId}) b,
-                        (select rec_wantedno
-                           from bookmark
-                          where id=#{indId}) c
-       where a.co_name = b.co_name (+)
-         and a.rec_wantedno = c.rec_wantedno (+)
-         and a.rec_wantedno = #{recWantedno}
+		 select a.*,
+             (select distinct b.co_name
+                from bookmark b
+               where b.id=#{indId}
+                 and a.co_name = b.co_name) as co_bookmark,
+             (select distinct c.rec_wantedno
+                from bookmark c
+               where c.id=#{indId}
+                 and a.rec_wantedno = c.rec_wantedno) as rec_bookmark
+		from recruit a
+       where a.rec_wantedno = #{recWantedno}
 	</select>
 	<select id="selectAllimdata" parameterType="recruit" resultType="recruit">
 		
