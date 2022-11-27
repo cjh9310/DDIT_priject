@@ -30,7 +30,7 @@
 	background-color: white;
 }
 
-#dt-basic-example {
+#table table-bordered table-hover m-0 {
 	border-spacing: 0;
 	border-collapse: separate;
 }
@@ -166,7 +166,7 @@ function openFaqList(faqNo) {
 			$('input[id=faqSdate]').val(result.faqSdate);
 			$('input[id=faqTitle]').val(result.faqTitle);
 			$('input[id=faqCategory]').val(result.faqCategory);
-			$('textarea[id=faqContent]').val(result.faqContent);			
+			$('textarea[id=faqContent]').summernote('code',result.faqContent);
 		},
 		error : function(request, status, error) {
 			 alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
@@ -189,7 +189,7 @@ function faqModify(){
 		<div class="col-xl-6" style="height: 100%;">
 			<div>
 				<div class="col-xl-12">
-					<div id="panel-7" class="panel" style="height: 380px;">
+					<div id="panel-7" class="panel" style="height: 670px;">
 						<div class="panel-container show">
 							<div class="panel-content" style="padding: 5px; margin: 10px;">
 								<div class="row">
@@ -210,14 +210,13 @@ function faqModify(){
 										</div>
 									</div>
 								</div>
-								<div class="tab-content"  style="border-bottom: 2px solid rgb(233,233,233); border-right: 2px solid rgb(233,233,233); height: 315px;">
-									<div class="tab-pane fade show active" id="nav_pills_default-1"
-										role="tabpanel">
-										<table id="dt-basic-example"
-											class="table table-sm table-bordered table-hover"
-											style="table-layout: fixed; padding: 0;">
-											<thead class="mytable">
-												<tr>
+								
+							<div class="tab-content" style="height: 580px; margin-top: 10px;">
+								<div class="tab-pane fade show active" id="nav_pills_default-1"
+									role="tabpanel">
+										<table class="table table-bordered table-hover m-0" style="table-layout: fixed; padding: 0;">
+			                                <thead class="thead-themed" id="mytable">
+			                                    <tr>
 													<th style="width: 5%;  text-align: center;"><b>NO</b></th>
 													<th style="width: 15%; text-align: center;"><b>제공처</b></th>
 													<th style="width: 30%; text-align: center;"><b>제목</b></th>
@@ -226,8 +225,8 @@ function faqModify(){
 													<th style="width: 10%; text-align: center;"><b>삭제</b></th>
 												</tr>
 											</thead>
-	
-											<tbody>
+			
+											<tbody >
 												<c:if test="${empty PublicWorkList }">
 													<tr>
 														<td colspan="6"><strong>해당 내용이 없습니다.</strong></td>
@@ -245,7 +244,7 @@ function faqModify(){
 																class="btn-xs btn-danger waves-themed" id=remove onclick="remove(${publicWorkList.pubNo})">삭제</button></td>
 													</tr>
 												</c:forEach>
-	
+		
 											</tbody>
 										</table>
 									</div>
@@ -306,7 +305,7 @@ function faqModify(){
 		<div class="col-xl-6" style="height: 100%;">
 			<div>
 				<div class="col-xl-12">
-					<div id="panel-7" class="panel" style="height: 380px;">
+					<div id="panel-7" class="panel" style="height: 670px;">
 						<div class="panel-container show">
 							<div class="panel-content" style="padding: 5px; margin: 10px;">
 								<div class="row">
@@ -327,13 +326,11 @@ function faqModify(){
 										</div>
 									</div>
 								</div>
-								<div class="tab-content">
+								<div class="tab-content" style="height: 580px; margin-top: 10px;">
 									<div class="tab-pane fade show active" id="nav_pills_default-1"
 										role="tabpanel">
-										<table id="dt-basic-example"
-											class="table table-sm table-bordered table-hover w-100"
-											style="table-layout: fixed; padding: 0;">
-											<thead class="mytable">
+			                            <table class="table table-bordered table-hover m-0">
+			                                <thead class="thead-themed">
 												<tr>
 													<th style="width: 10%; text-align: center;"><b>NO</b></th>
 													<th style="width: 15%; text-align: center;"><b>카테고리</b></th>
@@ -373,7 +370,7 @@ function faqModify(){
 	
 				<div class="col-xl-12">
 					<div id="panel-7" class="panel"
-						style="height: 520px; margin-top: 24px; margin-bottom: 0px;">
+						style="height: 555px; margin-top: 24px; margin-bottom: 0px;">
 
 						<div class="panel-container show">
 							<div class="panel-content">
@@ -398,7 +395,8 @@ function faqModify(){
 											</tr>		
 											<tr>
 												<th style="width: 10%; padding-bottom: 150px; text-align: center;"><b>내용</b></th>
-												<th style="width: 90%; height: 350px;" id="myContent"  colspan="6"><textarea style="border: 0px; height: 347px; width: 720px;" id="faqContent" name="faqContent"></textarea> </th>
+												<th style="width: 90%; height: 350px; padding: 0px;" id="myContent" colspan="6"><textarea style="border: 0px; height: 347px;" id="faqContent" name="faqContent"></textarea> </th>
+<!-- 												<th style="width: 90%; height: 350px;" id="myContent"  colspan="6"><textarea style="border: 0px; height: 347px; width: 720px;" id="faqContent" name="faqContent"></textarea> </th> -->
 											</tr>																			
 										</thead>
 									</table>
@@ -609,7 +607,7 @@ function faqModify(){
 														<label class="form-label" for="validationTextarea2"><b>내용</b>
 															<span class="text-danger">*</span></label>
 														<textarea class="form-control" id="modalfaqContent"
-															name="faqContent" placeholder="내용을 입력해주세요." rows="15"
+															name="modalFaqContent" placeholder="내용을 입력해주세요." rows="15"
 															required></textarea>
 														<div class="valid-feedback">Looks good!</div>
 													</div>
@@ -742,6 +740,7 @@ function faqModify(){
 	window.onload=function(){
 		summernote_go($('textarea[name="modalPubContent"]'),'<%=request.getContextPath()%>');	
 		summernote_go($('textarea[name="pubContent"]'),'<%=request.getContextPath()%>');	
+		summernote_go($('textarea[name="modalFaqContent"]'),'<%=request.getContextPath()%>');	
 		summernote_go($('textarea[name="faqContent"]'),'<%=request.getContextPath()%>');	
 	}
 	

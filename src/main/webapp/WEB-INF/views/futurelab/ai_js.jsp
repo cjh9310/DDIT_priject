@@ -217,12 +217,22 @@
 						</div>
 					</div>
 					<div class='icon-stack display-3 flex-shrink-0 panel-toolbar ml-2'>
-									<button
+							{{#nullCheck talBookmark}}
+									<button id="{{bookmarkId}}" class="bookMark_btn"
 										style="background-color: transparent; border: 0px;"
-										type="button" >
+											type="button" value="{{talBookmark}}">
+											<i name="talremove"
+												class="fas fa-star icon-stack-1x opacity-100 color-warning-500"></i>
+									</button>
+								{{else}}
+									<button name="talregist" id="{{bookmarkId}}"
+										class="bookMark_btn"
+										style="background-color: transparent; border: 0px;"
+										type="button" value="{{talBookmark}}">
 											<i name="talregist"
 												class="far fa-star icon-stack-1x opacity-100 color-warning-500"></i>
 											</button>
+								{{/nullCheck}}
 						</div>
 					<button
 						class="js-expand-btn btn btn-sm btn-default d-none waves-effect waves-themed"

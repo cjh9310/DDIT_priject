@@ -296,7 +296,7 @@ div {
 												</div>
 											</c:if>
 											<c:forEach items="${advRecList}" var="adv" varStatus="vs">
-												<tr  
+												<tr onclick="location.href='<%=request.getContextPath()%>/recruit/detail.do?recWantedno=${adv.recWantedno}'"
 													role="row" class="odd" data-toggle="modal"
 													data-target="#default-example-modal-lg-center${vs.index}">
 													<td class="dtr-control sorting_1 text-center" tabindex="0">

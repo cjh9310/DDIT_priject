@@ -45,7 +45,7 @@
 							<thead class="bg-primary-700">
 								<tr>
 									<th>No.</th>
-									<th>지원일자</th>
+									<th>신청일자</th>
 									<th>멘토링명</th>
 									<th>멘토링기간</th>
 									<th>멘토링 진행상황</th>
@@ -105,7 +105,7 @@
 							<thead class="bg-primary-700">
 								<tr>
 									<th>No.</th>
-									<th>지원일자</th>
+									<th>응모일자</th>
 									<th>공모전명</th>
 									<th>공고기간</th>
 									<th>수상내역</th>
@@ -173,7 +173,6 @@
 									<th>제목</th>
 									<th>상담진행상황</th>
 									<th>담당상담사</th>
-									<th>첨부파일</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -209,12 +208,6 @@
 										<c:if test="${support.counselorName eq 3 }">김민지 상담사 </c:if>
 										<c:if test="${support.counselorName eq 4 }">김채원 상담사 </c:if>
 										</td>
-										<c:if test="${empty support.attachList }">
-											<td></td>
-										</c:if>
-										<c:if test="${not empty support.attachList }">
-											<td><i class='ni ni-paper-clip'></i></td>
-										</c:if>
 									</tr>
 								</c:forEach>
 						</table>

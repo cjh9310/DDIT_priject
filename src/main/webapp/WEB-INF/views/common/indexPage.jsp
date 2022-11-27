@@ -1043,7 +1043,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				for(var i=0; i<recCount; i++){
 					console.log("rec 됨");
 					var unreadList = 
-						`<div class="alert alert-success alert-dismissible fade show" role="alert">
+						`<div style="cursor:pointer;" onclick="goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');"
+						      class="alert alert-success alert-dismissible fade show" role="alert">
 		                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
 		                </button>
@@ -1053,7 +1054,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 				for(var i=0; i<openCount; i++){
 					var unreadList = 
-					`<div class="alert alert-success alert-dismissible fade show" role="alert">
+					`<div style="cursor:pointer;" onclick="goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');" 
+						  class="alert alert-success alert-dismissible fade show" role="alert">
 	                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
 	                </button>
@@ -1108,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					for(var i=0; i<openCount; i++){
 						console.log("open 됨");
 						var unreadList = 
-							`<div class="alert alert-success alert-dismissible fade show" role="alert">
+							`<div style="cursor:pointer;" onclick="goPage('<%=request.getContextPath()%>/comember/mypage/recruit.do','M070000');" class="alert alert-success alert-dismissible fade show" role="alert">
 			                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
 			                </button>

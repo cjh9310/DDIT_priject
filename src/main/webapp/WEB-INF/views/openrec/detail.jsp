@@ -42,7 +42,10 @@ td { height: 80px; }
 	<div class="recruit-head panel-conteiner">
 		<div class="row w-100 p-0 m-0 h-100">
 			<div class="col-xl-1 p-2 m-0 row" style="background-size: cover;">
-				<img src="${openRec.openLogo}" class="card-img-top" alt="..."  style="display: block; height: 100%; width: auto;" />
+				<img id="image" style="display:block; width:100%; height:auto;"
+				src="${openRec.openLogo}"
+				onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/strength_log4job.png';"
+				alt="공채 로고" />
 			</div>
 			<table>
 				<tr>

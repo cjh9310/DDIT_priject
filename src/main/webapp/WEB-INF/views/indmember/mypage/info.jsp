@@ -109,6 +109,9 @@
 											<span class="badge badge-primary">${edu.strStatus}</span>
 										</c:if> <c:if test="${edu.eduStatus == 1}">
 											<span class="badge badge-info">${edu.strStatus}</span>
+										</c:if>
+										<c:if test="${edu.eduStatus == 2}">
+											<span class="badge badge-success">${edu.strStatus}</span>
 										</c:if></td>
 								</tr>
 							</c:forEach>

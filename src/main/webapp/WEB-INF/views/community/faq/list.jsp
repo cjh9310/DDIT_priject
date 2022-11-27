@@ -23,7 +23,7 @@
 							<li class="breadcrumb-item text-white"><a href="#"
 								class="text-white"> <i class="fal fa-home mr-1"></i> 커뮤니티
 							</a></li>
-							<li class="breadcrumb-item text-white"><a href="#"
+							<li class="breadcrumb-item text-white" style="width: 350px;"><a href="#"
 								class="text-white">자주묻는질문(FAQ)</a></li>
 						</ol>
 					</div>

@@ -137,7 +137,7 @@
 										<b>첨부파일 다운로드</b>
 									</td>
 									<td style="width: 40%;" colspan="3">
-										<div class="row" id="attachList" style="margin-left: 10px;"></div>
+										<div class="row" id="attachList" style="margin-left: 10px; width: 350px;"></div>
 									</td>
 								</tr>
 								<tr>

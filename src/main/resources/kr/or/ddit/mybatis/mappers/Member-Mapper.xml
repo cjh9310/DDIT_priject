@@ -47,15 +47,14 @@
 	</select>
 	
 	<select id="selectTalentListByScroll" resultType="member">
-		select a.*,
-               b.tal_id as tal_bookmark
+		 select a.*,
+               (select distinct b.tal_id
+                  from bookmark b
+                 where b.id=#{id}
+                   and a.id = b.tal_id) as tal_bookmark
           from (select mem.*, ind.* 
                   from member mem, ind_member ind
-                 where mem.id=ind.ind_id) a, 
-                          (select tal_id
-                             from bookmark
-                            where id=#{id}) b
-         where a.ind_id = b.tal_id (+)
+                 where mem.id=ind.ind_id) a
          order by a.regdate desc
 	</select>
 	

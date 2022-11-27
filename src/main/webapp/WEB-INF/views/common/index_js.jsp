@@ -210,7 +210,10 @@ Handlebars.registerHelper("dateCheck", function(element, options) {
 <div class="panel-content card-wrapper col-2" style="margin: 0px;">
 	<div class="card-deck">
 		<div class="card shadow-0 mb-g shadow-sm-hover">
-			<img src="{{openLogo}}" class="card-img-top" alt="...">
+			<img id="image" style="display:block; width:100%; height:auto;"
+												src="{{openLogo}}"
+												onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/strength_log4job.png';"
+												alt="공채 로고" />
 			<div class="card-body" style="cursor: pointer;"
 				onclick="location.href='<%=request.getContextPath()%>/openrec/detail.do?openSeqno={{openSeqno}}&openConm={{openConm}}'">
 				<h5 class="card-title" data-toggle="tooltip"

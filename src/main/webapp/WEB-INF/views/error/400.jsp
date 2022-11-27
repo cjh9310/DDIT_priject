@@ -33,11 +33,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>404 해당 페이지 없음</h1>
+						<h1>400 잘못된 요청</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item active">400 해당 페이지 없음</li>
+							<li class="breadcrumb-item active">400 잘못된 요청</li>
 						</ol>
 					</div>
 				</div>
@@ -52,10 +52,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 				<div class="error-content">
 					<h3>
-						<i class="fas fa-exclamation-triangle text-danger"></i> 잠시만요! 지금 이동하시려는
-						페이지는 없는 페이지입니다. 다시 한번 확인해주세요					</h3>
+						<i class="fas fa-exclamation-triangle text-danger"></i> 잠시만요! 지금
+						잘못된 요청을 보내고 있습니다.
+					</h3>
 
-					<p>해당 URL이 맞는지 다시 한번 확인해주시고 재요청해주세요</p>
+					<p>뒤로 돌아가기 전에 제대로 입력하였는지 생각해보세요</p>
+					<p>뒤로 돌아가기를 다시 한번 시도해 주세요.</p>
 					<button type="button" class="btn btn-info waves-effect waves-themed" onclick="history_back();">돌아가기</button>
 
 				</div>

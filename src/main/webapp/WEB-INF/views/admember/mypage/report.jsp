@@ -163,6 +163,7 @@ function reportChangeStatus(str){
 		  confirmButtonText: '네'
 	}).then(function (result){
 		if(result.value){
+			
 		//진행상태 변경
 		$.ajax({
 			url : 'reportChangeStatus',

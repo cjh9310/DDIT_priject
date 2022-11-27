@@ -456,8 +456,8 @@ function rec_supply_submit() {
 		success : function(data) {
 			
 			if(data == 'recruitSupplySuccess') {
-				AllimRegist();
 				alert(coName + '에 대한 채용 지원이 완료되었습니다.');
+				AllimRegist();
 				opener.parent.goPage('<%=request.getContextPath()%>/indmember/mypage/recruit.do','M100000');
 				console.log("goPage() : ",opener.parent.goPage);
 				window.close();

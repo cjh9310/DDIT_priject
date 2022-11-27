@@ -143,6 +143,10 @@
 									</p>
 									<p class="card-text">${recruit.recRegion}</p>
 									<p class="card-text">${recruit.recWantedtitle}</p>
+								<p class="card-text">
+														경력사항
+														&nbsp;:&nbsp;&nbsp;${recruit.recEntertpnm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											</p>
 									<a href="" class="card-link fw-700">${recruit.coName}
 										지원하러가기</a>
 								</div>
@@ -156,6 +160,22 @@
 </div>
 </div>
 <div class="alert alert-info fs-lg p-0" style="margin-bottom: 24px;">
+	<div class="input-group p-0 m-0 rounded-top">
+		<input type="text"
+			class="form-control form-control-lg shadow-inset-2 m-0"
+			id="accordion-recruit_filter"
+			placeholder="원하는 채용공고를  다양한 키워드로 검색해보세요" />
+		<div class="input-group-append">
+			<div class="card" style="width: 400px;"></div>
+			<button class="btn btn-outline-default waves-effect waves-themed"
+				type="button" id="inputGroupFileAddon04">검색</button>
+			<button class="btn btn-outline-default waves-effect waves-themed"
+				onclick="window.open('<%=request.getContextPath() %>/futurelab/ai3/recruit/recommand.do','OpenWindow','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes')"
+				type="button" id="inputGroupFileAddon04">AI에게 채용공고 추천받기</button>
+		</div>
+	</div>
+</div>
+<%-- <div class="alert alert-info fs-lg p-0" style="margin-bottom: 24px;">
 	<div class="input-group p-0 m-0 rounded-top">
 		<input type="text"
 			class="form-control form-control-lg shadow-inset-2 m-0"
@@ -268,7 +288,7 @@
 		<button class="btn btn-outline-default waves-effect waves-themed"
 			type="button" id="inputGroupFileAddon04">AI에게 채용공고 추천받기</button> -->
 	</div>
-</div>
+</div> --%>
 
 <div class="card mb-g p-0">
 	<div class="card-body p-0">
@@ -328,7 +348,9 @@
 												</td>
 												<td colspan="4" rowspan="2" style="width: 300px;">
 													<i class="badge text-primary">
-														<h4>마감일 &nbsp;:&nbsp;
+														<h4>
+														채용 진행 중
+														<%-- 마감일 &nbsp;:&nbsp;
 															<c:if test="${recruit.recReceiptclosedt ne '채용시까지'}">
 																<fmt:parseDate var="dateString"
 																	value="${recruit.recReceiptclosedt}" pattern="yyyyMMdd" />
@@ -337,7 +359,7 @@
 															</c:if>
 															<c:if test="${recruit.recReceiptclosedt eq '채용시까지'}">
 															${recruit.recReceiptclosedt}
-														</c:if>
+														</c:if> --%>
 														</h4>
 													</i>
 												</td>

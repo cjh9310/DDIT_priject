@@ -11,9 +11,9 @@
 
 <main id="js-page-content" role="main" class="page-content">
 	    <ol class="breadcrumb page-breadcrumb" style="padding-top: 10px;">
-	        <li class="breadcrumb-item"><a href="javascript:void(0);">마이페이지</a></li>
-	        <li class="breadcrumb-item">프로그램</li>
-	        <li class="breadcrumb-item active">내가 신청한 공모전 상세보기</li>
+	        <li class="breadcrumb-item"><a href="javascript:void(0);"></a></li>
+	        
+	        
 	    </ol>
 	    
 	    	<div></div>

@@ -7,11 +7,6 @@
 <c:set var="contest" value="${contest}" />
 
 <main id="js-page-content" role="main" class="page-content">
-	<ol class="breadcrumb page-breadcrumb" style="padding-top: 10px;">
-		<li class="breadcrumb-item"><a href="javascript:void(0);">마이페이지</a></li>
-		<li class="breadcrumb-item">프로그램</li>
-		<li class="breadcrumb-item active">상담신청 상세보기</li>
-	</ol>
 
 	<div></div>
 	<div class="row">
@@ -20,7 +15,7 @@
 			<div id="panel-1" class="panel">
 				<div class="panel-hdr">
 
-					<b>내가 신청한 상담내용</b>
+					<b>공모전 상세보기</b>
 
 					<div class="panel-toolbar"></div>
 				</div>
@@ -29,9 +24,10 @@
 						<form method="post" name="modifyForm" id="modifyForm" action="contestModify" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-5">
-								<img
-									src="/ddit/resources/template/img/support/contest/공모전11.png"
-									alt="공모전이미지" style="width: 300px;">
+								<img id="image" class="card-img-top"
+											src="<%=request.getContextPath()%>/getPicture.do?path=${contest.uploadpath}&filename=${contest.filename}"
+											onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/resources/template/img/support/contest/공모전11.png';"
+											alt="공모전이미지" style="width: 350px;"/>
 							</div>
 							<div class="col-7">
 								<div class="form-group">

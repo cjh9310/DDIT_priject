@@ -149,8 +149,8 @@
 									<h5 class="card-title fw-700">${openRec.openConm}</h5>
 									<p class="card-text">
 									</p>
-									<p class="card-text">${openRec.openConm}</p>
-									<p class="card-text">${openRec.openConm}</p>
+									<p class="card-text">${openRec.openTitle}</p>
+									<i class="badge border border-success text-success">${openRec.openEdate}까지</i></br></br>
 									<a href="" class="card-link fw-700">${openRec.openConm}
 										지원하러가기</a>
 								</div>

@@ -90,7 +90,7 @@
 													onclick="addFile_go(3);"	type="button" id="addFileBtn">파일 첨부</button>
 												</div>									
 												<div class="card-footer fileInput">
-												</div>`
+												</div>
 											</div>
 										</div>
 									</div>

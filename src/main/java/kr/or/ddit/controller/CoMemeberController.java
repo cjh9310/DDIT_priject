@@ -278,7 +278,7 @@ public class CoMemeberController {
 		
 		String coId = loginUser.getId();
 		openRec.setId(coId);
-				
+		
 		openRecService.regist(openRec, savePath);		
 
 		return url;

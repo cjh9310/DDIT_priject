@@ -8,11 +8,7 @@
 <c:set var="now" value="<%=new java.util.Date()%>" />
 
 <main id="js-page-content" role="main" class="page-content">
-	<ol class="breadcrumb page-breadcrumb" style="padding-top: 10px;">
-		<li class="breadcrumb-item"><a href="javascript:void(0);">마이페이지</a></li>
-		<li class="breadcrumb-item">프로그램</li>
-		<li class="breadcrumb-item active">멘토링 상세보기</li>
-	</ol>
+	
 
 	<div></div>
 	<div class="row">

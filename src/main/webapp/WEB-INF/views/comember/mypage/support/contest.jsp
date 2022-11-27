@@ -653,7 +653,7 @@ $(document).ready(function(){
                                     <div class="panel-container show">
                                     	<div style="margin-bottom:30px;"></div>
                                        	<div class="panel-content" style="height: 300px;">
-		                                      <div class="frame-wrap" id="ajaxCureList">
+		                                      <div class="frame-wrap" style="overflow: auto; height: 230px;" id="ajaxCureList">
 		                                      	<div class="text-center">
 		                                          	<h5>멘토링 지원자 목록을 보시려면 좌측 공모전을 선택하세요.</h5>
 		                                          </div>

@@ -31,10 +31,9 @@
 <body>
 
 <ol class="breadcrumb page-breadcrumb">
-	<li class="breadcrumb-item"><a href="javascript:void(0);">연봉</a></li>
-	<li class="breadcrumb-item">연봉 리스트</li>
-	<li class="position-absolute pos-top pos-right d-none d-sm-block"><span
-		class="js-get-date"></span></li>
+	<li class="breadcrumb-item"><a href="javascript:void(0);"></a></li>
+
+	<li class="position-absolute pos-top pos-right d-none d-sm-block"></li>
 </ol>
 
 <!--                              여기부터                                                                 -->
