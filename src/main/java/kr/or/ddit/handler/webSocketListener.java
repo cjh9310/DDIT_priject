@@ -28,7 +28,6 @@ public class webSocketListener extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		list.add(session);   // 리스트에 접속한 session들을 다마버려용
 	}
-
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println(message);
