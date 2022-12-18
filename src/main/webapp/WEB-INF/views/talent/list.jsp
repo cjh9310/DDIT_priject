@@ -330,7 +330,7 @@
                                                     <c:forEach items="${recruitList }" var="recruit">
                                                         <a href="javascript:void(0);"
                                                            type="button"
-                                                           onclick="recruitAdviceRegist('${talent.id}','${recruit.recWantedno}','${loginUser.id }','${recruit.recWantedtitle}')"
+                                                           onclick="recruitAdviceRegist('${talent.id}','${recruit.recWantedno}','${loginUser.id }')"
                                                            class="dropdown-item ${recruit.recWantedno}"
                                                            data-toggle="modal">${recruit.recWantedtitle}</a>
                                                     </c:forEach>
@@ -636,7 +636,7 @@ function recruitAdviceRegist(p_indId, p_recWantedno, p_coId, p_recWantedtitle) {
 	$.ajax({
 		url : '<%=request.getContextPath()%>/talent/recruitAdviceRegist',
 		type : 'POST',
-		data : {'indId' : p_indId, 'toId':p_indId,'recWantedno' : p_recWantedno ,'fromId' : p_coId, 'recWantedtitle' : p_recWantedtitle},
+		data : {'indId' : p_indId, 'toId':p_indId,'recWantedno' : p_recWantedno ,'fromId' : p_coId},
 		success : function(result) {
 			Swal.fire({
 				target: document.getElementById('counselModal'),
