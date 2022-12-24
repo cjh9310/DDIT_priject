@@ -22,7 +22,6 @@ public class BookmarkController {
 	@ResponseBody
 	public String recBookmarkRegist(BookmarkVO bookmark) throws Exception {
 		bookmarkService.registRecBookmark(bookmark);
-		System.out.println(bookmark.getTalId());
 		return "BookmarkRegistSuccess";
 	}
 	
@@ -30,7 +29,6 @@ public class BookmarkController {
 	@ResponseBody
 	public String recBookmarkRemove(BookmarkVO bookmark) throws Exception {
 		int bookNo = bookmarkService.getBookNoForRemove(bookmark);
-		System.out.println(bookmark.getBookNo());
 		bookmarkService.removeBookmark(bookNo);
 		return "BookmarkRemoveSuccess";
 	}
